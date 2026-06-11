@@ -2,14 +2,20 @@
    👑 CONFIGURATION GENERALE PARTAGÉE & STRUCTURE DE BASE
    ============================================================================== */
 body, html { 
-    height: 100%; 
+    min-height: 100vh; /* CORRECTION : Assure que la page fait AU MOINS la taille de l'écran sans s'écraser */
     margin: 0; 
     padding: 0; 
     font-family: 'Georgia', serif; 
     color: #ffffff; 
+    background-color: #0f0c08; /* Fond sombre de secours pour éviter l'écran blanc */
     transition: background 0.5s ease;
 }
-.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+.container { 
+    max-width: 1100px; 
+    margin: 0 auto; 
+    padding: 40px 20px; 
+    display: block !important; /* Force l'affichage structurel */
+}
 h1 { text-align: center; text-shadow: 2px 2px 4px #000; margin-top: 20px; font-size: 28px; text-transform: uppercase; letter-spacing: 1px; }
 h2 { border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 35px; text-shadow: 1px 1px 3px #000; font-size: 22px; }
 ul { padding-left: 20px; } li { margin-bottom: 7px; font-size: 15px; }
@@ -18,6 +24,28 @@ a { text-decoration: none; font-weight: bold; transition: 0.2s; } a:hover { text
 /* --- BOITES DE CONTENU STYLE PARCHEMIN / APOCALYPSE --- */
 .content-box { background-color: rgba(20, 20, 20, 0.88); padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); border: 1px solid #3e2f15; }
 .content-parchment { background: rgba(18, 14, 8, 0.94); border: 3px double #ffcc00; padding: 30px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
+
+/* --- GRILLE DU PORTAIL (WURM & 7DTD) --- */
+.portal-container { 
+    display: flex !important; 
+    justify-content: center; 
+    gap: 40px; 
+    margin-top: 60px; 
+    flex-wrap: wrap; 
+}
+.portal-card { 
+    background: rgba(15, 12, 8, 0.95); 
+    border: 2px solid #b38f00; 
+    border-radius: 10px; 
+    padding: 40px 25px; 
+    width: 340px; 
+    text-align: center; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7); 
+    transition: transform 0.3s ease, box-shadow 0 3px 15px rgba(255,204,0,0.2); 
+}
+.portal-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255,204,0,0.4); border-color: #ffcc00; }
+.portal-btn { display: inline-block; background: #ffcc00; color: #000; padding: 12px 30px; font-weight: bold; text-transform: uppercase; border-radius: 5px; margin-top: 25px; font-size: 14px; letter-spacing: 0.5px; transition: 0.2s; text-decoration: none; }
+.portal-btn:hover { background: #fff; box-shadow: 0 0 12px #ffcc00; }
 
 /* ==============================================================================
    ⚔️ BARRE DE NAVIGATION MEDIEVALE / SURVIE (NAVBAR)
@@ -32,19 +60,16 @@ a { text-decoration: none; font-weight: bold; transition: 0.2s; } a:hover { text
 .cluster-stats-box { display: flex; justify-content: center; gap: 25px; margin: 25px 0; flex-wrap: wrap; }
 .realm-stats-card { background-color: rgba(15, 12, 8, 0.93); border: 2px solid #b38f00; border-radius: 8px; padding: 20px; width: 480px; box-shadow: 0 6px 15px rgba(0,0,0,0.7); transition: 0.3s; }
 
-/* Changement dynamique de statut (Online / Offline) */
 .realm-stats-card.online-border { border-color: #00ff00 !important; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3) !important; }
 .realm-stats-card.offline-border { border-color: #ff0000 !important; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3) !important; }
 .realm-stats-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #594418; padding-bottom: 10px; margin-bottom: 15px; }
 .realm-title-text { font-size: 18px; font-weight: bold; color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; }
 
-/* Alignement de la grille (Guerriers, Uptime, Créatures) */
 .realm-grid-data { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .data-sub-box { background: rgba(0, 0, 0, 0.5); padding: 12px 8px; border-radius: 4px; text-align: center; border: 1px solid #3a2f15; }
 .data-sub-box h5 { margin: 0 0 6px 0; color: #e6c280; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
 .data-sub-value { font-size: 20px; font-weight: bold; color: #ffffff; }
 
-/* Témoins lumineux LED */
 .led-indicator { width: 12px; height: 12px; border-radius: 50px; display: inline-block; vertical-align: middle; margin-right: 6px; }
 .led-green { background-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
 .led-red { background-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
@@ -72,8 +97,9 @@ body.lang-en-mode .fr-txt { display: none !important; }
 .realm-card { background: rgba(20, 16, 11, 0.92); border: 2px dashed #b38f00; padding: 22px; border-radius: 6px; width: 44%; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
 .realm-card h3 { margin-top: 0; padding-bottom: 6px; border-bottom: 1px solid #594418; font-size: 18px; letter-spacing: 0.5px; }
 .realm-card p { font-size: 14px; line-height: 1.5; color: #eee; }
+
 /* ==============================================================================
-   🛠️ ETABLI TECHNIQUE DU BAS : RESEAU VS WURM.INI CONFIGS & ECO MARIN
+   🛠️ ETABLI TECHNIQUE DU BAS
    ============================================================================== */
 .technical-container { display: flex; justify-content: center; gap: 30px; margin-top: 35px; flex-wrap: wrap; }
 .tech-box { background-color: rgba(18, 15, 12, 0.9); border: 2px solid #594418; padding: 25px; border-radius: 8px; width: 44%; box-shadow: 0 5px 15px rgba(0,0,0,0.6); }
@@ -83,89 +109,7 @@ body.lang-en-mode .fr-txt { display: none !important; }
 .copy-btn { background: #ffcc00; color: #000; border: none; padding: 4px 10px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-left: 8px; font-size: 11px; transition: 0.2s; box-shadow: 0 1px 3px #000; }
 .copy-btn:hover { background: #fff; box-shadow: 0 0 5px #ffcc00; }
 
-/* CONFIGURATION SPECIALE BOITE ÉCOSYSTEME MARIN WURM */
 .eco-box { background: rgba(10, 25, 30, 0.9) !important; border: 2px solid #2a6f97 !important; box-shadow: 0 0 15px rgba(42, 111, 151, 0.4) !important; width: 94% !important; margin-top: 25px; }
 .eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 15px; }
 .eco-item { background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 4px; border-left: 3px solid #ffcc00; font-size: 13px; }
 .eco-item span { float: right; font-weight: bold; color: #4ea8de; }
-
-/* --- GRILLE D'ARSENAL INTERACTIVE POUR LES 100+ MODS --- */
-.mods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0; list-style: none; }
-.mod-element { background: rgba(35, 28, 18, 0.9); border: 1px solid #594418; padding: 12px; border-left: 4px solid #ffcc00; cursor: help; position: relative; font-size: 14px; border-radius: 4px; transition: 0.2s; }
-.mod-element:hover { background: rgba(255, 204, 0, 0.15); border-color: #ffcc00; }
-
-/* ==============================================================================
-   🛡️ DECLINAISON DU THÈME 1 : WURM UNLIMITED (OR & MEDIEVAL)
-   ============================================================================== */
-body.theme-wurm { background: #111 url("images/background1.jpg") center no-repeat fixed; background-size: cover; }
-body.theme-wurm h1 { color: #ffcc00; }
-body.theme-wurm h2 { color: #ffcc00; border-color: #ffcc00; }
-body.theme-wurm a { color: #ffcc00; }
-
-/* ==============================================================================
-   🧟 DECLINAISON DU THÈME 2 : 7 DAYS TO DIE (ROUGE & APOCALYPSE)
-   ============================================================================== */
-body.theme-7dtd { 
-    background: #0a0303 url("images/background_7dtd.jpg") center no-repeat fixed; 
-    background-size: cover; 
-}
-body.theme-7dtd h1 { 
-    color: #ff3333 !important; 
-    text-shadow: 2px 2px 5px #000, 0 0 15px rgba(139, 0, 0, 0.8) !important; 
-}
-body.theme-7dtd h2, body.theme-7dtd h3, body.theme-7dtd .player-list-window h6 { 
-    color: #ff5555 !important; 
-    border-color: #8b0000 !important; 
-}
-body.theme-7dtd a { color: #ff3333 !important; }
-body.theme-7dtd .copy-btn, body.theme-7dtd .lang-select-box { 
-    background: #8b0000 !important; 
-    color: #ffffff !important; 
-    border: 1px solid #ff3333 !important; 
-}
-body.theme-7dtd .copy-btn:hover, body.theme-7dtd .lang-select-box:hover { 
-    background: #ff3333 !important; 
-    box-shadow: 0 0 8px #ff3333 !important; 
-}
-body.theme-7dtd .medieval-nav { 
-    border-color: #8b0000 !important; 
-    background: rgba(10, 5, 5, 0.98) !important; 
-}
-body.theme-7dtd .nav-link { color: #ffaaaa !important; }
-body.theme-7dtd .nav-link:hover, body.theme-7dtd .nav-link.active { 
-    background: #8b0000 !important; 
-    color: #ffffff !important; 
-    box-shadow: 0 0 10px #8b0000 !important; 
-}
-body.theme-7dtd .realm-stats-card, body.theme-7dtd .realm-card, body.theme-7dtd .tech-box { 
-    background-color: rgba(12, 6, 6, 0.95) !important; 
-    border: 2px solid #8b0000 !important; 
-    box-shadow: 0 6px 15px rgba(0,0,0,0.9) !important; 
-}
-body.theme-7dtd .realm-title-text, body.theme-7dtd .data-sub-box h5 { 
-    color: #ff5555 !important; 
-}
-body.theme-7dtd .data-sub-box { 
-    border: 1px solid #5c0000 !important; 
-}
-body.theme-7dtd .btn-who-online { 
-    border-color: #ff5555 !important; 
-    color: #ff5555 !important; 
-}
-body.theme-7dtd .btn-who-online:hover { 
-    background: #8b0000 !important; 
-    color: #fff !important; 
-    box-shadow: 0 0 8px #8b0000 !important; 
-}
-body.theme-7dtd .player-name-tag { 
-    background: rgba(60, 10, 10, 0.85) !important; 
-    border-color: #ff3333 !important; 
-}
-body.theme-7dtd .player-time-badge { 
-    background: #ff3333 !important; 
-    color: #fff !important; 
-}
-body.theme-7dtd .player-list-window { 
-    border-color: #8b0000 !important; 
-}
-
