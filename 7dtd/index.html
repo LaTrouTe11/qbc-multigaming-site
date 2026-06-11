@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[QC/FR/CAN] QBC 7 Days to Die | Apocalypse</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .technical-container { display: flex; justify-content: center; gap: 30px; margin-top: 35px; flex-wrap: wrap; }
+        .tech-box { padding: 25px; border-radius: 8px; width: 44%; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body class="lang-fr-mode theme-7dtd">
+<div class="container">
+
+    <!-- SELECTEUR TRADUCTION -->
+    <div class="lang-selector-top">
+        <select class="lang-select-box" onchange="document.body.className = this.value === 'en' ? 'lang-en-mode theme-7dtd' : 'lang-fr-mode theme-7dtd'">
+            <option value="fr">🍁 Français</option>
+            <option value="en">🦅 English</option>
+        </select>
+    </div>
+
+    <h1 class="fr-txt">[QC/FR/CAN] QBC 7 Days to Die | SURVIE | Montreal 2026</h1>
+    <h1 class="en-txt">[QC/FR/CAN] QBC 7 Days to Die | SURVIVAL | Montreal 2026</h1>
+
+    <!-- BARRE DE NAVIGATION APOCALYPSE AVEC DISCORD -->
+    <div class="medieval-nav">
+        <a href="../index.html" class="nav-link fr-txt">🏡 Portail</a>
+        <a href="../index.html" class="nav-link en-txt">🏡 Portal</a>
+        <a href="index.html" class="nav-link active fr-txt">🧟 Survie</a>
+        <a href="index.html" class="nav-link active en-txt">🧟 Survival</a>
+        <a href="../wurm/index.html" class="nav-link fr-txt" style="color: #ffcc00;">🛡️ Wurm Unlimited</a>
+        <a href="../wurm/index.html" class="nav-link en-txt" style="color: #ffcc00;">🛡️ Wurm Unlimited</a>
+        <a href="https://discord.gg" target="_blank" class="nav-link" style="color: #7289da; text-shadow: 0 0 5px #7289da;">💬 Discord</a>
+    </div>
+
+    <!-- PANNEAU DE CONTROLE INTERACTIF - STATS SERVEUR 7DTD -->
+    <div class="cluster-stats-box">
+        <div id="card-7dtd" class="realm-stats-card online-border">
+            <div class="realm-stats-header">
+                <span class="realm-title-text">☣️ Zone No-Man's Land</span>
+                <div id="status-7dtd" style="display: flex; align-items: center;">
+                    <span class="led-indicator led-green"></span> <span style="color:#00ff00; text-shadow: 0 0 5px #00ff00;">ONLINE</span>
+                </div>
+            </div>
+            <div class="realm-grid-data">
+                <div class="data-sub-box">
+                    <h5 class="fr-txt">Survivants</h5>
+                    <h5 class="en-txt">Survivors</h5>
+                    <div id="players-7dtd" class="data-sub-value">0 / 40</div>
+                </div>
+                <div class="data-sub-box">
+                    <h5 class="fr-txt">Journée</h5>
+                    <h5 class="en-txt">Current Day</h5>
+                    <div id="day-7dtd" class="data-sub-value" style="color: #ff3333;">Jour 14</div>
+                </div>
+                <div class="data-sub-box">
+                    <h5 class="fr-txt">Difficulté</h5>
+                    <h5 class="en-txt">Difficulty</h5>
+                    <div id="diff-7dtd" class="data-sub-value" style="font-size: 16px; padding-top: 4px;">Guerrier</div>
+                </div>
+            </div>
+            <button class="btn-who-online" onclick="togglePlayerList()">💬 Qui a survécu ? / Who's online?</button>
+            <div id="window-7dtd" class="player-list-window">
+                <h6 class="fr-txt">Survivants en ligne :</h6>
+                <h6 class="en-txt">Online Survivors:</h6>
+                <div id="list-container-7dtd">
+                    <span style="color: #888; font-style: italic; font-size: 11px;">Aucun survivant actif pour le moment...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRESENTATION ET MOTD DU SERVEUR -->
+    <div class="realm-info-box">
+        <div class="realm-card" style="width: 94%; border-color: #8b0000;">
+            <h3 style="color:#ff3333;">☣️ QBC Apocalypse Center</h3>
+            <p class="fr-txt">Bienvenue sur l'extension 7 Days to Die du cluster QBC. Un serveur de survie hardcore mais équilibré, hébergé sur une machine dédiée à Montréal pour vous garantir le meilleur ping possible.</p>
+            <p class="en-txt">Welcome to the 7 Days to Die extension of the QBC cluster. A hardcore yet balanced survival server, hosted on a dedicated machine in Montreal to ensure the lowest latency.</p>
+            
+            <div style="margin-top: 15px; padding: 12px; background: rgba(139, 0, 0, 0.1); border-left: 3px solid #8b0000; font-family: 'Georgia', serif; font-size: 13px; line-height: 1.5; color: #ffaaaa;">
+                <span class="fr-txt">📜 <strong>MOTD :</strong> ATTENTION À LA LUNE DE SANG !<br>--------------------------------------------------<br>• <strong>[LOOT]</strong> Taux de butin fixé à x1.5 pour encourager l'exploration !<br>• <strong>[ZOMBIES]</strong> Vitesse augmentée la nuit. Soyez barricadés avant 22h00 !<br>• <strong>[CLAIM]</strong> Revendication de terrain active (Taille : 41x41 blocs protégés) !</span>
+                <span class="en-txt">📜 <strong>MOTD :</strong> BEWARE OF THE BLOOD MOON!<br>--------------------------------------------------<br>• <strong>[LOOT]</strong> Loot abundance locked at x1.5 parameters to encourage exploration!<br>• <strong>[ZOMBIES]</strong> Night speed parameters enhanced. Be fully fortified before 22:00!<br>• <strong>[CLAIM]</strong> Land claim blocks enabled (Size: 41x41 protected cubical zones)!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACCÈS RÉSEAU VS REGLAGES DE SURVIE -->
+    <div class="technical-container">
+        <div class="tech-box">
+            <h3 class="fr-txt">🌐 ACCÈS AU RECOIN</h3>
+            <h3 class="en-txt">🌐 SERVER NETWORK ACCESS</h3>
+            <ul>
+                <li><strong>Hostname :</strong> [QC/FR/CAN] QBC Apocalypse | Montreal 2026</li>
+                <li>
+                    <strong>☣️ IP Serveur :</strong> <span id="ip-7dtd-text">104.243.40.52:26900</span>
+                    <button class="copy-btn fr-txt" onclick="navigator.clipboard.writeText('104.243.40.52:26900'); alert('L\'adresse IP de 7DTD a été copiée !');">📋 Copier</button>
+                    <button class="copy-btn en-txt" onclick="navigator.clipboard.writeText('104.243.40.52:26900'); alert('7DTD IP address copied successfully!');">📋 Copy</button>
+                </li>
+                <li><strong>Ports Connexion :</strong> Game: 26900 | Query: 26902</li>
+                <li><strong>Taille de la Carte :</strong> 8192 x 8192 (Génération Custom RWG)</li>
+                <li><strong>Location Physique :</strong> Canada, Québec, Montréal</li>
+            </ul>
+        </div>
+
+        <div class="tech-box">
+            <h3 class="fr-txt">💀 PARAMÈTRES DE LA PARTIE</h3>
+            <h3 class="en-txt">💀 GAMEPLAY CONFIGURATIONS</h3>
+            <ul class="fr-txt">
+                <li><strong>Durée du jour :</strong> 60 minutes réelles par cycle de 24 heures en jeu</li>
+                <li><strong>Heures de jour :</strong> 18 heures de lumière (Zombies lents de 04h00 à 22h00)</li>
+                <li><strong>Perte à la mort :</strong> Sac à dos uniquement (Votre ceinture est sécurisée)</li>
+                <li><strong>Fréquence des Hordes :</strong> Tous les 7 jours stricts (Alerte lune rouge active)</li>
+                <li><strong>Reboot Maintenance :</strong> Tous les jours automatiquement à 04h30 AM</li>
+            </ul>
+            <ul class="en-txt">
+                <li><strong>Day Light Length :</strong> 60 real minutes per full 24-hour in-game cycle</li>
+                <li><strong>Daylight Hours :</strong> 18 hours thresholds (Zombies walk from 04:00 to 22:00)</li>
+                <li><strong>Drop on Death :</strong> Backpack only parameters (Your toolbelt is fully secured)</li>
+                <li><strong>Blood Moon Frequency :</strong> Every 7 flat days (Red moon notifications active)</li>
+                <li><strong>Automated Maintenance :</strong> Daily routine server reboot at 04:30 AM</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePlayerList() {
+    const el = document.getElementById('window-7dtd');
+    el.style.display = (el.style.display === "block") ? "none" : "block";
+}
+
+function refresh7DaysNetwork() {
+    // Si vous installez un outil de LiveMap ou Web-API pour 7DTD à l'avenir,
+    // ce script pourra lire le fichier JSON de la même manière que pour Wurm.
+    const container = document.getElementById('list-container-7dtd');
+    
+    // Exemple d'affichage en simulation propre
+    const mockPlayers = ["Survivant_QC", "LaTrouTe"];
+    
+    if(mockPlayers.length > 0) {
+        document.getElementById('players-7dtd').innerText = mockPlayers.length + " / 40";
+        container.innerHTML = mockPlayers.map(p => 
+            `<span class="player-name-tag">☣️ ${p} <span class="player-time-badge">⏳ En Vie</span></span>`
+        ).join('');
+    } else {
+        document.getElementById('players-7dtd').innerText = "0 / 40";
+        container.innerHTML = '<span style="color: #aaa; font-style: italic; font-size: 11px;">Aucun survivant en ligne actuellement.</span>';
+    }
+}
+
+// Lancement automatique au chargement
+refresh7DaysNetwork();
+</script>
+</body>
+</html>
