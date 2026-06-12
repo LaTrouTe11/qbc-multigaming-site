@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[AVORION] QBC Cyber-Space | Fiche Technique</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* --- DESIGN GALACTIQUE CYAN & ESPACE PROFOND --- */
+        body { background-color: #02050a !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
+        
+        .avorion-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #005f73; padding-bottom: 20px; }
+        .avorion-title { color: #00f0ff; text-shadow: 0 0 12px rgba(0,240,255,0.5); font-family: 'Courier New', Courier, monospace; letter-spacing: 2px; margin-bottom: 5px; font-size: 30px; font-weight: bold; }
+        
+        /* COMMUTATEUR DE LANGUE HAUT DROITE */
+        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
+        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #005f73; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
+        .lang-btn:hover { border-color: #00f0ff; color: #fff; }
+        .lang-btn.active-lang { background: #00f0ff; color: #000; border-color: #00f0ff; box-shadow: 0 0 8px rgba(0,240,255,0.4); }
+        
+        /* MASQUAGE DE LANGUE */
+        .lang-en { display: none; }
+        
+        /* GRILLE DE FORCE ET ANTI-ÉTIREMENT */
+        .avorion-grid-info { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
+        .avorion-spec-box { background: linear-gradient(135deg, #020b14 0%, #01050a 100%); border: 2px solid #005f73; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.9); }
+        .avorion-spec-box h3 { color: #00f0ff; margin-top: 0; font-size: 18px; text-transform: uppercase; border-bottom: 1px dashed #005f73; padding-bottom: 8px; margin-bottom: 15px; font-family: 'Courier New', Courier, monospace; font-weight: bold; }
+        
+        /* ALIGNEMENT DES CONFIGURATIONS SPATIALES */
+        .spec-line { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 4px; }
+        .spec-label { color: #8ecae6; font-weight: bold; text-transform: uppercase; font-size: 12px; }
+        .spec-value { color: #fff; font-weight: bold; }
+        .spec-value.highlight { color: #00f0ff; text-shadow: 0 0 5px rgba(0,240,255,0.3); }
+        
+        /* BOÎTES DE REDIRECTION CROISÉE VERS WURM / 7DTD */
+        .cross-link-box { background: rgba(0, 0, 0, 0.5); border: 1px solid #333; border-radius: 6px; padding: 12px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .cross-title { font-weight: bold; font-size: 13px; }
+        .cross-btn { background: #333; color: #fff; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 4px; text-decoration: none; text-transform: uppercase; }
+        .cross-btn:hover { background: #fff; color: #000; }
+        
+        /* BOUTONS ACTIONS */
+        .back-btn { display: inline-block; background: transparent; color: #00f0ff; border: 1px solid #00f0ff; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
+        .back-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 15px #00f0ff; }
+        .lang-split { display: block; margin-top: 3px; color: #aaa; font-style: italic; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="lang-selector-container">
+    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
+    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
+</div>
+
+<div class="avorion-header">
+    <h1 class="avorion-title">🌌 Univers Avorion Cyber-Space</h1>
+    <p style="margin: 0; font-size: 14px; color: #8ecae6; font-style: italic; text-align: center;">
+        <span class="lang-fr">Spécifications des secteurs et règlements du réseau spatial QBC.</span>
+        <span class="lang-en">Sector specifications and rules for the QBC space network.</span>
+    </p>
+</div>
+<div class="avorion-grid-info">
+    <!-- ==========================================
+         🚀 FICHE UNIQUE : QBC VOID-SECTORS ALPHA
+         ========================================== -->
+    <div class="avorion-spec-box" style="width: 100% !important; max-width: 600px; margin: 0 auto !important;">
+        <h3 class="lang-fr">🚀 Secteur : Void-Sectors Alpha</h3>
+        <h3 class="lang-en">🚀 Sector: Void-Sectors Alpha</h3>
+        
+        <div class="spec-line">
+            <span class="spec-label">Mode :</span>
+            <span class="spec-value">PvE (Exploration & Commerce)</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Difficulty / Difficulté :</span>
+            <span class="spec-value">Normal (Standard Space)</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Collision Damage :</span>
+            <span class="spec-value highlight">0.2x (Réduit / Reduced)</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Steam Query Port :</span>
+            <span class="spec-value highlight">25598</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Max Players :</span>
+            <span class="spec-value">50 Pilotes / Pilots</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Hébergeur / Host :</span>
+            <span class="spec-value">Montréal (Kinetic Hosting)</span>
+        </div>
+
+        <p style="font-size: 13px; color: #ccc; text-align: left; margin: 15px 0; line-height: 1.5;">
+            <span class="lang-fr">Secteur Alpha dédié à la construction de flottes de croiseurs, à l'établissement de stations de commerce et à la guerre contre les factions IA.</span>
+            <span class="lang-en">Alpha sector dedicated to fleet cruiser construction, establishing trade stations, and wars against AI factions.</span>
+        </p>
+
+        <!-- ==========================================
+             🔄 DETAILS PRECIS DES AUTRES UNIVERS (REDIRECTION)
+             ========================================== -->
+        <div style="margin-top: 25px; border-top: 1px dashed #005f73; padding-top: 15px;">
+            <h4 style="color:#8ecae6; font-size:12px; text-transform:uppercase; margin-bottom:10px; font-family:'Courier New'; font-weight:bold; letter-spacing:1px;">
+                <span class="lang-fr">🔍 Voir les détails des autres mondes :</span>
+                <span class="lang-en">🔍 View other worlds specifications:</span>
+            </h4>
+
+            <!-- Lien croisé vers l'univers Wurm -->
+            <div class="cross-link-box">
+                <div style="text-align:left;">
+                    <span class="cross-title" style="color:#ffcc00;">⚔️ Univers Wurm Unlimited</span>
+                    <span style="display:block; font-size:11px; color:#aaa;">Royaumes Flaggard & Doriath PvE</span>
+                </div>
+                <a href="../wurm/index.html" class="cross-btn" style="border: 1px solid #ffcc00; color:#ffcc00;">Détails</a>
+            </div>
+
+            <!-- Lien croisé vers l'univers 7 Days to Die -->
+            <div class="cross-link-box">
+                <div style="text-align:left;">
+                    <span class="cross-title" style="color:#ff1111;">💀 Univers 7 Days To Die Apocalypse</span>
+                    <span style="display:block; font-size:11px; color:#aaa;">Serveurs ProjectZ & New Mods PVE</span>
+                </div>
+                <a href="../7DaystoDie/index.html" class="cross-btn" style="border: 1px solid #ff1111; color:#ff1111;">Détails</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 20px;">
+    <!-- Bouton de retour rapide vers l'accueil principal -->
+    <a href="../index.html" class="back-btn">
+        <span class="lang-fr">⬅️ Retour au Portail</span>
+        <span class="lang-en">⬅️ Back to Portal</span>
+    </a>
+</div>
+
+<script>
+    // --- MOTEUR DE SELECTION DE LANGUE INTERACTIF ---
+    function changerLangue(langue) {
+        const elFr = document.querySelectorAll('.lang-fr');
+        const elEn = document.querySelectorAll('.lang-en');
+        const boutons = document.querySelectorAll('.lang-btn');
+        boutons.forEach(b => b.classList.remove('active-lang'));
+        
+        if (langue === 'fr') {
+            elFr.forEach(e => e.style.display = 'block');
+            elEn.forEach(e => e.style.display = 'none');
+            document.getElementById('btn-fr').classList.add('active-lang');
+        } else {
+            elFr.forEach(e => e.style.display = 'none');
+            elEn.forEach(e => e.style.display = 'block');
+            document.getElementById('id-btn-en').classList.add('active-lang');
+        }
+    }
+
+    // SÉCURITÉ ACTIVE : Bloque le Clic Droit et la touche F12
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
+        if (e.key === 'F12') { e.preventDefault(); }
+    });
+</script>
+</body>
+</html>

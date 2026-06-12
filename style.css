@@ -1,115 +1,100 @@
 /* ==============================================================================
-   👑 CONFIGURATION GENERALE PARTAGÉE & STRUCTURE DE BASE
+   👑 QBC FLAGGARD MULTIGAMMING - COMPOSANTS DE BASE (STYLE.CSS)
    ============================================================================== */
-body, html { 
-    min-height: 100vh; /* CORRECTION : Assure que la page fait AU MOINS la taille de l'écran sans s'écraser */
-    margin: 0; 
-    padding: 0; 
-    font-family: 'Georgia', serif; 
-    color: #ffffff; 
-    background-color: #0f0c08; /* Fond sombre de secours pour éviter l'écran blanc */
-    transition: background 0.5s ease;
+
+/* --- RESET & VARIABLES SYSTEME --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    box-sizing: border-box;
 }
-.container { 
-    max-width: 1100px; 
-    margin: 0 auto; 
-    padding: 40px 20px; 
-    display: block !important; /* Force l'affichage structurel */
+
+body {
+    background-color: #060303 !important;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
 }
-h1 { text-align: center; text-shadow: 2px 2px 4px #000; margin-top: 20px; font-size: 28px; text-transform: uppercase; letter-spacing: 1px; }
-h2 { border-bottom: 2px solid #ffcc00; padding-bottom: 5px; margin-top: 35px; text-shadow: 1px 1px 3px #000; font-size: 22px; }
-ul { padding-left: 20px; } li { margin-bottom: 7px; font-size: 15px; }
-a { text-decoration: none; font-weight: bold; transition: 0.2s; } a:hover { text-decoration: underline; color: #fff; }
 
-/* --- BOITES DE CONTENU STYLE PARCHEMIN / APOCALYPSE --- */
-.content-box { background-color: rgba(20, 20, 20, 0.88); padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); border: 1px solid #3e2f15; }
-.content-parchment { background: rgba(18, 14, 8, 0.94); border: 3px double #ffcc00; padding: 30px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
-
-/* --- GRILLE DU PORTAIL (WURM & 7DTD) --- */
-.portal-container { 
-    display: flex !important; 
-    justify-content: center; 
-    gap: 40px; 
-    margin-top: 60px; 
-    flex-wrap: wrap; 
+/* --- CONTENEUR CENTRAL DU SITE --- */
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
 }
-.portal-card { 
-    background: rgba(15, 12, 8, 0.95); 
-    border: 2px solid #b38f00; 
-    border-radius: 10px; 
-    padding: 40px 25px; 
-    width: 340px; 
-    text-align: center; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.7); 
-    transition: transform 0.3s ease, box-shadow 0 3px 15px rgba(255,204,0,0.2); 
+
+/* --- TITRE DE BIENVENUE PRINCIPAL --- */
+h1 {
+    font-size: 32px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
 }
-.portal-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255,204,0,0.4); border-color: #ffcc00; }
-.portal-btn { display: inline-block; background: #ffcc00; color: #000; padding: 12px 30px; font-weight: bold; text-transform: uppercase; border-radius: 5px; margin-top: 25px; font-size: 14px; letter-spacing: 0.5px; transition: 0.2s; text-decoration: none; }
-.portal-btn:hover { background: #fff; box-shadow: 0 0 12px #ffcc00; }
 
-/* ==============================================================================
-   ⚔️ BARRE DE NAVIGATION MEDIEVALE / SURVIE (NAVBAR)
-   ============================================================================== */
-.medieval-nav { display: flex; justify-content: center; background: rgba(15, 15, 15, 0.95); border: 2px solid #ffcc00; padding: 8px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.8); border-radius: 5px; flex-wrap: wrap; }
-.nav-link { color: #e6c280; text-decoration: none; padding: 12px 25px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; font-size: 14px; }
-.nav-link:hover, .nav-link.active { background: #ffcc00; color: #000000; box-shadow: 0 0 8px #ffcc00; font-weight: bold; }
+/* --- CONFIGURATION DES LIENS GENERIQUES --- */
+a {
+    text-decoration: none;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
 
-/* ==============================================================================
-   🛡️ PANNEAUX DE STATISTIQUES DES SERVEURS (BLOCS COMPTEURS)
-   ============================================================================== */
-.cluster-stats-box { display: flex; justify-content: center; gap: 25px; margin: 25px 0; flex-wrap: wrap; }
-.realm-stats-card { background-color: rgba(15, 12, 8, 0.93); border: 2px solid #b38f00; border-radius: 8px; padding: 20px; width: 480px; box-shadow: 0 6px 15px rgba(0,0,0,0.7); transition: 0.3s; }
+a:hover {
+    transform: translateY(-2px);
+}/* --- PARAGRAPHES ET SOUS-TITRES DE BIENVENUE --- */
+p {
+    font-size: 15px;
+    color: #e6c280;
+    margin-bottom: 25px;
+}
 
-.realm-stats-card.online-border { border-color: #00ff00 !important; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3) !important; }
-.realm-stats-card.offline-border { border-color: #ff0000 !important; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3) !important; }
-.realm-stats-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #594418; padding-bottom: 10px; margin-bottom: 15px; }
-.realm-title-text { font-size: 18px; font-weight: bold; color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; }
+/* --- STRUCTURE TECHNIQUE DES TEXTES BILINGUES --- */
+.lang-split {
+    display: block;
+    margin-top: 4px;
+    color: #aaaaaa;
+    font-style: italic;
+    font-size: 12px;
+    text-transform: none;
+    font-family: sans-serif;
+    text-shadow: none;
+    letter-spacing: 0;
+    font-weight: normal;
+}
 
-.realm-grid-data { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.data-sub-box { background: rgba(0, 0, 0, 0.5); padding: 12px 8px; border-radius: 4px; text-align: center; border: 1px solid #3a2f15; }
-.data-sub-box h5 { margin: 0 0 6px 0; color: #e6c280; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-.data-sub-value { font-size: 20px; font-weight: bold; color: #ffffff; }
+/* --- EFFETS DE SÉLECTION DE TEXTE --- */
+::-moz-selection {
+    background: #ffcc00;
+    color: #000000;
+}
 
-.led-indicator { width: 12px; height: 12px; border-radius: 50px; display: inline-block; vertical-align: middle; margin-right: 6px; }
-.led-green { background-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
-.led-red { background-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
+::selection {
+    background: #ffcc00;
+    color: #000000;
+}
 
-/* ==============================================================================
-   💬 FENÊTRES EXTENSIBLES "QUI EST EN LIGNE"
-   ============================================================================== */
-.player-list-window { display: none; margin-top: 15px; padding: 12px; background: rgba(0, 0, 0, 0.85); border: 1px solid #594418; border-radius: 4px; max-height: 120px; overflow-y: auto; text-align: left; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
-.player-list-window h6 { margin: 0 0 8px 0; color: #ffcc00; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(89, 68, 24, 0.5); padding-bottom: 4px; }
-.player-name-tag { display: inline-flex; align-items: center; gap: 5px; background: rgba(40, 30, 15, 0.85); color: #fff; padding: 4px 10px; margin: 4px; border-radius: 4px; font-size: 12px; border: 1px solid #ffcc00; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-.player-time-badge { background: #ffcc00; color: #000; font-size: 10px; padding: 1px 4px; border-radius: 3px; margin-left: 4px; }
-.btn-who-online { background: rgba(30, 25, 15, 0.6); border: 1px solid #e6c280; color: #e6c280; padding: 6px 12px; font-size: 12px; cursor: pointer; border-radius: 4px; margin-top: 15px; width: 100%; transition: all 0.2s ease; text-transform: uppercase; font-weight: bold; }
-.btn-who-online:hover { background: #e6c280; color: #000; box-shadow: 0 0 8px #e6c280; }
+/* --- AJUSTEMENT DES LISTES ET PUCES --- */
+ul, ol {
+    list-style-position: inside;
+}
 
-/* ==============================================================================
-   🌐 MULTILINGUE & CONFIGURATIONS CASIER TECHNIQUE
-   ============================================================================== */
-.lang-selector-top { text-align: right; margin-bottom: 15px; }
-.lang-select-box, .lang-box { background: #000; color: #ffcc00; border: 1px solid #ffcc00; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-.lang-select-box:hover { background: #111; border-color: #fff; }
-body.lang-fr-mode .en-txt { display: none !important; }
-body.lang-en-mode .fr-txt { display: none !important; }
+li {
+    outline: none;
+}
 
-.realm-info-box { display: flex; justify-content: center; gap: 30px; margin-top: 30px; flex-wrap: wrap; }
-.realm-card { background: rgba(20, 16, 11, 0.92); border: 2px dashed #b38f00; padding: 22px; border-radius: 6px; width: 44%; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
-.realm-card h3 { margin-top: 0; padding-bottom: 6px; border-bottom: 1px solid #594418; font-size: 18px; letter-spacing: 0.5px; }
-.realm-card p { font-size: 14px; line-height: 1.5; color: #eee; }
+/* --- RECOUVREMENT DES EFFETS DE FOCUS --- */
+button:focus, a:focus {
+    outline: none;
+}
 
-/* ==============================================================================
-   🛠️ ETABLI TECHNIQUE DU BAS
-   ============================================================================== */
-.technical-container { display: flex; justify-content: center; gap: 30px; margin-top: 35px; flex-wrap: wrap; }
-.tech-box { background-color: rgba(18, 15, 12, 0.9); border: 2px solid #594418; padding: 25px; border-radius: 8px; width: 44%; box-shadow: 0 5px 15px rgba(0,0,0,0.6); }
-.tech-box h3 { color: #ffcc00; margin-top: 0; border-bottom: 1px solid #594418; padding-bottom: 10px; text-transform: uppercase; font-size: 15px; letter-spacing: 1px; }
-.tech-box ul { list-style-type: diamond; color: #ddd; }
-.tech-box li { font-size: 14px; margin-bottom: 8px; }
-.copy-btn { background: #ffcc00; color: #000; border: none; padding: 4px 10px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-left: 8px; font-size: 11px; transition: 0.2s; box-shadow: 0 1px 3px #000; }
-.copy-btn:hover { background: #fff; box-shadow: 0 0 5px #ffcc00; }
 
-.eco-box { background: rgba(10, 25, 30, 0.9) !important; border: 2px solid #2a6f97 !important; box-shadow: 0 0 15px rgba(42, 111, 151, 0.4) !important; width: 94% !important; margin-top: 25px; }
-.eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 15px; }
-.eco-item { background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 4px; border-left: 3px solid #ffcc00; font-size: 13px; }
-.eco-item span { float: right; font-weight: bold; color: #4ea8de; }
+
+

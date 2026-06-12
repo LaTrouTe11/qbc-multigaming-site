@@ -3,214 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏰 Arsenaux & Extensions | QBC Flaggard</title>
-    <link rel="stylesheet" href="style.css">
+    <title>[WURM] Extensions & Votes | QBC Flaggard Backup</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* --- LOOK ULTRA MODERNE NÉON DORÉ --- */
+        body { background-color: #0c0905 !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
+        
+        .mods-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #594418; padding-bottom: 20px; }
+        .mods-title { color: #ffcc00; text-shadow: 0 0 12px rgba(255,204,0,0.4); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+        
+        /* BOÎTE COMMUTATION LANGUE HAUT DROITE */
+        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
+        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #443313; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
+        .lang-btn:hover { border-color: #ffcc00; color: #fff; }
+        .lang-btn.active-lang { background: #ffcc00; color: #000; border-color: #ffcc00; box-shadow: 0 0 8px rgba(255,204,0,0.3); }
+        
+        /* LANGUE CACHÉE */
+        .lang-en { display: none; }
+        
+        /* GRILLE HORIZONTALE STRUCTURÉE (ANTI-ÉTIREMENT) */
+        .wurm-grid-mods { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
+        .wurm-mod-box { background: rgba(22, 17, 11, 0.96); border: 2px solid #594418; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+        .wurm-mod-box h3 { color: #ffcc00; margin-top: 0; font-size: 17px; text-transform: uppercase; border-bottom: 1px dashed #594418; padding-bottom: 8px; margin-bottom: 15px; }
+        
+        /* STYLISATION DES LIENS DE VOTE & BACKUP */
+        .vote-link-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid #ffcc00; }
+        .vote-btn-action { background: #ffcc00; color: #000; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 3px; text-transform: uppercase; text-decoration: none; }
+        .vote-btn-action:hover { background: #fff; box-shadow: 0 0 10px #ffcc00; }
+        
+        /* LISTE DES MODS GRAPHIK */
+        .mod-list-ul { padding-left: 20px; margin: 0; }
+        .mod-list-ul li { margin-bottom: 8px; font-size: 13px; color: #ddd; }
+        .mod-highlight-text { color: #ffcc00; font-weight: bold; }
+        
+        .back-btn { display: inline-block; background: transparent; color: #ffcc00; border: 1px solid #ffcc00; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
+        .back-btn:hover { background: #ffcc00; color: #000; box-shadow: 0 0 15px #ffcc00; }
+    </style>
 </head>
-<body class="lang-fr-mode">
-<div class="container">
+<body>
 
-    <div class="lang-selector-top">
-        <select class="lang-select-box" onchange="document.body.className = this.value === 'en' ? 'lang-en-mode' : 'lang-fr-mode'">
-            <option value="fr">🍁 Français (Par défaut)</option>
-            <option value="en">🦅 English (Bilingual)</option>
-        </select>
-    </div>
+<!-- COMMUTATEUR DE LANGUE -->
+<div class="lang-selector-container">
+    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
+    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
+</div>
 
-    <h1 class="fr-txt">⚔️ ARSENAL DES EXTENSIONS ET MODS ACTIFS</h1>
-    <h1 class="en-txt">⚔️ ARSENAL OF ACTIVE EXTENSIONS AND MODS</h1>
+<div class="mods-header">
+    <h1 class="mods-title">📦 Extensions & Modules Réseau / Cluster Backup</h1>
+    <p style="margin: 0; font-size: 14px; color: #b38f00; font-style: italic; text-align: center;">
+        <span class="lang-fr">Liens de vote quotidiens, récompenses de vote actives et archives de sécurité.</span>
+        <span class="lang-en">Daily voting links, active vote rewards and structural security archives.</span>
+    </p>
+</div>
+<div class="wurm-grid-mods">
+    <!-- ==========================================
+         🗳️ SECTION 1 : VOTE REWARDS & SYSTEMES (DORIATH & FLAGGARD)
+         ========================================== -->
+    <div class="wurm-mod-box">
+        <h3 class="lang-fr">🗳️ Liens de Votes Officiels</h3>
+        <h3 class="lang-en">🗳️ Official Voting Links</h3>
+        
+        <p style="font-size: 13px; color: #bbb; margin-bottom: 15px; text-align: left;">
+            <span class="lang-fr">Votez quotidiennement pour faire grimper le cluster dans le classement et débloquer vos récompenses **VoteReward** (Monnaies de cuivre et bonus d'action) directement en jeu sur le serveur Doriath.</span>
+            <span class="lang-en">Vote daily to increase the cluster ranking and unlock your **VoteReward** rewards (Copper coins and action speed boosts) directly in-game on the Doriath server.</span>
+        </p>
 
-    <div class="medieval-nav">
-        <a href="index.html" class="nav-link fr-txt">🏡 Forteresse</a><a href="index.html" class="nav-link en-txt">🏡 Fortress</a>
-        <a href="mods.html" class="nav-link active fr-txt">🛠️ Arsenaux / Mods</a><a href="mods.html" class="nav-link active en-txt">🛠️ Arsenals / Mods</a>
-        <a href="vote.html" class="nav-link fr-txt">🗳️ Offrandes / Vote</a><a href="vote.html" class="nav-link en-txt">🗳️ Offerings / Vote</a>
-    </div>
+        <!-- Vote Lien 1 -->
+        <div class="vote-link-item">
+            <div style="text-align: left;">
+                <span style="font-weight: bold; font-size: 13px; color: #fff;">Wurm-Unlimited-Servers</span>
+                <span style="display:block; font-size:11px; color:#aaa;">Vote #1 (Doriath Linked)</span>
+            </div>
+            <a href="https://wurm-unlimited-servers.net" target="_blank" class="vote-btn-action">Vote</a>
+        </div>
 
-    <div class="realm-info-box" style="margin-bottom: 25px;">
-        <div class="realm-card" style="width:100%; text-align:center; border: 2px solid #ffcc00; background: rgba(15,11,5,0.9);">
-            <p class="fr-txt" style="font-size:16px; font-style:italic; margin:0; color:#ffcc00;">💡 Ouvrez les coffres ci-dessous en survolant les composants pour révéler leurs propriétés secrètes.</p>
-            <p class="en-txt" style="font-size:16px; font-style:italic; margin:0; color:#ffcc00;">💡 Open the chests below by hovering over components to reveal their secret properties.</p>
+        <!-- Vote Lien 2 -->
+        <div class="vote-link-item">
+            <div style="text-align: left;">
+                <span style="font-weight: bold; font-size: 13px; color: #fff;">Top-G Gaming List</span>
+                <span style="display:block; font-size:11px; color:#aaa;">Vote #2 (Cluster Ranking)</span>
+            </div>
+            <a href="https://topg.org" target="_blank" class="vote-btn-action">Vote</a>
+        </div>
+
+        <!-- Vote Lien 3 -->
+        <div class="vote-link-item">
+            <div style="text-align: left;">
+                <span style="font-weight: bold; font-size: 13px; color: #fff;">Arena Server Tracker</span>
+                <span style="display:block; font-size:11px; color:#aaa;">Vote #3 (Backup Vote)</span>
+            </div>
+            <a href="https://tracker-servers.com" target="_blank" class="vote-btn-action">Vote</a>
         </div>
     </div>
 
-    <div class="content-box" style="background: rgba(15,12,8,0.93); border: 2px double #ffcc00;">
-        <ul class="mods-grid">
-            <li class="mod-element">AdaAndGlimmerRods<div class="mod-info-card"><div class="desc-fr">Canne a peche magique forgee en Adamantine et Glimmer pour les poissons geants.</div><div class="desc-en">Magical fishing rods crafted from Adamantine and Glimmer for giant sea fauna.</div></div></li>
-            <li class="mod-element">AddKingdomItems<div class="mod-info-card"><div class="desc-fr">Bannieres royales, tapis volants et chariots d apparat craftables pour votre cite.</div><div class="desc-en">Craftable custom PMK flags, decorative banners, and royal transport wagons.</div></div></li>
-            <li class="mod-element">AddMissionItems<div class="mod-info-card"><div class="desc-fr">Objets sacres uniques injectes pour accomplir les grandes quetes des dieux.</div><div class="desc-en">Unique holy items required to fulfill high-tier deity and empire missions.</div></div></li>
-            <li class="mod-element">AffinityFixer<div class="mod-info-card"><div class="desc-fr">Echange et convertit automatiquement vos affinites PvP inutiles en bonus PvE stables.</div><div class="desc-en">Automatically converts useless PvP combat affinities into valuable PvE buffs.</div></div></li>
-            <li class="mod-element">alchemy<div class="mod-info-card"><div class="desc-fr">Ameliore grandement les recettes, la vitesse de mixage et l impact des potions.</div><div class="desc-en">Greatly enhances recipe multipliers, mixing speeds, and combat potion effects.</div></div></li>
-            <li class="mod-element">announcer<div class="mod-info-card"><div class="desc-fr">Alerte l ensemble du serveur lors de la connexion ou deconnexion d un citoyen.</div><div class="desc-en">Broadcasts global server-wide notifications when a player logs in or out.</div></div></li>
-            <li class="mod-element">AntiMycelium<div class="mod-info-card"><div class="desc-fr">Haltes et bloque la propagation sauvage de la terre corrompue de Libila.</div><div class="desc-en">Completely prevents the natural spreading of Libila's evil mycelium grass.</div></div></li>
-            <li class="mod-element">archeotweaks<div class="mod-info-card"><div class="desc-fr">Ajuste la vitesse de recherche et augmente la qualite des reliques antiques.</div><div class="desc-en">Balances discovery speed and drastically improves ancient relic fragment quality.</div></div></li>
-            <li class="mod-element">Archery<div class="mod-info-card"><div class="desc-fr">Ameliore la distance de tir, la physique des fleches et les degats des arcs.</div><div class="desc-en">Improves arrow trajectory, bow range capabilities, and physical damage.</div></div></li>
-            <li class="mod-element">ArmourStands<div class="mod-info-card"><div class="desc-fr">Supports en bois placables pour exposer vos ensembles d armures de plates completes.</div><div class="desc-en">Wooden display stands to exhibit your legendary custom metal armor sets.</div></div></li>
-            <li class="mod-element">Armoury<div class="mod-info-card"><div class="desc-fr">Ajoute de nouvelles variantes d armes medievales visuelles au catalogue de forge.</div><div class="desc-en">Introduces additional historical weapons and visual variants to smithing recipes.</div></div></li>
-            <li class="mod-element">AshProduce<div class="mod-info-card"><div class="desc-fr">Les feux de camp et forges generent de la cendre utilisable comme engrais de ferme.</div><div class="desc-en">Campfires and ovens yield ash components to use as high-grade soil fertilizer.</div></div></li>
-            <li class="mod-element">bagofholding<div class="mod-info-card"><div class="desc-fr">Sac de confinement dimensionnel magique qui multiplie le volume de charge.</div><div class="desc-en">Magical pocket dimension bags that scale up maximum container space limits.</div></div></li>
-            <li class="mod-element">banker<div class="mod-info-card"><div class="desc-fr">Invoque des marchands banquiers au village pour securiser vos coffres-forts.</div><div class="desc-en">Spawns local settlement bank brokers to interact with your crown coins.</div></div></li>
-            <li class="mod-element">Bardings<div class="mod-info-card"><div class="desc-fr">Lourdes protections de mailles et caparaons pour vos chevaux de guerre.</div><div class="desc-en">Heavy chainmail and protective medieval armor sets for your combat mounts.</div></div></li>
-            <li class="mod-element">bdew_server_mod_tools<div class="mod-info-card"><div class="desc-fr">Librairie de developpement requise pour la stabilite globale des extensions.</div><div class="desc-en">Core API developer hooks mandatory for advanced system architecture hooks.</div></div></li>
-            <li class="mod-element">betterdig<div class="mod-info-card"><div class="desc-fr">Terraformation avancee permettant de niveler le sol a la pelle de faon fluide.</div><div class="desc-en">Advanced shoveling mechanics allowing smooth grid dirt leveling tasks.</div></div></li>
-            <li class="mod-element">betterfarm<div class="mod-info-card"><div class="desc-fr">Accelere le labourage des champs et offre une protection anti-pourrissement.</div><div class="desc-en">Speeds up farm tile preparation and protects crops from rotting cycles.</div></div></li>
-            <li class="mod-element">boatmod<div class="mod-info-card"><div class="desc-fr">Les navires se deplacent plus rapidement, peu importe la puissance du vent.</div><div class="desc-en">Boats sail at high speeds regardless of unfavorable ocean wind vectors.</div></div></li>
-            <li class="mod-element">bountymod<div class="mod-info-card"><div class="desc-fr">Distribue directement des pieces de monnaie lors de l elimination des monstres.</div><div class="desc-en">Awards direct coin currency rewards into your inventory upon slaying mobs.</div></div></li>
-            <li class="mod-element">BountyOnBurn<div class="mod-info-card"><div class="desc-fr">Offre du Karma et de l alignement lors de l incineration sacrifielle des corps.</div><div class="desc-en">Grants religious character alignment increments during body burnings.</div></div></li>
-            <li class="mod-element">branchesAndTwigsWithPruning<div class="mod-info-card"><div class="desc-fr">L elagage des arbres donne de grandes quantites de bois d artisanat.</div><div class="desc-en">Pruning trees provides supplementary wood nodes for kindling items.</div></div></li>
-            <li class="mod-element">BuildingSkillMod<div class="mod-info-card"><div class="desc-fr">Reduit les restrictions liees au poids de la pierre pour batir vos chateaux.</div><div class="desc-en">Balances down structural weight limitations during brick masonry builds.</div></div></li>
-            <li class="mod-element">bulkmod<div class="mod-info-card"><div class="desc-fr">Optimise les entrepots et conteneurs de masse pour stocker des milliers d objets.</div><div class="desc-en">Expands large storage bins capacity to hold massive resource nodes.</div></div></li>
-            <li class="mod-element">bulkseparated<div class="mod-info-card"><div class="desc-fr">Separe et classe automatiquement les materiaux bruts de meme categorie.</div><div class="desc-en">Automatically categorizes identical raw industrial elements inside bins.</div></div></li>
-            <li class="mod-element">chestclaim<div class="mod-info-card"><div class="desc-fr">Verrouillage de securite pour privatiser et proteger vos coffres de chateau.</div><div class="desc-en">Secure claims to lock and protect personal fortress chests from theft.</div></div></li>
-            <li class="mod-element">christmasmod<div class="mod-info-card"><div class="desc-fr">Active les evenements hivernaux et la distribution de cadeaux de Noel.</div><div class="desc-en">Activates winter seasonal gifts and holiday empire events.</div></div></li>
-            <li class="mod-element">Coffee<div class="mod-info-card"><div class="desc-fr">Ajoute du cafe cultivable qui redonne instantanement 100% d endurance.</div><div class="desc-en">Grows custom coffee plants giving immediate stamina surges to explorers.</div></div></li>
-            <li class="mod-element">combiner<div class="mod-info-card"><div class="desc-fr">Fusionne les petits fragments de cordes ou cuirs en un seul bloc propre.</div><div class="desc-en">Merges small resource fibers and materials into solid crafting packages.</div></div></li>
-            <li class="mod-element">CookingMod<div class="mod-info-card"><div class="desc-fr">Ameliore la duree des feux de cuisson et boost l impact des epices.</div><div class="desc-en">Balances oven cooking times and custom dietary buff durations.</div></div></li>
-            <li class="mod-element">creatureagemod<div class="mod-info-card"><div class="desc-fr">Permet de voir l age exact et les statistiques de force des animaux.</div><div class="desc-en">Exposes absolute growth tiers and structural statistics of livestock.</div></div></li>
-            <li class="mod-element">cropmod<div class="mod-info-card"><div class="desc-fr">Ajuste les cycles agricoles pour assurer des recoltes toutes les 24h.</div><div class="desc-en">Locks farm tile growths to flat 24-hour cycles for steady farming.</div></div></li>
-            <li class="mod-element">customtrader<div class="mod-info-card"><div class="desc-fr">Marchands exclusifs vendant des outils et equipements de niveau Maitre QL70.</div><div class="desc-en">Custom trade brokers offering premium QL70 master tools and gear.</div></div></li>
-            <li class="mod-element">CustomWagons<div class="mod-info-card"><div class="desc-fr">Chariots lourds et blindes capables de transporter 4 fois plus de volume.</div><div class="desc-en">Heavy wagons configured with quadrupled resource payload capacities.</div></div></li>
-            <li class="mod-element">decorations<div class="mod-info-card"><div class="desc-fr">Meubles, tapis, armoires et tapisseries pour embellir vos interieurs.</div><div class="desc-en">Medieval furniture, carpets, and banners for custom fortress interior design.</div></div></li>
-            <li class="mod-element">deedmaker<div class="mod-info-card"><div class="desc-fr">Permet d etablir des titres de propriete et de fonder des cités sans taxes.</div><div class="desc-en">Allows layout of town deeds with zero purchase fees or coin requirements.</div></div></li>
-            <li class="mod-element">deedmod<div class="mod-info-card"><div class="desc-fr">Reduit le cout d entretien hebdomadaire exige par vos forteresses.</div><div class="desc-en">Reduces weekly upkeep coin drains on registered active kingdoms.</div></div></li>
-            <li class="mod-element">deliverycontracts<div class="mod-info-card"><div class="desc-fr">Systeme de livraison par courrier et contrats instantanes entre joueurs.</div><div class="desc-en">Instant player-to-player delivery post networks and economy logs.</div></div></li>
-            <li class="mod-element">diglikeminingmod<div class="mod-info-card"><div class="desc-fr">Permet de creuser la terre a la pelle avec la vitesse rapide de la mine.</div><div class="desc-en">Speeds up dirt shoveling actions to match fast mining tick speeds.</div></div></li>
-            <li class="mod-element">digtoground<div class="mod-info-card"><div class="desc-fr">Ajuste le depot des tas de terre directement sous vos pieds sans surcharge.</div><div class="desc-en">Dumps dirt piles perfectly flat onto active character ground tiles.</div></div></li>
-            <li class="mod-element">DoubleBulkCapacity<div class="mod-info-card"><div class="desc-fr">Double l espace de stockage interne de tous les grands coffres et caisses.</div><div class="desc-en">Doubles structural item limit counts inside all large bulk crates.</div></div></li>
-            <li class="mod-element">DrakeMountMod<div class="mod-info-card"><div class="desc-fr">Permet de dompter, monter et chevaucher des drakes terrestres rares.</div><div class="desc-en">Enables taming, riding, and breeding of rare flightless dragon drakes.</div></div></li>
-            <li class="mod-element">dungeon<div class="mod-info-card"><div class="desc-fr">Generation avancee permettant de batir des structures souterraines.</div><div class="desc-en">Allows excavation of complex underground structural layers and fortresses.</div></div></li>
-            <li class="mod-element">DyeMaker<div class="mod-info-card"><div class="desc-fr">Permet de fabriquer des teintures et pigments uniques pour vos armures.</div><div class="desc-en">Unlocks chemical blueprints for advanced shield and cloth pigments.</div></div></li>
-            <li class="mod-element">EnhancedChickenCoop<div class="mod-info-card"><div class="desc-fr">Poulaillers isoles protegeant les oeufs contre le pourrissement et les rats.</div><div class="desc-en">Insulated coops preventing egg decay and wildlife vermin theft.</div></div></li>
-            <li class="mod-element">EpicCurve<div class="mod-info-card"><div class="desc-fr">Applique les multiplicateurs de combat dynamiques de l archipel Epic.</div><div class="desc-en">Synchronizes high-tier epic speed modifiers into your combat ticks.</div></div></li>
-            <li class="mod-element">eventmod<div class="mod-info-card"><div class="desc-fr">Declenche des vagues d invasions de monstres pour defendre les royaumes.</div><div class="desc-en">Triggers automated hostile waves across global kingdom settlements.</div></div></li>
-            <li class="mod-element">FireBurnTime<div class="mod-info-card"><div class="desc-fr">Augmente considérablement l autonomie du bois dans les forges et foyers.</div><div class="desc-en">Extends fuel burning efficiencies inside heavy blacksmith furnaces.</div></div></li>
-            <li class="mod-element">fishytweaks<div class="mod-info-card"><div class="desc-fr">Augmente la taille et le poids maximal des poissons en mer profonde.</div><div class="desc-en">Boosts weight and growth variables of deep ocean marine fauna logs.</div></div></li>
-            <li class="mod-element">fixguards<div class="mod-info-card"><div class="desc-fr">Ameliore l intelligence artificielle (IA) et la portee des gardes de ville.</div><div class="desc-en">Fixes targeting scripts and AI pathing for settlement guard defense.</div></div></li>
-            <li class="mod-element">fuelStorage<div class="mod-info-card"><div class="desc-fr">Permet d alimenter automatiquement les forges a partir d un coffre proche.</div><div class="desc-en">Allows furnaces to automatically draw fuel from nearby chests.</div></div></li>
-            <li class="mod-element">halloween<div class="mod-info-card"><div class="desc-fr">Active les evenements de l apocalypse avec monstres d Halloween.</div><div class="desc-en">Activates spooky seasonal events and rare undead monster spawns.</div></div></li>
-            <li class="mod-element">harvesthelper<div class="mod-info-card"><div class="desc-fr">Affiche la saison exacte de recolte des arbres et buissons.</div><div class="desc-en">Displays exact calendar harvesting seasons for orchard trees.</div></div></li>
-            <li class="mod-element">hitchingpost<div class="mod-info-card"><div class="desc-fr">Poteaux d attache pour securiser les chevaux devant les tavernes.</div><div class="desc-en">Hitching posts to lock and secure warhorses outside structures.</div></div></li>
-            <li class="mod-element">hitchlimits<div class="mod-info-card"><div class="desc-fr">Permet d atteler plus d animaux de trait sur les grands chariots.</div><div class="desc-en">Removes restrictions on the maximum animals hitched to wagons.</div></div></li>
-            <li class="mod-element">HMWIMC<div class="mod-info-card"><div class="desc-fr">Affiche la boussole et les coordonnees bilingues sur l interface.</div><div class="desc-en">UI coordinates and clean grid navigation metrics.</div></div></li>
-            <li class="mod-element">hwportals<div class="mod-info-card"><div class="desc-fr">Ajoute des portails magiques reliables sur le reseau des routes.</div><div class="desc-en">Constructs fast-travel highway portals across paved roads.</div></div></li>
-            <li class="mod-item-special flaggard-only mod-element">icons<div class="mod-info-card"><div class="desc-fr">🛡️ EXCLUSIF FLAGGARD : Pack d icones de serveurs medievales HD.</div><div class="desc-en">🛡️ FLAGGARD EXCLUSIVE: HD medieval custom client server icon sets.</div></div></li>
-            <li class="mod-element">Iconzz<div class="mod-info-card"><div class="desc-fr">Ajuste l alignement visuel des competences dans votre inventaire.</div><div class="desc-en">Fixes window icon alignments inside player inventory grids.</div></div></li>
-            <li class="mod-element">inbreedwarning<div class="mod-info-card"><div class="desc-fr">Alerte textuelle rouge si deux animaux d elevage sont consanguins.</div><div class="desc-en">Red text warning if two breeding animals share identical ancestry.</div></div></li>
-            <li class="mod-element">increasemerchantitems<div class="mod-info-card"><div class="desc-fr">Augmente la quantite d objets vendus par les marchands d origine.</div><div class="desc-en">Expands stock capacities for standard base game token traders.</div></div></li>
-            <li class="mod-element">infinitywideentry<div class="mod-info-card"><div class="desc-fr">Permet de batir de grandes portes de chateau sans poteaux.</div><div class="desc-en">Enables building of massive double fortress gates without limits.</div></div></li>
-            <li class="mod-element">Joke<div class="mod-info-card"><div class="desc-fr">Ajoute des commandes amusantes et citations medievales au chat.</div><div class="desc-en">Adds fun roleplay commands and medieval tavern lore to chat.</div></div></li>
-            <li class="mod-element">karmaactions<div class="mod-info-card"><div class="desc-fr">Permet d utiliser vos points de Karma pour vous soigner.</div><div class="desc-en">Unlocks immediate health bursts using character Karma points.</div></div></li>
-            <li class="mod-element">KingdomSails<div class="mod-info-card"><div class="desc-fr">Permet de broder l embleme de votre cite sur les voiles des navires.</div><div class="desc-en">Embroiders custom settlement symbols onto longship sails.</div></div></li>
-            <li class="mod-element">KingdomStuff<div class="mod-info-card"><div class="desc-fr">Ajoute des armures et equipements exclusifs pour vos gardes.</div><div class="desc-en">Introduces unique defensive gear for faction city guards.</div></div></li>
-            <li class="mod-element">LeadMore<div class="mod-info-card"><div class="desc-fr">Permet de guider plus de 2 animaux en laisse en meme temps.</div><div class="desc-en">Allows players to lead multiple farm animals simultaneously.</div></div></li>
-            <li class="mod-element">LoadAltar<div class="mod-info-card"><div class="desc-fr">Permet de deplacer les autels sacres a l aide de gros chariots.</div><div class="desc-en">Enables transportation of heavy holy altars using wagons.</div></div></li>
-            <li class="mod-element">LocationCommand<div class="mod-info-card"><div class="desc-fr">Commande /loc pour verifier vos coordonnees cartographiques.</div><div class="desc-en">Chat command /loc to identify active geographical indexes.</div></div></li>
-            <li class="mod-element">loottables<div class="mod-info-card"><div class="desc-fr">Ameliore le butin des coffres aux tresors et des boss.</div><div class="desc-en">Enhances random drop blueprints inside boss treasure maps.</div></div></li>
-            <li class="mod-element">MarkAndRecall<div class="mod-info-card"><div class="desc-fr">Magie de teleportation pour marquer un point et y revenir.</div><div class="desc-en">Teleportation spell network to mark a spot and recall to it.</div></div></li>
-            <li class="mod-element">meditatemod<div class="mod-info-card"><div class="desc-fr">Supprime le delai d attente restrictif entre les meditations.</div><div class="desc-en">Removes cooldown timers for continuous meditation paths.</div></div></li>
-            <li class="mod-element">MightyMattockMod<div class="mod-info-card"><div class="desc-fr">Ameliore l efficacite de la pioche pour casser la roche rapide.</div><div class="desc-en">Boosts raw pickaxe speed for faster structural mining.</div></div></li>
-            <li class="mod-element">milkreset<div class="mod-info-card"><div class="desc-fr">Permet de traire les vaches deux fois plus souvent par cycle.</div><div class="desc-en">Resets milking timers for optimized dairy farm production.</div></div></li>
-            <li class="mod-element">minipets<div class="mod-info-card"><div class="desc-fr">Ajoute de petits compagnons decoratifs qui vous suivent partout.</div><div class="desc-en">Spawns small custom cosmetic pets that follow your explorer.</div></div></li>
-            <li class="mod-element">ModelMeImpressed<div class="mod-info-card"><div class="desc-fr">Corrige les bugs de chargement 3D des textures de batiments.</div><div class="desc-en">Fixes 3D rendering issues for heavily modded custom blocks.</div></div></li>
-            <li class="mod-element">ModifyGestationPeriod<div class="mod-info-card"><div class="desc-fr">Reduit le temps de grossesse des animaux pour un elevage plus rapide.</div><div class="desc-en">Shortens animal gestation duration for faster breeding.</div></div></li>
-            <li class="mod-element">morecraftables<div class="mod-info-card"><div class="desc-fr">Ajoute des dizaines de nouvelles recettes artisanales.</div><div class="desc-en">Adds dozens of new crafting components to your recipe book.</div></div></li>
-            <li class="mod-element">MorePotables<div class="mod-info-card"><div class="desc-fr">Permet de distiller de nouveaux jus et boissons medievales.</div><div class="desc-en">Unlocks additional brewing and distilling beverage nodes.</div></div></li>
-            <li class="mod-element">movemod<div class="mod-info-card"><div class="desc-fr">Ajuste la vitesse de marche globale selon votre surcharge d inventaire.</div><div class="desc-en">Tweaks character movement limits based on carrying metrics.</div></div></li>
-            <li class="mod-element">movetocenter<div class="mod-info-card"><div class="desc-fr">Aligne parfaitement les objets decoratifs au centre des tuiles.</div><div class="desc-en">Snaps furniture items exactly into the center of housing grids.</div></div></li>
-            <li class="mod-element">nobuildlimit<div class="mod-info-card"><div class="desc-fr">Supprime les restrictions de proximite pour batir vos extensions.</div><div class="desc-en">Removes structural proximity locks for close neighborhood builds.</div></div></li>
-            <li class="mod-element">NoHolyGround<div class="mod-info-card"><div class="desc-fr">Autorise la terraformation et les routes pres des zones sacrees.</div><div class="desc-en">Allows pathing and farming near natural divine altars.</div></div></li>
-            <li class="mod-element">NoMailCost<div class="mod-info-card"><div class="desc-fr">Supprime les taxes sur l envoi de vos colis par boîte aux lettres.</div><div class="desc-en">Removes crown postal fees inside global mailbox system.</div></div></li>
-            <li class="mod-element">NoSaltOrSand<div class="mod-info-card"><div class="desc-fr">Permet de couler du mortier et du beton sans sel ni sable requis.</div><div class="desc-en">Allows masonry mortar mixes without sand or salt nodes.</div></div></li>
-            <li class="mod-element">onetilemining<div class="mod-info-card"><div class="desc-fr">Permet de miner l integralite d une veine de roche sur une seule tuile.</div><div class="desc-en">Allows extraction of complete ore veins from a single node block.</div></div></li>
-            <li class="mod-element">PickMoreSprouts<div class="mod-info-card"><div class="desc-fr">Permet de recuperer plusieurs boutures d arbres d un seul coup.</div><div class="desc-en">Yields multiple botanical tree sprouts during forestry harvesting.</div></div></li>
-            <li class="mod-element">PiggyBank<div class="mod-info-card"><div class="desc-fr">Tirelire personnelle securisee pour ne jamais perdre vos pieces.</div><div class="desc-en">Personal safe box to lock crown gold away from inventory loss.</div></div></li>
-            <li class="mod-element">planters<div class="mod-info-card"><div class="desc-fr">Ajoute des pots de fleurs et jardinieres pour decorer vos balcons.</div><div class="desc-en">Adds placable floral planters and decorative garden structures.</div></div></li>
-            <li class="mod-element">PollSpawner<div class="mod-info-card"><div class="desc-fr">Optimise l apparition des poissons et animaux sauvages dans le monde.</div><div class="desc-en">Balances spawn loops for wildlife and lake fauna indexes.</div></div></li>
-            <li class="mod-element">Reedlands<div class="mod-info-card"><div class="desc-fr">Genere des zones de roseaux au bord de l eau pour faire du chaume.</div><div class="desc-en">Spawns riverside reeds used for custom medieval thatch roofings.</div></div></li>
-            <li class="mod-element">re-enablealliances<div class="mod-info-card"><div class="desc-fr">Permet aux villes de Flaggard et Doriath de signer des pactes sacres.</div><div class="desc-en">Enables diplomatic alliance pacts between independent towns.</div></div></li>
-            <li class="mod-element">renameAnimals<div class="mod-info-card"><div class="desc-fr">Permet de donner un nom personnalise a vos montures et animaux.</div><div class="desc-en">Allows naming labels onto your horses, dogs, and drakes.</div></div></li>
-            <li class="mod-element">RepairTower<div class="mod-info-card"><div class="desc-fr">Les tours de garde reparent automatiquement les clotures du village.</div><div class="desc-en">Guard towers repair surrounding settlement fences over time.</div></div></li>
-            <li class="mod-element">riftevent<div class="mod-info-card"><div class="desc-fr">Ouvre des failles de combat ehiques avec monstres geants du Vide.</div><div class="desc-en">Spawns custom Rift rumbles fighting interdimensional hostiles.</div></div></li>
-            <li class="mod-element">Roll<div class="mod-info-card"><div class="desc-fr">Commande /roll dans le chat pour tirer des des aleatoires.</div><div class="desc-en">Adds rolling dice mechanics inside chat for active roleplayers.</div></div></li>
-            <li class="mod-element">sacrificemod<div class="mod-info-card"><div class="desc-fr">Augmente grandement la faveur divine gagne en sacrifiant des objets.</div><div class="desc-en">Multiplies favor points awarded during holy altar sacrifices.</div></div></li>
-            <li class="mod-element">salvemod<div class="mod-info-card"><div class="desc-fr">Permet de fabriquer des onguents de soin puissants a base de plantes.</div><div class="desc-en">Enables advanced blending of high-efficiency healing salves.</div></div></li>
-            <li class="mod-element">scriptrunner<div class="mod-info-card"><div class="desc-fr">Moteur systeme pour executer vos applications JavaScript.</div><div class="desc-en">Core automation script runner processing event triggers.</div></div></li>
-            <li class="mod-element">servermap<div class="mod-info-card"><div class="desc-fr">Outil de liaison cartographique pour generer votre rendu Leaflet 4K.</div><div class="desc-en">Internal mapping tool required to compile your Leaflet layout.</div></div></li>
-            <li class="mod-element">serverpacks<div class="mod-info-card"><div class="desc-fr">Telecharge automatiquement les textures des armures personnalisees.</div><div class="desc-en">Forces automatic client download of server customized textures.</div></div></li>
-            <li class="mod-element">serverplayercounter<div class="mod-info-card"><div class="desc-fr">Force l ecriture du vrai nombre de citoyens vers l API de Steam.</div><div class="desc-en">Forces direct writing of exact citizen numbers to Steam API.</div></div></li>
-            <li class="mod-element">ServerTimeCommand<div class="mod-info-card"><div class="desc-fr">Commande /time pour verifier l heure exacte et la saison du monde.</div><div class="desc-en">Adds a chat utility command /time to reveal server calendar data.</div></div></li>
-            <li class="mod-element">ServerTimeMessage<div class="mod-info-card"><div class="desc-fr">Envoie un message systeme toutes les heures pour indiquer le temps.</div><div class="desc-en">Broadcasts hourly system reminders showing active in-game times.</div></div></li>
-            <li class="mod-element">ServerTweaks<div class="mod-info-card"><div class="desc-fr">Ajuste l utilisation du processeur de la machine pour eliminer les lags.</div><div class="desc-en">System optimizations reducing tick delays on heavy hosting tiers.</div></div></li>
-            <li class="mod-element">setheight<div class="mod-info-card"><div class="desc-fr">Permet aux GMs d ajuster la hauteur des sols sans outils.</div><div class="desc-en">Allows administrative staff to toggle ground heights directly.</div></div></li>
-            <li class="mod-element">shopanvil<div class="mod-info-card"><div class="desc-fr">Ajoute des enclumes de forge marchandes utilisables par les citoyens.</div><div class="desc-en">Spawns local placeable anvils linked with repair shop traits.</div></div></li>
-            <li class="mod-element">ShorterFemaleSleeves<div class="mod-info-card"><div class="desc-fr">Modification esthetique pour raccourcir les manches des robes.</div><div class="desc-en">Cosmetic model fix for shorter sleeves on female cloth models.</div></div></li>
-            <li class="mod-element">Signs<div class="mod-info-card"><div class="desc-fr">Ajoute de nouveaux panneaux en bois directionnels pour baliser les routes.</div><div class="desc-en">Introduces diverse placable signposts for highway indexing.</div></div></li>
-            <li class="mod-element">SimpleConcrete<div class="mod-info-card"><div class="desc-fr">Permet de fabriquer des dalles de beton simples pour amenager les parcs.</div><div class="desc-en">Enables basic concrete block casting for architecture designs.</div></div></li>
-            <li class="mod-element">skillmod<div class="mod-info-card"><div class="desc-fr">Applique le multiplicateur x3 sur le gain d experience (No Grind).</div><div class="desc-en">Injects our specific flat x3 experience multiplier on all skills.</div></div></li>
-            <li class="mod-element">SmeltPurifyMod<div class="mod-info-card"><div class="desc-fr">Permet de purifier les metaux de mauvaise qualite dans les fourneaux.</div><div class="desc-en">Allows purging of low-quality slag minerals inside furnaces.</div></div></li>
-            <li class="mod-element">soulstealing<div class="mod-info-card"><div class="desc-fr">Competence d enchantement pour voler le Karma des animaux sauvages.</div><div class="desc-en">Weapon enchant attribute absorbing enemy metrics into Karma.</div></div></li>
-            <li class="mod-element">Spellcraft<div class="mod-info-card"><div class="desc-fr">Permet d ensorceler les bijoux et armes avec des gemmes magiques.</div><div class="desc-en">Expands custom jewelry enchanting options using raw gems.</div></div></li>
-            <li class="mod-element">SpellFavorCost<div class="mod-info-card"><div class="desc-fr">Reduit la consommation de Mana des pretres pour les gros sorts.</div><div class="desc-en">Reduces deity priest favor point costs for heavy world spells.</div></div></li>
-            <li class="mod-element">spellmod<div class="mod-info-card"><div class="desc-fr">Ajuste la duree des enchantements appliques sur les outils.</div><div class="desc-en">Modifies durations and strength bounds of item tool spells.</div></div></li>
-            <li class="mod-element">StarterGear<div class="mod-info-card"><div class="desc-fr">Distribue le kit d armures et d outils de niveau Maitre QL70 a l arrivee.</div><div class="desc-en">Awards our custom complete QL70 master starter kit upon landing.</div></div></li>
-            <li class="mod-element">Survival<div class="mod-info-card"><div class="desc-fr">Nourriture eternelle sans pourrissement et faim reduite de 50%.</div><div class="desc-en">Infinite food freshness properties and halved hunger decay rates.</div></div></li>
-            <li class="mod-element">TabardMod<div class="mod-info-card"><div class="desc-fr">Permet de tisser des tabards de guilde colores avec vos armoiries.</div><div class="desc-en">Enables weaving of fabric faction tabards worn over armors.</div></div></li>
-            <li class="mod-element">taxidermy<div class="mod-info-card"><div class="desc-fr">Permet d empailler les dragons ou monstres tues pour decorer vos halls.</div><div class="desc-en">Allows taxidermy of slain epic beasts to display in your halls.</div></div></li>
-            <li class="mod-element">TemplarReplacer<div class="mod-info-card"><div class="desc-fr">Remplace les anciens gardes par de puissants templiers lourdement armes.</div><div class="desc-en">Upgrades low-tier settlement defense units into heavy Templars.</div></div></li>
-            <li class="mod-element">TentSleep<div class="mod-info-card"><div class="desc-fr">Dormir dans une tente en pleine nature regenere 100% de votre fatigue.</div><div class="desc-en">Sleeping inside wild exploration tents speeds up fatigue reset.</div></div></li>
-            <li class="mod-element">tileExport<div class="mod-info-card"><div class="desc-fr">Permet d exporter des morceaux de cartes pour la terraformation externe.</div><div class="desc-en">Allows geometric layout exports for terrain design software.</div></div></li>
-            <li class="mod-element">TimedPay<div class="mod-info-card"><div class="desc-fr">Systeme de salaire automatique distribuant de l Iron chaque minute.</div><div class="desc-en">Core code distributing money rewards for active player timers.</div></div></li>
-            <li class="mod-element">timerfix<div class="mod-info-card"><div class="desc-fr">Corrige les bugs de desynchronisation des minuteries sous Windows.</div><div class="desc-en">Fixes ticking timer lags specific to high-uptime Windows servers.</div></div></li>
-            <li class="mod-element">toolpurchaser<div class="mod-info-card"><div class="desc-fr">Distributeur automatique pour racheter des outils neufs en cas de perte.</div><div class="desc-en">Allows automatic coin recovery buybacks for master toolkit logs.</div></div></li>
-            <li class="mod-element">TreasureHunting<div class="mod-info-card"><div class="desc-fr">Ajoute des cartes au tresor et des coffres enfouis partout dans le sol.</div><div class="desc-en">Generates random buried treasure maps and digging loot spots.</div></div></li>
-            <li class="mod-element">TreeStumpSizeHack<div class="mod-info-card"><div class="desc-fr">Reduit la taille des souches d arbres pour pouvoir nettoyer les routes.</div><div class="desc-en">Shrinks visual bounds of cut forest stumps for easier clearing.</div></div></li>
-            <li class="mod-element">Unleash<div class="mod-info-card"><div class="desc-fr">Permet de detacher vos montures n importe ou sans clotures requises.</div><div class="desc-en">Allows releasing leashed horses anywhere without pen structures.</div></div></li>
-            <li class="mod-element">upkeepcosts<div class="mod-info-card"><div class="desc-fr">Divise par 10 les taxes d entretien foncier exigees par les cites.</div><div class="desc-en">Drastically lowers weekly town maintenance tax requirements.</div></div></li>
-            <li class="mod-item-special doriath-only mod-element">VoteReward<div class="mod-info-card"><div class="desc-fr">⚜️ EXCLUSIF DORIATH : Injecteur de recompense lie a la cle API de vote.</div><div class="desc-en">⚜️ DORIATH EXCLUSIVE: Token injector connected to our vote web API.</div></div></li>
-            <li class="mod-element">waxed<div class="mod-info-card"><div class="desc-fr">Permet d appliquer de la cire d abeille sur le bois pour stopper l usure.</div><div class="desc-en">Allows players to wax wooden items to stop natural decay drains.</div></div></li>
-            <li class="mod-element">Windmill<div class="mod-info-card"><div class="desc-fr">Ajoute de grands moulins a vent fonctionnels pour moudre le grain en farine.</div><div class="desc-en">Adds placable working windmills to automate grain grinding loops.</div></div></li>
-        </ul>
-    </div> <!-- Fermeture de content-parchment -->
-</div> <!-- Fermeture de container -->
-
-<!-- ============================================================================== -->
-<!--  SCRIPTS INTERACTIFS - GESTION DES FILTRES ET COMMUTATION DE LANGUES             -->
-<!-- ============================================================================== -->
-<script>
-function toggleLang(selectedLang) {
-    if(selectedLang === "en") {
-        document.body.className = "lang-en-mode";
-    } else {
-        document.body.className = "lang-fr-mode";
-    }
-}
-
-function switchRealm(chosenRealm) {
-    const tabs = document.querySelectorAll('.realm-tab');
-    tabs.forEach(t => t.classList.remove('active'));
-    
-    // Correction de ciblage des onglets de royaumes
-    if(chosenRealm === "flaggard") {
-        tabs[0].classList.add('active');
-    } else {
-        tabs[1].classList.add('active');
-    }
-
-    const elements = document.querySelectorAll('.mod-element');
-    elements.forEach(el => {
-        el.style.display = "block";
-        el.style.borderColor = "#ffcc00";
-
-        if(chosenRealm === "flaggard" && el.classList.contains('doriath-only')) {
-            el.style.display = "none";
-        } else if(chosenRealm === "doriath" && el.classList.contains('flaggard-only')) {
-            el.style.display = "none";
-        }
+    <!-- ==========================================
+         🛠️ SECTION 2 : ARCHIVE DES EXTENSIONS LOGICIELLES (BACKUP)
+         ========================================== -->
+    <div class="wurm-mod-box">
+        <h3 class="lang-fr">🛠️ Modules et Extensions Actives</h3>
+        <h3 class="lang-en">🛠️ Active Extensions & Mods</h3>
         
-        if(el.classList.contains('flaggard-only') || el.classList.contains('doriath-only')) {
-            el.style.borderColor = "#a67c1e";
+        <p style="font-size: 13px; color: #bbb; margin-bottom: 15px; text-align: left;">
+            <span class="lang-fr">Liste de sauvegarde des modules installés côté serveur. Aucun téléchargement n'est requis par l'utilisateur pour rejoindre le réseau.</span>
+            <span class="lang-en">Backup list of server-side installed modules. No client-side downloads are required for players to join the network.</span>
+        </p>
+
+        <ul class="mod-list-ul" style="text-align: left; line-height: 1.6;">
+            <li><span class="mod-highlight-text">[Core]</span> VoteReward v2.4 (Sync Doriath)</li>
+            <li><span class="mod-highlight-text">[Core]</span> Ago's Server Modlauncher Core v1.9</li>
+            <li><span class="mod-highlight-text">[Mod]</span> Bank Item Sync & Global Currency</li>
+            <li><span class="mod-highlight-text">[Mod]</span> Livemap Advanced Telemetry Protocol</li>
+            <li><span class="mod-highlight-text">[Mod]</span> No-Decay Infrastructure (Flaggard Security)</li>
+            <li><span class="mod-highlight-text">[Mod]</span> BetterDigging & Crop Harvesting Controls</li>
+            <li><span class="mod-highlight-text">[Mod]</span> Rare Ores Mining Injections (Adamantine Boost)</li>
+            <li><span class="mod-highlight-text">[Mod]</span> Salvage Items & Weapon Reforging Script</li>
+            <li><span class="mod-highlight-text">[Mod]</span> Creatures Custom Level Scale (Difficulty 1.5x)</li>
+        </ul>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 20px;">
+    <!-- Bouton de retour vers la fiche technique Wurm -->
+    <a href="index.html" class="back-btn">
+        <span class="lang-fr">⬅️ Retour à la Fiche Wurm</span>
+        <span class="lang-en">⬅️ Back to Wurm Specs</span>
+    </a>
+</div>
+
+<script>
+    // --- MOTEUR DE SELECTION DE LANGUE INTERACTIF ---
+    function changerLangue(langue) {
+        const elFr = document.querySelectorAll('.lang-fr');
+        const elEn = document.querySelectorAll('.lang-en');
+        const boutons = document.querySelectorAll('.lang-btn');
+        boutons.forEach(b => b.classList.remove('active-lang'));
+        
+        if (langue === 'fr') {
+            elFr.forEach(e => e.style.display = 'block');
+            elEn.forEach(e => e.style.display = 'none');
+            document.getElementById('btn-fr').classList.add('active-lang');
+        } else {
+            elFr.forEach(e => e.style.display = 'none');
+            elEn.forEach(e => e.style.display = 'block');
+            document.getElementById('id-btn-en').classList.add('active-lang');
         }
+    }
+
+    // SÉCURITÉ ACTIVE : Bloque le Clic Droit et l'inspection de vos scripts
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
+        if (e.key === 'F12') { e.preventDefault(); }
     });
-}
-switchRealm('flaggard');
 </script>
 </body>
 </html>
+

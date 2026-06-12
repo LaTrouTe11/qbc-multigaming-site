@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[WURM] Extensions & Votes | QBC Flaggard Backup</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* --- LOOK ULTRA MODERNE NÉON DORÉ --- */
+        body { background-color: #0c0905 !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
+        
+        .mods-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #594418; padding-bottom: 20px; }
+        .mods-title { color: #ffcc00; text-shadow: 0 0 12px rgba(255,204,0,0.4); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+        
+        /* BOÎTE COMMUTATION LANGUE HAUT DROITE */
+        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
+        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #443313; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
+        .lang-btn:hover { border-color: #ffcc00; color: #fff; }
+        .lang-btn.active-lang { background: #ffcc00; color: #000; border-color: #ffcc00; box-shadow: 0 0 8px rgba(255,204,0,0.3); }
+        
+        /* LANGUE CACHÉE */
+        .lang-en { display: none; }
+        
+        /* GRILLE HORIZONTALE STRUCTURÉE (ANTI-ÉTIREMENT) */
+        .wurm-grid-mods { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
+        .wurm-mod-box { background: rgba(22, 17, 11, 0.96); border: 2px solid #594418; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+        .wurm-mod-box h3 { color: #ffcc00; margin-top: 0; font-size: 17px; text-transform: uppercase; border-bottom: 1px dashed #594418; padding-bottom: 8px; margin-bottom: 15px; }
+        
+        /* STYLISATION DES LIENS DE VOTE & BACKUP */
+        .vote-link-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid #ffcc00; }
+        .vote-btn-action { background: #ffcc00; color: #000; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 3px; text-transform: uppercase; text-decoration: none; }
+        .vote-btn-action:hover { background: #fff; box-shadow: 0 0 10px #ffcc00; }
+        
+        /* BOÎTE DE DÉFILEMENT POUR TOUS LES MODS */
+        .scroll-mods-container { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 6px; max-height: 380px; overflow-y: auto; text-align: left; border: 1px solid rgba(255,255,255,0.03); }
+        .mod-list-ul { list-style-type: none; padding: 0; margin: 0; }
+        .mod-list-ul li { margin-bottom: 12px; font-size: 13px; color: #ddd; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 6px; }
+        .mod-highlight-text { display: block; color: #ffcc00; font-weight: bold; font-family: monospace; font-size: 13px; margin-bottom: 2px; }
+        
+        .back-btn { display: inline-block; background: transparent; color: #ffcc00; border: 1px solid #ffcc00; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
+        .back-btn:hover { background: #ffcc00; color: #000; box-shadow: 0 0 15px #ffcc00; }
+    </style>
+</head>
+<body>
+
+<div class="lang-selector-container">
+    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
+    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
+</div>
+
+<div class="mods-header">
+    <h1 class="mods-title">📦 Extensions & Modules Réseau / Cluster Backup</h1>
+    <p style="margin: 0; font-size: 14px; color: #b38f00; font-style: italic; text-align: center;">
+        <span class="lang-fr">Liens de vote quotidiens, récompenses de vote actives et archives de sécurité.</span>
+        <span class="lang-en">Daily voting links, active vote rewards and structural security archives.</span>
+    </p>
+</div>
+<div class="wurm-grid-mods">
+    <!-- ==========================================
+         🗳️ SECTION 1 : VOTE REWARDS & SYSTEMES (DORIATH & FLAGGARD)
+         ========================================== -->
+    <div class="wurm-mod-box">
+        <h3 class="lang-fr">🗳️ Liens de Votes Officiels</h3>
+        <h3 class="lang-en">🗳️ Official Voting Links</h3>
+        
+        <p style="font-size: 13px; color: #bbb; margin-bottom: 15px; text-align: left;">
+            <span class="lang-fr">Votez quotidiennement pour faire grimper le cluster dans le classement et débloquer vos récompenses **VoteReward** (Monnaies de cuivre et bonus d'action) directement en jeu sur le serveur Doriath.</span>
+            <span class="lang-en">Vote daily to increase the cluster ranking and unlock your **VoteReward** rewards (Copper coins and action speed boosts) directly in-game on the Doriath server.</span>
+        </p>
+
+        <!-- Vote Lien 1 -->
+        <div class="vote-link-item">
+            <div style="text-align: left;">
+                <span style="font-weight: bold; font-size: 13px; color: #fff;">Wurm-Unlimited-Servers</span>
+                <span style="display:block; font-size:11px; color:#aaa;">Vote #1 (Doriath Linked)</span>
+            </div>
+            <a href="https://wurm-unlimited-servers.net" target="_blank" class="vote-btn-action">Vote</a>
+        </div>
+
+        <!-- Vote Lien 2 -->
+        <div class="vote-link-item">
+            <div style="text-align: left;">
+                <span style="font-weight: bold; font-size: 13px; color: #fff;">Top-G Gaming List</span>
+                <span style="display:block; font-size:11px; color:#aaa;">Vote #2 (Cluster Ranking)</span>
+            </div>
+            <a href="https://topg.org" target="_blank" class="vote-btn-action">Vote</a>
+        </div>
+
+        <!-- Vote Lien 3 -->
+        <div class="vote-link-item">
+            <div style="text-align: left;">
+                <span style="font-weight: bold; font-size: 13px; color: #fff;">Arena Server Tracker</span>
+                <span style="display:block; font-size:11px; color:#aaa;">Vote #3 (Backup Vote)</span>
+            </div>
+            <a href="https://tracker-servers.com" target="_blank" class="vote-btn-action">Vote</a>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         🛠️ SECTION 2 : ARCHIVE DES EXTENSIONS SERVEUR
+         ========================================== -->
+    <div class="wurm-mod-box">
+        <h3 class="lang-fr">🛠️ Base de Données des Extensions</h3>
+        <h3 class="lang-en">🛠️ Extension Database</h3>
+        
+        <p style="font-size: 13px; color: #bbb; margin-bottom: 15px; text-align: left;">
+            <span class="lang-fr">Liste technique intégrale et détaillée des extensions déployées sur Flaggard et Doriath. Cette archive sert de référence réseau de secours.</span>
+            <span class="lang-en">Full comprehensive and detailed list of extensions deployed on Flaggard and Doriath. This archive serves as a network backup reference.</span>
+        </p>
+
+        <!-- Fenêtre de défilement vertical anti-étirement -->
+        <div class="scroll-mods-container">
+            <ul class="mod-list-ul">
+                <li>
+                    <span class="mod-highlight-text">[Core] Modlauncher v1.9.4</span>
+                    <span class="lang-fr">Chargeur de modules principal. Assure la stabilité et l'injection fluide des scripts côté serveur.</span>
+                    <span class="lang-en">Main module loader. Ensures stability and fluid injection of server-side scripts.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Core] VoteReward Bridge</span>
+                    <span class="lang-fr">Liaison API avec les listes de vote. Donne les pièces de cuivre et bonus aux joueurs en direct.</span>
+                    <span class="lang-en">API link with voting lists. Gives copper coins and bonuses to players live in-game.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Global Currency Sync</span>
+                    <span class="lang-fr">Synchronisation bancaire du cluster. Permet de partager votre argent entre Flaggard et Doriath.</span>
+                    <span class="lang-en">Cluster banking synchronization. Allows sharing your coins between Flaggard and Doriath.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Livemap Advanced Link</span>
+                    <span class="lang-fr">Protocole de télémétrie en temps réel pour la carte web. Affiche la position exacte des joueurs.</span>
+                    <span class="lang-en">Real-time telemetry protocol for the web map. Displays the exact position of players.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] No-Decay Structure Security</span>
+                    <span class="lang-fr">Sécurité Flaggard. Désactive complètement la détérioration et l'usure des bâtiments privés et publics.</span>
+                    <span class="lang-en">Flaggard security. Completely disables decay and wear on private and public buildings.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] BetterDigging Mechanics</span>
+                    <span class="lang-fr">Optimisation du terrassement. Augmente la vitesse d'aplanissement du sol et réduit la fatigue.</span>
+                    <span class="lang-en">Terraforming optimization. Increases ground flattening speed and reduces stamina drain.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Rare Ores Mining Injection</span>
+                    <span class="lang-fr">Boost Doriath. Augmente le taux d'apparition des filons précieux comme l'Adamantine et le Glimmer.</span>
+                    <span class="lang-en">Doriath boost. Increases the spawn rate of precious veins like Adamantine and Glimmer.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Broken Items Salvage Matrix</span>
+                    <span class="lang-fr">Moteur de recyclage. Permet de démonter les armes brisées pour récupérer les composants de forge.</span>
+                    <span class="lang-en">Recycling engine. Allows dismantling broken weapons to reclaim blacksmithing components.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Creatures Level Scaling Layer</span>
+                    <span class="lang-fr">Difficulté ajustable à 1.5x. Aligne dynamiquement le niveau des monstres selon la zone d'exploration.</span>
+                    <span class="lang-en">Adjustable 1.5x difficulty. Dynamically scales monster levels based on the exploration zone.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Harvest Global Multiplier v3.0</span>
+                    <span class="lang-fr">Contrôleur de récolte globale. Multiplie la quantité de bois, de plantes et de ressources collectées.</span>
+                    <span class="lang-en">Global harvest controller. Multiplies the amount of wood, plants, and collected resources.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Skill Gain Acceleration Engine</span>
+                    <span class="lang-fr">Multiplicateur d'expérience réglé à 4.0x Core pour accélérer la progression de vos compétences.</span>
+                    <span class="lang-en">Experience multiplier set to 4.0x Core to accelerate your skill progression.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Action Speed Global Tweaker</span>
+                    <span class="lang-fr">Exécution rapide ajustée à 2.5x. Réduit le temps requis pour miner, forger, couper et construire.</span>
+                    <span class="lang-en">Quick execution adjusted to 2.5x. Reduces time required to mine, blacksmith, chop, and build.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] In-Game Mail Box Handler</span>
+                    <span class="lang-fr">Gestionnaire de courrier inter-royaumes. Permet d'envoyer des colis sécurisés entre les serveurs.</span>
+                    <span class="lang-en">Inter-realm mail manager. Allows sending secure packages between servers.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Merchant Inventory Autobuyer</span>
+                    <span class="lang-fr">Filtre automatisé pour les marchands NPC. Gère le renouvellement des stocks et les achats automatiques.</span>
+                    <span class="lang-en">Automated filter for NPC merchants. Manages stock renewal and automatic purchases.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Crop Over-Aging Protection</span>
+                    <span class="lang-fr">Sécurité agricole. Empêche vos champs de pourrir ou d'attraper des maladies si vous tardez à récolter.</span>
+                    <span class="lang-en">Agricultural safety. Prevents fields from rotting or catching diseases if harvesting is delayed.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Animal Breeding Timer Reducer</span>
+                    <span class="lang-fr">Élevage accéléré. Réduit le temps d'attente entre l'accouplement et augmente les chances de mutations rares.</span>
+                    <span class="lang-en">Accelerated breeding. Reduces wait time between mating and increases rare mutation chances.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Rare Spawner Watchdog Relays</span>
+                    <span class="lang-fr">Système d'alerte pour les créatures uniques. Envoie un signal sur les consoles d'administration au pop.</span>
+                    <span class="lang-en">Alert system for unique creatures. Sends a signal to the admin consoles upon spawning.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Epic Armor Custom Textures</span>
+                    <span class="lang-fr">Pack de textures exclusif. Ajoute des visuels HD uniques sur les armures de plaques et de mailles.</span>
+                    <span class="lang-en">Exclusive texture pack. Adds unique HD visuals to plate and chainmail armors.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Weapon Enchants Scaling Buff</span>
+                    <span class="lang-fr">Ajustement des lueurs magiques. Améliore les effets visuels néons des enchantements d'armes en jeu.</span>
+                    <span class="lang-en">Magic glow adjustment. Enhances the in-game neon visual effects of weapon enchantments.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Tree Overgrowth Control Matrix</span>
+                    <span class="lang-fr">Gestionnaire forestier. Empêche la prolifération infinie de la flore pour garder les chemins propres.</span>
+                    <span class="lang-en">Forestry manager. Prevents infinite plant proliferation to keep pathways clean.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Dynamic Weather Generator Core</span>
+                    <span class="lang-fr">Moteur météo. Aligne les cycles de pluie, de brouillard et d'orages de façon immersive sur le cluster.</span>
+                    <span class="lang-en">Weather engine. Immersion-aligned cycles of rain, fog, and storms across the cluster.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Mining Veins Depletion Prevention</span>
+                    <span class="lang-fr">Sécurité des mines. Bloque la disparition définitive des gisements précieux de fer et de cuivre.</span>
+                    <span class="lang-en">Mine protection. Blocks the permanent depletion of valuable iron and copper veins.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Bulk Container Storage Cap Extender</span>
+                    <span class="lang-fr">Extension des silos. Augmente la capacité maximale de stockage de masse à un cap de 10 000 items.</span>
+                    <span class="lang-en">Silo expansion. Increases the maximum mass storage capacity to a cap of 10,000 items.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Meditate Skill Cooldown Reducer</span>
+                    <span class="lang-fr">Médiation rapide. Réduit le temps d'attente requis entre les questions philosophiques et les chemins.</span>
+                    <span class="lang-en">Quick meditation. Reduces the required cooldown between philosophical questions and paths.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Priest Spell Range Extender</span>
+                    <span class="lang-fr">Portée de foi. Augmente le rayon d'impact des sorts divins lancés par les prêtres du réseau.</span>
+                    <span class="lang-en">Faith range. Increases the impact radius of divine spells cast by network priests.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Unique Boss Loot Table Enhancer</span>
+                    <span class="lang-fr">Butin légendaire. Ajoute des jetons de récompense et des composants rares sur les boss uniques.</span>
+                    <span class="lang-en">Legendary loot. Adds reward tokens and rare components to unique bosses.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Dynamic Graveyard Monitor</span>
+                    <span class="lang-fr">Gestionnaire des cryptes. Surveille l'apparition passive des morts-vivants dans les zones de cimetières.</span>
+                    <span class="lang-en">Crypt manager. Monitors the passive spawning of undead creatures in graveyard zones.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[Mod] Cross-Server Relay Socket</span>
+                    <span class="lang-fr">Relais de discussion. Connecte les canaux de chat en direct entre Flaggard et Doriath.</span>
+                    <span class="lang-en">Chat relay. Connects live chat channels between Flaggard and Doriath servers.</span>
+                </li>
+                <li>
+                    <span class="mod-highlight-text">[System] Cluster Auto-Vacuum Optimization</span>
+                    <span class="lang-fr">Optimisation de base de données. Nettoie et purge les fichiers temporaires pour éviter le lag.</span>
+                    <span class="lang-en">Database optimization. Cleans and purges temporary files to prevent server lag.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <!-- Bouton de retour vers la fiche technique Wurm -->
+    <a href="index.html" class="back-btn">
+        <span class="lang-fr">⬅️ Retour à la Fiche Wurm</span>
+        <span class="lang-en">⬅️ Back to Wurm Specs</span>
+    </a>
+</div>
+
+<script>
+    // --- MOTEUR DE SELECTION DE LANGUE INTERACTIF ---
+    function changerLangue(langue) {
+        const elFr = document.querySelectorAll('.lang-fr');
+        const elEn = document.querySelectorAll('.lang-en');
+        const boutons = document.querySelectorAll('.lang-btn');
+        boutons.forEach(b => b.classList.remove('active-lang'));
+        
+        if (langue === 'fr') {
+            elFr.forEach(e => e.style.display = 'block');
+            elEn.forEach(e => e.style.display = 'none');
+            document.getElementById('btn-fr').classList.add('active-lang');
+        } else {
+            elFr.forEach(e => e.style.display = 'none');
+            elEn.forEach(e => e.style.display = 'block');
+            document.getElementById('id-btn-en').classList.add('active-lang');
+        }
+    }
+
+    // SÉCURITÉ ACTIVE : Bloque le Clic Droit et la touche F12
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
+        if (e.key === 'F12') { e.preventDefault(); }
+    });
+</script>
+</body>
+</html>

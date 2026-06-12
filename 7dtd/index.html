@@ -3,38 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[QBC] 7 Days to Die | En Construction</title>
+    <title>[7DTD] QBC Flaggard Apocalypse | Fiche Technique</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        .construction-box { background: rgba(15, 5, 5, 0.95); border: 2px dashed #8b0000; border-radius: 8px; padding: 40px; margin-top: 50px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.8); }
-        .hazard-bar { background: repeating-linear-gradient(45deg, #8b0000, #8b0000 10px, #000 10px, #000 20px); height: 15px; margin: 20px 0; border-radius: 4px; }
+        /* --- DESIGN THÉMATIQUE ZOMBIE SANG & FIN DU MONDE --- */
+        body { background-color: #0a0505 !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
+        
+        .sdtd-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #8b0000; padding-bottom: 20px; }
+        .sdtd-title { color: #ff1111; text-shadow: 0 0 12px rgba(255,17,17,0.5); font-family: 'Impact', Charcoal, sans-serif; letter-spacing: 2px; margin-bottom: 5px; font-size: 32px; }
+        
+        /* COMMUTATEUR DE LANGUE HAUT DROITE */
+        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
+        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #4a0000; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
+        .lang-btn:hover { border-color: #ff1111; color: #fff; }
+        .lang-btn.active-lang { background: #ff1111; color: #fff; border-color: #ff1111; box-shadow: 0 0 8px rgba(255,17,17,0.4); }
+        
+        /* MASQUAGE DE LANGUE */
+        .lang-en { display: none; }
+        
+        /* GRILLE DE FORCE ET ANTI-ÉTIREMENT */
+        .sdtd-grid-info { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
+        .sdtd-spec-box { background: linear-gradient(135deg, #120303 0%, #080101 100%); border: 2px solid #600000; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.9); }
+        .sdtd-spec-box h3 { color: #ff1111; margin-top: 0; font-size: 18px; text-transform: uppercase; border-bottom: 1px dashed #8b0000; padding-bottom: 8px; margin-bottom: 15px; font-family: 'Impact', Charcoal, sans-serif; letter-spacing: 1px; }
+        
+        /* ALIGNEMENT DES CONFIGURATIONS DE SURVIE */
+        .spec-line { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 4px; }
+        .spec-label { color: #ff8888; font-weight: bold; text-transform: uppercase; }
+        .spec-value { color: #fff; font-weight: bold; }
+        .spec-value.highlight { color: #ff1111; text-shadow: 0 0 5px rgba(255,17,17,0.3); }
+        
+        /* BOÎTES DE REDIRECTION CROISÉE VERS WURM / AVORION */
+        .cross-link-box { background: rgba(0, 0, 0, 0.5); border: 1px solid #333; border-radius: 6px; padding: 12px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .cross-title { font-weight: bold; font-size: 13px; }
+        .cross-btn { background: #333; color: #fff; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 4px; text-decoration: none; text-transform: uppercase; }
+        .cross-btn:hover { background: #fff; color: #000; }
+        
+        /* BOUTONS ACTIONS */
+        .back-btn { display: inline-block; background: transparent; color: #ff1111; border: 1px solid #ff1111; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
+        .back-btn:hover { background: #ff1111; color: #000; box-shadow: 0 0 15px #ff1111; }
+        .lang-split { display: block; margin-top: 3px; color: #aaa; font-style: italic; font-size: 12px; }
     </style>
 </head>
-<body class="lang-fr-mode theme-7dtd">
-<div class="container">
+<body>
 
-    <h1>🧟 QBC 7 DAYS TO DIE | APOCALYPSE SERVEUR</h1>
-
-    <!-- BARRE DE NAVIGATION ULTRA SIMPLIFIÉE -->
-    <div class="medieval-nav">
-        <a href="../index.html" class="nav-link">🏡 Retour au Portail</a>
-        <a href="../wurm/index.html" class="nav-link" style="color: #ffcc00;">🛡️ Wurm Unlimited</a>
-    </div>
-
-    <!-- BOITE DE CHANTIER EN COURS -->
-    <div class="construction-box">
-        <h2 style="border: none; color: #ff3333; margin-top: 0; font-size: 24px;">🚧 ROYAUME EN COURS DE SÉCURISATION 🚧</h2>
-        <div class="hazard-bar"></div>
-        <p style="font-size: 16px; line-height: 1.6; color: #ddd;">
-            <strong>Chantier de survie actif !</strong> Les fondations du serveur *7 Days to Die* et les configurations de l'apocalypse sont actuellement en cours de préparation par <strong>LaTrouTe11</strong>.
-        </p>
-        <p style="color: #ff5555; font-style: italic; margin-top: 15px; font-size: 14px;">
-            Les vagues de zombies arriveront très bientôt à Montréal. Restez à l'écoute sur le Discord !
-        </p>
-        <div class="hazard-bar"></div>
-    </div>
-
+<div class="lang-selector-container">
+    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
+    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
 </div>
+
+<div class="sdtd-header">
+    <h1 class="sdtd-title">💀 Univers 7 Days To Die apocalypse</h1>
+    <p style="margin: 0; font-size: 14px; color: #ff8888; font-style: italic; text-align: center;">
+        <span class="lang-fr">Spécifications de combat et règlements du premier avant-poste ProjectZ 2.6.</span>
+        <span class="lang-en">Combat specifications and rules for the first ProjectZ 2.6 outpost.</span>
+    </p>
+</div>
+<div class="sdtd-grid-info">
+    <!-- ==========================================
+         🩸 FICHE UNIQUE : QBC FLAGGARD PROJECTZ 2.6
+         ========================================== -->
+    <div class="sdtd-spec-box" style="width: 100% !important; max-width: 600px; margin: 0 auto !important;">
+        <h3 class="lang-fr">🩸 Serveur 1 : ProjectZ-2-6 Apocalypse</h3>
+        <h3 class="lang-en">🩸 Server 1: ProjectZ-2-6 Apocalypse</h3>
+        
+        <div class="spec-line">
+            <span class="spec-label">Mode :</span>
+            <span class="spec-value">PvE (Survie Hardcore)</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Difficulté / Difficulty :</span>
+            <span class="spec-value">Warrior (Niveau 4)</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Loot Abundance :</span>
+            <span class="spec-value">200% (Abondant)</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Blood Moon Frequency :</span>
+            <span class="spec-value highlight">Chaque 7 Jours / Every 7 Days</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Extensions / Packages :</span>
+            <span class="spec-value highlight">12 Modules Actifs (Core)</span>
+        </div>
+        <div class="spec-line">
+            <span class="spec-label">Emplacement / Location :</span>
+            <span class="spec-value">Montréal (Kinetic Hosting)</span>
+        </div>
+
+        <p style="font-size: 13px; color: #ccc; text-align: left; margin: 15px 0; line-height: 1.5;">
+            <span class="lang-fr">Ce serveur est configuré pour une survie immersive avec gestion de drone automatisée, quêtes uniques et structures en acier lourd renforcé.</span>
+            <span class="lang-en">This server is configured for immersive survival with automated drone management, unique custom quests, and heavy reinforced steel building.</span>
+        </p>
+
+        <!-- ==========================================
+             🔄 DETAILS PRECIS DES AUTRES UNIVERS (REDIRECTION)
+             ========================================== -->
+        <div style="margin-top: 25px; border-top: 1px dashed #600000; padding-top: 15px;">
+            <h4 style="color:#ff8888; font-size:12px; text-transform:uppercase; margin-bottom:10px; font-family:'Impact'; letter-spacing:1px;">
+                <span class="lang-fr">🔍 Voir les détails des autres mondes :</span>
+                <span class="lang-en">🔍 View other worlds specifications:</span>
+            </h4>
+
+            <!-- Lien vers l'univers Wurm -->
+            <div class="cross-link-box">
+                <div style="text-align:left;">
+                    <span class="cross-title" style="color:#ffcc00;">⚔️ Univers Wurm Unlimited</span>
+                    <span style="display:block; font-size:11px; color:#aaa;">Royaumes Flaggard & Doriath PvE</span>
+                </div>
+                <a href="../wurm/index.html" class="cross-btn" style="border: 1px solid #ffcc00; color:#ffcc00;">Détails</a>
+            </div>
+
+            <!-- Lien vers l'univers Avorion -->
+            <div class="cross-link-box">
+                <div style="text-align:left;">
+                    <span class="cross-title" style="color:#00f0ff;">🌌 Univers Avorion Cyber-Space</span>
+                    <span style="display:block; font-size:11px; color:#aaa;">Secteurs Alpha & Nebula Beta</span>
+                </div>
+                <a href="../avorion1/index.html" class="cross-btn" style="border: 1px solid #00f0ff; color:#00f0ff;">Détails</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 20px;">
+    <!-- Bouton de retour rapide vers l'accueil principal -->
+    <a href="../index.html" class="back-btn">
+        <span class="lang-fr">⬅️ Retour au Portail</span>
+        <span class="lang-en">⬅️ Back to Portal</span>
+    </a>
+</div>
+
+<script>
+    // --- MOTEUR DE SELECTION DE LANGUE INTERACTIF ---
+    function changerLangue(langue) {
+        const elFr = document.querySelectorAll('.lang-fr');
+        const elEn = document.querySelectorAll('.lang-en');
+        const boutons = document.querySelectorAll('.lang-btn');
+        boutons.forEach(b => b.classList.remove('active-lang'));
+        
+        if (langue === 'fr') {
+            elFr.forEach(e => e.style.display = 'block');
+            elEn.forEach(e => e.style.display = 'none');
+            document.getElementById('btn-fr').classList.add('active-lang');
+        } else {
+            elFr.forEach(e => e.style.display = 'none');
+            elEn.forEach(e => e.style.display = 'block');
+            document.getElementById('id-btn-en').classList.add('active-lang');
+        }
+    }
+
+    // SÉCURITÉ ACTIVE : Bloque le Clic Droit et la touche F12
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
+        if (e.key === 'F12') { e.preventDefault(); }
+    });
+</script>
 </body>
 </html>
+
+
 

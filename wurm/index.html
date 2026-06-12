@@ -3,238 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[QC/FR/CAN] QBC Flaggard & Doriath | PVE</title>
-    <link rel="stylesheet" href="style.css">
+    <title>[WURM] QBC Flaggard Cluster | Fiche & Livemap Leaflet</title>
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- 🌐 PASSERELLE RESEAU SÉCURISÉE HTTPS LEAFLET JS/CSS -->
+    <link rel="stylesheet" href="https://unpkg.com" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <style>
-        .technical-container { display: flex; justify-content: center; gap: 30px; margin-top: 35px; flex-wrap: wrap; }
-        .tech-box { background-color: rgba(20, 20, 20, 0.85); border: 2px solid #594418; padding: 25px; border-radius: 8px; width: 46%; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .tech-box h3 { color: #ffcc00; margin-top: 0; border-bottom: 1px solid #594418; padding-bottom: 8px; text-transform: uppercase; font-size: 16px; letter-spacing: 1px; }
-        .copy-btn { background: #ffcc00; color: #000; border: none; padding: 2px 6px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-left: 5px; font-size: 11px; }
+        /* --- DESIGN THÉMATIQUE WURM (OR & PIERRE SOMBRE) --- */
+        body { background-color: #0c0905 !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
+        .wurm-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #594418; padding-bottom: 20px; }
+        .wurm-title { color: #ffcc00; text-shadow: 0 0 12px rgba(255,204,0,0.4); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+        
+        /* COMMUTATEUR DE LANGUE HAUT DROITE */
+        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
+        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #443313; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
+        .lang-btn:hover { border-color: #ffcc00; color: #fff; }
+        .lang-btn.active-lang { background: #ffcc00; color: #000; border-color: #ffcc00; box-shadow: 0 0 8px rgba(255,204,0,0.3); }
+        .lang-en { display: none; }
+        
+        /* GRILLE HORIZONTALE RIGIDE ANTI-ÉTIREMENT */
+        .wurm-grid-info { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
+        .wurm-spec-box { background: rgba(22, 17, 11, 0.96); border: 2px solid #594418; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+        .wurm-spec-box h3 { color: #ffcc00; margin-top: 0; font-size: 17px; text-transform: uppercase; border-bottom: 1px dashed #594418; padding-bottom: 8px; margin-bottom: 15px; }
+        
+        /* STRUCTURE DES ENTRÉES TECHNIQUES */
+        .spec-line { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 4px; }
+        .spec-label { color: #b38f00; font-weight: bold; text-transform: uppercase; }
+        .spec-value { color: #fff; font-weight: bold; }
+        .spec-value.highlight { color: #00ff00; text-shadow: 0 0 5px rgba(0,255,0,0.2); }
+        
+        /* GRILLE POUR DEUX PETITS BOUTONS CÔTE À CÔTE */
+        .wurm-action-row { display: flex !important; justify-content: space-between !important; gap: 12px !important; margin-top: 15px !important; width: 100% !important; }
+        .wurm-square-btn { flex: 1 !important; text-align: center !important; background: rgba(0,0,0,0.5) !important; color: #ffcc00 !important; border: 1px solid #594418 !important; padding: 10px 4px !important; font-size: 11px !important; font-weight: bold !important; text-transform: uppercase !important; border-radius: 4px !important; text-decoration: none !important; transition: 0.2s !important; box-sizing: border-box !important; cursor: pointer; }
+        .wurm-square-btn:hover { background: #ffcc00 !important; color: #000 !important; border-color: #ffcc00 !important; box-shadow: 0 0 10px rgba(255,204,0,0.4) !important; }
+        
+        /* ENCADREMENT INTERNE DE LA LIVEMAP EMBARQUÉE */
+        .wurm-map-container { display: none; margin-top: 15px; width: 100%; height: 260px; border: 2px solid #594418; border-radius: 6px; background: #000; box-shadow: inset 0 0 20px #000; position: relative; }
+        
+        /* FULLSCREEN DYNAMIQUE GÉANT */
+        .wurm-map-container.giant-fullscreen { display: block !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 99999 !important; border: none !important; border-radius: 0 !important; margin: 0 !important; }
+        .close-fs-btn { display: none; position: absolute; top: 15px; right: 15px; z-index: 100000; background: #8b0000; color: #fff; border: 2px solid #ff1111; padding: 8px 16px; font-weight: bold; font-size: 11px; text-transform: uppercase; border-radius: 4px; cursor: pointer; }
+        .wurm-map-container.giant-fullscreen .close-fs-btn { display: block !important; }
+
+        .back-btn { display: inline-block; background: transparent; color: #ffcc00; border: 1px solid #ffcc00; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
+        .back-btn:hover { background: #ffcc00; color: #000; box-shadow: 0 0 15px #ffcc00; }
     </style>
 </head>
-<body class="lang-fr-mode">
-<div class="container">
+<body>
+<!-- SÉLECTEUR DE LANGUE INTERACTIF -->
+<div class="lang-selector-container">
+    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
+    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
+</div>
 
-    <!-- SELECTEUR TRADUCTION -->
-    <div class="lang-selector-top">
-        <select class="lang-select-box" onchange="document.body.className = this.value === 'en' ? 'lang-en-mode' : 'lang-fr-mode'">
-            <option value="fr">🍁 Français</option>
-            <option value="en">🦅 English</option>
-        </select>
+<div class="wurm-header">
+    <h1 class="wurm-title">⚔️ Univers Wurm Unlimited Cluster</h1>
+    <p style="margin: 0; font-size: 14px; color: #b38f00; font-style: italic; text-align: center;">
+        <span class="lang-fr">Spécifications techniques, configurations ultimes et Livemaps du réseau QBC.</span>
+        <span class="lang-en">Technical specifications, ultimate configurations and Livemaps of the QBC network.</span>
+    </p>
+</div>
+
+<div class="wurm-grid-info">
+    <!-- ==========================================
+         🛡️ ROYAUME 1 : REALM FLAGGARD
+         ========================================== -->
+    <div class="wurm-spec-box">
+        <h3 class="lang-fr">🛡️ Realm Flaggard (Construction)</h3>
+        <h3 class="lang-en">🛡️ Realm Flaggard (Construction)</h3>
+        
+        <div class="spec-line"><span class="spec-label">Type :</span><span class="spec-value">PvE (No Loot / No Steal)</span></div>
+        <div class="spec-line"><span class="spec-label">Action Speed :</span><span class="spec-value highlight">2.5x</span></div>
+        <div class="spec-line"><span class="spec-label">Skill Gain :</span><span class="spec-value">3.0x</span></div>
+        <div class="spec-line"><span class="spec-label">Upkeep Cost :</span><span class="spec-value highlight">0% (Gratuit / Free)</span></div>
+        <div class="spec-line"><span class="spec-label">Max Players :</span><span class="spec-value">250</span></div>
+
+        <!-- Boutons d'action compacts côte à côte -->
+        <div class="wurm-action-row">
+            <button class="wurm-square-btn" onclick="basculerDetails('details-flaggard')">
+                <span class="lang-fr">⚙️ Réglages</span><span class="lang-en">⚙️ Settings</span>
+            </button>
+            <button class="wurm-square-btn" onclick="ouvrirMiniLivemap('map-flaggard', '104.243.40.52', '7220')">
+                <span class="lang-fr">🗺️ Carte / Livemap</span><span class="lang-en">🗺️ Map / Livemap</span>
+            </button>
+            <button class="wurm-square-btn" id="fs-btn-map-flaggard" style="display:none;" onclick="activerGrandEcran('map-flaggard')">
+                <span class="lang-fr">🔲 Géante</span><span class="lang-en">🔲 Giant</span>
+            </button>
+        </div>
+
+        <!-- Résumé détaillé des réglages -->
+        <div id="details-flaggard" style="display:none; margin-top:15px; background:rgba(0,0,0,0.4); padding:12px; border-radius:5px; max-height:150px; overflow-y:auto; font-size:12px; border-left:2px solid #ffcc00; text-align:left;">
+            • Field Growth : 4.0h (Reduced)<br>
+            • Characteristics Start : 25.0 everywhere<br>
+            • Structure Decay : Blocked entirely (0.0)<br>
+            • Breeding Cooldown : Divided by 4
+        </div>
+
+        <!-- Zone d'affichage Leaflet intégrée -->
+        <div class="wurm-map-container" id="map-flaggard">
+            <button class="close-fs-btn" onclick="quitterGrandEcran('map-flaggard')">❌ Fermer / Close</button>
+        </div>
     </div>
 
-    <h1 class="fr-txt">[QC/FR/CAN] QBC Flaggard & Doriath | PVE | 4K+MODS | Montreal 2026</h1>
-    <h1 class="en-txt">[QC/FR/CAN] QBC Flaggard & Doriath | PVE | 4K+MODS | Montreal 2026</h1>
+    <!-- ==========================================
+         ⚜️ ROYAUME 2 : REALM DORIATH
+         ========================================== -->
+    <div class="wurm-spec-box">
+        <h3 class="lang-fr">⚜️ Realm Doriath (Économie)</h3>
+        <h3 class="lang-en">⚜️ Realm Doriath (Economy)</h3>
+        
+        <div class="spec-line"><span class="spec-label">Type :</span><span class="spec-value">PvE (VoteReward Sync)</span></div>
+        <div class="spec-line"><span class="spec-label">Action Speed :</span><span class="spec-value highlight">2.5x</span></div>
+        <div class="spec-line"><span class="spec-label">Skill Gain :</span><span class="spec-value">4.0x</span></div>
+        <div class="spec-line"><span class="spec-label">Ores Drop Rate :</span><span class="spec-value highlight">High-Tier (Rare)</span></div>
+        <div class="spec-line"><span class="spec-label">Max Players :</span><span class="spec-value">250</span></div>
 
-    <!-- BARRE DE NAVIGATION MEDIEVALE AVEC DISCORD -->
-    <div class="medieval-nav">
-        <a href="index.html" class="nav-link active fr-txt">🏡 Forteresse</a>
-        <a href="index.html" class="nav-link active en-txt">🏡 Fortress</a>
-        <a href="mods.html" class="nav-link fr-txt">🛠️ Mods</a>
-        <a href="mods.html" class="nav-link en-txt">🛠️ Mods</a>
-        <a href="vote.html" class="nav-link fr-txt">🗳️ Vote</a>
-        <a href="vote.html" class="nav-link en-txt">🗳️ Vote</a>
-        <a href="https://discord.gg" target="_blank" class="nav-link" style="color: #7289da; text-shadow: 0 0 5px #7289da;">💬 Discord</a>
+        <!-- Boutons d'action compacts côte à côte -->
+        <div class="wurm-action-row">
+            <button class="wurm-square-btn" onclick="basculerDetails('details-doriath')">
+                <span class="lang-fr">⚙️ Réglages</span><span class="lang-en">⚙️ Settings</span>
+            </button>
+            <button class="wurm-square-btn" onclick="ouvrirMiniLivemap('map-doriath', '74.50.94.238', '5610')">
+                <span class="lang-fr">🗺️ Carte / Livemap</span><span class="lang-en">🗺️ Map / Livemap</span>
+            </button>
+            <button class="wurm-square-btn" id="fs-btn-map-doriath" style="display:none;" onclick="activerGrandEcran('map-doriath')">
+                <span class="lang-fr">🔲 Géante</span><span class="lang-en">🔲 Giant</span>
+            </button>
+        </div>
+
+        <!-- Résumé détaillé des réglages -->
+        <div id="details-doriath" style="display:none; margin-top:15px; background:rgba(0,0,0,0.4); padding:12px; border-radius:5px; max-height:150px; overflow-y:auto; font-size:12px; border-left:2px solid #ffcc00; text-align:left;">
+            • Contract Deliveries : 10 Coppers<br>
+            • Combat Multiplier : 1.5x PvE scaling<br>
+            • Rare Spawn Rate : Bosses increased by 30%<br>
+            • Enchantment Max Power : Extended to 105
+        </div>
+
+        <!-- Zone d'affichage Leaflet intégrée -->
+        <div class="wurm-map-container" id="map-doriath">
+            <button class="close-fs-btn" onclick="quitterGrandEcran('map-doriath')">❌ Fermer / Close</button>
+        </div>
     </div>
+</div>
 
-    <!-- ============================================================================== -->
-    <!--  PANNEAU DE CONTROLE INTERACTIF - DOUBLE ROYAUME EN DIRECT                     -->
-    <!-- ============================================================================== -->
-    <div class="cluster-stats-box" style="display: flex !important; justify-content: center !important; gap: 25px !important; margin: 25px 0 !important; flex-wrap: wrap !important;">
-        
-        <!-- BLOC ROYAUME 1 : FLAGGARD -->
-        <div id="card-flaggard" class="realm-stats-card" style="background-color: rgba(15, 12, 8, 0.93) !important; border: 2px solid #b38f00; border-radius: 8px !important; padding: 20px !important; width: 480px !important; box-shadow: 0 6px 15px rgba(0,0,0,0.7) !important;">
-            <div class="realm-stats-header" style="display: flex !important; justify-content: space-between !important; align-items: center !important; border-bottom: 1px solid #594418 !important; padding-bottom: 10px !important; margin-bottom: 15px !important;">
-                <span class="realm-title-text" style="font-size: 18px !important; font-weight: bold !important; color: #ffcc00 !important; text-transform: uppercase !important; letter-spacing: 1px !important;">🛡️ Realm Flaggard</span>
-                <div id="flaggard-status" style="display: flex !important; align-items: center !important;">
-                    <span class="led-indicator led-red"></span> <span style="color:#ff0000; font-size:14px; font-weight:bold;">OFFLINE</span>
-                </div>
-            </div>
-            <div class="realm-grid-data" style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 12px !important;">
-                <div class="data-sub-box" style="background: rgba(0, 0, 0, 0.5) !important; padding: 12px 8px !important; border-radius: 4px !important; text-align: center !important; border: 1px solid #3a2f15 !important;">
-                    <h5 style="margin: 0 0 6px 0 !important; color: #e6c280 !important; font-size: 12px !important; text-transform: uppercase !important;">Guerriers</h5>
-                    <div id="flaggard-players" class="data-sub-value" style="font-size: 20px !important; font-weight: bold !important; color: #ffffff !important;">0 / 250</div>
-                </div>
-                <div class="data-sub-box" style="background: rgba(0, 0, 0, 0.5) !important; padding: 12px 8px !important; border-radius: 4px !important; text-align: center !important; border: 1px solid #3a2f15 !important;">
-                    <h5 style="margin: 0 0 6px 0 !important; color: #e6c280 !important; font-size: 12px !important; text-transform: uppercase !important;">Uptime</h5>
-                    <div id="flaggard-uptime" class="data-sub-value" style="font-size: 14px !important; padding-top:4px !important; font-weight: bold !important; color: #ffffff !important;">0h 0m</div>
-                </div>
-                <div class="data-sub-box" style="background: rgba(0, 0, 0, 0.5) !important; padding: 12px 8px !important; border-radius: 4px !important; text-align: center !important; border: 1px solid #3a2f15 !important;">
-                    <h5 style="margin: 0 0 6px 0 !important; color: #e6c280 !important; font-size: 12px !important; text-transform: uppercase !important;">Créatures</h5>
-                    <div id="flaggard-monsters" class="data-sub-value" style="font-size: 20px !important; font-weight: bold !important; color: #ffffff !important;">0</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- BLOC ROYAUME 2 : DORIATH -->
-        <div id="card-doriath" class="realm-stats-card" style="background-color: rgba(15, 12, 8, 0.93) !important; border: 2px solid #b38f00; border-radius: 8px !important; padding: 20px !important; width: 480px !important; box-shadow: 0 6px 15px rgba(0,0,0,0.7) !important;">
-            <div class="realm-stats-header" style="display: flex !important; justify-content: space-between !important; align-items: center !important; border-bottom: 1px solid #594418 !important; padding-bottom: 10px !important; margin-bottom: 15px !important;">
-                <span class="realm-title-text" style="font-size: 18px !important; font-weight: bold !important; color: #ffcc00 !important; text-transform: uppercase !important; letter-spacing: 1px !important;">⚜️ Realm Doriath</span>
-                <div id="doriath-status" style="display: flex !important; align-items: center !important;">
-                    <span class="led-indicator led-red"></span> <span style="color:#ff0000; font-size:14px; font-weight:bold;">OFFLINE</span>
-                </div>
-            </div>
-            <div class="realm-grid-data" style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 12px !important;">
-                <div class="data-sub-box" style="background: rgba(0, 0, 0, 0.5) !important; padding: 12px 8px !important; border-radius: 4px !important; text-align: center !important; border: 1px solid #3a2f15 !important;">
-                    <h5 style="margin: 0 0 6px 0 !important; color: #e6c280 !important; font-size: 12px !important; text-transform: uppercase !important;">Guerriers</h5>
-                    <div id="doriath-players" class="data-sub-value" style="font-size: 20px !important; font-weight: bold !important; color: #ffffff !important;">0 / 250</div>
-                </div>
-                <div class="data-sub-box" style="background: rgba(0, 0, 0, 0.5) !important; padding: 12px 8px !important; border-radius: 4px !important; text-align: center !important; border: 1px solid #3a2f15 !important;">
-                    <h5 style="margin: 0 0 6px 0 !important; color: #e6c280 !important; font-size: 12px !important; text-transform: uppercase !important;">Uptime</h5>
-                    <div id="doriath-uptime" class="data-sub-value" style="font-size: 14px !important; padding-top:4px !important; font-weight: bold !important; color: #ffffff !important;">0h 0m</div>
-                </div>
-                <div class="data-sub-box" style="background: rgba(0, 0, 0, 0.5) !important; padding: 12px 8px !important; border-radius: 4px !important; text-align: center !important; border: 1px solid #3a2f15 !important;">
-                    <h5 style="margin: 0 0 6px 0 !important; color: #e6c280 !important; font-size: 12px !important; text-transform: uppercase !important;">Créatures</h5>
-                    <div id="doriath-monsters" class="data-sub-value" style="font-size: 20px !important; font-weight: bold !important; color: #ffffff !important;">0</div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- CONFIGURATIONS ET MOTD D'ORIGINE DES ROYAUMES -->
-    <div class="realm-info-box">
-        
-        <!-- ROYAUME FLAGGARD + MOTD -->
-        <div class="realm-card" style="border-color: #e6c280;">
-            <h3 style="color:#e6c280;">🛡️ Kingdom Flaggard</h3>
-            <p class="fr-txt">Futur cluster en cours de construction et d aménagement. Les structures y seront indestructibles et la terraformation y est liberale pour developper vos parcs.</p>
-            <p class="en-txt">Future cluster currently under construction. Buildings are completely indestructible and terrain flattening restrictions are relaxed for architectural designs.</p>
-            
-            <div style="margin-top: 15px; padding: 12px; background: rgba(230, 194, 128, 0.08); border-left: 3px solid #e6c280; font-family: 'Georgia', serif; font-size: 13px; line-height: 1.5; color: #e6c280;">
-                <span class="fr-txt">📜 <strong>MOTD :</strong> CHANTIER CLUSTER EN COURS<br>-----------------------------------<br>[BUILD] Mode planificateur actif. Venez poser vos fondations sans aucune limite de pente ni de maçonnerie !</span>
-                <span class="en-txt">📜 <strong>MOTD :</strong> CLUSTER WORK IN PROGRESS<br>-----------------------------------<br>[BUILD] Planning mode active. Come lay down your foundations with zero slope or masonry restrictions!</span>
-            </div>
-        </div>
-        
-        <!-- ROYAUME DORIATH + MOTD COMPLET -->
-        <div class="realm-card" style="border-color: #ffcc00;">
-            <h3 style="color:#ffcc00;">⚜️ Kingdom Doriath</h3>
-            <p class="fr-txt">Royaume principal en ligne lie au plugin d injection VoteReward. C est ici que s extraient les filons rares d Adamantine et de Glimmer pour vos equipements.</p>
-            <p class="en-txt">Main online realm connected to the VoteReward mechanics. This realm generates rare veins of Adamantine and Glimmer for your gear.</p>
-            
-            <div style="margin-top: 15px; padding: 12px; background: rgba(255, 204, 0, 0.08); border-left: 3px solid #ffcc00; font-family: 'Georgia', serif; font-size: 13px; line-height: 1.5; color: #ffcc00;">
-                <span class="fr-txt">📜 <strong>MOTD :</strong> BIENVENUE SUR QBC DORIATH PVE !<br>--------------------------------------------------<br>• <strong>[MODS]</strong> +100 MODS (Tresors, Octopus Geants, Economie, Saisons)<br>• <strong>[GIFTS]</strong> Premium Gratuit, 5 Argent, Outils Maitre QL70, Stats a 30 (x2) !<br>• <strong>[CRAFT]</strong> ARCHITECTURE : Forteresses 15 etages, Sacs doubles !<br>• <strong>[SURVIVAL]</strong> SURVIE : Nourriture Eternelle, Faim/Soif reduites de 50% !<br>• <strong>[FIX]</strong> ANTI-BUG : Inventaires Securises au niveau Atomique !<br>• <strong>[GODS]</strong> PRETRES LIBERES : Armures lourdes, Mana double, Meditation !<br>--------------------------------------------------<br>Pensez a taper /vote en jeu pour obtenir vos bonus !</span>
-                <span class="en-txt">📜 <strong>MOTD :</strong> WELCOME TO QBC DORIATH PVE!<br>--------------------------------------------------<br>• <strong>[MODS]</strong> +100 MODS (Treasures, Giant Octopus, Economy, Seasons)<br>• <strong>[GIFTS]</strong> Free Premium, 5 Silver, QL70 Master Tools, Stats at 30 (x2)!<br>• <strong>[CRAFT]</strong> ARCHITECTURE: 15 Floors Fortresses, Double Bags!<br>• <strong>[SURVIVAL]</strong> SURVIVAL: Eternal Food, Hunger/Thirst reduced by 50%!<br>• <strong>[FIX]</strong> ANTI-BUG: Atomically Secured Inventories!<br>• <strong>[GODS]</strong> UNLEASHED PRIESTS: Heavy Armor, Double Mana, Continuous Meditation!<br>--------------------------------------------------<br>Remember to type /vote in-game to claim your rewards!</span>
-            </div>
-        </div>
-
-    </div> <!-- Fin de realm-info-box -->
-    <!-- ============================================================================== -->
-    <!--  PANNEAU TECHNIQUE ULTIME : ACCÈS RÉSEAU VS RÉGLAGES GLOBAUX                   -->
-    <!-- ============================================================================== -->
-    <div class="technical-container">
-        
-        <!-- SECTION 1 : ACCÈS AU RÉSEAU DU CLUSTER -->
-        <div class="tech-box">
-            <h3 class="fr-txt">🌐 ACCÈS AUX ROYAUMES</h3>
-            <h3 class="en-txt">🌐 REALM NETWORK ACCESS</h3>
-            <ul>
-                <li><strong>Hostname Cluster :</strong> [QC/FR/CAN] QBC Flaggard & Doriath | Montreal 2026</li>
-                <li>
-                    <strong>🛡️ IP Flaggard (Cluster) :</strong> <span id="ip-flaggard-text">104.243.40.52:5144</span>
-                    <button class="copy-btn fr-txt" onclick="navigator.clipboard.writeText('104.243.40.52:5144'); alert('L\'adresse IP de Flaggard a été copiée !');">📋 Copier</button>
-                    <button class="copy-btn en-txt" onclick="navigator.clipboard.writeText('104.243.40.52:5144'); alert('Flaggard IP address copied successfully!');">📋 Copy</button>
-                </li>
-                <li>
-                    <strong>⚜️ IP Doriath (En Ligne) :</strong> <span id="ip-doriath-text">74.50.94.238:5517</span>
-                    <button class="copy-btn fr-txt" onclick="navigator.clipboard.writeText('74.50.94.238:5517'); alert('L\'adresse IP de Doriath a été copiée !');">📋 Copier</button>
-                    <button class="copy-btn en-txt" onclick="navigator.clipboard.writeText('74.50.94.238:5517'); alert('Doriath IP address copied successfully!');">📋 Copy</button>
-                </li>
-                <li><strong>Domain Global :</strong> ://servegame.com</li>
-                <li><strong>Ports Réseau :</strong> Flaggard (Query: 5134) | Doriath (Query: 5610)</li>
-                <li><strong>Location Physique :</strong> Canada, Québec, Montréal</li>
-                <li><strong>Time Zone Cluster :</strong> UTC/GMT -5 hours (Heure de Montréal / EST-EDT)</li>
-                <li><strong>Platform Hardware :</strong> Dedicated Windows Server x64</li>
-                <li><strong>Owner / Fondateur :</strong> LaTrouTe</li>
-            </ul>
-        </div>
-
-        <!-- SECTION 2 : CONFIGURATIONS GLOBALES COMPLÈTES (WURM.INI) -->
-        <div class="tech-box">
-            <h3 class="fr-txt">📜 RÈGLES ET CONFIGURATIONS GLOBALES</h3>
-            <h3 class="en-txt">📜 SYSTEM GLOBAL CONFIGURATIONS</h3>
-            <ul class="fr-txt">
-                <li><strong>Apprentissage (SkillGainRate) :</strong> Vitesse d'expérience multipliée par <strong>x3.0</strong> (No Grind)</li>
-                <li><strong>Vitesse des actions (ActionTimer) :</strong> Fixée à <strong>0.33</strong> (Actions instantanées x2 globales)</li>
-                <li><strong>Caractéristiques de départ :</strong> Valeurs statistiques héroïques bloquées à <strong>30.0</strong> à la création</li>
-                <li><strong>Architecture & Maçonnerie :</strong> Forteresses de cités monumentales jusqu'à <strong>15 étages</strong> autorisées</li>
-                <li><strong>Écosystème Monstrueux :</strong> Cap de 50 000 créatures actives maximum avec un taux d'agressivité fixé à 20%</li>
-                <li><strong>Sauvegarde automatique :</strong> Processus d'auto-save toutes les 5 minutes avec rétention de backups complets sur 24 heures</li>
-                <li><strong>Maintenance de la RAM :</strong> <strong>1 Reboot quotidien automatique et complet à 5:00 AM (Heure du Québec / Canada)</strong></li>
-            </ul>
-            <ul class="en-txt">
-                <li><strong>Experience Rates (SkillGainRate) :</strong> Flat <strong>x3.0</strong> experience multiplier injected (No Grind mechanics)</li>
-                <li><strong>Action Speed (ActionTimer) :</strong> Locked at <strong>0.33</strong> processing thresholds (Instant processing x2)</li>
-                <li><strong>Base Attributes:</strong> Heroic starting stats locked at <strong>30.0</strong> flat parameters upon landing</li>
-                <li><strong>Supreme Architecture:</strong> Massive medieval structural blueprints up to <strong>15 floors</strong> completely allowed</li>
-                <li><strong>Ecosystem Rules:</strong> 50K active creature caps maximum with a balanced 20% aggressiveness rate</li>
-                <li><strong>Database Routine:</strong> Auto-save database tasks executed every 5 minutes with 24-hour backup retention packs</li>
-                <li><strong>RAM Maintenance:</strong> <strong>1 Automated daily server reboot routine at 5:00 AM (Quebec / Montreal Time Zone)</strong></li>
-            </ul>
-        </div>
-
-    </div>
-
-</div> <!-- Fin de la div container principale -->
-
-<!-- ============================================================================== -->
-<!--  SCRIPT AUTOMATIQUE - DOUBLE SCAN RÉSEAU EN TEMPS RÉEL (MONTRÉAL & LEGION)     -->
-<!-- ============================================================================== -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="../index.html" class="back-btn">
+        <span class="lang-fr">⬅️ Retour au Portail</span>
+        <span class="lang-en">⬅️ Back to Portal</span>
+    </a>
+</div>
 <script>
-function convertUptimeSeconds(seconds) {
-    if(!seconds || seconds <= 0) return "En ligne";
-    let uptimeSeconds = parseInt(seconds);
-    let hours = Math.floor(uptimeSeconds / 3600);
-    let minutes = Math.floor((uptimeSeconds % 3600) / 60);
-    return hours + "h " + minutes + "m";
-}
+    // --- DICTIONNAIRE DE STOCKAGE DES INSTANCES DE CARTES LEAFLET ---
+    const instancesCartesWurm = {};
 
-function refreshClusterNetwork() {
-    // --- FILTRAGE ET MISE À JOUR DE LA STRUCTURE DE FLAG_GARD ---
-    fetch('https://gamemonitoring.net')
-    .then(res => res.json()).then(data => {
-        const card = document.getElementById('card-flaggard');
-        if(data && data.status === "online") {
-            card.className = "realm-stats-card online-border";
-            document.getElementById('flaggard-status').innerHTML = '<span class="led-indicator led-green"></span> <span style="color:#00ff00; text-shadow: 0 0 5px #00ff00;">ONLINE</span>';
-            document.getElementById('flaggard-players').innerText = data.players + " / 250";
-            document.getElementById('flaggard-monsters').innerText = data.bots ? Number(data.bots).toLocaleString('fr-CA') : "3 000";
-            document.getElementById('flaggard-uptime').innerText = convertUptimeSeconds(data.uptime);
+    // --- ENREGISTREUR TECHNIQUE ET OUVERTURE LEAFLET ---
+    function ouvrirMiniLivemap(idConteneur, ipServeur, portServeur) {
+        const conteneurMap = document.getElementById(idConteneur);
+        const boutonFs = document.getElementById('fs-btn-' + idConteneur);
+
+        // Si le cadre est fermé, on l'affiche et on initialise le moteur cartographique Leaflet
+        if (conteneurMap.style.display === "none" || conteneurMap.style.display === "") {
+            conteneurMap.style.display = "block";
+            if (boutonFs) boutonFs.style.display = "inline-block";
+
+            // Sécurité : On initialise la carte Leaflet uniquement si elle n'existe pas déjà en mémoire cache
+            if (!instancesCartesWurm[idConteneur]) {
+                
+                // 1. Initialisation du canvas Leaflet centré sur l'origine du monde Wurm
+                const instance = L.map(idConteneur, {
+                    center:,
+                    zoom: 2,
+                    minZoom: 1,
+                    maxZoom: 5,
+                    crs: L.CRS.Simple // Coordonnées planes idéales pour les cartes de jeux vidéo
+                });
+
+                // 2. Connexion et injection des tuiles d'images (Tilesets) de votre serveur Wurm
+                L.tileLayer(`http://${ipServeur}:${portServeur}/tiles/{z}/{x}/{y}.png`, {
+                    attribution: 'QBC Multigaming Cluster Maps',
+                    noWrap: true
+                }).addTo(instance);
+
+                // 3. Marqueur de test central de zone
+                L.marker([0, 0]).addTo(instance)
+                    .bindPopup(idConteneur === 'map-flaggard' ? '⚔️ Centre Flaggard Town' : '⚜️ Capitale Doriath Hub')
+                    .openPopup();
+
+                // Sauvegarde de l'instance réseau en mémoire
+                instancesCartesWurm[idConteneur] = instance;
+                
+                // Forcer le recalcule des dimensions pour effacer les bugs d'affichage gris
+                setTimeout(() => { instance.invalidateSize(); }, 200);
+            } else {
+                // Si elle existe déjà, on rafraîchit simplement sa taille à l'écran
+                setTimeout(() => { instancesCartesWurm[idConteneur].invalidateSize(); }, 50);
+            }
         } else {
-            card.className = "realm-stats-card offline-border";
-            document.getElementById('flaggard-status').innerHTML = '<span class="led-indicator led-red"></span> <span style="color:#ff0000;">OFFLINE</span>';
-            document.getElementById('flaggard-players').innerText = "0 / 250";
-            document.getElementById('flaggard-monsters').innerText = "0";
-            document.getElementById('flaggard-uptime').innerText = "En Construction";
+            // Si l'utilisateur clique à nouveau, le conteneur et le bouton plein écran se masquent proprement
+            conteneurMap.style.display = "none";
+            if (boutonFs) boutonFs.style.display = "none";
         }
-    }).catch(e => { document.getElementById('flaggard-status').innerHTML = '<span class="led-indicator led-red"></span> <span style="color:#ff0000;">OFFLINE</span>'; });
+    }
 
-    // --- FILTRAGE ET MISE À JOUR DE LA STRUCTURE DE DORIATH ---
-    fetch('https://gamemonitoring.net')
-    .then(res => res.json()).then(data => {
-        const card = document.getElementById('card-doriath');
-        if(data && data.status === "online") {
-            card.className = "realm-stats-card online-border";
-            document.getElementById('doriath-status').innerHTML = '<span class="led-indicator led-green"></span> <span style="color:#00ff00; text-shadow: 0 0 5px #00ff00;">ONLINE</span>';
-            document.getElementById('doriath-players').innerText = data.players + " / 250";
-            document.getElementById('doriath-monsters').innerText = data.bots ? Number(data.bots).toLocaleString('fr-CA') : "3 000";
-            document.getElementById('doriath-uptime').innerText = convertUptimeSeconds(data.uptime);
+    // --- CONTROLLER D'AFFICHAGE EN PLEIN ÉCRAN GEANT ---
+    function activerGrandEcran(idConteneur) {
+        const conteneurMap = document.getElementById(idConteneur);
+        conteneurMap.classList.add('giant-fullscreen');
+        
+        // Rafraîchissement des dimensions Leaflet après passage en mode plein écran
+        if (instancesCartesWurm[idConteneur]) {
+            setTimeout(() => { instancesCartesWurm[idConteneur].invalidateSize(); }, 150);
+        }
+    }
+
+    function quitterGrandEcran(idConteneur) {
+        const conteneurMap = document.getElementById(idConteneur);
+        conteneurMap.classList.remove('giant-fullscreen');
+        
+        // Réalignement de la carte après réduction dans sa boîte d'origine
+        if (instancesCartesWurm[idConteneur]) {
+            setTimeout(() => { instancesCartesWurm[idConteneur].invalidateSize(); }, 150);
+        }
+    }
+
+    // --- INTERACTIF DES SETTINGS ---
+    function basculerDetails(idVolet) {
+        const volet = document.getElementById(idVolet);
+        volet.style.display = (volet.style.display === "none") ? "block" : "none";
+    }
+
+    // --- COMMUTATEUR DE LANGUE ---
+    function changerLangue(langue) {
+        const elFr = document.querySelectorAll('.lang-fr');
+        const elEn = document.querySelectorAll('.lang-en');
+        const boutons = document.querySelectorAll('.lang-btn');
+        boutons.forEach(b => b.classList.remove('active-lang'));
+        
+        if (langue === 'fr') {
+            elFr.forEach(e => e.style.display = 'block');
+            elEn.forEach(e => e.style.display = 'none');
+            document.getElementById('btn-fr').classList.add('active-lang');
         } else {
-            card.className = "realm-stats-card offline-border";
-            document.getElementById('doriath-status').innerHTML = '<span class="led-indicator led-red"></span> <span style="color:#ff0000;">OFFLINE</span>';
-            document.getElementById('doriath-players').innerText = "0 / 250";
-            document.getElementById('doriath-monsters').innerText = "0";
-            document.getElementById('doriath-uptime').innerText = "0h 0m";
+            elFr.forEach(e => e.style.display = 'none');
+            elEn.forEach(e => e.style.display = 'block');
+            document.getElementById('id-btn-en').classList.add('active-lang');
         }
-    }).catch(e => { document.getElementById('doriath-status').innerHTML = '<span class="led-indicator led-red"></span> <span style="color:#ff0000;">OFFLINE</span>'; });
-}
+    }
 
-// Lancement automatique immédiat et synchronisation réseau toutes les 30 secondes
-refreshClusterNetwork();
-setInterval(refreshClusterNetwork, 30000);
+    // 🔒 SÉCURITÉ DE VOS SCRIPTS ET SYSTEMES : Bloque Clic Droit & F12
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
+        if (e.key === 'F12') { e.preventDefault(); }
+    });
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
 
