@@ -3,110 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[QBC] Wurm Unlimited | Terminal Fantastique</title>
+    <title>[QBC] Wurm Unlimited | Terminal Fantastique 2026</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* 🏰 LOOK SUPRÊME MÉDIÉVAL BRUN CUIR & OR LUMINEUX */
-        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background: #0c0805; color: #f4eae1; font-family: 'Georgia', serif, sans-serif; }
-        .game-layout { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        /* 🌌 FOND RECALIBRÉ CLAIR : Filtre ultra-léger sur votre image background1.jpg */
+        body { 
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; 
+            background-color: #0c0805; color: #f4eae1; font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            min-height: 100vh; overflow-x: hidden;
+            background-image: radial-gradient(circle at center, rgba(45, 30, 19, 0.25) 0%, rgba(8, 5, 3, 0.45) 100%), url('background1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .game-layout { max-width: 1200px; width: 100%; margin: 0 auto; padding: 20px; box-sizing: border-box; }
         
+        /* Fiche technique translucide effet verre */
         .server-card { 
-            background: rgba(28, 19, 12, 0.97); 
-            border: 1px solid #5c4028; 
-            border-radius: 10px; 
-            padding: 30px; 
-            text-align: center; 
-            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.12); 
+            background: rgba(28, 18, 12, 0.92); 
+            border: 1px solid rgba(212, 175, 55, 0.35); 
+            border-radius: 16px; padding: 30px; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8); 
+            backdrop-filter: blur(10px);
         }
         
-        .led-green { width: 8px; height: 8px; background-color: #d4af37; border-radius: 50%; box-shadow: 0 0 8px #d4af37; display: inline-block; margin-right: 6px; }
+        /* 💡 LED DE STATUT FLASHY COULEUR STANDARD INTERNATIONALE (VERT) */
+        .led-green { width: 8px; height: 8px; background-color: #2ecc71; border-radius: 50%; box-shadow: 0 0 10px #2ecc71; display: inline-block; margin-right: 6px; }
         
-        /* Boutons Brun Foncé Rétroéclairés Or */
-        .btn-7dtd { 
-            background: #26170c; 
-            color: #d4af37; 
-            border: 1px solid #735132; 
-            padding: 8px 15px; 
+        /* Bouton Retour Portail Sombre Solide Visible */
+        .btn-portal-back {
+            background: #19100a !important; 
+            color: #ffffff !important; 
+            border: 1px solid #d4af37 !important; 
+            padding: 10px 20px; 
             font-weight: bold; 
             text-transform: uppercase; 
-            border-radius: 4px; 
+            border-radius: 8px; 
             font-size: 11px; 
             cursor: pointer; 
-            transition: 0.2s; 
+            transition: 0.3s; 
             text-decoration: none; 
-            box-shadow: inset 0 0 8px rgba(212, 175, 55, 0.05);
             font-family: sans-serif;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            display: inline-block;
         }
-        .btn-7dtd:hover { 
-            background: #d4af37; 
-            color: #1c130c; 
-            border-color: #d4af37; 
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); 
+        .btn-portal-back:hover { 
+            background: #d4af37 !important; 
+            color: #1c130c !important; 
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); 
+            transform: translateY(-2px); 
         }
-        
-        .type-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 4px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; margin-right: 15px; border: 1px solid transparent; font-family: sans-serif; }
-        
-        .live-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
-        
-        .info-panel { 
-            background: #140d08; 
-            border: 1px dashed #735132; 
-            padding: 12px; 
-            border-radius: 5px; 
-            text-align: center; 
+
+        .btn-7dtd { 
+            background: rgba(38, 23, 13, 0.8); color: #d4af37; border: 1px solid #735132; 
+            padding: 10px 20px; font-weight: bold; text-transform: uppercase; border-radius: 8px; 
+            font-size: 11px; cursor: pointer; transition: 0.3s; text-decoration: none; font-family: sans-serif;
+            backdrop-filter: blur(4px);
         }
-        .info-panel h5 { margin: 0 0 6px 0; color: #d4af37; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 0 0 3px rgba(212, 175, 55, 0.2); font-family: sans-serif; }
+        .btn-7dtd:hover { background: #d4af37; color: #1c130c; border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); transform: translateY(-2px); }
+        
+        /* 💡 BADGE STANDARD : Reprend les couleurs vertes de sécurité identiques à 7DTD */
+        .type-badge { display: inline-block; font-size: 11px; padding: 4px 12px; border-radius: 6px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; margin-right: 15px; border: 1px solid #1a3a24 !important; color: #2ecc71 !important; background: rgba(46,204,113,0.06) !important; font-family: monospace; }
+        
+        .live-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin: 25px 0; }
+        
+        .info-panel { background: rgba(20, 13, 8, 0.7); border: 1px dashed rgba(212, 175, 55, 0.4); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(4px); }
+        .info-panel h5 { margin: 0 0 6px 0; color: #d4af37; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 0 0 5px rgba(212,175,55,0.2); font-family: sans-serif; }
         .info-panel .val { font-size: 13px; font-weight: bold; color: #fff; font-family: monospace; }
         
-        .map-preview-container { margin: 20px 0; background: #110a06; border: 1px solid #5c4028; padding: 10px; border-radius: 6px; }
-        .map-interactive-image { width: 100%; max-width: 500px; height: auto; border: 1px solid #735132; border-radius: 4px; transition: 0.3s; cursor: pointer; }
-        .map-interactive-image:hover { border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); transform: scale(1.01); }
+        .map-preview-container { margin: 25px 0; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 12px; }
+        .map-interactive-image { width: 100%; max-width: 500px; height: auto; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 8px; transition: 0.3s ease; cursor: pointer; }
+        .map-interactive-image:hover { border-color: #d4af37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); transform: scale(1.01); }
         
-        .dashboard-container { display: flex; gap: 20px; margin-top: 25px; text-align: left; height: 280px; }
-        .sidebar-tabs { width: 220px; display: flex; flex-direction: column; gap: 8px; background: #160f0a; border: 1px solid #5c4028; padding: 12px; border-radius: 6px; }
+        .dashboard-container { display: flex; gap: 20px; margin-top: 30px; text-align: left; height: 280px; }
+        .sidebar-tabs { width: 220px; display: flex; flex-direction: column; gap: 8px; background: rgba(20, 13, 8, 0.7); border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; }
         
-        .tab-btn { 
-            background: rgba(212, 175, 55, 0.01); 
-            border: 1px solid #735132; 
-            color: #c4b4a3; 
-            padding: 10px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            font-size: 11px; 
-            text-align: left; 
-            transition: 0.2s; 
-            text-transform: uppercase; 
-            font-family: sans-serif;
-        }
-        .tab-btn:hover, .tab-btn.active { border-color: #d4af37; color: #ffffff; background: rgba(212, 175, 55, 0.12); box-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
+        .tab-btn { background: rgba(255,255,255,0.01); border: 1px solid rgba(212, 175, 55, 0.3); color: #c4b4a3; padding: 11px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; text-align: left; transition: 0.2s; text-transform: uppercase; font-family: sans-serif; }
+        .tab-btn:hover, .tab-btn.active { border-color: #d4af37; color: #ffffff; background: rgba(212, 175, 55, 0.2); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
         
-        .content-display-area { flex: 1; background: #110a06; border: 1px solid #5c4028; padding: 20px; border-radius: 6px; overflow-y: auto; line-height: 1.6; font-size: 13px; color: #f4eae1; }
-        .content-display-area h4 { color: #d4af37; margin-top: 0; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #735132; padding-bottom: 5px; text-shadow: 0 0 4px rgba(212, 175, 55, 0.3); font-family: sans-serif; }
+        .content-display-area { flex: 1; background: rgba(15, 10, 6, 0.75); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; overflow-y: auto; line-height: 1.6; font-size: 13px; color: #f4eae1; backdrop-filter: blur(4px); }
+        .content-display-area h4 { color: #d4af37; margin-top: 0; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 5px; text-shadow: 0 0 5px rgba(212,175,55,0.2); font-family: sans-serif; }
     </style>
 </head>
 <body>
 <div class="game-layout">
     <div style="text-align: left; margin-bottom: 20px;">
-        <a href="../index.html" class="btn-7dtd" style="background:#19100a; color:#fff; border-color:#5c4028;">🏡 Retour au Portail</a>
+        <a href="../index.html" class="btn-portal-back">🏡 Retour au Portail</a>
     </div>
     <div class="server-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #5c4028; padding-bottom: 10px; margin-bottom: 20px;">
-            <span id="server-title" style="font-size: 22px; color: #d4af37; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);">Ouverture du Registre Impérial...</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 15px; margin-bottom: 25px;">
+            <span id="server-title" style="font-size: 22px; color: #d4af37; font-weight: bold; letter-spacing: 0.5px; text-shadow: 0 0 10px rgba(212,175,55,0.3);">Ouverture du Registre Impérial...</span>
             <div style="display: flex; align-items: center;">
+                <!-- 💡 APPLIQUE LA STRUCTURE STANDARD EXACTE DU BADGE -->
                 <div id="server-game-mode-badge" class="type-badge">Scan System...</div>
                 <span class="led-green"></span>
-                <span style="color:#d4af37; font-weight:bold; font-size: 13px; text-shadow: 0 0 5px #d4af37;">REALM: </span>
-                <span id="players-count" style="font-size:18px; font-weight:bold; margin-left: 5px; color:#fff; font-family:monospace;">0 / 40</span>
+                <span style="color:#2ecc71; font-weight:bold; font-size: 13px; text-shadow: 0 0 5px #2ecc71;">ONLINE: </span>
+                <span id="players-count" style="font-size:18px; font-weight:bold; margin-left: 5px; font-family: monospace; color:#fff;">0 / 250</span>
             </div>
         </div>
         <div class="live-info-grid">
-            <div class="info-panel"><h5>🗺️ Royaume Actif</h5><div id="wurm-map-name" class="val">-</div></div>
-            <div class="info-panel"><h5>⚙️ Version Jeu</h5><div id="wurm-version" class="val">-</div></div>
-            <div class="info-panel"><h5>⏱️ Climat Écosystème</h5><div id="wurm-time" class="val">-</div></div>
-            <div class="info-panel"><h5>🛡️ Sécurité Divine</h5><div id="wurm-shield" class="val" style="color: #2ecc71;">100% Actif</div></div>
-            <div class="info-panel"><h5>💥 Monstres Vaincus</h5><div id="wurm-kills" class="val">-</div></div>
-            <div class="info-panel" style="border-color: #d4af37;"><h5 style="color: #d4af37; text-shadow: 0 0 4px rgba(212, 175, 55, 0.2);">🔄 Prochain Reboot</h5><div id="wurm-reboot-countdown" class="val" style="color: #d4af37;">Calcul...</div></div>
+            <div class="info-panel"><h5>🗺️ Royaume Actif / Active Realm</h5><div id="wurm-map-name" class="val">-</div></div>
+            <div class="info-panel"><h5>⚙️ Version Jeu / Game Version</h5><div id="wurm-version" class="val">-</div></div>
+            <div class="info-panel"><h5>⏱️ Climat Écosystème / Weather</h5><div id="wurm-time" class="val">-</div></div>
+            <div class="info-panel"><h5>🛡️ Sécurité Divine / Shield</h5><div id="wurm-shield" class="val" style="color: #2ecc71;">100% Actif</div></div>
+            <div class="info-panel"><h5>💥 Monstres Vaincus / Slayed</h5><div id="wurm-kills" class="val">-</div></div>
+            <div class="info-panel" style="border-color: #d4af37;"><h5 style="color: #d4af37;">🔄 Prochain Reboot / Restart</h5><div id="wurm-reboot-countdown" class="val" style="color: #d4af37;">Calcul...</div></div>
         </div>
         <div class="map-preview-container">
             <h5 style="color: #d4af37; margin: 0 0 8px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; text-shadow: 0 0 3px rgba(212, 175, 55, 0.2);">🗺️ Cartographie d'Orientation du Territoire (Cliquez pour agrandir) :</h5>
@@ -116,43 +118,48 @@
         </div>
         <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;">
             <button id="radar-refresh-btn" class="btn-7dtd" onclick="forceRadarRefresh()">📡 Scan Auto dans 60s</button>
-            <a id="wurm-vote-action-btn" href="#" target="_blank" class="btn-7dtd" style="border-color: #d4af37; color: #d4af37; display: inline-block; line-height: 1.4;">🗳️ Voter pour ce Royaume</a>
+            <a id="wurm-vote-action-btn" href="#" target="_blank" class="btn-7dtd" style="border-color: #d4af37; color: #d4af37; display: inline-block; line-height: 1.4; box-shadow: 0 0 10px rgba(212,175,55,0.1);">🗳️ Voter pour ce Royaume / Vote</a>
         </div>
         <div class="dashboard-container">
             <div class="sidebar-tabs">
                 <button id="tab-motd" class="tab-btn active" onclick="switchConsoleTab('motd')">📢 Chroniques (MOTD)</button>
-                <button id="tab-rules" class="tab-btn" onclick="switchConsoleTab('rules')">📜 Lois Impériales</button>
+                <button id="tab-rules" class="tab-btn" onclick="switchConsoleTab('rules')">📜 Lois Impériales / Rules</button>
             </div>
             <div id="consoleDisplayArea" class="content-display-area">-</div>
         </div>
     </div>
 </div>
+<script src="../js/config.js"></script>
 <script>
-const INTERNAL_WURM_CONFIG = {
-    "wurm1": { "ip": "104.243.40.52", "port": "5134", "mapImg": "wurm1_map.jpg", "voteLink": "https://wurm-unlimited.com" },
-    "wurm2": { "ip": "74.50.94.238", "port": "5610", "mapImg": "wurm2_map.jpg", "voteLink": "https://wurm-unlimited.com" }
-};
 const SEPARATED_WURM_DATA = {
     'wurm1': {
         name: "🛡️ QBC WURM UNLIMITED — ROYAUME DORIATH",
-        gameModeText: "🏰 REALM CREATION",
-        gameModeColor: "#d4af37", gameModeBg: "rgba(212,175,55,0.06)", gameModeBorder: "#735132",
+        gameModeText: "🟢 REALM ONLINE", gameModeColor: "#2ecc71", gameModeBg: "rgba(46,204,113,0.06)", gameModeBorder: "#1a3a24", playerIcon: "🏰",
         mapFallback: "Doriath_Imperial_Map", timeFallback: "Printemps - Journée Calme", versionFallback: "v1.9 Stable", killsFallback: "14,850 Vaincus",
         morningReboot: 6, eveningReboot: 18,
-        motd: `<h4>📢 CHRONIQUES DU ROYAUME — DORIATH</h4><p style="color: #d4af37; font-weight: bold; text-transform: uppercase;">⚔️ SÉCURISATION ET EXPANSION DE VOS DEEDS ⚔️</p>
-               <details open style="background: rgba(212, 175, 55, 0.02); border: 1px solid #735132; padding: 6px; margin-bottom: 6px;"><summary style="color: #d4af37; font-weight: bold; font-size: 12px; cursor: pointer;">📋 Fiche Technique : QBC Doriath</summary><div style="padding: 5px; font-size: 11px; color: #fff; font-family: monospace;"><strong>ServerDescription:</strong> Skillgain x5 | Action x3 | Économie calibrée RPG. IP: 104.243.40.52</div></details>
-               <p style="margin-top: 15px; padding: 6px; background: rgba(255,204,0,0.03); border: 1px dashed #d4af37; border-radius: 4px; font-size: 11px;"><strong style="color: #d4af37;">🔄 Statut :</strong> <span style="color: #fff; font-weight: bold;">❌ AUCUN WIPE EN COURS (Sauvegarde à vie)</span></p>`,
-        rules: `<h4>📜 LOIS DU ROYAUME — DORIATH</h4><div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;"><p><strong>1✗- VOLS INTERDITS :</strong> Le pillage de structures hors de votre territoire (Deed) est banni.</p><p><strong>2✗- TERRAFORMATION :</strong> Ne pas obstruer les routes impériales publiques.</p></div>`
+        motd: `<h4>📢 CHRONIQUES DU ROYAUME — DORIATH / REALM ANNOUNCEMENTS</h4>
+               <p style="color: #d4af37; font-weight: bold; text-transform: uppercase;">⚔️ SÉCURISATION ET EXPANSION DE VOS DEEDS / EXPANDING YOUR DEEDS ⚔️</p>
+               <details open style="background: rgba(212, 175, 55, 0.02); border: 1px solid #735132; padding: 6px; margin-bottom: 6px;"><summary style="color: #d4af37; font-weight: bold; font-size: 12px; cursor: pointer;">📋 Fiche Technique / Technical Data : QBC Doriath</summary>
+               <div style="padding: 5px; font-size: 11px; color: #fff; font-family: monospace;"><strong>ServerDescription:</strong> Skillgain x5 | Action x3 | Économie calibrée RPG / RPG Calibrated Economy. IP: 104.243.40.52</div></details>
+               <p style="margin-top: 15px; padding: 6px; background: rgba(255,204,0,0.03); border: 1px dashed #d4af37; border-radius: 4px; font-size: 11px;"><strong style="color: #d4af37;">🔄 Statut / Status :</strong> <span style="color: #fff; font-weight: bold;">❌ AUCUN WIPE EN COURS / NO WIPE (Sauvegarde à vie / Lifetime Backup)</span></p>`,
+        rules: `<h4>📜 LOIS DU ROYAUME — DORIATH / REALM LAWS</h4>
+                <div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;">
+                <p><strong>1✗- VOLS INTERDITS / NO STEALING :</strong> Le pillage de structures hors de votre territoire (Deed) est banni. / Plundering structures outside your territory is strictly banned.</p>
+                </div>`
     },
     'wurm2': {
         name: "🛡️ QBC WURM UNLIMITED — ROYAUME FLAGGARD",
-        gameModeText: "🏰 REALM AVENTURE",
-        gameModeColor: "#d4af37", gameModeBg: "rgba(212,175,55,0.06)", gameModeBorder: "#735132",
+        gameModeText: "🟢 REALM ONLINE", gameModeColor: "#2ecc71", gameModeBg: "rgba(46,204,113,0.06)", gameModeBorder: "#1a3a24", playerIcon: "⚔️",
         mapFallback: "Flaggard_Wild_Lands", timeFallback: "Été - Ciel Dégagé", versionFallback: "v1.9 Custom", killsFallback: "4,120 Vaincus",
         morningReboot: 5, eveningReboot: 17,
-        motd: `<h4>📢 CHRONIQUES DU ROYAUME — FLAGGARD</h4><p style="color: #d4af37; font-weight: bold; text-transform: uppercase; font-size: 13px; margin-bottom: 12px;">🌱 NOUVELLES CONQUÊTES ET ÉLEVAGES DE DRAGONS</p>
-               <details open style="background: rgba(212, 175, 55, 0.02); border: 1px solid #735132; padding: 6px;"><summary style="color: #d4af37; font-weight: bold; font-size: 12px; cursor: pointer;">📋 Fiche Technique : QBC Flaggard</summary><div style="padding: 5px; font-size: 11px; color: #fff; font-family: monospace;"><strong>ServerDescription:</strong> IP: 74.50.94.238 | Mods Élevages avancés activés.</div></details>`,
-        rules: `<h4>📜 LOIS DU ROYAUME — FLAGGARD</h4><div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;"><p><strong>1✗- RESPECT DES LIMITES :</strong> Ne construisez pas à moins de 50 tuiles d'un village existant sans accord.</p></div>`
+        motd: `<h4>📢 CHRONIQUES DU ROYAUME — FLAGGARD / REALM ANNOUNCEMENTS</h4>
+               <p style="color: #d4af37; font-weight: bold; text-transform: uppercase; font-size: 13px; margin-bottom: 12px;">🌱 NOUVELLES CONQUÊTES ET ÉLEVAGES DE DRAGONS / NEW CONQUESTS & DRAGON BREEDING</p>
+               <details open style="background: rgba(212, 175, 55, 0.02); border: 1px solid #735132; padding: 6px;"><summary style="color: #d4af37; font-weight: bold; font-size: 12px; cursor: pointer;">📋 Fiche Technique / Technical Data : QBC Flaggard</summary>
+               <div style="padding: 5px; font-size: 11px; color: #fff; font-family: monospace;"><strong>ServerDescription:</strong> IP: 74.50.94.238 | Mods Élevages avancés activés / Advanced breeding mods activated.</div></details>`,
+        rules: `<h4>📜 LOIS DU ROYAUME — FLAGGARD / REALM LAWS</h4>
+                <div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;">
+                <p><strong>1✗- RESPECT DES LIMITES / RESPECT BOUNDARIES :</strong> Ne construisez pas à moins de 50 tuiles d'un village existant sans accord. / Do not build within 50 tiles of an existing village without an agreement.</p>
+                </div>`
     }
 };
 
@@ -194,15 +201,19 @@ function updateRebootTimer() {
 }
 
 function loadWurmStats(isAutoRefresh) {
-    activeServerKey = new URLSearchParams(window.location.search).get('server') || 'wurm1';
-    
-    if (activeServerKey !== 'wurm1' && activeServerKey !== 'wurm2') {
-        activeServerKey = 'wurm1';
+    let searchKey = new URLSearchParams(window.location.search).get('server');
+    if (!searchKey) {
+        if (window.location.href.includes('wurm1')) searchKey = 'wurm1';
+        else if (window.location.href.includes('wurm2')) searchKey = 'wurm2';
+        else searchKey = 'wurm1';
     }
-    
+    activeServerKey = searchKey;
     const currentData = SEPARATED_WURM_DATA[activeServerKey];
-    const activeMapImg = INTERNAL_WURM_CONFIG[activeServerKey].mapImg;
-    const activeVoteLink = INTERNAL_WURM_CONFIG[activeServerKey].voteLink;
+    
+    const realNetConfig = (typeof QBC_GLOBAL_CONFIG !== 'undefined') ? QBC_GLOBAL_CONFIG[activeServerKey] : null;
+    const activeMapImg = realNetConfig ? realNetConfig.mapImg : currentData.mapImg;
+    const activeVoteLink = realNetConfig ? realNetConfig.voteLink : "#";
+    const maxSlots = realNetConfig ? (realNetConfig.maxPlayers || 250) : 250;
 
     document.getElementById('server-title').innerText = currentData.name;
     
@@ -217,8 +228,14 @@ function loadWurmStats(isAutoRefresh) {
         voteBtn.href = activeVoteLink;
     }
 
+    // 💡 REMPLACEMENT STANDARD NATIONAL : Aligné sur le vert de 7DTD / Avorion
     const mb = document.getElementById('server-game-mode-badge');
-    if (mb) { mb.innerText = currentData.gameModeText; mb.style.color = currentData.gameModeColor; mb.style.borderColor = currentData.gameModeBorder; mb.style.background = currentData.gameModeBg; }
+    if (mb) { 
+        mb.innerText = currentData.gameModeText; 
+        mb.style.color = currentData.gameModeColor; 
+        mb.style.borderColor = currentData.gameModeBorder; 
+        mb.style.background = currentData.gameModeBg; 
+    }
     
     if (!isAutoRefresh) switchConsoleTab('motd');
     updateRebootTimer();
@@ -228,7 +245,7 @@ function loadWurmStats(isAutoRefresh) {
         .then(res => res.json())
         .then(data => {
             if (data.online) {
-                document.getElementById('players-count').innerText = `${data.count} / ${data.maxPlayers || 40}`;
+                document.getElementById('players-count').innerText = `${data.count} / ${maxSlots}`;
                 document.getElementById('wurm-map-name').innerText = data.map || currentData.mapFallback;
                 document.getElementById('wurm-version').innerText = data.version || currentData.versionFallback;
                 document.getElementById('wurm-time').innerText = data.time || currentData.timeFallback;
@@ -236,7 +253,7 @@ function loadWurmStats(isAutoRefresh) {
             }
         })
         .catch(() => {
-            document.getElementById('players-count').innerText = "0 / 40";
+            document.getElementById('players-count').innerText = `0 / ${maxSlots}`;
             document.getElementById('wurm-map-name').innerText = currentData.mapFallback; 
             document.getElementById('wurm-version').innerText = currentData.versionFallback; 
             document.getElementById('wurm-time').innerText = currentData.timeFallback;
@@ -246,23 +263,7 @@ function loadWurmStats(isAutoRefresh) {
 
 loadWurmStats(false);
 document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => { if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 's' || e.key === 'S')) e.preventDefault(); });
+document.addEventListener('keydown', e => { if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) e.preventDefault(); });
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
