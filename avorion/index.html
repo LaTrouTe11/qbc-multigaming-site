@@ -44,7 +44,6 @@
         }
         
         .type-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 4px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; margin-right: 15px; border: 1px solid transparent; }
-        
         .live-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
         
         .info-panel { 
@@ -95,7 +94,7 @@
                 <div id="server-game-mode-badge" class="type-badge">Scan System...</div>
                 <span class="led-green"></span>
                 <span style="color:#00ffcc; font-weight:bold; font-size: 13px; text-shadow: 0 0 5px #00ffcc;">LINK: </span>
-                <span id="players-count" style="font-size:18px; font-weight:bold; margin-left: 5px; color:#fff; font-family:monospace;">0 / 40</span>
+                <span id="players-count" style="font-size:18px; font-weight:bold; margin-left: 5px; color:#fff; font-family:monospace;">0 / 20</span>
             </div>
         </div>
         <div class="live-info-grid">
@@ -124,11 +123,8 @@
         </div>
     </div>
 </div>
+<script src="../js/config.js"></script>
 <script>
-const INTERNAL_AVORION_CONFIG = {
-    "avorion1": { "ip": "67.216.85.235", "port": 25598, "mapImg": "map_avorion1.jpg" },
-    "avorion2": { "ip": "172.240.47.89", "port": 25605, "mapImg": "map_avorion2.jpg" }
-};
 const SEPARATED_AVORION_DATA = {
     'avorion1': {
         name: "🛡️ QBC FLAGGARD AVORION — SECTEUR CORE 1",
@@ -199,7 +195,11 @@ function loadAvorionStats(isAutoRefresh) {
     }
     
     const currentData = SEPARATED_AVORION_DATA[activeServerKey];
-    const activeMapImg = INTERNAL_AVORION_CONFIG[activeServerKey].mapImg;
+    
+    // Extrait dynamiquement vos 20 slots réels depuis config.js
+    const realNetConfig = (typeof QBC_GLOBAL_CONFIG !== 'undefined') ? QBC_GLOBAL_CONFIG[activeServerKey] : null;
+    const activeMapImg = realNetConfig ? realNetConfig.mapImg : currentData.mapImg;
+    const maxSlots = realNetConfig ? (realNetConfig.maxPlayers || 20) : 20;
 
     document.getElementById('server-title').innerText = currentData.name;
     
@@ -221,7 +221,7 @@ function loadAvorionStats(isAutoRefresh) {
         .then(res => res.json())
         .then(data => {
             if (data.online) {
-                document.getElementById('players-count').innerText = `${data.count} / ${data.maxPlayers || 40}`;
+                document.getElementById('players-count').innerText = `${data.count} / ${maxSlots}`;
                 document.getElementById('avorion-sector-name').innerText = data.map || currentData.mapFallback;
                 document.getElementById('avorion-version').innerText = data.version || currentData.versionFallback;
                 document.getElementById('avorion-time').innerText = data.time || currentData.timeFallback;
@@ -229,7 +229,7 @@ function loadAvorionStats(isAutoRefresh) {
             }
         })
         .catch(() => {
-            document.getElementById('players-count').innerText = "0 / 40";
+            document.getElementById('players-count').innerText = `0 / ${maxSlots}`;
             document.getElementById('avorion-sector-name').innerText = currentData.mapFallback; 
             document.getElementById('avorion-version').innerText = currentData.versionFallback; 
             document.getElementById('avorion-time').innerText = currentData.timeFallback;

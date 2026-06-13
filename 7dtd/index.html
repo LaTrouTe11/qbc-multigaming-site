@@ -147,6 +147,58 @@ function updateRebootTimer() {
 function load7DTDStats(isAutoRefresh) {
     activeServerKey = new URLSearchParams(window.location.search).get('server') || '7dtd1';
     const currentData = SEPARATED_7DTD_DATA[activeServerKey];
+	    // 🔗 Récupération des IP, images et slots depuis votre fichier config.js global unifié [INDEX]
+    const realNetConfig = (typeof QBC_GLOBAL_CONFIG !== 'undefined') ? QBC_GLOBAL_CONFIG[activeServerKey] : null;
+    const activeMapImg = realNetConfig ? realNetConfig.mapImg : currentData.mapImg;
+    const activeLiveMap = realNetConfig ? realNetConfig.map : "#";
+    const maxSlots = realNetConfig ? (realNetConfig.maxPlayers || 40) : 40; // Lit le vrai slot !
+
+    document.getElementById('server-title').innerText = currentData.name;
+    
+    // Branchement dynamique des images fixes et des redirections HTTP vers vos dashboards
+    const mapImgEl = document.getElementById('7dtd-map-img');
+    const mapLinkEl = document.getElementById('7dtd-map-link');
+    const liveMapBtn = document.getElementById('7dtd-livemap-action-btn');
+    if (mapImgEl && mapLinkEl) {
+        mapImgEl.src = activeMapImg;
+        mapLinkEl.href = activeLiveMap;
+    }
+    if (liveMapBtn) {
+        liveMapBtn.href = activeLiveMap;
+    }
+
+    const mb = document.getElementById('server-game-mode-badge');
+    if (mb) { mb.innerText = currentData.gameModeText; mb.style.color = currentData.gameModeColor; mb.style.borderColor = currentData.gameModeBorder; mb.style.background = currentData.gameModeBg; }
+    
+    if (!isAutoRefresh) switchConsoleTab('motd'); 
+    updateRebootTimer();
+    startRadarCountdown();
+    
+    fetch('/.netlify/functions/get-players?game=' + activeServerKey)
+        .then(res => res.json())
+        .then(data => {
+            if (data.online) {
+                document.getElementById('players-count').innerText = `${data.count} / ${maxSlots}`; // Affiche votre vrai slot !
+                document.getElementById('7dtd-map-name').innerText = data.map || currentData.mapFallback;
+                document.getElementById('7dtd-server-time').innerText = data.time || currentData.timeFallback;
+                document.getElementById('7dtd-bloodmoon').innerText = data.bloodmoon || currentData.moonFallback;
+                document.getElementById('7dtd-version').innerHTML = `<span style="color:#ffcc00;">${data.version || currentData.versionFallback}</span>`;
+                document.getElementById('7dtd-kills').innerText = (data.kills || currentData.killsFallback) + " Kills";
+                const tc = document.getElementById('player-tags-container');
+                if (data.playersData && data.playersData.length > 0) {
+                    tc.innerHTML = data.playersData.map(p => `<span class="player-tag">${currentData.playerIcon} ${p.name} <span style="color:#aaa; font-weight:normal; font-size:11px;">(${p.playtime} - ${p.kills} Kills)</span></span>`).join('');
+                } else if (data.names && data.names.length > 0) {
+                    tc.innerHTML = data.names.map(name => `<span class="player-tag">${currentData.playerIcon} ${name}</span>`).join('');
+                } else { tc.innerHTML = '<span style="color: #aaa; font-style: italic; font-size: 12px;">Aucun joueur détecté en jeu.</span>'; }
+            }
+        })
+        .catch(() => {
+            document.getElementById('players-count').innerText = `0 / ${maxSlots}`; // Repli local avec votre vrai slot !
+            document.getElementById('7dtd-map-name').innerText = currentData.mapFallback; document.getElementById('7dtd-server-time').innerText = currentData.timeFallback; document.getElementById('7dtd-bloodmoon').innerText = currentData.moonFallback;
+            document.getElementById('7dtd-version').innerHTML = `<span style="color:#ffcc00;">${currentData.versionFallback}</span>`; document.getElementById('7dtd-kills').innerText = currentData.killsFallback;
+            document.getElementById('player-tags-container').innerHTML = '<span style="color: #aaa; font-style: italic; font-size: 11px;">Aucun survivant actif en direct.</span>';
+        });
+}
     
     // 🔥 LECTURE DIRECTE DE LA CONFIG INTERNE DU FICHIER (PLUS DE BLOCAGE DE DOSSIER PARENT)
     const activeMapImg = INTERNAL_CONFIG[activeServerKey].mapImg;

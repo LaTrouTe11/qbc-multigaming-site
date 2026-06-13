@@ -3,240 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[QBC] Terminal Multigaming | Portail Officiel</title>
+    <title>[QBC] Wurm Unlimited | Terminal Fantastique</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* FOND APOCALYPSE TERMINAL PROFESSIONNEL */
-        body {
-            background-color: #050303;
-            color: #ffffff;
+        /* 🏰 LOOK SUPRÊME MÉDIÉVAL BRUN CUIR & OR LUMINEUX */
+        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background: #0c0805; color: #f4eae1; font-family: 'Georgia', serif, sans-serif; }
+        .game-layout { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        .server-card { 
+            background: rgba(28, 19, 12, 0.97); 
+            border: 1px solid #5c4028; 
+            border-radius: 10px; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.12); 
+        }
+        
+        .led-green { width: 8px; height: 8px; background-color: #d4af37; border-radius: 50%; box-shadow: 0 0 8px #d4af37; display: inline-block; margin-right: 6px; }
+        
+        .btn-7dtd { 
+            background: #26170c; 
+            color: #d4af37; 
+            border: 1px solid #735132; 
+            padding: 8px 15px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            border-radius: 4px; 
+            font-size: 11px; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            text-decoration: none; 
+            box-shadow: inset 0 0 8px rgba(212, 175, 55, 0.05);
             font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
         }
-
-        .portal-container {
-            max-width: 1350px;
-            width: 100%;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+        .btn-7dtd:hover { 
+            background: #d4af37; 
+            color: #1c130c; 
+            border-color: #d4af37; 
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); 
         }
-
-        h1 {
-            color: #cc3333;
-            font-family: monospace;
-            font-size: 26px;
-            letter-spacing: 2px;
-            margin-bottom: 50px;
-            text-shadow: 0 0 10px rgba(204, 51, 51, 0.6);
-            text-transform: uppercase;
+        
+        .type-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 4px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; margin-right: 15px; border: 1px solid transparent; font-family: sans-serif; }
+        .live-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+        
+        .info-panel { 
+            background: #140d08; 
+            border: 1px dashed #735132; 
+            padding: 12px; 
+            border-radius: 5px; 
+            text-align: center; 
         }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 35px;
-            margin-top: 20px;
+        .info-panel h5 { margin: 0 0 6px 0; color: #d4af37; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 0 0 3px rgba(212, 175, 55, 0.2); font-family: sans-serif; }
+        .info-panel .val { font-size: 13px; font-weight: bold; color: #fff; font-family: monospace; }
+        
+        .map-preview-container { margin: 20px 0; background: #110a06; border: 1px solid #5c4028; padding: 10px; border-radius: 6px; }
+        .map-interactive-image { width: 100%; max-width: 500px; height: auto; border: 1px solid #735132; border-radius: 4px; transition: 0.3s; cursor: pointer; }
+        .map-interactive-image:hover { border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); transform: scale(1.01); }
+        
+        .dashboard-container { display: flex; gap: 20px; margin-top: 25px; text-align: left; height: 280px; }
+        .sidebar-tabs { width: 220px; display: flex; flex-direction: column; gap: 8px; background: #160f0a; border: 1px solid #5c4028; padding: 12px; border-radius: 6px; }
+        
+        .tab-btn { 
+            background: rgba(212, 175, 55, 0.01); 
+            border: 1px solid #735132; 
+            color: #c4b4a3; 
+            padding: 10px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 11px; 
+            text-align: left; 
+            transition: 0.2s; 
+            text-transform: uppercase; 
+            font-family: sans-serif;
         }
-
-        /* LES GRANDS CADRES PRO AVEC IMAGES DE COUVERTURE */
-        .game-card {
-            position: relative;
-            height: 260px;
-            border-radius: 8px;
-            border: 1px solid #2b1c1c;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.95);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s ease-in-out;
-        }
-
-        .card-7dtd { background-image: url('7dtd/background.jpg'); }
-        .card-wurm { background-image: url('wurm/background.jpg'); }
-        .card-avorion { background-image: url('avorion/background.jpg'); }
-
-        .game-card:hover {
-            border-color: #cc3333;
-            box-shadow: 0 0 25px rgba(204, 51, 51, 0.5);
-            transform: translateY(-4px);
-            background-size: 105%;
-        }
-
-        /* FILTRE PRO DE CONTRASTE DU MILIEU */
-        .game-card-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(5,3,3,0.9) 20%, rgba(5,3,3,0.5) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            box-sizing: border-box;
-            transition: 0.3s;
-        }
-
-        /* ÉCRITURE DES BOUTONS ROUTEURS DOUBLE SERVEURS WHITE HAUTE VISIBILITÉ */
-        .server-route-btn {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 90%;
-            background: #0f0b0b;
-            color: #ffffff;
-            border: 1px solid #442222;
-            padding: 8px 12px;
-            margin-top: 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            box-sizing: border-box;
-        }
-        .server-route-btn:hover {
-            background: #cc3333;
-            color: #000000;
-            border-color: #cc3333;
-            box-shadow: 0 0 12px rgba(204, 51, 51, 0.7);
-            transform: scale(1.02);
-        }
-
-        /* STYLE DE L'ICÔNE ANIMÉE RADAR */
-        .portal-game-icon {
-            font-size: 38px;
-            margin-bottom: 5px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-shadow: 0 0 10px rgba(204, 51, 51, 0.5);
-            display: inline-block;
-        }
-
-        .game-card:hover .portal-game-icon {
-            transform: scale(1.12) rotateY(360deg);
-            text-shadow: 0 0 20px #cc3333;
-        }
-
-        .portal-game-title {
-            color: #ffffff !important;
-            font-weight: bold;
-            font-family: monospace, sans-serif;
-            text-transform: uppercase;
-            font-size: 18px;
-            letter-spacing: 1.5px;
-            margin: 0 0 5px 0;
-            padding-bottom: 4px;
-            border-bottom: 2px solid #cc3333;
-            text-shadow: 2px 2px 4px #000000;
-        }
+        .tab-btn:hover, .tab-btn.active { border-color: #d4af37; color: #ffffff; background: rgba(212, 175, 55, 0.12); box-shadow: 0 0 8px rgba(212, 175, 55, 0.2); }
+        
+        .content-display-area { flex: 1; background: #110a06; border: 1px solid #5c4028; padding: 20px; border-radius: 6px; overflow-y: auto; line-height: 1.6; font-size: 13px; color: #f4eae1; }
+        .content-display-area h4 { color: #d4af37; margin-top: 0; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #735132; padding-bottom: 5px; text-shadow: 0 0 4px rgba(212, 175, 55, 0.3); font-family: sans-serif; }
     </style>
 </head>
 <body>
-
-    <div class="portal-container">
-        <h1>📊 TERMINAL MULTIGAMING INTERACTIF QBC</h1>
-
-        <div class="games-grid">
-            
-            <!-- 🧟 SECTION 7 DAYS TO DIE (2 SERVEURS INSTANTANÉS) -->
-            <div class="game-card card-7dtd">
-                <div class="game-card-overlay">
-                    <div class="portal-game-icon">🧟‍♂️</div>
-                    <h3 class="portal-game-title">7 DAYS TO DIE</h3>
-                    <a href="7dtd/index.html?server=7dtd1" class="server-route-btn">
-                        <span>🛑 Flaggard ProjectZ</span>
-                        <span id="portal-mini-7dtd1" style="color:#2ecc71;">(--)</span>
-                    </a>
-                    <a href="7dtd/index.html?server=7dtd2" class="server-route-btn">
-                        <span>🛑 Flaggard New Mods</span>
-                        <span id="portal-mini-7dtd2" style="color:#2ecc71;">(--)</span>
-                    </a>
-                </div>
+<div class="game-layout">
+    <div style="text-align: left; margin-bottom: 20px;">
+        <a href="../index.html" class="btn-7dtd" style="background:#19100a; color:#fff; border-color:#5c4028;">🏡 Retour au Portail</a>
+    </div>
+    <div class="server-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #5c4028; padding-bottom: 10px; margin-bottom: 20px;">
+            <span id="server-title" style="font-size: 22px; color: #d4af37; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);">Ouverture du Registre Impérial...</span>
+            <div style="display: flex; align-items: center;">
+                <div id="server-game-mode-badge" class="type-badge">Scan System...</div>
+                <span class="led-green"></span>
+                <span style="color:#d4af37; font-weight:bold; font-size: 13px; text-shadow: 0 0 5px #d4af37;">REALM: </span>
+                <span id="players-count" style="font-size:18px; font-weight:bold; margin-left: 5px; color:#fff; font-family:monospace;">0 / 40</span>
             </div>
-
-            <!-- 🏰 SECTION WURM UNLIMITED (2 ROYAUMES INSTANTANÉS) -->
-            <div class="game-card card-wurm">
-                <div class="game-card-overlay">
-                    <div class="portal-game-icon">🏰</div>
-                    <h3 class="portal-game-title">WURM UNLIMITED</h3>
-                    <a href="wurm/index.html?server=wurm1" class="server-route-btn">
-                        <span>⚔️ Royaume Élite 1</span>
-                        <span id="portal-mini-wurm1" style="color:#2ecc71;">(--)</span>
-                    </a>
-                    <a href="wurm/index.html?server=wurm2" class="server-route-btn">
-                        <span>⚔️ Royaume Élite 2</span>
-                        <span id="portal-mini-wurm2" style="color:#2ecc71;">(--)</span>
-                    </a>
-                </div>
+        </div>
+        <div class="live-info-grid">
+            <div class="info-panel"><h5>🗺️ Royaume Actif</h5><div id="wurm-map-name" class="val">-</div></div>
+            <div class="info-panel"><h5>⚙️ Version Jeu</h5><div id="wurm-version" class="val">-</div></div>
+            <div class="info-panel"><h5>⏱️ Climat Écosystème</h5><div id="wurm-time" class="val">-</div></div>
+            <div class="info-panel"><h5>🛡️ Sécurité Divine</h5><div id="wurm-shield" class="val" style="color: #2ecc71;">100% Actif</div></div>
+            <div class="info-panel"><h5>💥 Monstres Vaincus</h5><div id="wurm-kills" class="val">-</div></div>
+            <div class="info-panel" style="border-color: #d4af37;"><h5 style="color: #d4af37; text-shadow: 0 0 4px rgba(212, 175, 55, 0.2);">🔄 Prochain Reboot</h5><div id="wurm-reboot-countdown" class="val" style="color: #d4af37;">Calcul...</div></div>
+        </div>
+        <div class="map-preview-container">
+            <h5 style="color: #d4af37; margin: 0 0 8px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; text-shadow: 0 0 3px rgba(212, 175, 55, 0.2);">🗺️ Cartographie d'Orientation du Territoire (Cliquez pour agrandir) :</h5>
+            <a id="wurm-map-link" href="#" target="_blank">
+                <img id="wurm-map-img" src="" alt="Carte non chargée" class="map-interactive-image">
+            </a>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;">
+            <button id="radar-refresh-btn" class="btn-7dtd" onclick="forceRadarRefresh()">📡 Scan Auto dans 60s</button>
+            <a id="wurm-vote-action-btn" href="#" target="_blank" class="btn-7dtd" style="border-color: #d4af37; color: #d4af37; display: inline-block; line-height: 1.4;">🗳️ Voter pour ce Royaume</a>
+        </div>
+        <div class="dashboard-container">
+            <div class="sidebar-tabs">
+                <button id="tab-motd" class="tab-btn active" onclick="switchConsoleTab('motd')">📢 Chroniques (MOTD)</button>
+                <button id="tab-rules" class="tab-btn" onclick="switchConsoleTab('rules')">📜 Lois Impériales</button>
             </div>
-
-            <!-- 🚀 SECTION AVORION (2 SECTEURS INSTANTANÉS) -->
-            <div class="game-card card-avorion">
-                <div class="game-card-overlay">
-                    <div class="portal-game-icon">🚀</div>
-                    <h3 class="portal-game-title">AVORION</h3>
-                    <a href="avorion/index.html?server=avorion1" class="server-route-btn">
-                        <span>🛰️ Secteur Core 1</span>
-                        <span id="portal-mini-avorion1" style="color:#2ecc71;">(--)</span>
-                    </a>
-                    <a href="avorion/index.html?server=avorion2" class="server-route-btn">
-                        <span>🛰️ Secteur Core 2</span>
-                        <span id="portal-mini-avorion2" style="color:#2ecc71;">(--)</span>
-                    </a>
-                </div>
-            </div>
-
+            <div id="consoleDisplayArea" class="content-display-area">-</div>
         </div>
     </div>
-
-<script src="js/config.js"></script>
+</div>
 <script>
-    function syncPortalLiveCounters() {
-        const servers = ['7dtd1', '7dtd2', 'wurm1', 'wurm2', 'avorion1', 'avorion2'];
-        
-        servers.forEach(srv => {
-            fetch('/.netlify/functions/get-players?game=' + srv)
-                .then(res => res.json())
-                .then(data => {
-                    const el = document.getElementById('portal-mini-' + srv);
-                    const textEl = document.getElementById('portal-stats-' + srv);
-                    
-                    // Lit le nombre de slots max écrit dans votre config.js
-                    const maxSlots = (typeof QBC_GLOBAL_CONFIG !== 'undefined' && QBC_GLOBAL_CONFIG[srv]) ? (QBC_GLOBAL_CONFIG[srv].maxPlayers || 40) : 40;
-                    
-                    if (el) {
-                        el.innerText = data.online ? `(${data.count}/${maxSlots})` : `(0/${maxSlots})`;
-                    }
-                    if (textEl) {
-                        const label = srv.startsWith('wurm') ? 'ROYAUME' : 'SECTEUR';
-                        textEl.innerText = data.online ? `${label} : ${data.count} / ${maxSlots}` : `${label} : LOCAL DECONECT`;
-                    }
-                })
-                .catch(() => {
-                    const el = document.getElementById('portal-mini-' + srv);
-                    if (el) el.innerText = "(0/40)";
-                });
-        });
+const INTERNAL_WURM_CONFIG = {
+    "wurm1": { "ip": "104.243.40.52", "port": "5134", "mapImg": "wurm1_map.jpg", "voteLink": "https://wurm-unlimited.com" },
+    "wurm2": { "ip": "74.50.94.238", "port": "5610", "mapImg": "wurm2_map.jpg", "voteLink": "https://wurm-unlimited.com" }
+};
+const SEPARATED_WURM_DATA = {
+    'wurm1': {
+        name: "🛡️ QBC WURM UNLIMITED — ROYAUME DORIATH",
+        gameModeText: "🏰 REALM CREATION", gameModeColor: "#d4af37", gameModeBg: "rgba(212,175,55,0.06)", gameModeBorder: "#735132", playerIcon: "🏰",
+        mapFallback: "Doriath_Imperial_Map", timeFallback: "Printemps - Journée Calme", versionFallback: "v1.9 Stable", killsFallback: "14,850 Vaincus",
+        morningReboot: 6, eveningReboot: 18,
+        motd: `<h4>📢 CHRONIQUES DU ROYAUME — DORIATH</h4><p style="color: #d4af37; font-weight: bold; text-transform: uppercase;">⚔️ SÉCURISATION ET EXPANSION DE VOS DEEDS ⚔️</p>
+               <details open style="background: rgba(212, 175, 55, 0.02); border: 1px solid #735132; padding: 6px; margin-bottom: 6px;"><summary style="color: #d4af37; font-weight: bold; font-size: 12px; cursor: pointer;">📋 Fiche Technique : QBC Doriath</summary><div style="padding: 5px; font-size: 11px; color: #fff; font-family: monospace;"><strong>ServerDescription:</strong> Skillgain x5 | Action x3 | Économie calibrée RPG. IP: 104.243.40.52</div></details>
+               <p style="margin-top: 15px; padding: 6px; background: rgba(255,204,0,0.03); border: 1px dashed #d4af37; border-radius: 4px; font-size: 11px;"><strong style="color: #d4af37;">🔄 Statut :</strong> <span style="color: #fff; font-weight: bold;">❌ AUCUN WIPE EN COURS (Sauvegarde à vie)</span></p>`,
+        rules: `<h4>📜 LOIS DU ROYAUME — DORIATH</h4><div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;"><p><strong>1✗- VOLS INTERDITS :</strong> Le pillage de structures hors de votre territoire (Deed) est banni.</p></div>`
+    },
+    'wurm2': {
+        name: "🛡️ QBC WURM UNLIMITED — ROYAUME FLAGGARD",
+        gameModeText: "🏰 REALM AVENTURE", gameModeColor: "#d4af37", gameModeBg: "rgba(212,175,55,0.06)", gameModeBorder: "#735132", playerIcon: "⚔️",
+        mapFallback: "Flaggard_Wild_Lands", timeFallback: "Été - Ciel Dégagé", versionFallback: "v1.9 Custom", killsFallback: "4,120 Vaincus",
+        morningReboot: 5, eveningReboot: 17,
+        motd: `<h4>📢 CHRONIQUES DU ROYAUME — FLAGGARD</h4><p style="color: #d4af37; font-weight: bold; text-transform: uppercase; font-size: 13px; margin-bottom: 12px;">🌱 NOUVELLES CONQUÊTES ET ÉLEVAGES DE DRAGONS</p>`,
+        rules: `<h4>📜 LOIS DU ROYAUME — FLAGGARD</h4><div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;"><p><strong>1✗- RESPECT :</strong> Ne construisez pas à moins de 50 tuiles d'un village existant sans accord.</p></div>`
     }
-    syncPortalLiveCounters();
-    setInterval(syncPortalLiveCounters, 60000);
-</script>
+};
 
+let activeServerKey = "wurm1";
+let radarTimeLeft = 60;
+let radarTimerInterval = null;
+
+function switchConsoleTab(tabName) {
+    const displayArea = document.getElementById('consoleDisplayArea');
+    if (!displayArea) return;
+    displayArea.innerHTML = SEPARATED_WURM_DATA[activeServerKey][tabName];
+    ['motd', 'rules'].forEach(t => { const btn = document.getElementById('tab-' + t); if (btn) { if (t === tabName) btn.classList.add('active'); else btn.classList.remove('active'); } });
+}
+
+function startRadarCountdown() {
+    if (radarTimerInterval) clearInterval(radarTimerInterval);
+    radarTimeLeft = 60;
+    const radarBtn = document.getElementById('radar-refresh-btn');
+    radarTimerInterval = setInterval(() => {
+        radarTimeLeft--;
+        if (radarBtn) radarBtn.innerText = `📡 Scan Auto dans ${radarTimeLeft}s`;
+        if (radarTimeLeft <= 0) loadWurmStats(true);
+    }, 1000);
+}
+
+function forceRadarRefresh() {
+    alert("📡 Resynchronisation immédiate de l'écosystème Wurm !");
+    loadWurmStats(false);
+}
+
+function updateRebootTimer() {
+    const now = new Date(); const currentHour = now.getHours(); const currentData = SEPARATED_WURM_DATA[activeServerKey];
+    let targetHour = (currentHour >= currentData.morningReboot && currentHour < currentData.eveningReboot) ? currentData.eveningReboot : currentData.morningReboot;
+    let targetDate = new Date(); targetDate.setHours(targetHour, 0, 0, 0);
+    if (currentHour >= currentData.eveningReboot) { targetDate.setDate(targetDate.getDate() + 1); targetDate.setHours(currentData.morningReboot, 0, 0, 0); }
+    const diffMs = targetDate - now;
+    const countdownEl = document.getElementById('wurm-reboot-countdown');
+    if (countdownEl) countdownEl.innerText = `Dans ${Math.floor(diffMs / 3600000)}h ${Math.floor((diffMs % 3600000) / 60000)}m (${targetHour}:00)`;
+}
+
+function loadWurmStats(isAutoRefresh) {
+    activeServerKey = new URLSearchParams(window.location.search).get('server') || 'wurm1';
+    
+    if (activeServerKey !== 'wurm1' && activeServerKey !== 'wurm2') {
+        activeServerKey = 'wurm1';
+    }
+    
+    const currentData = SEPARATED_WURM_DATA[activeServerKey];
+    
+    // Extrait dynamiquement vos 250 slots depuis la config globale
+    const realNetConfig = (typeof QBC_GLOBAL_CONFIG !== 'undefined') ? QBC_GLOBAL_CONFIG[activeServerKey] : null;
+    const activeMapImg = realNetConfig ? realNetConfig.mapImg : currentData.mapImg;
+    const activeVoteLink = realNetConfig ? realNetConfig.voteLink : "#";
+    const maxSlots = realNetConfig ? (realNetConfig.maxPlayers || 250) : 250;
+
+    document.getElementById('server-title').innerText = currentData.name;
+    
+    const mapImgEl = document.getElementById('wurm-map-img');
+    const mapLinkEl = document.getElementById('wurm-map-link');
+    const voteBtn = document.getElementById('wurm-vote-action-btn');
+    if (mapImgEl && mapLinkEl) {
+        mapImgEl.src = activeMapImg;
+        mapLinkEl.href = activeMapImg;
+    }
+    if (voteBtn) {
+        voteBtn.href = activeVoteLink;
+    }
+
+    const mb = document.getElementById('server-game-mode-badge');
+    if (mb) { mb.innerText = currentData.gameModeText; mb.style.color = currentData.gameModeColor; mb.style.borderColor = currentData.gameModeBorder; mb.style.background = currentData.gameModeBg; }
+    
+    if (!isAutoRefresh) switchConsoleTab('motd');
+    updateRebootTimer();
+    startRadarCountdown();
+    
+    fetch('/.netlify/functions/get-players?game=' + activeServerKey)
+        .then(res => res.json())
+        .then(data => {
+            if (data.online) {
+                document.getElementById('players-count').innerText = `${data.count} / ${maxSlots}`;
+                document.getElementById('wurm-map-name').innerText = data.map || currentData.mapFallback;
+                document.getElementById('wurm-version').innerText = data.version || currentData.versionFallback;
+                document.getElementById('wurm-time').innerText = data.time || currentData.timeFallback;
+                document.getElementById('wurm-kills').innerText = (data.kills || currentData.killsFallback);
+            }
+        })
+        .catch(() => {
+            document.getElementById('players-count').innerText = `0 / ${maxSlots}`;
+            document.getElementById('wurm-map-name').innerText = currentData.mapFallback; 
+            document.getElementById('wurm-version').innerText = currentData.versionFallback; 
+            document.getElementById('wurm-time').innerText = currentData.timeFallback;
+            document.getElementById('wurm-kills').innerText = currentData.killsFallback;
+        });
+}
+
+loadWurmStats(false);
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => { if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) e.preventDefault(); });
+</script>
 </body>
 </html>
 
