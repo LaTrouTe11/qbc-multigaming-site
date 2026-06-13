@@ -3,297 +3,595 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[WURM] Extensions & Votes | QBC Flaggard Backup</title>
+    <title>[QBC] Index Technologique | Apocalypse Mods</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* --- LOOK ULTRA MODERNE NÉON DORÉ --- */
-        body { background-color: #0c0905 !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
+        /* Design Épuré Haute Visibilité 2026 — Look Cendres Éteintes avec fond zombie */
+        body { 
+            background-image: url('background.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            background-repeat: no-repeat; 
+            font-family: sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; 
+            overflow: hidden; 
+        }
         
-        .mods-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #594418; padding-bottom: 20px; }
-        .mods-title { color: #ffcc00; text-shadow: 0 0 12px rgba(255,204,0,0.4); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+        .dashboard-layout { display: flex; max-width: 1350px; margin: 0 auto; height: calc(100vh - 130px); gap: 20px; padding: 10px; }
         
-        /* BOÎTE COMMUTATION LANGUE HAUT DROITE */
-        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
-        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #443313; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
-        .lang-btn:hover { border-color: #ffcc00; color: #fff; }
-        .lang-btn.active-lang { background: #ffcc00; color: #000; border-color: #ffcc00; box-shadow: 0 0 8px rgba(255,204,0,0.3); }
+        /* Barre latérale gauche - Catégories */
+        .sidebar-tabs { width: 280px; display: flex; flex-direction: column; gap: 8px; background: rgba(12, 10, 10, 0.92); border: 1px solid #2d2525; padding: 15px; border-radius: 6px; overflow-y: auto; }
+        .cat-tab-btn { background: rgba(255,255,255,0.02); border: 1px solid #3d3232; color: #ccc; padding: 12px; border-radius: 4px; text-align: left; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .cat-tab-btn:hover, .cat-tab-btn.active { border-color: #cc3333; color: #cc3333; background: rgba(204,51,51,0.05); }
+        .cat-tab-btn span { font-family: monospace; font-size: 12px; color: #888; margin-left: 10px; }
+        .cat-tab-btn.active span { color: #cc3333; font-weight: bold; }
+
+        /* Colonne centrale - Recherche et Grille des mods */
+        .center-content-panel { flex: 1; display: flex; flex-direction: column; gap: 15px; height: 100%; }
         
-        /* LANGUE CACHÉE */
-        .lang-en { display: none; }
+        /* Barre de recherche dynamique */
+        .search-wrapper { background: rgba(15, 10, 10, 0.92); border: 1px solid #3a2e2e; padding: 10px 15px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; }
+        .search-box-input { width: 100%; background: #070505; border: 1px solid #2d1d1d; padding: 10px; border-radius: 4px; color: #fff; font-family: monospace; font-size: 13px; outline: none; transition: 0.2s; }
+        .search-box-input:focus { border-color: #cc3333; box-shadow: 0 0 5px rgba(204,51,51,0.2); }
+        .total-counter-badge { font-size: 11px; background: rgba(255,255,255,0.05); color: #aaa; border: 1px solid #332525; padding: 4px 10px; border-radius: 3px; font-weight: bold; white-space: nowrap; margin-left: 15px; }
+
+        .modules-feed { flex: 1; background: rgba(7, 5, 5, 0.85); border: 1px solid #1f1818; border-radius: 6px; padding: 15px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; align-content: start; }
+        .module-item { background: rgba(18, 14, 14, 0.95); border: 1px solid #2b1f1f; padding: 12px; border-radius: 4px; color: #ffffff; cursor: pointer; text-align: center; font-family: monospace; font-size: 12px; transition: 0.15s; display: flex; align-items: center; justify-content: center; min-height: 45px; line-height: 1.3; }
+        .module-item:hover, .module-item.active { border-color: #cc3333; background: #211212; color: #cc3333; }
+
+        /* Écran de lecture à droite — Contraste Haute Lisibilité */
+        .preview-pane { width: 440px; background: rgba(10, 8, 8, 0.95); border: 1px solid #3a2e2e; border-radius: 6px; padding: 25px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.6); height: 100%; box-sizing: border-box; }
+        .preview-header { color: #cc3333; font-family: monospace; font-size: 18px; font-weight: bold; border-bottom: 1px solid #2d1d1d; padding-bottom: 10px; margin-bottom: 15px; text-align: left; }
         
-        /* GRILLE HORIZONTALE STRUCTURÉE (ANTI-ÉTIREMENT) */
-        .wurm-grid-mods { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
-        .wurm-mod-box { background: rgba(22, 17, 11, 0.96); border: 2px solid #594418; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
-        .wurm-mod-box h3 { color: #ffcc00; margin-top: 0; font-size: 17px; text-transform: uppercase; border-bottom: 1px dashed #594418; padding-bottom: 8px; margin-bottom: 15px; }
+        .sub-tab-nav { display: flex; gap: 5px; margin-bottom: 15px; }
+        .sub-tab-btn { flex: 1; padding: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; border-radius: 3px; cursor: pointer; border: 1px solid rgba(204,51,51,0.2); transition: 0.2s; }
+        .preview-badge { display: inline-block; font-size: 11px; padding: 3px 8px; border-radius: 3px; font-weight: bold; align-self: flex-start; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* STYLISATION DES LIENS DE VOTE & BACKUP */
-        .vote-link-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid #ffcc00; }
-        .vote-btn-action { background: #ffcc00; color: #000; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 3px; text-transform: uppercase; text-decoration: none; }
-        .vote-btn-action:hover { background: #fff; box-shadow: 0 0 10px #ffcc00; }
+        .preview-scrollable-body { font-size: 13px; line-height: 1.6; color: #ffffff; text-align: left; overflow-y: auto; flex-grow: 1; padding-right: 8px; margin-bottom: 15px; }
+        .preview-scrollable-body h4 { color: #cc3333; margin-top: 0; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; border-bottom: 1px solid #2d1d1d; padding-bottom: 4px; }
         
-        /* BOÎTE DE DÉFILEMENT POUR TOUS LES MODS */
-        .scroll-mods-container { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 6px; max-height: 380px; overflow-y: auto; text-align: left; border: 1px solid rgba(255,255,255,0.03); }
-        .mod-list-ul { list-style-type: none; padding: 0; margin: 0; }
-        .mod-list-ul li { margin-bottom: 12px; font-size: 13px; color: #ddd; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 6px; }
-        .mod-highlight-text { display: block; color: #ffcc00; font-weight: bold; font-family: monospace; font-size: 13px; margin-bottom: 2px; }
+        /* Le gros bouton de téléchargement interactif */
+        .master-download-action-btn { display: block; width: 100%; padding: 12px; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 12px; text-align: center; text-decoration: none; border: 1px solid transparent; transition: 0.2s; }
         
-        .back-btn { display: inline-block; background: transparent; color: #ffcc00; border: 1px solid #ffcc00; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
-        .back-btn:hover { background: #ffcc00; color: #000; box-shadow: 0 0 15px #ffcc00; }
+        body.lang-fr-mode .en-txt { display: none !important; }
+        body.lang-en-mode .fr-txt { display: none !important; }
     </style>
 </head>
 <body>
 
-<div class="lang-selector-container">
-    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
-    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
-</div>
-
-<div class="mods-header">
-    <h1 class="mods-title">📦 Extensions & Modules Réseau / Cluster Backup</h1>
-    <p style="margin: 0; font-size: 14px; color: #b38f00; font-style: italic; text-align: center;">
-        <span class="lang-fr">Liens de vote quotidiens, récompenses de vote actives et archives de sécurité.</span>
-        <span class="lang-en">Daily voting links, active vote rewards and structural security archives.</span>
-    </p>
-</div>
-<div class="wurm-grid-mods">
-    <!-- ==========================================
-         🗳️ SECTION 1 : VOTE REWARDS & SYSTEMES (DORIATH & FLAGGARD)
-         ========================================== -->
-    <div class="wurm-mod-box">
-        <h3 class="lang-fr">🗳️ Liens de Votes Officiels</h3>
-        <h3 class="lang-en">🗳️ Official Voting Links</h3>
-        
-        <p style="font-size: 13px; color: #bbb; margin-bottom: 15px; text-align: left;">
-            <span class="lang-fr">Votez quotidiennement pour faire grimper le cluster dans le classement et débloquer vos récompenses **VoteReward** (Monnaies de cuivre et bonus d'action) directement en jeu sur le serveur Doriath.</span>
-            <span class="lang-en">Vote daily to increase the cluster ranking and unlock your **VoteReward** rewards (Copper coins and action speed boosts) directly in-game on the Doriath server.</span>
-        </p>
-
-        <!-- Vote Lien 1 -->
-        <div class="vote-link-item">
-            <div style="text-align: left;">
-                <span style="font-weight: bold; font-size: 13px; color: #fff;">Wurm-Unlimited-Servers</span>
-                <span style="display:block; font-size:11px; color:#aaa;">Vote #1 (Doriath Linked)</span>
-            </div>
-            <a href="https://wurm-unlimited-servers.net" target="_blank" class="vote-btn-action">Vote</a>
-        </div>
-
-        <!-- Vote Lien 2 -->
-        <div class="vote-link-item">
-            <div style="text-align: left;">
-                <span style="font-weight: bold; font-size: 13px; color: #fff;">Top-G Gaming List</span>
-                <span style="display:block; font-size:11px; color:#aaa;">Vote #2 (Cluster Ranking)</span>
-            </div>
-            <a href="https://topg.org" target="_blank" class="vote-btn-action">Vote</a>
-        </div>
-
-        <!-- Vote Lien 3 -->
-        <div class="vote-link-item">
-            <div style="text-align: left;">
-                <span style="font-weight: bold; font-size: 13px; color: #fff;">Arena Server Tracker</span>
-                <span style="display:block; font-size:11px; color:#aaa;">Vote #3 (Backup Vote)</span>
-            </div>
-            <a href="https://tracker-servers.com" target="_blank" class="vote-btn-action">Vote</a>
-        </div>
+    <!-- TOP NAVIGATION -->
+    <div style="max-width: 1350px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 10px 5px 10px; background: rgba(5,3,3,0.6); border-radius: 4px; margin-top: 5px;">
+        <a href="index.html" id="back-btn" class="portal-btn" style="background:#222; color:#fff; text-decoration:none; padding:8px 15px; border-radius:4px; font-size:12px; font-weight:bold; border: 1px solid #3a2e2e;">⛑️ Quitter l'Index</a>
+        <h2 style="margin:0; font-size:17px; color:#cc3333;" id="main-portal-title" class="fr-txt">🗂️ BASE DE DONNÉES ENCYCLOPÉDIQUE 7DTD</h2>
+        <h2 style="margin:0; font-size:17px; color:#cc3333;" id="main-portal-title-en" class="en-txt">🗂️ SYSTEM CONFIGURATION INDEX MODULES</h2>
+        <select class="lang-select-box" style="background:#111; color:#fff; border:1px solid #3a2e2e; padding:5px; border-radius:4px; cursor:pointer;" onchange="document.body.className = this.value === 'en' ? 'lang-en-mode theme-7dtd' : 'lang-fr-mode theme-7dtd'">
+            <option value="fr">🍁 Français</option>
+            <option value="en">🦅 English</option>
+        </select>
     </div>
 
-    <!-- ==========================================
-         🛠️ SECTION 2 : ARCHIVE DES EXTENSIONS SERVEUR
-         ========================================== -->
-    <div class="wurm-mod-box">
-        <h3 class="lang-fr">🛠️ Base de Données des Extensions</h3>
-        <h3 class="lang-en">🛠️ Extension Database</h3>
-        
-        <p style="font-size: 13px; color: #bbb; margin-bottom: 15px; text-align: left;">
-            <span class="lang-fr">Liste technique intégrale et détaillée des extensions déployées sur Flaggard et Doriath. Cette archive sert de référence réseau de secours.</span>
-            <span class="lang-en">Full comprehensive and detailed list of extensions deployed on Flaggard and Doriath. This archive serves as a network backup reference.</span>
-        </p>
+    <div class="dashboard-layout">
+        <!-- SECTIONS FILTRES GAUCHE AVEC BALISES COMPTEURS -->
+        <div class="sidebar-tabs">
+            <button class="cat-tab-btn active" onclick="switchCategory(event, 'all')">📂 Tous les Composants <span id="count-all"></span></button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-combat')">⚔️ Armes & Arsenal <span id="count-combat"></span></button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-world')">🧟 IA Hostile & Faune <span id="count-world"></span></button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-craft')">🔨 Artisanat & Déco <span id="count-craft"></span></button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-core')">⚙️ Confort & Système <span id="count-core"></span></button>
+        </div>
 
-        <!-- Fenêtre de défilement vertical anti-étirement -->
-        <div class="scroll-mods-container">
-            <ul class="mod-list-ul">
-                <li>
-                    <span class="mod-highlight-text">[Core] Modlauncher v1.9.4</span>
-                    <span class="lang-fr">Chargeur de modules principal. Assure la stabilité et l'injection fluide des scripts côté serveur.</span>
-                    <span class="lang-en">Main module loader. Ensures stability and fluid injection of server-side scripts.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Core] VoteReward Bridge</span>
-                    <span class="lang-fr">Liaison API avec les listes de vote. Donne les pièces de cuivre et bonus aux joueurs en direct.</span>
-                    <span class="lang-en">API link with voting lists. Gives copper coins and bonuses to players live in-game.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Global Currency Sync</span>
-                    <span class="lang-fr">Synchronisation bancaire du cluster. Permet de partager votre argent entre Flaggard et Doriath.</span>
-                    <span class="lang-en">Cluster banking synchronization. Allows sharing your coins between Flaggard and Doriath.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Livemap Advanced Link</span>
-                    <span class="lang-fr">Protocole de télémétrie en temps réel pour la carte web. Affiche la position exacte des joueurs.</span>
-                    <span class="lang-en">Real-time telemetry protocol for the web map. Displays the exact position of players.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] No-Decay Structure Security</span>
-                    <span class="lang-fr">Sécurité Flaggard. Désactive complètement la détérioration et l'usure des bâtiments privés et publics.</span>
-                    <span class="lang-en">Flaggard security. Completely disables decay and wear on private and public buildings.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] BetterDigging Mechanics</span>
-                    <span class="lang-fr">Optimisation du terrassement. Augmente la vitesse d'aplanissement du sol et réduit la fatigue.</span>
-                    <span class="lang-en">Terraforming optimization. Increases ground flattening speed and reduces stamina drain.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Rare Ores Mining Injection</span>
-                    <span class="lang-fr">Boost Doriath. Augmente le taux d'apparition des filons précieux comme l'Adamantine et le Glimmer.</span>
-                    <span class="lang-en">Doriath boost. Increases the spawn rate of precious veins like Adamantine and Glimmer.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Broken Items Salvage Matrix</span>
-                    <span class="lang-fr">Moteur de recyclage. Permet de démonter les armes brisées pour récupérer les composants de forge.</span>
-                    <span class="lang-en">Recycling engine. Allows dismantling broken weapons to reclaim blacksmithing components.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Creatures Level Scaling Layer</span>
-                    <span class="lang-fr">Difficulté ajustable à 1.5x. Aligne dynamiquement le niveau des monstres selon la zone d'exploration.</span>
-                    <span class="lang-en">Adjustable 1.5x difficulty. Dynamically scales monster levels based on the exploration zone.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Harvest Global Multiplier v3.0</span>
-                    <span class="lang-fr">Contrôleur de récolte globale. Multiplie la quantité de bois, de plantes et de ressources collectées.</span>
-                    <span class="lang-en">Global harvest controller. Multiplies the amount of wood, plants, and collected resources.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Skill Gain Acceleration Engine</span>
-                    <span class="lang-fr">Multiplicateur d'expérience réglé à 4.0x Core pour accélérer la progression de vos compétences.</span>
-                    <span class="lang-en">Experience multiplier set to 4.0x Core to accelerate your skill progression.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Action Speed Global Tweaker</span>
-                    <span class="lang-fr">Exécution rapide ajustée à 2.5x. Réduit le temps requis pour miner, forger, couper et construire.</span>
-                    <span class="lang-en">Quick execution adjusted to 2.5x. Reduces time required to mine, blacksmith, chop, and build.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] In-Game Mail Box Handler</span>
-                    <span class="lang-fr">Gestionnaire de courrier inter-royaumes. Permet d'envoyer des colis sécurisés entre les serveurs.</span>
-                    <span class="lang-en">Inter-realm mail manager. Allows sending secure packages between servers.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Merchant Inventory Autobuyer</span>
-                    <span class="lang-fr">Filtre automatisé pour les marchands NPC. Gère le renouvellement des stocks et les achats automatiques.</span>
-                    <span class="lang-en">Automated filter for NPC merchants. Manages stock renewal and automatic purchases.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Crop Over-Aging Protection</span>
-                    <span class="lang-fr">Sécurité agricole. Empêche vos champs de pourrir ou d'attraper des maladies si vous tardez à récolter.</span>
-                    <span class="lang-en">Agricultural safety. Prevents fields from rotting or catching diseases if harvesting is delayed.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Animal Breeding Timer Reducer</span>
-                    <span class="lang-fr">Élevage accéléré. Réduit le temps d'attente entre l'accouplement et augmente les chances de mutations rares.</span>
-                    <span class="lang-en">Accelerated breeding. Reduces wait time between mating and increases rare mutation chances.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Rare Spawner Watchdog Relays</span>
-                    <span class="lang-fr">Système d'alerte pour les créatures uniques. Envoie un signal sur les consoles d'administration au pop.</span>
-                    <span class="lang-en">Alert system for unique creatures. Sends a signal to the admin consoles upon spawning.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Epic Armor Custom Textures</span>
-                    <span class="lang-fr">Pack de textures exclusif. Ajoute des visuels HD uniques sur les armures de plaques et de mailles.</span>
-                    <span class="lang-en">Exclusive texture pack. Adds unique HD visuals to plate and chainmail armors.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Weapon Enchants Scaling Buff</span>
-                    <span class="lang-fr">Ajustement des lueurs magiques. Améliore les effets visuels néons des enchantements d'armes en jeu.</span>
-                    <span class="lang-en">Magic glow adjustment. Enhances the in-game neon visual effects of weapon enchantments.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Tree Overgrowth Control Matrix</span>
-                    <span class="lang-fr">Gestionnaire forestier. Empêche la prolifération infinie de la flore pour garder les chemins propres.</span>
-                    <span class="lang-en">Forestry manager. Prevents infinite plant proliferation to keep pathways clean.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Dynamic Weather Generator Core</span>
-                    <span class="lang-fr">Moteur météo. Aligne les cycles de pluie, de brouillard et d'orages de façon immersive sur le cluster.</span>
-                    <span class="lang-en">Weather engine. Immersion-aligned cycles of rain, fog, and storms across the cluster.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Mining Veins Depletion Prevention</span>
-                    <span class="lang-fr">Sécurité des mines. Bloque la disparition définitive des gisements précieux de fer et de cuivre.</span>
-                    <span class="lang-en">Mine protection. Blocks the permanent depletion of valuable iron and copper veins.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Bulk Container Storage Cap Extender</span>
-                    <span class="lang-fr">Extension des silos. Augmente la capacité maximale de stockage de masse à un cap de 10 000 items.</span>
-                    <span class="lang-en">Silo expansion. Increases the maximum mass storage capacity to a cap of 10,000 items.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Meditate Skill Cooldown Reducer</span>
-                    <span class="lang-fr">Médiation rapide. Réduit le temps d'attente requis entre les questions philosophiques et les chemins.</span>
-                    <span class="lang-en">Quick meditation. Reduces the required cooldown between philosophical questions and paths.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Priest Spell Range Extender</span>
-                    <span class="lang-fr">Portée de foi. Augmente le rayon d'impact des sorts divins lancés par les prêtres du réseau.</span>
-                    <span class="lang-en">Faith range. Increases the impact radius of divine spells cast by network priests.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Unique Boss Loot Table Enhancer</span>
-                    <span class="lang-fr">Butin légendaire. Ajoute des jetons de récompense et des composants rares sur les boss uniques.</span>
-                    <span class="lang-en">Legendary loot. Adds reward tokens and rare components to unique bosses.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Dynamic Graveyard Monitor</span>
-                    <span class="lang-fr">Gestionnaire des cryptes. Surveille l'apparition passive des morts-vivants dans les zones de cimetières.</span>
-                    <span class="lang-en">Crypt manager. Monitors the passive spawning of undead creatures in graveyard zones.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[Mod] Cross-Server Relay Socket</span>
-                    <span class="lang-fr">Relais de discussion. Connecte les canaux de chat en direct entre Flaggard et Doriath.</span>
-                    <span class="lang-en">Chat relay. Connects live chat channels between Flaggard and Doriath servers.</span>
-                </li>
-                <li>
-                    <span class="mod-highlight-text">[System] Cluster Auto-Vacuum Optimization</span>
-                    <span class="lang-fr">Optimisation de base de données. Nettoie et purge les fichiers temporaires pour éviter le lag.</span>
-                    <span class="lang-en">Database optimization. Cleans and purges temporary files to prevent server lag.</span>
-                </li>
-            </ul>
+        <!-- PANNEAU CENTRAL AVEC RECHERCHE ET FEED -->
+        <div class="center-content-panel">
+            <div class="search-wrapper">
+                <input type="text" id="modsSearchBox" class="search-box-input" placeholder="🔍 Taper le nom d'un composant informatique pour le filtrer..." oninput="handleLiveSearch()">
+                <div id="totalCounter" class="total-counter-badge">MODS : 0</div>
+            </div>
+            <div id="modulesFeed" class="modules-feed"></div>
+        </div>
+
+        <!-- PANNEAU DROITE DE LECTURE AVEC BOUTON INTERACTIF LIÉ -->
+        <div class="preview-pane">
+            <div id="prevTitle" class="preview-header">Sélectionnez un composant</div>
+            <div id="prevBadge" class="preview-badge" style="display:none;">QBC Component</div>
+            
+            <div class="sub-tab-nav">
+                <button id="sub-tab-desc" class="sub-tab-btn" onclick="switchSubTab('desc')">ℹ️ Guide</button>
+                <button id="sub-tab-cmd" class="sub-tab-btn" onclick="switchSubTab('cmd')">🎮 Touches</button>
+            </div>
+
+            <div id="prevBody" class="preview-scrollable-body">
+                <p class="fr-txt" style="color:#aaa; font-style:italic;">Sélectionnez l'un des composants de la grille centrale pour inspecter sa fiche technique.</p>
+                <p class="en-txt" style="color:#aaa; font-style:italic;">Select any operational module from the core center grid network to review its system properties logs.</p>
+            </div>
+            
+            <!-- ZONE DU GROS BOUTON CLIQUABLE INTERACTIF DE LIEN -->
+            <a id="masterDownloadAction" href="#" target="_blank" class="master-download-action-btn" style="display:none;">Action</a>
         </div>
     </div>
-</div>
-
-<div style="text-align: center; margin-top: 20px;">
-    <!-- Bouton de retour vers la fiche technique Wurm -->
-    <a href="index.html" class="back-btn">
-        <span class="lang-fr">⬅️ Retour à la Fiche Wurm</span>
-        <span class="lang-en">⬅️ Back to Wurm Specs</span>
-    </a>
-</div>
 
 <script>
-    // --- MOTEUR DE SELECTION DE LANGUE INTERACTIF ---
-    function changerLangue(langue) {
-        const elFr = document.querySelectorAll('.lang-fr');
-        const elEn = document.querySelectorAll('.lang-en');
-        const boutons = document.querySelectorAll('.lang-btn');
-        boutons.forEach(b => b.classList.remove('active-lang'));
-        
-        if (langue === 'fr') {
-            elFr.forEach(e => e.style.display = 'block');
-            elEn.forEach(e => e.style.display = 'none');
-            document.getElementById('btn-fr').classList.add('active-lang');
+const SEPARATED_APOCALYPSE_DATABASES = {
+    '7dtd1': [
+        // =========================================================================
+        // ⚔️ SERVEUR 1 : ARSENAL & COMBAT (cat-combat)
+        // =========================================================================
+        {
+            cat: "cat-combat", name: "LittleRedSonja_T2IT3weapons",
+            fr_desc: "Variantes d'armes de paliers T2 et T3 injectées sur le serveur.",
+            en_desc: "Weapon arsenal expansion injecting new T2 and T3 tiers gun variants.",
+            fr_cmd: "Débloquez les schémas avancés en jeu pour fabriquer les armes T3.",
+            en_cmd: "Unlock military schematic paths in-game to assemble elite T3 weapons.",
+            link: "none"
+        },
+        {
+            cat: "cat-combat", name: "LittleRedSonja_AmmoRecycling",
+            fr_desc: "Système de recyclage et de démontage des munitions usagées.",
+            en_desc: "Industrial recycling framework to dismantle old ammunition stocks.",
+            fr_cmd: "Ouvrez la forge pour fondre les douilles obsolètes en plomb pur et laiton.",
+            en_cmd: "Access furnace interfaces to smelt down old rounds into brass and lead.",
+            link: "none"
+        },
+        {
+            cat: "cat-combat", name: "Scomar82_SuBaS",
+            fr_desc: "Mod d'équilibrage balistique pour les accessoires de visée.",
+            en_desc: "Ballistic overhaul tuning weapon attachments profiles and statistics.",
+            fr_cmd: "Glissez les lunettes, silencieux ou chargeurs dans vos armes.",
+            en_cmd: "Drag and drop compatible scopes or magazines into your active weapon slots.",
+            link: "https://7daystodiemods.com"
+        },
+
+        // =========================================================================
+        // 🧟 SERVEUR 1 : MENACE INFECTÉE & FAUNE (cat-world)
+        // =========================================================================
+        {
+            cat: "cat-world", name: "AbasiyanikMoreZombieSpawns3X",
+            fr_desc: "Multiplie par 3 le taux d'apparition des zombies sauvages.",
+            en_desc: "Multiplies hostile zombie spawns density by 3X across all world biomes.",
+            fr_cmd: "Aucune action requise. Les vagues extérieures sont très violentes la nuit.",
+            en_cmd: "No action required. Exterior streams are highly aggressive during night.",
+            link: "none"
+        },
+        {
+            cat: "cat-world", name: "AbasiyanikMoreEnemyAnimalSpawns3X",
+            fr_desc: "Augmente de 300% la génération des prédateurs hostiles (ours, loups).",
+            en_desc: "Scales up wild predator entity spawns (bears, wolves, coyotes) by 300%.",
+            fr_cmd: "Les animaux sauvages attaquent à vue. Préparez vos armes lourdes.",
+            en_cmd: "Wild fauna aggression values are raised. Ensure high-tier armaments.",
+            link: "none"
+        },
+        {
+            cat: "cat-world", name: "AbasiyanikMoreFriendlyAnimalSpawns5X",
+            fr_desc: "Multiplie par 5 la faune pacifique pour équilibrer la récolte de viande.",
+            en_desc: "Boosts passive wildlife entity generation by 5X to balance meat harvests.",
+            fr_cmd: "Traquez le gibier en forêt pour accumuler des rations à cuire.",
+            en_cmd: "Track deer and wild pigs inside forest biomes to stock up on food.",
+            link: "none"
+        },
+        // =========================================================================
+        // 🔨 SERVEUR 1 : ARTISANAT, DÉCO & STRUCTURES (cat-craft)
+        // =========================================================================
+        {
+            cat: "cat-craft", name: "3SlotForgeInput",
+            fr_desc: "Extension de forge ouvrant un 3ème emplacement de fusion simultané.",
+            en_desc: "Heavy industrial framework expanding forge processing queues to 3 slots.",
+            fr_cmd: "Ouvrez votre forge pour y déposer trois métaux différents à fondre d'un coup.",
+            en_cmd: "Open your forge UI: a third input slot is available to smelt raw tools.",
+            link: "none"
+        },
+        {
+            cat: "cat-craft", name: "Vita_HardenedSteelBlocksAndTraps",
+            fr_desc: "Niveau d'amélioration en acier trempé pour blinder vos blocs.",
+            en_desc: "Unlocks an elite hardened steel plating tier for blocks and traps.",
+            fr_cmd: "Utilisez de l'acier forgé avec votre marteau pour renforcer vos lignes.",
+            en_cmd: "Expend forged steel bars with your claw hammer to protect defense blocks.",
+            link: "none"
+        },
+        {
+            cat: "cat-craft", name: "Jakmeister999_Reinforced_Chainlink_Fences_V2",
+            fr_desc: "Permet de construire et fortifier des grilles de clôtures de sécurité.",
+            en_desc: "Enables assembling and reinforcing military-grade chainlink wire.",
+            fr_cmd: "Fabriquez des clôtures pour voir à travers vos défenses sans failles.",
+            en_cmd: "Craft wire fence networks to maintain clear field of view during hordes.",
+            link: "https://nexusmods.com"
+        },
+        {
+            cat: "cat-craft", name: "BBQ_and_Wood_Stove",
+            fr_desc: "Permet de fabriquer des barbecues et poêles à bois pour la cuisine.",
+            en_desc: "Enables crafting fully operational cooking BBQs and indoor stoves.",
+            fr_cmd: "Placez la structure au sol pour cuisiner vos viandes de survie.",
+            en_cmd: "Deploy the unit on a tile to unlock an optimized thermal cooking station.",
+            link: "none"
+        },
+        {
+            cat: "cat-craft", name: "Sams_Building_Stuff",
+            fr_desc: "Pack d'éléments d'architecture et de formes de blocs de Sam.",
+            en_desc: "Sam's comprehensive structural building blocks texture package.",
+            fr_cmd: "Maintenez la touche [R] avec un bloc en main pour choisir la forme.",
+            en_cmd: "Hold down the [R] keybind with a construction block to change shape options.",
+            link: "https://steamcommunity.com"
+        },
+        {
+            cat: "cat-craft", name: "Sams_Storage_Stuff",
+            fr_desc: "Pack d'armoires et de casiers de guilde triés de Sam.",
+            en_desc: "Sam's complete custom inventory storage crates and labeled lockers pack.",
+            fr_cmd: "Fabriquez les conteneurs de Sam à l'établi pour ranger vos loots.",
+            en_cmd: "Craft Sam's container boxes to clean up and organize your loot hauls.",
+            link: "none"
+        },
+
+        // =========================================================================
+        // ⚙️ SERVEUR 1 : NOYAU MACHINE & SYSTÈME (cat-core)
+        // =========================================================================
+        {
+            cat: "cat-core", name: "ProjectZ",
+            fr_desc: "Noyau système v2.6+ régulant le confort et l'économie du cluster.",
+            en_desc: "Core mechanics framework v2.6+ managing survival rate variables.",
+            fr_cmd: "Gère la faim, la soif réduite et applique la sauvegarde des profils.",
+            en_cmd: "Coordinates hunger, cushioned thirst rates, and forces data saving.",
+            link: "none"
+        },
+        {
+            cat: "cat-core", name: "DroneLocator",
+            fr_desc: "Système de tracking radar pour localiser votre drone perdu.",
+            en_desc: "Radar tracking script enabling instant mapping for lost drones.",
+            fr_cmd: "Ouvrez votre carte globale (touche M) : la position du drone y est balisée.",
+            en_cmd: "Open your general map overlay (M key): your drone's position is pinged.",
+            link: "none"
+        },
+        {
+            cat: "cat-core", name: "AbasiyanikStarterBundle",
+            fr_desc: "Distribution automatisée du kit d'outils et de fournitures de départ.",
+            en_desc: "Automated beginner supplies kit distribution package for fresh spawns.",
+            fr_cmd: "Vérifiez votre inventaire à la première connexion : le kit y est inséré.",
+            en_cmd: "Check your starting inventory blocks on first login: your gift is inside.",
+            link: "none"
+        },
+        {
+            cat: "cat-core", name: "TFP_MapRendering",
+            fr_desc: "Moteur exportant la topographie géologique en temps réel sur le web.",
+            en_desc: "Advanced map rendering sub-engine compiling geological grids.",
+            fr_cmd: "Alimente le radar cartographique extérieur du portail QBC.",
+            en_cmd: "Feeds external web-mapping queries and traces active territory claim lines.",
+            link: "none"
+        },
+        {
+            cat: "cat-core", name: "TFP_WebServer",
+            fr_desc: "Interface réseau pour synchroniser les horloges de temps réel.",
+            en_desc: "Internal web server communication module pushing data parameters to the site.",
+            fr_cmd: "Permet d'afficher l'heure du jeu et la Blood Moon sur le site d'accueil.",
+            en_cmd: "Pushes live status info (Active Day, Time, Blood Moon counters) to front-end.",
+            link: "none"
+        },
+        {
+            cat: "cat-core", name: "TFP_CommandExtensions",
+            fr_desc: "Console administrative de sécurité et de protection anti-triche.",
+            en_desc: "Extended administrative server console utility script for system integrity.",
+            fr_cmd: "Surveille la cohérence de la base de données pour empêcher les rollbacks.",
+            en_cmd: "Monitors overall database stability metrics to prevent rollbacks during crashes.",
+            link: "none"
+        }
+    ],
+    '7dtd2': [
+        // =========================================================================
+        // ⚔️ SERVEUR 2 : ARSENAL VANILLA+ (cat-combat)
+        // =========================================================================
+        {
+            cat: "cat-combat", name: "LittleRedSonja_T2IT3weapons",
+            fr_desc: "Débloque de nouvelles variantes d'armes de paliers T2 et T3.",
+            en_desc: "Weapon arsenal expansion injecting new T2 and T3 tiers gun variants.",
+            fr_cmd: "Le compteur de combat affiche votre temps de jeu cumulé en direct.",
+            en_cmd: "The survival logging dashboard displays your active session duration counters.",
+            link: "none"
+        },
+        {
+            cat: "cat-combat", name: "LittleRedSonja_AmmoRecycling",
+            fr_desc: "Démontage industriel et recyclage des munitions.",
+            en_desc: "Industrial recycling framework to dismantle old ammunition stocks.",
+            fr_cmd: "Ouvrez la forge ou l'établi pour fondre les balles obsolètes.",
+            en_cmd: "Access furnace interfaces to smelt down old rounds into brass and lead.",
+            link: "none"
+        },
+        {
+            cat: "cat-combat", name: "Dyes_Pack",
+            fr_desc: "Grand choix de pigments colorés pour personnaliser vos pièces d'armure.",
+            en_desc: "Unlocks an expansive coloring pigment package to customize armor gear sets.",
+            fr_cmd: "Utilisez les teintures dans l'emplacement de modification de vos vêtements.",
+            en_cmd: "Apply dyes directly inside the cosmetic modification grids layout of your gear.",
+            link: "none"
+        },
+
+        // =========================================================================
+        // 🧟 SERVEUR 2 : ECOSYSTEME & MENACES (cat-world)
+        // =========================================================================
+        {
+            cat: "cat-world", name: "V2_ServerSideZombiesLITE",
+            fr_desc: "Pack d'infectés allégé pour préserver les performances physiques.",
+            en_desc: "Streamlined zombie package optimizing monster physics and server ticks.",
+            fr_cmd: "Les vagues s'équilibrent pour maintenir des performances fluides en ligne.",
+            en_cmd: "Zombie entity count matches optimal network bandwidth to preserve hit-reg.",
+            link: "none"
+        },
+        {
+            cat: "cat-world", name: "MicksServersideTeleports",
+            fr_desc: "Système de balises de téléportation géré via le tchat de faction.",
+            en_desc: "Server-side quick travel gateway teleportation system managed via host.",
+            fr_cmd: "Tapez les commandes de téléportation autorisées pour transiter à votre abri.",
+            en_cmd: "Type designated navigation waypoint codes inside chat logs to initiate warp.",
+            link: "none"
+        },
+        {
+            cat: "cat-world", name: "AutomatedWaterBarrel",
+            fr_desc: "Citernes de récupération d'eau de pluie automatisées pour les camps.",
+            en_desc: "Automated rain collector barrel barrels network stabilizing water supplies.",
+            fr_cmd: "Ouvrez l'interface du tonneau pour collecter de l'eau purifiée.",
+            en_cmd: "Access the barrel tap grid interface to draw clean purified survival water.",
+            link: "none"
+        },
+
+        // =========================================================================
+        // 🔨 SERVEUR 2 : METIERS & DECO (cat-craft)
+        // =========================================================================
+        {
+            cat: "cat-craft", name: "Craftable_Working_BBQ_and_Wood_Stove",
+            fr_desc: "Permet de fabriquer des barbecues et poêles à bois fonctionnels pour la cuisine.",
+            en_desc: "Enables crafting fully operational cooking BBQs and indoor stoves.",
+            fr_cmd: "Placez la structure au sol pour cuisiner vos plats chauds.",
+            en_cmd: "Deploy the unit on a tile to unlock an optimized high-yield thermal cooking station.",
+            link: "none"
+        },
+        {
+            cat: "cat-craft", name: "AbasiyanikCraftableFlags_and_Posters",
+            fr_desc: "Pack de drapeaux héraldiques, posters et affiches de Sam.",
+            en_desc: "Sam's decorative flags, custom paint framing, and custom wall posters bundle.",
+            fr_cmd: "Utilisez le menu de menuiserie pour fabriquer les cadres muraux.",
+            en_cmd: "Open your crafting tables menu index to pick and build visual home decorations.",
+            link: "https://7daystodiemods.com"
+        },
+        {
+            cat: "cat-craft", name: "Sams_Storage_and_Deco_Stuff",
+            fr_desc: "Pack d'armoires, casiers de guilde et tapis d'ours de Sam.",
+            en_desc: "Sam's comprehensive sorted guild chests, lockers, and bear rug layout pack.",
+            fr_cmd: "Placez les rangements au sol pour organiser vos ressources.",
+            en_cmd: "Place down Sam's custom crates to separate your resource hauls into columns.",
+            link: "none"
+        },
+
+        // =========================================================================
+        // ⚙️ SERVEUR 2 : CONFIG CORE (cat-core)
+        // =========================================================================
+        {
+            cat: "cat-core", name: "Jakmeister999_REASONABLE_Large_Stacks",
+            fr_desc: "Augmente la limite d'empilement (Stacks) des matériaux en coffre.",
+            en_desc: "Expands maximum baseline stack numbers inside vault items cells.",
+            fr_cmd: "Vos ressources (bois, plomb, munitions) s'entassent en volumes géants.",
+            en_cmd: "Your construction blocks and ammunition bundles pack tightly into huge numbers.",
+            link: "none"
+        },
+        {
+            cat: "cat-core", name: "V2_ServerSideVehicles",
+            fr_desc: "Véhicules additionnels légers pour explorer la carte.",
+            en_desc: "Unlocks lightweight additional transport vehicles profiles to explore map perimeters.",
+            fr_cmd: "Trouvez les pièces mécaniques ou assemblez le châssis à l'établi.",
+            en_cmd: "Gather missing frame parts or build vehicle components using industrial stations.",
+            link: "none"
+        }
+    ]
+};
+
+// Variables globales de contrôle de l'application
+let activeServerKey = "7dtd1";
+let selectedModIndex = 0;
+let currentActiveSubTab = 'desc';
+
+// =========================================================================
+// 🎛️ CORE MOTEUR INTERACTIF APOCALYPSE ENCYCLOPEDIA 2026
+// =========================================================================
+function buildApocalypseDashboard() {
+    const urlParams = new URLSearchParams(window.location.search);
+    activeServerKey = urlParams.get('server') || '7dtd1';
+
+    const titleFr = document.getElementById('main-portal-title');
+    const titleEn = document.getElementById('main-portal-title-en');
+    const isEnglish = document.body.className.includes('lang-en-mode');
+    
+    // Aligne dynamiquement l'en-tête principal selon le serveur actif
+    if (activeServerKey === '7dtd1') {
+        if (titleFr) titleFr.innerText = "🗂️ L'ENCYCLOPÉDIE DES MODS : SERVEUR 1 APOCALYPSE";
+        if (titleEn) titleEn.innerText = "🗂️ MODULES ENCYCLOPEDIA: SERVER 1 APOCALYPSE";
+    } else {
+        if (titleFr) titleFr.innerText = "🗂️ L'ENCYCLOPÉDIE DES MODS : SERVEUR 2 VANILLA+";
+        if (titleEn) titleEn.innerText = "🗂️ MODULES ENCYCLOPEDIA: SERVER 2 VANILLA+";
+    }
+
+    // Force la visibilité d'un SEUL titre selon la langue active
+    if (isEnglish) {
+        if (titleFr) titleFr.style.display = "none";
+        if (titleEn) titleEn.style.display = "block";
+    } else {
+        if (titleFr) titleFr.style.display = "block";
+        if (titleEn) titleEn.style.display = "none";
+    }
+
+    // Calcule les chiffres dans le menu de gauche et génère la liste centrale
+    updateCategoryCounters();
+    renderModulesList('all', '');
+}
+
+// Calcule et affiche dynamiquement le nombre de mods par catégorie à gauche
+function updateCategoryCounters() {
+    const activeDatabase = SEPARATED_APOCALYPSE_DATABASES[activeServerKey];
+    
+    let total = activeDatabase.length;
+    let combat = 0;
+    let world = 0;
+    let craft = 0;
+    let core = 0;
+
+    activeDatabase.forEach(mod => {
+        if (mod.cat === 'cat-combat') combat++;
+        else if (mod.cat === 'cat-world') world++;
+        else if (mod.cat === 'cat-craft') craft++;
+        else if (mod.cat === 'cat-core') core++;
+    });
+
+    document.getElementById('count-all').innerText = `(${total})`;
+    document.getElementById('count-combat').innerText = `(${combat})`;
+    document.getElementById('count-world').innerText = `(${world})`;
+    document.getElementById('count-craft').innerText = `(${craft})`;
+    document.getElementById('count-core').innerText = `(${core})`;
+}
+// Fonction maîtresse de génération de la liste centrale avec recherche bilingue
+function renderModulesList(categoryFilter, searchFilter) {
+    const feed = document.getElementById('modulesFeed');
+    if (!feed) return;
+
+    feed.innerHTML = "";
+    const activeDatabase = SEPARATED_APOCALYPSE_DATABASES[activeServerKey];
+    let matchCount = 0;
+
+    activeDatabase.forEach((mod, index) => {
+        const matchesCategory = (categoryFilter === 'all' || mod.cat === categoryFilter);
+        const matchesSearch = mod.name.toLowerCase().includes(searchFilter.toLowerCase()) || 
+                              mod.fr_desc.toLowerCase().includes(searchFilter.toLowerCase()) ||
+                              mod.en_desc.toLowerCase().includes(searchFilter.toLowerCase());
+
+        if (matchesCategory && matchesSearch) {
+            matchCount++;
+            const itemHtml = `<div class="module-item" data-cat="${mod.cat}" onclick="selectApocalypseModule(event, ${index})">${mod.name}</div>`;
+            feed.insertAdjacentHTML('beforeend', itemHtml);
+        }
+    });
+
+    // Met à jour la jauge de décompte de la barre de recherche au centre
+    document.getElementById('totalCounter').innerText = "MODS : " + matchCount;
+}
+
+function selectApocalypseModule(evt, index) {
+    document.querySelectorAll('.module-item').forEach(i => i.classList.remove('active'));
+    evt.currentTarget.classList.add('active');
+
+    selectedModIndex = index;
+    const mod = SEPARATED_APOCALYPSE_DATABASES[activeServerKey][index];
+    
+    document.getElementById('prevTitle').innerText = mod.name;
+    document.getElementById('prevBadge').style.display = "inline-block";
+    
+    const cat = mod.cat;
+    const badge = document.getElementById('prevBadge');
+    
+    if (cat === 'cat-combat') { 
+        badge.innerText = "⚔️ Arsenal & Loot"; badge.style.color = "#ffcc00"; badge.style.borderColor = "#443b22"; badge.style.background = "rgba(255,204,0,0.04)"; 
+    } else if (cat === 'cat-world') { 
+        badge.innerText = "🧟 Menaces Infectées"; badge.style.color = "#ff4444"; badge.style.borderColor = "#442222"; badge.style.background = "rgba(255,68,68,0.04)"; 
+    } else { 
+        badge.innerText = "🔨 Métiers & Forges"; badge.style.color = "#2ecc71"; badge.style.borderColor = "#1a3a24"; badge.style.background = "rgba(46,204,113,0.04)"; 
+    }
+
+    // Gestion technique du bouton cliquable de lien / téléchargement direct
+    const dlBtn = document.getElementById('masterDownloadAction');
+    if (dlBtn) {
+        dlBtn.style.display = "block";
+        if (mod.link === "none" || !mod.link) {
+            dlBtn.removeAttribute('href');
+            dlBtn.removeAttribute('target');
+            dlBtn.innerText = "⚡ Aucun téléchargement requis";
+            dlBtn.style.background = "rgba(46,204,113,0.1)";
+            dlBtn.style.color = "#2ecc71";
+            dlBtn.style.borderColor = "#1a3a24";
+            dlBtn.style.cursor = "not-allowed";
         } else {
-            elFr.forEach(e => e.style.display = 'none');
-            elEn.forEach(e => e.style.display = 'block');
-            document.getElementById('id-btn-en').classList.add('active-lang');
+            dlBtn.href = mod.link;
+            dlBtn.target = "_blank";
+            dlBtn.innerText = "📥 Consulter le site du mod";
+            dlBtn.style.background = "#cc3333";
+            dlBtn.style.color = "#000000";
+            dlBtn.style.borderColor = "#cc3333";
+            dlBtn.style.cursor = "pointer";
         }
     }
 
-    // SÉCURITÉ ACTIVE : Bloque le Clic Droit et la touche F12
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
-        if (e.key === 'F12') { e.preventDefault(); }
+    switchSubTab(currentActiveSubTab);
+}
+
+function switchSubTab(subTabName) {
+    currentActiveSubTab = subTabName;
+    const mod = SEPARATED_APOCALYPSE_DATABASES[activeServerKey][selectedModIndex];
+    if (!mod) return;
+    
+    const isEnglish = document.body.className.includes('lang-en-mode');
+    const bodyEl = document.getElementById('prevBody');
+
+    ['desc', 'cmd'].forEach(t => {
+        const btn = document.getElementById('sub-tab-' + t);
+        if (btn) {
+            if (t === subTabName) {
+                btn.style.background = "#cc3333"; btn.style.color = "#000000"; btn.style.borderColor = "#cc3333";
+            } else {
+                btn.style.background = "#120e0e"; btn.style.color = "#aaaaaa"; btn.style.borderColor = "#2b1f1f";
+            }
+        }
     });
+
+    if (subTabName === 'desc') {
+        bodyEl.innerHTML = `<h4>ℹ️ Présentation du Module :</h4><p>${isEnglish ? mod.en_desc : mod.fr_desc}</p>`;
+    } else {
+        bodyEl.innerHTML = `<h4>🎮 Configuration des Touches :</h4><p>${isEnglish ? mod.en_cmd : mod.fr_cmd}</p>`;
+    }
+}
+
+function handleLiveSearch() {
+    const searchString = document.getElementById('modsSearchBox').value;
+    renderModulesList(activeCategoryFilter, searchString);
+}
+
+let activeCategoryFilter = 'all';
+function switchCategory(evt, catId) {
+    document.querySelectorAll('.cat-tab-btn').forEach(b => b.classList.remove('active'));
+    evt.currentTarget.classList.add('active');
+
+    activeCategoryFilter = catId;
+    const searchString = document.getElementById('modsSearchBox').value;
+    renderModulesList(catId, searchString);
+}
+
+// Synchronise l'affichage global au clic du sélecteur de langue
+document.querySelector('.lang-select-box').addEventListener('change', function(e) {
+    const isEnglish = e.target.value === 'en';
+    const titleFr = document.getElementById('main-portal-title');
+    const titleEn = document.getElementById('main-portal-title-en');
+    
+    if (isEnglish) {
+        document.body.className = 'lang-en-mode theme-7dtd';
+        if (titleFr) titleFr.style.display = "none";
+        if (titleEn) titleEn.style.display = "block";
+    } else {
+        document.body.className = 'lang-fr-mode theme-7dtd';
+        if (titleFr) titleFr.style.display = "block";
+        if (titleEn) titleEn.style.display = "none";
+    }
+    
+    handleLiveSearch();
+});
+
+buildApocalypseDashboard();
+
+function syncBackButton() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeServer = urlParams.get('server') || '7dtd1';
+    document.getElementById('back-btn').href = "index.html?server=" + activeServer;
+}
+syncBackButton();
+
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+    if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+    }
+});
 </script>
 </body>
 </html>

@@ -3,164 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[7DTD] QBC Flaggard Apocalypse | Fiche Technique</title>
+    <title>[QBC] 7 Days To Die | Terminal de Survie</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* --- DESIGN THÉMATIQUE ZOMBIE SANG & FIN DU MONDE --- */
-        body { background-color: #0a0505 !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
-        
-        .sdtd-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #8b0000; padding-bottom: 20px; }
-        .sdtd-title { color: #ff1111; text-shadow: 0 0 12px rgba(255,17,17,0.5); font-family: 'Impact', Charcoal, sans-serif; letter-spacing: 2px; margin-bottom: 5px; font-size: 32px; }
-        
-        /* COMMUTATEUR DE LANGUE HAUT DROITE */
-        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
-        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #4a0000; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
-        .lang-btn:hover { border-color: #ff1111; color: #fff; }
-        .lang-btn.active-lang { background: #ff1111; color: #fff; border-color: #ff1111; box-shadow: 0 0 8px rgba(255,17,17,0.4); }
-        
-        /* MASQUAGE DE LANGUE */
-        .lang-en { display: none; }
-        
-        /* GRILLE DE FORCE ET ANTI-ÉTIREMENT */
-        .sdtd-grid-info { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
-        .sdtd-spec-box { background: linear-gradient(135deg, #120303 0%, #080101 100%); border: 2px solid #600000; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.9); }
-        .sdtd-spec-box h3 { color: #ff1111; margin-top: 0; font-size: 18px; text-transform: uppercase; border-bottom: 1px dashed #8b0000; padding-bottom: 8px; margin-bottom: 15px; font-family: 'Impact', Charcoal, sans-serif; letter-spacing: 1px; }
-        
-        /* ALIGNEMENT DES CONFIGURATIONS DE SURVIE */
-        .spec-line { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 4px; }
-        .spec-label { color: #ff8888; font-weight: bold; text-transform: uppercase; }
-        .spec-value { color: #fff; font-weight: bold; }
-        .spec-value.highlight { color: #ff1111; text-shadow: 0 0 5px rgba(255,17,17,0.3); }
-        
-        /* BOÎTES DE REDIRECTION CROISÉE VERS WURM / AVORION */
-        .cross-link-box { background: rgba(0, 0, 0, 0.5); border: 1px solid #333; border-radius: 6px; padding: 12px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .cross-title { font-weight: bold; font-size: 13px; }
-        .cross-btn { background: #333; color: #fff; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 4px; text-decoration: none; text-transform: uppercase; }
-        .cross-btn:hover { background: #fff; color: #000; }
-        
-        /* BOUTONS ACTIONS */
-        .back-btn { display: inline-block; background: transparent; color: #ff1111; border: 1px solid #ff1111; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
-        .back-btn:hover { background: #ff1111; color: #000; box-shadow: 0 0 15px #ff1111; }
-        .lang-split { display: block; margin-top: 3px; color: #aaa; font-style: italic; font-size: 12px; }
+        .game-layout { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .server-card { background: rgba(12, 10, 10, 0.95); border: 1px solid #2b1c1c; border-radius: 10px; padding: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.9); }
+        .led-green { width: 8px; height: 8px; background-color: #00ff00; border-radius: 50%; box-shadow: 0 0 6px #00ff00; display: inline-block; margin-right: 6px; }
+        .btn-7dtd { background: #120e0e; color: #cc3333; border: 1px solid #3d2222; padding: 8px 15px; font-weight: bold; text-transform: uppercase; border-radius: 4px; font-size: 12px; cursor: pointer; transition: 0.2s; text-decoration: none; }
+        .btn-7dtd:hover { background: #cc3333; color: #000; border-color: #cc3333; box-shadow: 0 0 8px rgba(204, 51, 51, 0.4); }
+        .type-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 4px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; margin-right: 15px; border: 1px solid transparent; }
+        .live-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+        .info-panel { background: #0a0707; border: 1px dashed #3a2222; padding: 12px; border-radius: 5px; text-align: center; }
+        .info-panel h5 { margin: 0 0 6px 0; color: #cc3333; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-panel .val { font-size: 13px; font-weight: bold; color: #fff; font-family: monospace; }
+        .map-preview-container { margin: 20px 0; background: #070505; border: 1px solid #2b1c1c; padding: 10px; border-radius: 6px; }
+        .map-interactive-image { width: 100%; max-width: 500px; height: auto; border: 1px solid #3a2222; border-radius: 4px; transition: 0.3s; cursor: pointer; }
+        .map-interactive-image:hover { border-color: #cc3333; box-shadow: 0 0 12px rgba(204, 51, 51, 0.3); transform: scale(1.01); }
+        .dashboard-container { display: flex; gap: 20px; margin-top: 25px; text-align: left; height: 280px; }
+        .sidebar-tabs { width: 220px; display: flex; flex-direction: column; gap: 8px; background: #0c0a0a; border: 1px solid #2b1c1c; padding: 12px; border-radius: 6px; }
+        .tab-btn { background: rgba(255,255,255,0.01); border: 1px solid #3a2222; color: #aaa; padding: 10px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 11px; text-align: left; transition: 0.2s; text-transform: uppercase; }
+        .tab-btn:hover, .tab-btn.active { border-color: #cc3333; color: #cc3333; background: rgba(204,51,51,0.05); }
+        .content-display-area { flex: 1; background: #070505; border: 1px solid #2b1c1c; padding: 20px; border-radius: 6px; overflow-y: auto; line-height: 1.6; font-size: 13px; color: #ffffff; }
+        .content-display-area h4 { color: #cc3333; margin-top: 0; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #3d2222; padding-bottom: 5px; }
+        .player-list-box { background: #0a0707; border: 1px solid #2b1c1c; border-radius: 6px; padding: 15px; margin-top: 20px; text-align: left; }
+        .player-grid-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .player-tag { background: #141010; border: 1px solid #3a2222; color: #ffffff; padding: 5px 12px; border-radius: 4px; font-family: monospace; font-size: 12px; font-weight: bold; }
+        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background: #050303; color: #ffffff; font-family: sans-serif; }
     </style>
 </head>
 <body>
-
-<div class="lang-selector-container">
-    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
-    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
-</div>
-
-<div class="sdtd-header">
-    <h1 class="sdtd-title">💀 Univers 7 Days To Die apocalypse</h1>
-    <p style="margin: 0; font-size: 14px; color: #ff8888; font-style: italic; text-align: center;">
-        <span class="lang-fr">Spécifications de combat et règlements du premier avant-poste ProjectZ 2.6.</span>
-        <span class="lang-en">Combat specifications and rules for the first ProjectZ 2.6 outpost.</span>
-    </p>
-</div>
-<div class="sdtd-grid-info">
-    <!-- ==========================================
-         🩸 FICHE UNIQUE : QBC FLAGGARD PROJECTZ 2.6
-         ========================================== -->
-    <div class="sdtd-spec-box" style="width: 100% !important; max-width: 600px; margin: 0 auto !important;">
-        <h3 class="lang-fr">🩸 Serveur 1 : ProjectZ-2-6 Apocalypse</h3>
-        <h3 class="lang-en">🩸 Server 1: ProjectZ-2-6 Apocalypse</h3>
-        
-        <div class="spec-line">
-            <span class="spec-label">Mode :</span>
-            <span class="spec-value">PvE (Survie Hardcore)</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Difficulté / Difficulty :</span>
-            <span class="spec-value">Warrior (Niveau 4)</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Loot Abundance :</span>
-            <span class="spec-value">200% (Abondant)</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Blood Moon Frequency :</span>
-            <span class="spec-value highlight">Chaque 7 Jours / Every 7 Days</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Extensions / Packages :</span>
-            <span class="spec-value highlight">12 Modules Actifs (Core)</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Emplacement / Location :</span>
-            <span class="spec-value">Montréal (Kinetic Hosting)</span>
-        </div>
-
-        <p style="font-size: 13px; color: #ccc; text-align: left; margin: 15px 0; line-height: 1.5;">
-            <span class="lang-fr">Ce serveur est configuré pour une survie immersive avec gestion de drone automatisée, quêtes uniques et structures en acier lourd renforcé.</span>
-            <span class="lang-en">This server is configured for immersive survival with automated drone management, unique custom quests, and heavy reinforced steel building.</span>
-        </p>
-
-        <!-- ==========================================
-             🔄 DETAILS PRECIS DES AUTRES UNIVERS (REDIRECTION)
-             ========================================== -->
-        <div style="margin-top: 25px; border-top: 1px dashed #600000; padding-top: 15px;">
-            <h4 style="color:#ff8888; font-size:12px; text-transform:uppercase; margin-bottom:10px; font-family:'Impact'; letter-spacing:1px;">
-                <span class="lang-fr">🔍 Voir les détails des autres mondes :</span>
-                <span class="lang-en">🔍 View other worlds specifications:</span>
-            </h4>
-
-            <!-- Lien vers l'univers Wurm -->
-            <div class="cross-link-box">
-                <div style="text-align:left;">
-                    <span class="cross-title" style="color:#ffcc00;">⚔️ Univers Wurm Unlimited</span>
-                    <span style="display:block; font-size:11px; color:#aaa;">Royaumes Flaggard & Doriath PvE</span>
-                </div>
-                <a href="../wurm/index.html" class="cross-btn" style="border: 1px solid #ffcc00; color:#ffcc00;">Détails</a>
+<div class="game-layout">
+    <div style="text-align: left; margin-bottom: 20px;">
+        <a href="../index.html" class="btn-7dtd" style="background:#222; color:#fff; border-color:#3a2222;">🏡 Retour au Portail</a>
+    </div>
+    <div class="server-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2b1c1c; padding-bottom: 10px; margin-bottom: 20px;">
+            <span id="server-title" style="font-size: 22px; color: #cc3333; font-weight: bold;">Initialisation...</span>
+            <div style="display: flex; align-items: center;">
+                <div id="server-game-mode-badge" class="type-badge">Scan System...</div>
+                <span class="led-green"></span>
+                <span style="color:#00ff00; font-weight:bold; font-size: 13px;">ONLINE: </span>
+                <span id="players-count" style="font-size:18px; font-weight:bold; margin-left: 5px;">0 / 40</span>
             </div>
-
-            <!-- Lien vers l'univers Avorion -->
-            <div class="cross-link-box">
-                <div style="text-align:left;">
-                    <span class="cross-title" style="color:#00f0ff;">🌌 Univers Avorion Cyber-Space</span>
-                    <span style="display:block; font-size:11px; color:#aaa;">Secteurs Alpha & Nebula Beta</span>
-                </div>
-                <a href="../avorion1/index.html" class="cross-btn" style="border: 1px solid #00f0ff; color:#00f0ff;">Détails</a>
+        </div>
+        <div class="live-info-grid">
+            <div class="info-panel"><h5>🗺️ Carte Active</h5><div id="7dtd-map-name" class="val">-</div></div>
+            <div class="info-panel"><h5>⚙️ Version Jeu</h5><div id="7dtd-version" class="val">-</div></div>
+            <div class="info-panel"><h5>⏱️ Temps Univers</h5><div id="7dtd-server-time" class="val">-</div></div>
+            <div class="info-panel"><h5>🩸 Blood Moon</h5><div id="7dtd-bloodmoon" class="val" style="color: #cc3333;">-</div></div>
+            <div class="info-panel"><h5>💀 Zombies Tués</h5><div id="7dtd-kills" class="val">-</div></div>
+            <div class="info-panel" style="border-color: #ffcc00;"><h5 style="color: #ffcc00;">🔄 Prochain Reboot</h5><div id="7dtd-reboot-countdown" class="val" style="color: #ffcc00;">Calcul...</div></div>
+        </div>
+        <div class="map-preview-container">
+            <h5 style="color: #cc3333; margin: 0 0 8px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left;">🗺️ Aperçu Planisphère de l'Instance :</h5>
+            <a id="7dtd-map-link" href="#" target="_blank">
+                <img id="7dtd-map-img" src="" alt="Chargement de l'image..." class="map-interactive-image">
+            </a>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+            <button id="radar-refresh-btn" class="btn-7dtd" onclick="forceRadarRefresh()">📡 Scan Auto dans 60s</button>
+            <a id="7dtd-livemap-action-btn" href="#" target="_blank" class="btn-7dtd" style="border-color: #00ffff; color: #00ffff; display: inline-block; line-height: 1.4;">📡 Ouvrir la LiveMap Web</a>
+        </div>
+        <div class="dashboard-container">
+            <div class="sidebar-tabs">
+                <button id="tab-motd" class="tab-btn active" onclick="switchConsoleTab('motd')">📢 Message (MOTD)</button>
+                <button id="tab-rules" class="tab-btn" onclick="switchConsoleTab('rules')">📜 Lois & Règlements</button>
+            </div>
+            <div id="consoleDisplayArea" class="content-display-area">-</div>
+        </div>
+        <div class="player-list-box">
+            <h5 style="color: #cc3333; margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">👥 Survivants repérés dans la zone :</h5>
+            <div id="player-tags-container" class="player-grid-tags">
+                <span style="color: #aaa; font-style: italic; font-size: 12px;">Aucun signal de survivant.</span>
             </div>
         </div>
     </div>
 </div>
-<div style="text-align: center; margin-top: 20px;">
-    <!-- Bouton de retour rapide vers l'accueil principal -->
-    <a href="../index.html" class="back-btn">
-        <span class="lang-fr">⬅️ Retour au Portail</span>
-        <span class="lang-en">⬅️ Back to Portal</span>
-    </a>
-</div>
 
 <script>
-    // --- MOTEUR DE SELECTION DE LANGUE INTERACTIF ---
-    function changerLangue(langue) {
-        const elFr = document.querySelectorAll('.lang-fr');
-        const elEn = document.querySelectorAll('.lang-en');
-        const boutons = document.querySelectorAll('.lang-btn');
-        boutons.forEach(b => b.classList.remove('active-lang'));
-        
-        if (langue === 'fr') {
-            elFr.forEach(e => e.style.display = 'block');
-            elEn.forEach(e => e.style.display = 'none');
-            document.getElementById('btn-fr').classList.add('active-lang');
-        } else {
-            elFr.forEach(e => e.style.display = 'none');
-            elEn.forEach(e => e.style.display = 'block');
-            document.getElementById('id-btn-en').classList.add('active-lang');
-        }
+// CONFIGURATION DIRECTEMENT INJECTÉE POUR COURT-CIRCUITER L'ÉCRAN BLANC LOCAL
+const INTERNAL_CONFIG = {
+    "7dtd1": { "ip": "15.235.65.131", "port": "25593", "map": "http://15.235.65.131:25594", "mapImg": "map_s1.jpg" },
+    "7dtd2": { "ip": "51.222.244.134", "port": "25592", "map": "http://51.222.244.134:25594", "mapImg": "map_s2.jpg" }
+};
+const SEPARATED_7DTD_DATA = {
+    '7dtd1': {
+        name: "🛡️ Q฿₵ ₣Ⱡ₳₲₲₳ⱤĐ Q₵ ₵₳₦ ₣Ɽ ₱VɆ ฿łɆ₦VɆ₦ɄɆ / ₩ɆⱠ₵Ø₥Ɇ",
+        gameModeText: "🟢 PVE COMBAT", gameModeColor: "#2ecc71", gameModeBg: "rgba(46,204,113,0.06)", gameModeBorder: "#1a3a24", playerIcon: "⚔️",
+        mapFallback: "QBC_Insane_Apocalypse", timeFallback: "Jour 42 - 18:30", moonFallback: "CE SOIR (22:00)", versionFallback: "v2.6 Stable", killsFallback: "4,850 Kills",
+        morningReboot: 6, eveningReboot: 18, launchDate: new Date(2026, 2, 1),
+        motd: `<h4>📢 PROTOCOLES DE BORD — FLAGGHARD PVE</h4><p style="color: #cc3333; font-weight: bold; text-transform: uppercase; font-size: 13px; margin-bottom: 12px;">🩸 INFOS SYSTÈME ACTIVE V2.6 🩸</p>
+               <details open style="background: rgba(0,255,255,0.02); border: 1px solid #153a3a; padding: 6px; margin-bottom: 6px; cursor: pointer;"><summary style="color: #00ffff; font-weight: bold; font-size: 12px;">📋 Fiche Technique : QBC Flaggard ProjectZ</summary><div style="padding: 5px; font-size: 11px; color: #fff; font-family: monospace;"><strong>ServerDescription:</strong> Server-Side 2.6++ | 40+ MODS++ | Level 750++ | Vehicles + Teleport + Livemaps + Starter-kits | Location: Canada - Montreal</div></details>
+               <details style="background: rgba(255,255,255,0.02); border: 1px solid #2b1c1c; padding: 6px; margin-bottom: 6px; cursor: pointer;"><summary style="color: #ffcc00; font-weight: bold; font-size: 12px;">⚠️ Guide de départ / Starting Guide</summary><div style="padding: 5px; font-size: 11px; color: #ccc;"><p>✓ <strong>Quest Ticket Yautja :</strong> <span style="color: #cc3333; font-weight: bold;">NE PAS UTILISER</span></p><p>✓ <strong>Livre de quête rouge :</strong> Red Quest Book (Survival) Required</p></div></details>`,
+        rules: `<h4>📜 REGLEMENTS SERVER PROJECTZ 2.6</h4><div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;"><p><strong>1✗-</strong> Interdit aucun landclaim au POI Carl's Corn Farm.</p></div>`
+    },
+    '7dtd2': {
+        name: "🛡️ QBC Flaggard QC FR CAN PVE NEW MODS",
+        gameModeText: "🟢 PVE NEW MODS", gameModeColor: "#2ecc71", gameModeBg: "rgba(46,204,113,0.06)", gameModeBorder: "#1a3a24", playerIcon: "⚙️",
+        mapFallback: "QBC_Standard_Navezgane", timeFallback: "Jour 3 - 10:15", moonFallback: "Dans 4 Jours", versionFallback: "v2.6 Vanilla+", killsFallback: "1,240 Kills",
+        morningReboot: 5, eveningReboot: 17, launchDate: new Date(2026, 3, 15),
+        motd: `<h4>📢 PROTOCOLES DE BORD — FLAGGHARD NEW MODS</h4><p style="color: #2ecc71; font-weight: bold; text-transform: uppercase; font-size: 13px; margin-bottom: 12px;">🌱 EXPANSION COMPOSANTS LIVE 🌱</p>`,
+        rules: `<h4>📜 REGLEMENTS SERVER 2</h4><div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;"><p><strong>1✗-</strong> Interdit aucun landclaim au POI Carl's Corn Farm.</p></div>`
+    }
+};
+
+let activeServerKey = "7dtd1";
+let radarTimeLeft = 60;
+let radarTimerInterval = null;
+
+function switchConsoleTab(tabName) {
+    const displayArea = document.getElementById('consoleDisplayArea');
+    if (!displayArea) return;
+    displayArea.innerHTML = SEPARATED_7DTD_DATA[activeServerKey][tabName];
+    ['motd', 'rules'].forEach(t => { const btn = document.getElementById('tab-' + t); if (btn) { if (t === tabName) btn.classList.add('active'); else btn.classList.remove('active'); } });
+}
+
+function startRadarCountdown() {
+    if (radarTimerInterval) clearInterval(radarTimerInterval);
+    radarTimeLeft = 60;
+    const radarBtn = document.getElementById('radar-refresh-btn');
+    radarTimerInterval = setInterval(() => {
+        radarTimeLeft--;
+        if (radarBtn) radarBtn.innerText = `📡 Scan Auto dans ${radarTimeLeft}s`;
+        if (radarTimeLeft <= 0) load7DTDStats(true);
+    }, 1000);
+}
+
+function forceRadarRefresh() {
+    alert("📡 Resynchronisation immédiate de l'instance locale !");
+    load7DTDStats(false);
+}
+
+function updateRebootTimer() {
+    const now = new Date(); const currentHour = now.getHours(); const currentData = SEPARATED_7DTD_DATA[activeServerKey];
+    let targetHour = (currentHour >= currentData.morningReboot && currentHour < currentData.eveningReboot) ? currentData.eveningReboot : currentData.morningReboot;
+    let targetDate = new Date(); targetDate.setHours(targetHour, 0, 0, 0);
+    if (currentHour >= currentData.eveningReboot) { targetDate.setDate(targetDate.getDate() + 1); targetDate.setHours(currentData.morningReboot, 0, 0, 0); }
+    const diffMs = targetDate - now;
+    const countdownEl = document.getElementById('7dtd-reboot-countdown');
+    if (countdownEl) countdownEl.innerText = `Dans ${Math.floor(diffMs / 3600000)}h ${Math.floor((diffMs % 3600000) / 60000)}m (${targetHour}:00)`;
+}
+
+function load7DTDStats(isAutoRefresh) {
+    activeServerKey = new URLSearchParams(window.location.search).get('server') || '7dtd1';
+    const currentData = SEPARATED_7DTD_DATA[activeServerKey];
+    
+    // 🔥 LECTURE DIRECTE DE LA CONFIG INTERNE DU FICHIER (PLUS DE BLOCAGE DE DOSSIER PARENT)
+    const activeMapImg = INTERNAL_CONFIG[activeServerKey].mapImg;
+    const activeLiveMap = INTERNAL_CONFIG[activeServerKey].map;
+
+    document.getElementById('server-title').innerText = currentData.name;
+    
+    const mapImgEl = document.getElementById('7dtd-map-img');
+    const mapLinkEl = document.getElementById('7dtd-map-link');
+    const liveMapBtn = document.getElementById('7dtd-livemap-action-btn');
+    if (mapImgEl && mapLinkEl) {
+        mapImgEl.src = activeMapImg;
+        mapLinkEl.href = activeLiveMap;
+    }
+    if (liveMapBtn) {
+        liveMapBtn.href = activeLiveMap;
     }
 
-    // SÉCURITÉ ACTIVE : Bloque le Clic Droit et la touche F12
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
-        if (e.key === 'F12') { e.preventDefault(); }
-    });
+    const mb = document.getElementById('server-game-mode-badge');
+    if (mb) { mb.innerText = currentData.gameModeText; mb.style.color = currentData.gameModeColor; mb.style.borderColor = currentData.gameModeBorder; mb.style.background = currentData.gameModeBg; }
+    
+    if (!isAutoRefresh) switchConsoleTab('motd'); 
+    updateRebootTimer();
+    startRadarCountdown();
+    
+    fetch('/.netlify/functions/get-players?game=' + activeServerKey)
+        .then(res => res.json())
+        .then(data => {
+            if (data.online) {
+                document.getElementById('players-count').innerText = `${data.count} / ${data.maxPlayers || 40}`;
+                document.getElementById('7dtd-map-name').innerText = data.map || currentData.mapFallback;
+                document.getElementById('7dtd-server-time').innerText = data.time || currentData.timeFallback;
+                document.getElementById('7dtd-bloodmoon').innerText = data.bloodmoon || currentData.moonFallback;
+                document.getElementById('7dtd-version').innerHTML = `<span style="color:#ffcc00;">${data.version || currentData.versionFallback}</span>`;
+                document.getElementById('7dtd-kills').innerText = (data.kills || currentData.killsFallback) + " Kills";
+            }
+        })
+        .catch(() => {
+            document.getElementById('players-count').innerText = "0 / 40";
+            document.getElementById('7dtd-map-name').innerText = currentData.mapFallback; 
+            document.getElementById('7dtd-server-time').innerText = currentData.timeFallback; 
+            document.getElementById('7dtd-bloodmoon').innerText = currentData.moonFallback;
+            document.getElementById('7dtd-version').innerHTML = `<span style="color:#ffcc00;">${currentData.versionFallback}</span>`; 
+            document.getElementById('7dtd-kills').innerText = currentData.killsFallback;
+        });
+}
+load7DTDStats(false);
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => { if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) e.preventDefault(); });
 </script>
 </body>
 </html>
-
-
-

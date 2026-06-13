@@ -3,161 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[AVORION] QBC Cyber-Space | Fiche Technique</title>
+    <title>[QBC] Avorion | Terminal Cyber-Spatial</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* --- DESIGN GALACTIQUE CYAN & ESPACE PROFOND --- */
-        body { background-color: #02050a !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
+        /* 🌌 LOOK SUPRÊME SCI-FI BLEU CYAN NÉON */
+        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background: #020308; color: #ffffff; font-family: 'Courier New', monospace, sans-serif; }
+        .game-layout { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
-        .avorion-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #005f73; padding-bottom: 20px; }
-        .avorion-title { color: #00f0ff; text-shadow: 0 0 12px rgba(0,240,255,0.5); font-family: 'Courier New', Courier, monospace; letter-spacing: 2px; margin-bottom: 5px; font-size: 30px; font-weight: bold; }
+        .server-card { 
+            background: rgba(8, 12, 24, 0.96); 
+            border: 1px solid #102a45; 
+            border-radius: 10px; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 10px 40px rgba(0, 162, 255, 0.15); 
+        }
         
-        /* COMMUTATEUR DE LANGUE HAUT DROITE */
-        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
-        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #005f73; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
-        .lang-btn:hover { border-color: #00f0ff; color: #fff; }
-        .lang-btn.active-lang { background: #00f0ff; color: #000; border-color: #00f0ff; box-shadow: 0 0 8px rgba(0,240,255,0.4); }
+        .led-green { width: 8px; height: 8px; background-color: #00ffcc; border-radius: 50%; box-shadow: 0 0 8px #00ffcc; display: inline-block; margin-right: 6px; }
         
-        /* MASQUAGE DE LANGUE */
-        .lang-en { display: none; }
+        /* Boutons Bleu Cyan Néon Tactiques */
+        .btn-7dtd { 
+            background: #060d1a; 
+            color: #00a2ff; 
+            border: 1px solid #00558f; 
+            padding: 8px 15px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            text-decoration: none; 
+            box-shadow: inset 0 0 10px rgba(0, 162, 255, 0.1);
+        }
+        .btn-7dtd:hover { 
+            background: #00a2ff; 
+            color: #000000; 
+            border-color: #00a2ff; 
+            box-shadow: 0 0 15px rgba(0, 162, 255, 0.6); 
+        }
         
-        /* GRILLE DE FORCE ET ANTI-ÉTIREMENT */
-        .avorion-grid-info { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
-        .avorion-spec-box { background: linear-gradient(135deg, #020b14 0%, #01050a 100%); border: 2px solid #005f73; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.9); }
-        .avorion-spec-box h3 { color: #00f0ff; margin-top: 0; font-size: 18px; text-transform: uppercase; border-bottom: 1px dashed #005f73; padding-bottom: 8px; margin-bottom: 15px; font-family: 'Courier New', Courier, monospace; font-weight: bold; }
+        .type-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 4px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; margin-right: 15px; border: 1px solid transparent; }
         
-        /* ALIGNEMENT DES CONFIGURATIONS SPATIALES */
-        .spec-line { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 4px; }
-        .spec-label { color: #8ecae6; font-weight: bold; text-transform: uppercase; font-size: 12px; }
-        .spec-value { color: #fff; font-weight: bold; }
-        .spec-value.highlight { color: #00f0ff; text-shadow: 0 0 5px rgba(0,240,255,0.3); }
+        .live-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
         
-        /* BOÎTES DE REDIRECTION CROISÉE VERS WURM / 7DTD */
-        .cross-link-box { background: rgba(0, 0, 0, 0.5); border: 1px solid #333; border-radius: 6px; padding: 12px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .cross-title { font-weight: bold; font-size: 13px; }
-        .cross-btn { background: #333; color: #fff; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 4px; text-decoration: none; text-transform: uppercase; }
-        .cross-btn:hover { background: #fff; color: #000; }
+        .info-panel { 
+            background: #040812; 
+            border: 1px dashed #00558f; 
+            padding: 12px; 
+            border-radius: 5px; 
+            text-align: center; 
+        }
+        .info-panel h5 { margin: 0 0 6px 0; color: #00a2ff; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 0 0 5px rgba(0, 162, 255, 0.3); }
+        .info-panel .val { font-size: 13px; font-weight: bold; color: #fff; font-family: monospace; }
         
-        /* BOUTONS ACTIONS */
-        .back-btn { display: inline-block; background: transparent; color: #00f0ff; border: 1px solid #00f0ff; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
-        .back-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 15px #00f0ff; }
-        .lang-split { display: block; margin-top: 3px; color: #aaa; font-style: italic; font-size: 12px; }
+        .map-preview-container { margin: 20px 0; background: #03060f; border: 1px solid #102a45; padding: 10px; border-radius: 6px; }
+        .map-interactive-image { width: 100%; max-width: 500px; height: auto; border: 1px solid #00558f; border-radius: 4px; transition: 0.3s; cursor: pointer; }
+        .map-interactive-image:hover { border-color: #00a2ff; box-shadow: 0 0 15px rgba(0, 162, 255, 0.4); transform: scale(1.01); }
+        
+        .dashboard-container { display: flex; gap: 20px; margin-top: 25px; text-align: left; height: 280px; }
+        .sidebar-tabs { width: 220px; display: flex; flex-direction: column; gap: 8px; background: #060a14; border: 1px solid #102a45; padding: 12px; border-radius: 6px; }
+        
+        .tab-btn { 
+            background: rgba(0, 162, 255, 0.02); 
+            border: 1px solid #00558f; 
+            color: #8ab4f8; 
+            padding: 10px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 11px; 
+            text-align: left; 
+            transition: 0.2s; 
+            text-transform: uppercase; 
+        }
+        .tab-btn:hover, .tab-btn.active { border-color: #00a2ff; color: #ffffff; background: rgba(0, 162, 255, 0.15); box-shadow: 0 0 8px rgba(0, 162, 255, 0.3); }
+        
+        .content-display-area { flex: 1; background: #03060f; border: 1px solid #102a45; padding: 20px; border-radius: 6px; overflow-y: auto; line-height: 1.6; font-size: 13px; color: #ffffff; }
+        .content-display-area h4 { color: #00a2ff; margin-top: 0; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #00558f; padding-bottom: 5px; text-shadow: 0 0 5px rgba(0, 162, 255, 0.4); }
     </style>
 </head>
 <body>
-
-<div class="lang-selector-container">
-    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
-    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
-</div>
-
-<div class="avorion-header">
-    <h1 class="avorion-title">🌌 Univers Avorion Cyber-Space</h1>
-    <p style="margin: 0; font-size: 14px; color: #8ecae6; font-style: italic; text-align: center;">
-        <span class="lang-fr">Spécifications des secteurs et règlements du réseau spatial QBC.</span>
-        <span class="lang-en">Sector specifications and rules for the QBC space network.</span>
-    </p>
-</div>
-<div class="avorion-grid-info">
-    <!-- ==========================================
-         🚀 FICHE UNIQUE : QBC VOID-SECTORS ALPHA
-         ========================================== -->
-    <div class="avorion-spec-box" style="width: 100% !important; max-width: 600px; margin: 0 auto !important;">
-        <h3 class="lang-fr">🚀 Secteur : Void-Sectors Alpha</h3>
-        <h3 class="lang-en">🚀 Sector: Void-Sectors Alpha</h3>
-        
-        <div class="spec-line">
-            <span class="spec-label">Mode :</span>
-            <span class="spec-value">PvE (Exploration & Commerce)</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Difficulty / Difficulté :</span>
-            <span class="spec-value">Normal (Standard Space)</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Collision Damage :</span>
-            <span class="spec-value highlight">0.2x (Réduit / Reduced)</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Steam Query Port :</span>
-            <span class="spec-value highlight">25598</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Max Players :</span>
-            <span class="spec-value">50 Pilotes / Pilots</span>
-        </div>
-        <div class="spec-line">
-            <span class="spec-label">Hébergeur / Host :</span>
-            <span class="spec-value">Montréal (Kinetic Hosting)</span>
-        </div>
-
-        <p style="font-size: 13px; color: #ccc; text-align: left; margin: 15px 0; line-height: 1.5;">
-            <span class="lang-fr">Secteur Alpha dédié à la construction de flottes de croiseurs, à l'établissement de stations de commerce et à la guerre contre les factions IA.</span>
-            <span class="lang-en">Alpha sector dedicated to fleet cruiser construction, establishing trade stations, and wars against AI factions.</span>
-        </p>
-
-        <!-- ==========================================
-             🔄 DETAILS PRECIS DES AUTRES UNIVERS (REDIRECTION)
-             ========================================== -->
-        <div style="margin-top: 25px; border-top: 1px dashed #005f73; padding-top: 15px;">
-            <h4 style="color:#8ecae6; font-size:12px; text-transform:uppercase; margin-bottom:10px; font-family:'Courier New'; font-weight:bold; letter-spacing:1px;">
-                <span class="lang-fr">🔍 Voir les détails des autres mondes :</span>
-                <span class="lang-en">🔍 View other worlds specifications:</span>
-            </h4>
-
-            <!-- Lien croisé vers l'univers Wurm -->
-            <div class="cross-link-box">
-                <div style="text-align:left;">
-                    <span class="cross-title" style="color:#ffcc00;">⚔️ Univers Wurm Unlimited</span>
-                    <span style="display:block; font-size:11px; color:#aaa;">Royaumes Flaggard & Doriath PvE</span>
-                </div>
-                <a href="../wurm/index.html" class="cross-btn" style="border: 1px solid #ffcc00; color:#ffcc00;">Détails</a>
+<div class="game-layout">
+    <div style="text-align: left; margin-bottom: 20px;">
+        <a href="../index.html" class="btn-7dtd" style="background:#091220; color:#fff; border-color:#102a45;">🏡 Retour au Portail</a>
+    </div>
+    <div class="server-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #102a45; padding-bottom: 10px; margin-bottom: 20px;">
+            <span id="server-title" style="font-size: 22px; color: #00a2ff; font-weight: bold; text-shadow: 0 0 10px rgba(0, 162, 255, 0.5);">Initialisation Cyber-Pont...</span>
+            <div style="display: flex; align-items: center;">
+                <div id="server-game-mode-badge" class="type-badge">Scan System...</div>
+                <span class="led-green"></span>
+                <span style="color:#00ffcc; font-weight:bold; font-size: 13px; text-shadow: 0 0 5px #00ffcc;">LINK: </span>
+                <span id="players-count" style="font-size:18px; font-weight:bold; margin-left: 5px; color:#fff; font-family:monospace;">0 / 40</span>
             </div>
-
-            <!-- Lien croisé vers l'univers 7 Days to Die -->
-            <div class="cross-link-box">
-                <div style="text-align:left;">
-                    <span class="cross-title" style="color:#ff1111;">💀 Univers 7 Days To Die Apocalypse</span>
-                    <span style="display:block; font-size:11px; color:#aaa;">Serveurs ProjectZ & New Mods PVE</span>
-                </div>
-                <a href="../7DaystoDie/index.html" class="cross-btn" style="border: 1px solid #ff1111; color:#ff1111;">Détails</a>
+        </div>
+        <div class="live-info-grid">
+            <div class="info-panel"><h5>🗺️ Secteur Actif</h5><div id="avorion-sector-name" class="val">-</div></div>
+            <div class="info-panel"><h5>⚙️ Version Galaxie</h5><div id="avorion-version" class="val">-</div></div>
+            <div class="info-panel"><h5>⏱️ Temps Quadrant</h5><div id="avorion-time" class="val">-</div></div>
+            <div class="info-panel"><h5>🛡️ Bouclier Secteur</h5><div id="avorion-shield" class="val" style="color: #00ffcc; text-shadow: 0 0 5px #00ffcc;">100%</div></div>
+            <div class="info-panel"><h5>💥 Vaisseaux Détruits</h5><div id="avorion-kills" class="val">-</div></div>
+            <div class="info-panel" style="border-color: #00ffcc;"><h5 style="color: #00ffcc; text-shadow: 0 0 5px #00ffcc;">🔄 Prochain Reboot</h5><div id="avorion-reboot-countdown" class="val" style="color: #00ffcc;">Calcul...</div></div>
+        </div>
+        <div class="map-preview-container">
+            <h5 style="color: #00a2ff; margin: 0 0 8px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; text-shadow: 0 0 5px rgba(0, 162, 255, 0.3);">🗺️ Cartographie Quadrant / Galaxy Map (Cliquez pour zoomer) :</h5>
+            <a id="avorion-map-link" href="#" target="_blank">
+                <img id="avorion-map-img" src="" alt="Carte Sectorielle non chargée" class="map-interactive-image">
+            </a>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;">
+            <button id="radar-refresh-btn" class="btn-7dtd" onclick="forceRadarRefresh()">📡 Scan Auto dans 60s</button>
+        </div>
+        <div class="dashboard-container">
+            <div class="sidebar-tabs">
+                <button id="tab-motd" class="tab-btn active" onclick="switchConsoleTab('motd')">📢 Directive (MOTD)</button>
+                <button id="tab-rules" class="tab-btn" onclick="switchConsoleTab('rules')">📜 Lois Hyperspatiales</button>
             </div>
+            <div id="consoleDisplayArea" class="content-display-area">-</div>
         </div>
     </div>
 </div>
-<div style="text-align: center; margin-top: 20px;">
-    <!-- Bouton de retour rapide vers l'accueil principal -->
-    <a href="../index.html" class="back-btn">
-        <span class="lang-fr">⬅️ Retour au Portail</span>
-        <span class="lang-en">⬅️ Back to Portal</span>
-    </a>
-</div>
-
 <script>
-    // --- MOTEUR DE SELECTION DE LANGUE INTERACTIF ---
-    function changerLangue(langue) {
-        const elFr = document.querySelectorAll('.lang-fr');
-        const elEn = document.querySelectorAll('.lang-en');
-        const boutons = document.querySelectorAll('.lang-btn');
-        boutons.forEach(b => b.classList.remove('active-lang'));
-        
-        if (langue === 'fr') {
-            elFr.forEach(e => e.style.display = 'block');
-            elEn.forEach(e => e.style.display = 'none');
-            document.getElementById('btn-fr').classList.add('active-lang');
-        } else {
-            elFr.forEach(e => e.style.display = 'none');
-            elEn.forEach(e => e.style.display = 'block');
-            document.getElementById('id-btn-en').classList.add('active-lang');
-        }
+const INTERNAL_AVORION_CONFIG = {
+    "avorion1": { "ip": "67.216.85.235", "port": 25598, "mapImg": "map_avorion1.jpg" },
+    "avorion2": { "ip": "172.240.47.89", "port": 25605, "mapImg": "map_avorion2.jpg" }
+};
+const SEPARATED_AVORION_DATA = {
+    'avorion1': {
+        name: "🛡️ QBC FLAGGARD AVORION — SECTEUR CORE 1",
+        gameModeText: "🛰️ CYBER EXPEDITION",
+        gameModeColor: "#00ffcc", gameModeBg: "rgba(0,255,204,0.06)", gameModeBorder: "#00558f",
+        mapFallback: "Galaxy_Sector_Alpha_01", timeFallback: "Quadrant 04 - Cycle 12", versionFallback: "v2.5 Stable", killsFallback: "2,410 Vaisseaux",
+        morningReboot: 6, eveningReboot: 18,
+        mapImg: "map_avorion1.jpg",
+        motd: `<h4>📢 DIRECTIVE DE BORD — SECTEUR CORE 1</h4><p style="color: #00ffcc; font-weight: bold; text-transform: uppercase; text-shadow: 0 0 5px #00ffcc;">🚀 INITIALISATION DE LA FLOTTE EN COURS</p>
+               <details open style="background: rgba(0, 162, 255, 0.02); border: 1px solid #00558f; border-radius: 4px; padding: 6px; margin-bottom: 6px;"><summary style="color: #00a2ff; font-weight: bold; font-size: 12px; cursor: pointer;">📋 Fiche Technique : QBC Flaggard Core 1</summary><div style="padding: 5px; font-size: 11px; font-family: monospace; color: #fff;"><strong>ServerDescription:</strong> Server-Side 2.6++ | 40+ MODS++ | Location: Canada - Montreal</div></details>`,
+        rules: `<h4>📜 LOIS HYPERSPATIALES — CORE 1</h4><div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;"><p><strong>1✗- SÉCURITÉ :</strong> Interdiction de piller les débris au sein des secteurs de guilde alliée.</p></div>`
+    },
+    'avorion2': {
+        name: "🛡️ QBC FLAGGARD AVORION — SECTEUR CORE 2",
+        gameModeText: "🛰️ CYBER MODDED",
+        gameModeColor: "#00ffcc", gameModeBg: "rgba(0,255,204,0.06)", gameModeBorder: "#00558f",
+        mapFallback: "Galaxy_Sector_Beta_02", timeFallback: "Quadrant 09 - Cycle 02", versionFallback: "v2.5 Modded+", killsFallback: "840 Vaisseaux",
+        morningReboot: 5, eveningReboot: 17,
+        mapImg: "map_avorion2.jpg",
+        motd: `<h4>📢 DIRECTIVE DE BORD — SECTEUR CORE 2</h4><p style="color: #00ffcc; font-weight: bold; text-transform: uppercase; text-shadow: 0 0 5px #00ffcc;">🌱 EXTENSION DES SYSTÈMES ET COMPOSANTS MODDÉS</p>`,
+        rules: `<h4>📜 LOIS HYPERSPATIALES — CORE 2</h4><div style="font-family: monospace; font-size: 12px; color: #eee; line-height: 1.6;"><p><strong>1✗- RESPECT :</strong> Veuillez respecter l'emplacement des stations de saut.</p></div>`
+    }
+};
+
+let activeServerKey = "avorion1";
+let radarTimeLeft = 60;
+let radarTimerInterval = null;
+
+function switchConsoleTab(tabName) {
+    const displayArea = document.getElementById('consoleDisplayArea');
+    if (displayArea && SEPARATED_AVORION_DATA[activeServerKey][tabName]) {
+        displayArea.innerHTML = SEPARATED_AVORION_DATA[activeServerKey][tabName];
+    }
+    ['motd', 'rules'].forEach(t => { const btn = document.getElementById('tab-' + t); if (btn) { if (t === tabName) btn.classList.add('active'); else btn.classList.remove('active'); } });
+}
+
+function startRadarCountdown() {
+    if (radarTimerInterval) clearInterval(radarTimerInterval);
+    radarTimeLeft = 60;
+    const radarBtn = document.getElementById('radar-refresh-btn');
+    radarTimerInterval = setInterval(() => {
+        radarTimeLeft--;
+        if (radarBtn) radarBtn.innerText = `📡 Scan Auto dans ${radarTimeLeft}s`;
+        if (radarTimeLeft <= 0) loadAvorionStats(true);
+    }, 1000);
+}
+
+function forceRadarRefresh() {
+    alert("📡 Resynchronisation immédiate des quadrants Avorion !");
+    loadAvorionStats(false);
+}
+
+function updateRebootTimer() {
+    const now = new Date(); const currentHour = now.getHours(); const currentData = SEPARATED_AVORION_DATA[activeServerKey];
+    let targetHour = (currentHour >= currentData.morningReboot && currentHour < currentData.eveningReboot) ? currentData.eveningReboot : currentData.morningReboot;
+    let targetDate = new Date(); targetDate.setHours(targetHour, 0, 0, 0);
+    if (currentHour >= currentData.eveningReboot) { targetDate.setDate(targetDate.getDate() + 1); targetDate.setHours(currentData.morningReboot, 0, 0, 0); }
+    const diffMs = targetDate - now;
+    const countdownEl = document.getElementById('avorion-reboot-countdown');
+    if (countdownEl) countdownEl.innerText = `Dans ${Math.floor(diffMs / 3600000)}h ${Math.floor((diffMs % 3600000) / 60000)}m (${targetHour}:00)`;
+}
+
+function loadAvorionStats(isAutoRefresh) {
+    activeServerKey = new URLSearchParams(window.location.search).get('server') || 'avorion1';
+    
+    if (activeServerKey !== 'avorion1' && activeServerKey !== 'avorion2') {
+        activeServerKey = 'avorion1';
+    }
+    
+    const currentData = SEPARATED_AVORION_DATA[activeServerKey];
+    const activeMapImg = INTERNAL_AVORION_CONFIG[activeServerKey].mapImg;
+
+    document.getElementById('server-title').innerText = currentData.name;
+    
+    const mapImgEl = document.getElementById('avorion-map-img');
+    const mapLinkEl = document.getElementById('avorion-map-link');
+    if (mapImgEl && mapLinkEl) {
+        mapImgEl.src = activeMapImg;
+        mapLinkEl.href = activeMapImg;
     }
 
-    // SÉCURITÉ ACTIVE : Bloque le Clic Droit et la touche F12
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
-        if (e.key === 'F12') { e.preventDefault(); }
-    });
+    const mb = document.getElementById('server-game-mode-badge');
+    if (mb) { mb.innerText = currentData.gameModeText; mb.style.color = currentData.gameModeColor; mb.style.borderColor = currentData.gameModeBorder; mb.style.background = currentData.gameModeBg; }
+    
+    if (!isAutoRefresh) switchConsoleTab('motd');
+    updateRebootTimer();
+    startRadarCountdown();
+    
+    fetch('/.netlify/functions/get-players?game=' + activeServerKey)
+        .then(res => res.json())
+        .then(data => {
+            if (data.online) {
+                document.getElementById('players-count').innerText = `${data.count} / ${data.maxPlayers || 40}`;
+                document.getElementById('avorion-sector-name').innerText = data.map || currentData.mapFallback;
+                document.getElementById('avorion-version').innerText = data.version || currentData.versionFallback;
+                document.getElementById('avorion-time').innerText = data.time || currentData.timeFallback;
+                document.getElementById('avorion-kills').innerText = (data.kills || currentData.killsFallback);
+            }
+        })
+        .catch(() => {
+            document.getElementById('players-count').innerText = "0 / 40";
+            document.getElementById('avorion-sector-name').innerText = currentData.mapFallback; 
+            document.getElementById('avorion-version').innerText = currentData.versionFallback; 
+            document.getElementById('avorion-time').innerText = currentData.timeFallback;
+            document.getElementById('avorion-kills').innerText = currentData.killsFallback;
+        });
+}
+
+loadAvorionStats(false);
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => { if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 's' || e.key === 'S')) e.preventDefault(); });
 </script>
 </body>
 </html>

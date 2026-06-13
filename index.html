@@ -3,400 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QBC Flaggard Multigaming | Portail Officiel 2026</title>
-    <link rel="stylesheet" href="style.css">
+    <title>[QBC] Terminal Multigaming | Portail Officiel</title>
+    <link rel="stylesheet" href="../style.css">
     <style>
-        /* --- DESIGN GLOBAL --- */
-        body { background-color: #060303 !important; font-family: sans-serif; color: #fff; margin: 0; padding: 20px; }
-        .portal-section-title { text-align: center; font-size: 26px; margin-top: 50px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; }
-        .update-category-date { text-align: center; font-size: 11px; margin-bottom: 25px; font-style: italic; opacity: 0.7; }
-        
-        /* COULEURS ET THÈMES DES TITRES */
-        .wurm-title-theme { color: #ffcc00; text-shadow: 0 0 10px rgba(255,204,0,0.5); }
-        .sdtd-title-theme { color: #ff1111; text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); font-family: 'Impact', Charcoal, sans-serif; letter-spacing: 3px; font-size: 32px; }
-        .avorion-title-theme { color: #00f0ff; text-shadow: 0 0 15px rgba(0, 240, 255, 0.8); font-family: 'Courier New', Courier, monospace; letter-spacing: 2px; font-size: 28px; font-weight: bold; }
-        
-        /* GRILLE DE SÉCURITÉ : Force l'affichage côte à côte horizontal et annule le style.css */
-        .qbc-grid-row { display: block !important; text-align: center !important; width: 100% !important; max-width: 1020px !important; margin: 0 auto 40px auto !important; }
-        
-        /* COMMUTATEUR INTERACTIF DE LANGUE */
-        .lang-selector-container { text-align: right; max-width: 940px; margin: 0 auto 20px auto; }
-        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #333; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
-        .lang-btn:hover { border-color: #ffcc00; color: #fff; }
-        .lang-btn.active-lang { background: #ffcc00; color: #000; border-color: #ffcc00; box-shadow: 0 0 8px rgba(255,204,0,0.4); }
-        
-        /* SYSTÈME DE MASQUAGE DE LANGUE INITIAL */
-        .lang-en { display: none; }
-        
-        /* BOÎTE DES NOTES DE MISE À JOUR */
-        .global-update-box { max-width: 940px; margin: 30px auto 10px auto; background: rgba(20, 16, 12, 0.95); border: 2px dashed #b38f00; border-radius: 8px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.8); text-align: left; box-sizing: border-box; }
-        .global-update-box h3 { color: #ffcc00; margin-top: 0; font-size: 16px; text-transform: uppercase; border-bottom: 1px solid #594418; padding-bottom: 8px; margin-bottom: 10px; }
-        .patch-date-line { font-size: 12px; color: #e6c280; font-weight: bold; margin-bottom: 15px; font-style: italic; }
-        .global-update-box ul { margin: 0; padding-left: 20px; color: #ddd; font-size: 13px; line-height: 1.6; }
-        .global-update-box li { margin-bottom: 10px; }
-        .update-tag { background: #8b0000; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 3px; margin-right: 6px; text-transform: uppercase; }
-        
-        /* BADGES ET POINT D'IMPACT FLUO */
-        .status-badge { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); padding: 10px 14px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #ffcc00; transition: 0.3s; }
-        .status-badge.offline-mode { border-left-color: #ff1111; }
-        .status-badge.online-mode { border-left-color: #00ff00; box-shadow: inset 0 0 10px rgba(0,255,0,0.1); }
-        .live-dot { width: 8px; height: 8px; background-color: #00ff00; border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px #00ff00; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.7; } }
-        
-        /* JAUGES DE COMPTAGE ANTI-ÉTIREMENT */
-        .player-count-container { margin: 15px 0; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; }
-        .player-text { font-size: 12px; font-weight: bold; color: #ccc; margin-bottom: 6px; display: flex; justify-content: space-between; }
-        .progress-bar-bg { background: rgba(0,0,0,0.6); height: 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; border-radius: 10px; transition: width 1.2s ease-in-out; }
-        
-        .wurm-bar { background: #ffcc00; box-shadow: 0 0 8px #ffcc00; }
-        .sdtd-bar { background: #ff1111; box-shadow: 0 0 12px #ff1111; }
-        .avorion-bar { background: #00f0ff; box-shadow: 0 0 12px #00f0ff; }
-        
-        /* DESIGN INDÉPENDANT DES 3 UNIVERS (BLOCAGE DES DIMENSIONS) */
-        .wurm-card { background: rgba(18, 14, 8, 0.96) !important; border: 2px solid #b38f00 !important; border-radius: 10px; padding: 25px; width: 440px !important; display: inline-block !important; vertical-align: top !important; margin: 10px 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.8) !important; }
-        .wurm-btn { display: inline-block; background: #ffcc00; color: #000; padding: 12px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; margin-top: 20px; text-decoration: none; width: 100%; text-align: center; box-sizing: border-box; letter-spacing: 1px; }
+        /* FOND APOCALYPSE TERMINAL PROFESSIONNEL */
+        body {
+            background-color: #050303;
+            color: #ffffff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+        }
 
-        .sdtd-card { background: linear-gradient(135deg, #120303 0%, #080101 100%) !important; border: 3px solid #600000 !important; border-radius: 12px; padding: 25px; width: 440px !important; display: inline-block !important; vertical-align: top !important; margin: 10px 15px !important; text-align: left !important; box-shadow: 0 15px 35px #000, inset 0 0 20px rgba(139,0,0,0.4) !important; box-sizing: border-box !important; }
-        .sdtd-card:hover { transform: translateY(-4px); border-color: #ff1111 !important; box-shadow: 0 20px 40px rgba(255,17,17,0.25) !important; }
-        .sdtd-zombie-title { color: #ff1111 !important; font-family: 'Impact', Charcoal, sans-serif; font-size: 18px; text-transform: uppercase; }
-        .sdtd-btn { display: inline-block; background: #8b0000; color: #fff; padding: 12px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; margin-top: 20px; text-decoration: none; border: 2px solid #ff1111; width: 100%; text-align: center; box-sizing: border-box; letter-spacing: 1px; text-shadow: 1px 1px 2px #000; }
-        .sdtd-btn:hover { background: #ff1111; color: #000; box-shadow: 0 0 20px #ff1111; }
-        
-        .avorion-card { background: linear-gradient(135deg, #020b14 0%, #01050a 100%) !important; border: 3px solid #005f73 !important; border-radius: 12px; padding: 25px; width: 440px !important; display: inline-block !important; vertical-align: top !important; float: none !important; margin: 10px 15px !important; text-align: left !important; box-shadow: 0 15px 35px #000, inset 0 0 20px rgba(0,240,255,0.15) !important; box-sizing: border-box !important; transition: 0.3s; }
-        .avorion-card:hover { transform: translateY(-4px); border-color: #00f0ff !important; box-shadow: 0 20px 40px rgba(0,240,255,0.25) !important; }
-        .avorion-space-title { color: #00f0ff !important; font-family: 'Courier New', Courier, monospace; font-size: 17px; font-weight: bold; text-transform: uppercase; text-shadow: 1px 1px 3px #000; }
-        .avorion-btn { display: inline-block; background: #005f73; color: #fff; padding: 12px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; margin-top: 20px; text-decoration: none; border: 2px solid #00f0ff; width: 100%; text-align: center; box-sizing: border-box; text-shadow: 1px 1px 2px #000; }
-        .avorion-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 20px #00f0ff; }
+        .portal-container {
+            max-width: 1350px;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-        .lang-split { display: block; margin-top: 3px; color: #aaa; font-style: italic; font-size: 12px; text-transform: none; font-family: sans-serif; text-shadow: none; letter-spacing: 0; font-weight: normal; }
+        h1 {
+            color: #cc3333;
+            font-family: monospace;
+            font-size: 26px;
+            letter-spacing: 2px;
+            margin-bottom: 50px;
+            text-shadow: 0 0 10px rgba(204, 51, 51, 0.6);
+            text-transform: uppercase;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 35px;
+            margin-top: 20px;
+        }
+
+        /* LES GRANDS CADRES PRO AVEC IMAGES DE COUVERTURE */
+        .game-card {
+            position: relative;
+            height: 260px;
+            border-radius: 8px;
+            border: 1px solid #2b1c1c;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.95);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s ease-in-out;
+        }
+
+        .card-7dtd { background-image: url('7dtd/background.jpg'); }
+        .card-wurm { background-image: url('wurm/background.jpg'); }
+        .card-avorion { background-image: url('avorion/background.jpg'); }
+
+        .game-card:hover {
+            border-color: #cc3333;
+            box-shadow: 0 0 25px rgba(204, 51, 51, 0.5);
+            transform: translateY(-4px);
+            background-size: 105%;
+        }
+
+        /* FILTRE PRO DE CONTRASTE DU MILIEU */
+        .game-card-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(5,3,3,0.9) 20%, rgba(5,3,3,0.5) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        /* ÉCRITURE DES BOUTONS ROUTEURS DOUBLE SERVEURS WHITE HAUTE VISIBILITÉ */
+        .server-route-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            background: #0f0b0b;
+            color: #ffffff;
+            border: 1px solid #442222;
+            padding: 8px 12px;
+            margin-top: 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
+        .server-route-btn:hover {
+            background: #cc3333;
+            color: #000000;
+            border-color: #cc3333;
+            box-shadow: 0 0 12px rgba(204, 51, 51, 0.7);
+            transform: scale(1.02);
+        }
+
+        /* STYLE DE L'ICÔNE ANIMÉE RADAR */
+        .portal-game-icon {
+            font-size: 38px;
+            margin-bottom: 5px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-shadow: 0 0 10px rgba(204, 51, 51, 0.5);
+            display: inline-block;
+        }
+
+        .game-card:hover .portal-game-icon {
+            transform: scale(1.12) rotateY(360deg);
+            text-shadow: 0 0 20px #cc3333;
+        }
+
+        .portal-game-title {
+            color: #ffffff !important;
+            font-weight: bold;
+            font-family: monospace, sans-serif;
+            text-transform: uppercase;
+            font-size: 18px;
+            letter-spacing: 1.5px;
+            margin: 0 0 5px 0;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #cc3333;
+            text-shadow: 2px 2px 4px #000000;
+        }
     </style>
 </head>
 <body>
-<!-- BANDEAU DE SÉLECTION DE LANGUE -->
-<div class="lang-selector-container">
-    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
-    <button class="lang-btn" id="btn-en" onclick="changerLangue('en')">English</button>
-</div>
 
-<div class="container">
-    
-    <h1 style="text-align:center; text-shadow:0 0 15px rgba(255,204,0,0.3);">👑 QBC FLAGGARD MULTIGAMMING</h1>
-    <p style="text-align: center; color: #e6c280; font-size: 15px; margin-top: 5px;">
-        <span class="lang-fr">Sélectionnez votre univers de jeu et connectez-vous au réseau canadien.</span>
-        <span class="lang-en">Select your gaming universe and connect to the Canadian network.</span>
-    </p>
+    <div class="portal-container">
+        <h1>📊 TERMINAL MULTIGAMING INTERACTIF QBC</h1>
 
-    <!-- 📢 BOÎTE DE MISES À JOUR GLOBALE -->
-    <div class="global-update-box">
-        <h3 class="lang-fr">📢 Dernières Mises à Jour / Patch Notes</h3>
-        <h3 class="lang-en">📢 Latest Updates / Patch Notes</h3>
-        <div class="patch-date-line">
-            <span class="lang-fr">📅 Date du Patch : 11 Juin 2026</span>
-            <span class="lang-en">📅 Patch Date: June 11, 2026</span>
-        </div>
-        <ul>
-            <li>
-                <span class="update-tag" style="background:#8b0000;">7dtd</span> 
-                <span class="lang-fr"><strong>Serveur 2 (NEW MODS) :</strong> Déploiement de la liste des 35 extensions et cap niveau 750 activé.</span>
-                <span class="lang-en"><strong>Server 2 (NEW MODS):</strong> Deployment of the 35 extensions list and level 750 cap enabled.</span>
-            </li>
-            <li>
-                <span class="update-tag" style="background:#8b0000;">7dtd</span> 
-                <span class="lang-fr"><strong>Sécurité :</strong> Les fiches techniques individuelles ont été isolées dans leurs dossiers respectifs.</span>
-                <span class="lang-en"><strong>Security:</strong> Individual technical sheets have been isolated into their respective folders.</span>
-            </li>
-            <li>
-                <span class="update-tag" style="background:#b38f00; color:#000;">Wurm</span> 
-                <span class="lang-fr"><strong>Économie :</strong> Le prix du contrat de livraison est configuré à 10 pièces de cuivre chez les marchands acheteurs.</span>
-                <span class="lang-en"><strong>Economy:</strong> Delivery contract price is configured to 10 copper pieces at buyer merchants.</span>
-            </li>
-            <li>
-                <span class="update-tag" style="background:#005f73;">Avorion</span> 
-                <span class="lang-fr"><strong>Cluster Spatiale :</strong> Préparation des dossiers d'infrastructure pour les secteurs Alpha et Beta.</span>
-                <span class="lang-en"><strong>Spatial Cluster:</strong> Infrastructure folder preparation for Alpha and Beta sectors.</span>
-            </li>
-        </ul>
-    </div>
+        <div class="games-grid">
+            
+            <!-- 🧟 SECTION 7 DAYS TO DIE (2 SERVEURS INSTANTANÉS) -->
+            <div class="game-card card-7dtd">
+                <div class="game-card-overlay">
+                    <div class="portal-game-icon">🧟‍♂️</div>
+                    <h3 class="portal-game-title">7 DAYS TO DIE</h3>
+                    <a href="7dtd/index.html?server=7dtd1" class="server-route-btn">
+                        <span>🛑 Flaggard ProjectZ</span>
+                        <span id="portal-mini-7dtd1" style="color:#2ecc71;">(--)</span>
+                    </a>
+                    <a href="7dtd/index.html?server=7dtd2" class="server-route-btn">
+                        <span>🛑 Flaggard New Mods</span>
+                        <span id="portal-mini-7dtd2" style="color:#2ecc71;">(--)</span>
+                    </a>
+                </div>
+            </div>
 
-    <!-- ==============================================================================
-         🛡️ CATEGORIE 1 : WURM UNLIMITED CLUSTER (SEPARÉ WURM1 ET WURM2)
-         ============================================================================== -->
-    <h2 class="portal-section-title wurm-title-theme">⚔️ Univers Wurm Unlimited Cluster</h2>
-    <div class="update-category-date" style="color:#e6c280;">
-        <span class="lang-fr">Dernière MaJ Wurm : <span id="wurm-date-fr">...</span></span>
-        <span class="lang-en">Last Wurm Update: <span id="wurm-date-en">...</span></span>
-    </div>
-    
-    <div class="qbc-grid-row">
-        <!-- REALM FLAGGARD (DOSSIER WURM1) -->
-        <div class="wurm-card" id="card-wurm1">
-            <div class="status-badge offline-mode" id="status-badge-wurm1">
-                <span style="font-weight:bold; color:#ffcc00;">🛡️ Realm Flaggard</span>
-                <span style="color:#ff3333; font-weight:bold; font-size:12px;" id="status-txt-wurm1">🔴 OFFLINE</span>
-            </div>
-            <div class="player-count-container">
-                <div class="player-text">
-                    <span class="lang-fr">Joueurs actifs :</span>
-                    <span class="lang-en">Active Warriors:</span>
-                    <span style="color:#ffcc00; font-weight:bold;" id="txt-wurm1">0 / 250</span>
+            <!-- 🏰 SECTION WURM UNLIMITED (2 ROYAUMES INSTANTANÉS) -->
+            <div class="game-card card-wurm">
+                <div class="game-card-overlay">
+                    <div class="portal-game-icon">🏰</div>
+                    <h3 class="portal-game-title">WURM UNLIMITED</h3>
+                    <a href="wurm/index.html?server=wurm1" class="server-route-btn">
+                        <span>⚔️ Royaume Élite 1</span>
+                        <span id="portal-mini-wurm1" style="color:#2ecc71;">(--)</span>
+                    </a>
+                    <a href="wurm/index.html?server=wurm2" class="server-route-btn">
+                        <span>⚔️ Royaume Élite 2</span>
+                        <span id="portal-mini-wurm2" style="color:#2ecc71;">(--)</span>
+                    </a>
                 </div>
-                <div class="progress-bar-bg"><div class="progress-fill wurm-bar" id="bar-wurm1"></div></div>
             </div>
-            <p style="color: #ddd; font-size: 13px; line-height: 1.4;">
-                <span class="lang-fr"><strong>[FR]</strong> Cluster de construction. Structures indestructibles et terraformation libérale.</span>
-                <span class="lang-en"><strong>[EN]</strong> Construction cluster. Indestructible buildings and relaxed flattening.</span>
-            </p>
-            <a href="wurm1/index.html" class="wurm-btn"><span class="lang-fr">Entrer</span><span class="lang-en">Enter</span></a>
-        </div>
-        <!-- REALM DORIATH (DOSSIER WURM2) -->
-        <div class="wurm-card" id="card-wurm2">
-            <div class="status-badge offline-mode" id="status-badge-wurm2">
-                <span style="font-weight:bold; color:#ffcc00;">⚜️ Realm Doriath</span>
-                <span style="color:#ff3333; font-weight:bold; font-size:12px;" id="status-txt-wurm2">🔴 OFFLINE</span>
-            </div>
-            <div class="player-count-container">
-                <div class="player-text">
-                    <span class="lang-fr">Joueurs actifs :</span>
-                    <span class="lang-en">Active Warriors:</span>
-                    <span style="color:#ffcc00; font-weight:bold;" id="txt-wurm2">0 / 250</span>
-                </div>
-                <div class="progress-bar-bg"><div class="progress-fill wurm-bar" id="bar-wurm2"></div></div>
-            </div>
-            <p style="color: #ddd; font-size: 13px; line-height: 1.4;">
-                <span class="lang-fr"><strong>[FR]</strong> Royaume principal lié à VoteReward. Minerais et filons rares d'Adamantine.</span>
-                <span class="lang-en"><strong>[EN]</strong> Main realm connected to reward mechanics. High-tier ore mining zones.</span>
-            </p>
-            <a href="wurm2/index.html" class="wurm-btn"><span class="lang-fr">Entrer</span><span class="lang-en">Enter</span></a>
-        </div>
-    </div>
-    <!-- ==============================================================================
-         🧟 CATEGORIE 2 : 7 DAYS TO DIE (ROUGE APOCALYPSE)
-         ============================================================================== -->
-    <h2 class="portal-section-title sdtd-title-theme">💀 Univers 7 Days To Die Apocalypse</h2>
-    <div class="update-category-date" style="color:#ff9999;">
-        <span class="lang-fr">Dernière MaJ 7DTD : <span id="7dtd-date-fr">...</span></span>
-        <span class="lang-en">Last 7DTD Update: <span id="7dtd-date-en">...</span></span>
-    </div>
 
-    <div class="qbc-grid-row">
-        <!-- SERVEUR 1 : PROJECTZ 2.6 -->
-        <div class="sdtd-card" id="card-7dtd1">
-            <div class="status-badge offline-mode" id="status-badge-7dtd1">
-                <span class="sdtd-zombie-title">🩸 QBC Flaggard PVE ProjectZ-2-6</span>
-                <span style="color:#ff3333; font-weight:bold; font-size:12px;" id="status-txt-7dtd1">🔴 OFFLINE</span>
-            </div>
-            <div class="player-count-container">
-                <div class="player-text">
-                    <span class="lang-fr">Survivants en ligne :</span>
-                    <span class="lang-en">Survivors online:</span>
-                    <span style="color:#ff1111; font-weight:bold;" id="txt-7dtd1">0 / 16</span>
+            <!-- 🚀 SECTION AVORION (2 SECTEURS INSTANTANÉS) -->
+            <div class="game-card card-avorion">
+                <div class="game-card-overlay">
+                    <div class="portal-game-icon">🚀</div>
+                    <h3 class="portal-game-title">AVORION</h3>
+                    <a href="avorion/index.html?server=avorion1" class="server-route-btn">
+                        <span>🛰️ Secteur Core 1</span>
+                        <span id="portal-mini-avorion1" style="color:#2ecc71;">(--)</span>
+                    </a>
+                    <a href="avorion/index.html?server=avorion2" class="server-route-btn">
+                        <span>🛰️ Secteur Core 2</span>
+                        <span id="portal-mini-avorion2" style="color:#2ecc71;">(--)</span>
+                    </a>
                 </div>
-                <div class="progress-bar-bg"><div class="progress-fill sdtd-bar" id="bar-7dtd1"></div></div>
             </div>
-            <p style="color: #ffcccc; font-size: 11px; margin-top: -5px; font-weight: bold; text-align: center;">💀 Q฿₵ ₣Ⱡ₳₲₲₳ⱤĐ Q₵ ₵₳₦ ₣Ɽ ₱VɆ ฿łɆ₦VɆ₦ɄɆ / ₩ɆⱠ₵Ø₥Ɇ</p>
-            <p style="color: #bbb; font-size: 13px; line-height: 1.5; margin-bottom: 15px;">
-                <span class="lang-fr"><strong>[FR]</strong> Serveur apocalypse à Montréal. Intègre 12 extensions, quêtes uniques et drones.</span>
-                <span class="lang-en"><strong>[EN]</strong> Montreal apocalypse server. Features 12 core mods, custom quest books and drones.</span>
-            </p>
-            <a href="7DaystoDie/index.html" class="sdtd-btn"><span class="lang-fr">Fiche & Règlements</span><span class="lang-en">View Info & Rules</span></a>
-        </div>
-        <!-- SERVEUR 2 : NEW MODS -->
-        <div class="sdtd-card" id="card-7dtd2">
-            <div class="status-badge offline-mode" id="status-badge-7dtd2">
-                <span class="sdtd-zombie-title">🩸 QBC Flaggard PVE NEW MODS 2.6</span>
-                <span style="color:#ff3333; font-weight:bold; font-size:12px;" id="status-txt-7dtd2">🔴 OFFLINE</span>
-            </div>
-            <div class="player-count-container">
-                <div class="player-text">
-                    <span class="lang-fr">Survivants en ligne :</span>
-                    <span class="lang-en">Survivors online:</span>
-                    <span style="color:#ff1111; font-weight:bold;" id="txt-7dtd2">0 / 20</span>
-                </div>
-                <div class="progress-bar-bg"><div class="progress-fill sdtd-bar" id="bar-7dtd2"></div></div>
-            </div>
-            <p style="color: #ffcccc; font-size: 11px; margin-top: -5px; font-weight: bold; text-align: center;">💀 Q฿₵ ₣Ⱡ₳₲₲₳ⱤĐ Q₵ ₵₳₦ ₣Ɽ ₱VɆ ฿łɆ₦VɆ₦ɄɆ / ₩Ɇ₥₵Ø₥Ɇ</p>
-            <p style="color: #bbb; font-size: 13px; line-height: 1.5; margin-bottom: 15px;">
-                <span class="lang-fr"><strong>[FR]</strong> Progression niveau 750, pack massif de 40+ modules de jeu et véhicules lourds.</span>
-                <span class="lang-en"><strong>[EN]</strong> Heroic level 750 progression, massive 40+ gameplay mods pack and custom heavy vehicles.</span>
-            </p>
-            <a href="7DaystoDie2/index.html" class="sdtd-btn"><span class="lang-fr">Fiche & Règlements</span><span class="lang-en">View Info & Rules</span></a>
+
         </div>
     </div>
 
-    <!-- ==============================================================================
-         🚀 CATEGORIE 3 : AVORION (CYBER ESPACE CYAN CENTRÉ)
-         ============================================================================== -->
-    <h2 class="portal-section-title avorion-title-theme">🌌 Univers Avorion Cyber-Space</h2>
-    <div class="update-category-date" style="color:#8ecae6;">
-        <span class="lang-fr">Dernière MaJ Avorion : <span id="avorion-date-fr">...</span></span>
-        <span class="lang-en">Last Avorion Update: <span id="avorion-date-en">...</span></span>
-    </div>
-    
-    <div class="qbc-grid-row">
-        <!-- AVORION SERVEUR 1 -->
-        <div class="avorion-card">
-            <div class="status-badge offline-mode" id="status-badge-avo1">
-                <span class="avorion-space-title">🚀 QBC Void-Sectors Alpha</span>
-                <span style="color:#ff3333; font-weight:bold; font-size:12px;" id="status-txt-avo1">🔴 OFFLINE</span>
-            </div>
-            <div class="player-count-container">
-                <div class="player-text">
-                    <span class="lang-fr">Pilotes connectés :</span>
-                    <span class="lang-en">Pilots online:</span>
-                    <span style="color:#00f0ff; font-weight:bold;" id="txt-avo1">0 / 50</span>
-                </div>
-                <div class="progress-bar-bg"><div class="progress-fill avorion-bar" id="bar-avo1"></div></div>
-            </div>
-            <p style="color: #ddd; font-size: 13px; line-height: 1.4;">
-                <span class="lang-fr"><strong>[FR]</strong> Exploration spatiale, construction de vaisseaux de lignes et commerce intergalactique.</span>
-                <span class="lang-en"><strong>[EN]</strong> Spaceship construction, faction wars, and deep void exploration.</span>
-            </p>
-            <a href="avorion1/index.html" class="avorion-btn">
-                <span class="lang-fr">Fiche & Règlements</span><span class="lang-en">View Info & Rules</span>
-            </a>
-        </div>
-        <!-- AVORION SERVEUR 2 -->
-        <div class="avorion-card">
-            <div class="status-badge offline-mode" id="status-badge-avo2">
-                <span class="avorion-space-title">🚀 QBC Nebula-Frontier Beta</span>
-                <span style="color:#ff3333; font-weight:bold; font-size:12px;" id="status-txt-avo2">🔴 OFFLINE</span>
-            </div>
-            <div class="player-count-container">
-                <div class="player-text">
-                    <span class="lang-fr">Pilotes connectés :</span>
-                    <span class="lang-en">Pilots online:</span>
-                    <span style="color:#00f0ff; font-weight:bold;" id="txt-avo2">0 / 50</span>
-                </div>
-                <div class="progress-bar-bg"><div class="progress-fill avorion-bar" id="bar-avo2"></div></div>
-            </div>
-            <p style="color: #ddd; font-size: 13px; line-height: 1.4;">
-                <span class="lang-fr"><strong>[FR]</strong> Secteur Beta orienté vers l'extraction industrielle de minerais rares (Xanion, Avorion).</span>
-                <span class="lang-en"><strong>[EN]</strong> Industrial mining operations and core-defense protocols in the Beta Nebula.</span>
-            </p>
-            <a href="avorion2/index.html" class="avorion-btn">
-                <span class="lang-fr">Fiche & Règlements</span><span class="lang-en">View Info & Rules</span>
-            </a>
-        </div>
-    </div>
-    
-    <p style="text-align:center; font-size:11px; color:#555; padding-bottom: 20px;">
-        <span class="lang-fr">© 2026 QBC Flaggard Multigaming - Tous droits réservés.</span>
-        <span class="lang-en">© 2026 QBC Flaggard Multigaming - All rights reserved.</span>
-    </p>
-</div>
-
+<script src="js/config.js"></script>
 <script>
-    function changerLangue(langue) {
-        const elFr = document.querySelectorAll('.lang-fr');
-        const elEn = document.querySelectorAll('.lang-en');
-        const boutons = document.querySelectorAll('.lang-btn');
-        boutons.forEach(b => b.classList.remove('active-lang'));
-        if (langue === 'fr') {
-            elFr.forEach(e => e.style.display = 'inline-block');
-            elEn.forEach(e => e.style.display = 'none');
-            document.getElementById('btn-fr').classList.add('active-lang');
-        } else {
-            elFr.forEach(e => e.style.display = 'none');
-            elEn.forEach(e => e.style.display = 'inline-block');
-            document.getElementById('btn-en').classList.add('active-lang');
-        }
-    }
-
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
-        if (e.key === 'F12') { e.preventDefault(); }
-    });
-
-    const d = new Date(document.lastModified);
-    const s = d.toLocaleDateString('fr-FR', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
-    document.getElementById('wurm-date-fr').textContent = d.toLocaleDateString('fr-FR', {year:'numeric', month:'2-digit', day:'2-digit'});
-    document.getElementById('wurm-date-en').textContent = d.toLocaleDateString('fr-FR', {year:'numeric', month:'2-digit', day:'2-digit'});
-    document.getElementById('7dtd-date-fr').textContent = s;
-    document.getElementById('7dtd-date-en').textContent = s;
-    document.getElementById('avorion-date-fr').textContent = s;
-    document.getElementById('avorion-date-en').textContent = s;
-
-    function queryServeurDirect(ip, port, txtId, barId, badgeId, statusTxtId, maxDefaut) {
-        const urlAPI = `https://mcsrvstat.org{ip}:${port}`;
+    function syncPortalLiveCounters() {
+        const servers = ['7dtd1', '7dtd2', 'wurm1', 'wurm2', 'avorion1', 'avorion2'];
         
-        fetch(urlAPI)
-            .then(res => res.json())
-            .then(data => {
-                const badgeElement = document.getElementById(badgeId);
-                const txtStatusElement = document.getElementById(statusTxtId);
-                
-                if(data && data.online === true) {
-                    const enLigne = (data.players && data.players.online) ? data.players.online : 0;
-                    const maxJoueurs = (data.players && data.players.max) ? data.players.max : maxDefaut;
+        servers.forEach(srv => {
+            fetch('/.netlify/functions/get-players?game=' + srv)
+                .then(res => res.json())
+                .then(data => {
+                    const el = document.getElementById('portal-mini-' + srv);
+                    const textEl = document.getElementById('portal-stats-' + srv);
                     
-                    document.getElementById(txtId).textContent = `${enLigne} / ${maxJoueurs}`;
-                    document.getElementById(barId).style.width = `${(enLigne / maxJoueurs) * 100}%`;
+                    // Lit le nombre de slots max écrit dans votre config.js
+                    const maxSlots = (typeof QBC_GLOBAL_CONFIG !== 'undefined' && QBC_GLOBAL_CONFIG[srv]) ? (QBC_GLOBAL_CONFIG[srv].maxPlayers || 40) : 40;
                     
-                    if(badgeElement && txtStatusElement) {
-                        badgeElement.className = "status-badge online-mode";
-                        badgeElement.style.borderLeftColor = "#00ff00";
-                        txtStatusElement.innerHTML = `<span class="live-dot"></span>🟢 LIVE`;
-                        txtStatusElement.style.color = "#00ff00";
+                    if (el) {
+                        el.innerText = data.online ? `(${data.count}/${maxSlots})` : `(0/${maxSlots})`;
                     }
-                } else {
-                    evaluerFailsafeStatut(ip, txtId, barId, badgeElement, txtStatusElement, maxDefaut);
-                }
-            })
-            .catch(() => {
-                const badgeElement = document.getElementById(badgeId);
-                const txtStatusElement = document.getElementById(statusTxtId);
-                evaluerFailsafeStatut(ip, txtId, barId, badgeElement, txtStatusElement, maxDefaut);
-            });
+                    if (textEl) {
+                        const label = srv.startsWith('wurm') ? 'ROYAUME' : 'SECTEUR';
+                        textEl.innerText = data.online ? `${label} : ${data.count} / ${maxSlots}` : `${label} : LOCAL DECONECT`;
+                    }
+                })
+                .catch(() => {
+                    const el = document.getElementById('portal-mini-' + srv);
+                    if (el) el.innerText = "(0/40)";
+                });
+        });
     }
-
-    function evaluerFailsafeStatut(ip, txtId, barId, badgeElement, txtStatusElement, maxDefaut) {
-        if (ip === '104.243.40.52') { 
-            document.getElementById(txtId).textContent = `0 / ${maxDefaut}`;
-            document.getElementById(barId).style.width = "0%";
-            if(badgeElement && txtStatusElement) {
-                badgeElement.className = "status-badge offline-mode";
-                badgeElement.style.borderLeftColor = "#ff1111";
-                txtStatusElement.textContent = "🔴 OFFLINE";
-                txtStatusElement.style.color = "#ff3333";
-            }
-        } else {
-            if(badgeElement && txtStatusElement) {
-                badgeElement.className = "status-badge online-mode";
-                badgeElement.style.borderLeftColor = "#00ff00";
-                txtStatusElement.innerHTML = `<span class="live-dot"></span>🟢 LIVE`;
-                txtStatusElement.style.color = "#00ff00";
-                document.getElementById(txtId).textContent = `0 / ${maxDefaut}`;
-                document.getElementById(barId).style.width = "0%";
-            }
-        }
-    }
-
-    function scannerToutLeCluster() {
-        queryServeurDirect('104.243.40.52', '5134', 'txt-wurm1', 'bar-wurm1', 'status-badge-wurm1', 'status-txt-wurm1', 250);
-        queryServeurDirect('74.50.94.238', '5610', 'txt-wurm2', 'bar-wurm2', 'status-badge-wurm2', 'status-txt-wurm2', 250);
-        queryServeurDirect('15.235.65.131', '25593', 'txt-7dtd1', 'bar-7dtd1', 'status-badge-7dtd1', 'status-txt-7dtd1', 16);
-        queryServeurDirect('51.222.244.134', '25592', 'txt-7dtd2', 'bar-7dtd2', 'status-badge-7dtd2', 'status-txt-7dtd2', 20);
-        queryServeurDirect('15.235.65.131', '25598', 'txt-avo1', 'bar-avo1', 'status-badge-avo1', 'status-txt-avo1', 50);
-        queryServeurDirect('51.222.244.134', '25605', 'txt-avo2', 'bar-avo2', 'status-badge-avo2', 'status-txt-avo2', 50);
-    }
-
-    window.addEventListener('load', () => {
-        scannerToutLeCluster();
-        setInterval(scannerToutLeCluster, 30000);
-    });
+    syncPortalLiveCounters();
+    setInterval(syncPortalLiveCounters, 60000);
 </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
 
 
 

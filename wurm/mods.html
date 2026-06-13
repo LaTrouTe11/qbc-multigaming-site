@@ -3,158 +3,546 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[WURM] Extensions & Votes | QBC Flaggard Backup</title>
+    <title>[QBC] Index Technologique | 136 Mods</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* --- LOOK ULTRA MODERNE NÉON DORÉ --- */
-        body { background-color: #0c0905 !important; font-family: sans-serif; color: #eee; margin: 0; padding: 20px; }
+        /* Design Écran de Contrôle Intégré Dashboard Pro 2026 */
+        .dashboard-layout { display: flex; max-width: 1350px; margin: 0 auto; height: calc(100vh - 100px); gap: 20px; padding: 10px; }
         
-        .mods-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #594418; padding-bottom: 20px; }
-        .mods-title { color: #ffcc00; text-shadow: 0 0 12px rgba(255,204,0,0.4); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
-        
-        /* BOÎTE COMMUTATION LANGUE HAUT DROITE */
-        .lang-selector-container { text-align: right; max-width: 1000px; margin: 0 auto 20px auto; }
-        .lang-btn { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid #443313; padding: 6px 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.2s; margin-left: 5px; }
-        .lang-btn:hover { border-color: #ffcc00; color: #fff; }
-        .lang-btn.active-lang { background: #ffcc00; color: #000; border-color: #ffcc00; box-shadow: 0 0 8px rgba(255,204,0,0.3); }
-        
-        /* LANGUE CACHÉE */
-        .lang-en { display: none; }
-        
-        /* GRILLE HORIZONTALE STRUCTURÉE (ANTI-ÉTIREMENT) */
-        .wurm-grid-mods { display: block !important; text-align: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto !important; }
-        .wurm-mod-box { background: rgba(22, 17, 11, 0.96); border: 2px solid #594418; border-radius: 10px; padding: 25px; width: 460px !important; display: inline-block !important; vertical-align: top !important; margin: 15px !important; text-align: left !important; box-sizing: border-box !important; box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
-        .wurm-mod-box h3 { color: #ffcc00; margin-top: 0; font-size: 17px; text-transform: uppercase; border-bottom: 1px dashed #594418; padding-bottom: 8px; margin-bottom: 15px; }
-        
-        /* STYLISATION DES LIENS DE VOTE & BACKUP */
-        .vote-link-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid #ffcc00; }
-        .vote-btn-action { background: #ffcc00; color: #000; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 3px; text-transform: uppercase; text-decoration: none; }
-        .vote-btn-action:hover { background: #fff; box-shadow: 0 0 10px #ffcc00; }
-        
-        /* LISTE DES MODS GRAPHIK */
-        .mod-list-ul { padding-left: 20px; margin: 0; }
-        .mod-list-ul li { margin-bottom: 8px; font-size: 13px; color: #ddd; }
-        .mod-highlight-text { color: #ffcc00; font-weight: bold; }
-        
-        .back-btn { display: inline-block; background: transparent; color: #ffcc00; border: 1px solid #ffcc00; padding: 10px 25px; font-weight: bold; text-transform: uppercase; border-radius: 5px; text-decoration: none; margin-top: 30px; transition: 0.2s; font-size: 12px; letter-spacing: 1px; }
-        .back-btn:hover { background: #ffcc00; color: #000; box-shadow: 0 0 15px #ffcc00; }
+        /* Liste des boutons de sections à gauche */
+        .sidebar-tabs { width: 280px; display: flex; flex-direction: column; gap: 8px; background: rgba(15, 12, 10, 0.95); border: 1px solid #b38f00; padding: 15px; border-radius: 6px; overflow-y: auto; }
+        .cat-tab-btn { background: rgba(255,255,255,0.02); border: 1px solid rgba(179,143,0,0.3); color: #ccc; padding: 12px; border-radius: 4px; text-align: left; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.2s; }
+        .cat-tab-btn:hover, .cat-tab-btn.active { border-color: #ffcc00; color: #ffcc00; background: rgba(179,143,0,0.1); box-shadow: inset 0 0 10px rgba(255,204,0,0.1); }
+
+        /* Flux central affichant les modules de la catégorie */
+        .modules-feed { flex: 1; background: rgba(10, 8, 6, 0.6); border: 1px solid rgba(179,143,0,0.2); border-radius: 6px; padding: 15px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; align-content: start; }
+        .module-item { background: rgba(22, 18, 14, 0.95); border: 1px solid rgba(179,143,0,0.4); padding: 12px; border-radius: 4px; color: #fff; cursor: pointer; text-align: center; font-family: monospace; font-size: 12px; transition: 0.15s; display: flex; align-items: center; justify-content: center; min-height: 45px; line-height: 1.3; }
+        .module-item:hover, .module-item.active { border-color: #ffcc00; background: #261e16; color: #ffcc00; box-shadow: 0 0 8px rgba(255,204,0,0.2); }
+
+        /* Écran de lecture fixe et complet à droite */
+        .preview-pane { width: 420px; background: rgba(15, 12, 10, 0.95); border: 2px solid #b38f00; border-radius: 6px; padding: 25px; display: flex; flex-direction: column; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .preview-header { color: #ffcc00; font-family: monospace; font-size: 18px; font-weight: bold; border-bottom: 1px solid #b38f00; padding-bottom: 10px; margin-bottom: 15px; text-align: left; }
+        .preview-badge { display: inline-block; background: rgba(0,255,0,0.1); color: #00ff00; border: 1px solid #00ff00; font-size: 11px; padding: 3px 8px; border-radius: 3px; font-weight: bold; align-self: flex-start; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .preview-body { font-size: 13px; line-height: 1.6; color: #ddd; flex-grow: 1; text-align: left; }
+        .preview-body h4 { color: #ffcc00; margin-top: 0; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; }
+        .preview-body ul { margin-top: 5px; padding-left: 18px; color: #ccc; }
+        .preview-body li { margin-bottom: 5px; }
+
+        body.lang-fr-mode .en-txt { display: none !important; }
+        body.lang-en-mode .fr-txt { display: none !important; }
+        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; overflow: hidden; }
     </style>
 </head>
-<body>
+<body class="lang-fr-mode theme-wurm" style="background:#0a0806; color:#eee;">
 
-<!-- COMMUTATEUR DE LANGUE -->
-<div class="lang-selector-container">
-    <button class="lang-btn active-lang" id="btn-fr" onclick="changerLangue('fr')">Français</button>
-    <button class="lang-btn" id="id-btn-en" onclick="changerLangue('en')">English</button>
-</div>
-
-<div class="mods-header">
-    <h1 class="mods-title">📦 Extensions & Modules Réseau / Cluster Backup</h1>
-    <p style="margin: 0; font-size: 14px; color: #b38f00; font-style: italic; text-align: center;">
-        <span class="lang-fr">Liens de vote quotidiens, récompenses de vote actives et archives de sécurité.</span>
-        <span class="lang-en">Daily voting links, active vote rewards and structural security archives.</span>
-    </p>
-</div>
-<div class="wurm-grid-mods">
-    <!-- ==========================================
-         🗳️ SECTION 1 : VOTE REWARDS & SYSTEMES (DORIATH & FLAGGARD)
-         ========================================== -->
-    <div class="wurm-mod-box">
-        <h3 class="lang-fr">🗳️ Liens de Votes Officiels</h3>
-        <h3 class="lang-en">🗳️ Official Voting Links</h3>
-        
-        <p style="font-size: 13px; color: #bbb; margin-bottom: 15px; text-align: left;">
-            <span class="lang-fr">Votez quotidiennement pour faire grimper le cluster dans le classement et débloquer vos récompenses **VoteReward** (Monnaies de cuivre et bonus d'action) directement en jeu sur le serveur Doriath.</span>
-            <span class="lang-en">Vote daily to increase the cluster ranking and unlock your **VoteReward** rewards (Copper coins and action speed boosts) directly in-game on the Doriath server.</span>
-        </p>
-
-        <!-- Vote Lien 1 -->
-        <div class="vote-link-item">
-            <div style="text-align: left;">
-                <span style="font-weight: bold; font-size: 13px; color: #fff;">Wurm-Unlimited-Servers</span>
-                <span style="display:block; font-size:11px; color:#aaa;">Vote #1 (Doriath Linked)</span>
-            </div>
-            <a href="https://wurm-unlimited-servers.net" target="_blank" class="vote-btn-action">Vote</a>
-        </div>
-
-        <!-- Vote Lien 2 -->
-        <div class="vote-link-item">
-            <div style="text-align: left;">
-                <span style="font-weight: bold; font-size: 13px; color: #fff;">Top-G Gaming List</span>
-                <span style="display:block; font-size:11px; color:#aaa;">Vote #2 (Cluster Ranking)</span>
-            </div>
-            <a href="https://topg.org" target="_blank" class="vote-btn-action">Vote</a>
-        </div>
-
-        <!-- Vote Lien 3 -->
-        <div class="vote-link-item">
-            <div style="text-align: left;">
-                <span style="font-weight: bold; font-size: 13px; color: #fff;">Arena Server Tracker</span>
-                <span style="display:block; font-size:11px; color:#aaa;">Vote #3 (Backup Vote)</span>
-            </div>
-            <a href="https://tracker-servers.com" target="_blank" class="vote-btn-action">Vote</a>
-        </div>
+    <!-- NAVIGATION DU TOP -->
+    <div style="max-width: 1350px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 10px 5px 10px;">
+        <a href="index.html" id="back-btn" class="portal-btn" style="background:#222; color:#fff; text-decoration:none; padding:8px 15px; border-radius:4px; font-size:12px; font-weight:bold; border: 1px solid #b38f00;">🛡️ Quitter l'Index</a>
+        <h2 style="margin:0; font-size:18px; color:#ffcc00; text-shadow: 0 0 10px rgba(255,204,0,0.2);" class="fr-txt">🗂️ BASE DE DONNÉES ENCYCLOPÉDIQUE QBC</h2>
+        <h2 style="margin:0; font-size:18px; color:#ffcc00; text-shadow: 0 0 10px rgba(255,204,0,0.2);" class="en-txt">🗂️ QBC CORE KNOWLEDGE BASE SYSTEM</h2>
+        <select class="lang-select-box" style="background:#111; color:#fff; border:1px solid #b38f00; padding:5px; border-radius:4px; cursor:pointer;" onchange="document.body.className = this.value === 'en' ? 'lang-en-mode theme-wurm' : 'lang-fr-mode theme-wurm'">
+            <option value="fr">🍁 Français</option>
+            <option value="en">🦅 English</option>
+        </select>
     </div>
 
-    <!-- ==========================================
-         🛠️ SECTION 2 : ARCHIVE DES EXTENSIONS LOGICIELLES (BACKUP)
-         ========================================== -->
-    <div class="wurm-mod-box">
-        <h3 class="lang-fr">🛠️ Modules et Extensions Actives</h3>
-        <h3 class="lang-en">🛠️ Active Extensions & Mods</h3>
-        
-        <p style="font-size: 13px; color: #bbb; margin-bottom: 15px; text-align: left;">
-            <span class="lang-fr">Liste de sauvegarde des modules installés côté serveur. Aucun téléchargement n'est requis par l'utilisateur pour rejoindre le réseau.</span>
-            <span class="lang-en">Backup list of server-side installed modules. No client-side downloads are required for players to join the network.</span>
-        </p>
+    <!-- CORE PLAN INTERACTIF -->
+    <div class="dashboard-layout">
+        <div class="sidebar-tabs">
+            <button class="cat-tab-btn active" onclick="switchCategory(event, 'all')">📂 Tous les Modules (136)</button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-deeds')">🏘️ Propriétés & Revendications</button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-mining')">⛏️ Outils & Nivellement</button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-nature')">🌾 Élevage & Agriculture</button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-craft')">🔨 Artisanat & Économie</button>
+            <button class="cat-tab-btn" onclick="switchCategory(event, 'cat-core')">🔮 Magie & Noyau Serveur</button>
+        </div>
 
-        <ul class="mod-list-ul" style="text-align: left; line-height: 1.6;">
-            <li><span class="mod-highlight-text">[Core]</span> VoteReward v2.4 (Sync Doriath)</li>
-            <li><span class="mod-highlight-text">[Core]</span> Ago's Server Modlauncher Core v1.9</li>
-            <li><span class="mod-highlight-text">[Mod]</span> Bank Item Sync & Global Currency</li>
-            <li><span class="mod-highlight-text">[Mod]</span> Livemap Advanced Telemetry Protocol</li>
-            <li><span class="mod-highlight-text">[Mod]</span> No-Decay Infrastructure (Flaggard Security)</li>
-            <li><span class="mod-highlight-text">[Mod]</span> BetterDigging & Crop Harvesting Controls</li>
-            <li><span class="mod-highlight-text">[Mod]</span> Rare Ores Mining Injections (Adamantine Boost)</li>
-            <li><span class="mod-highlight-text">[Mod]</span> Salvage Items & Weapon Reforging Script</li>
-            <li><span class="mod-highlight-text">[Mod]</span> Creatures Custom Level Scale (Difficulty 1.5x)</li>
-        </ul>
+        <div id="modulesFeed" class="modules-feed"></div>
+
+        <div class="preview-pane">
+            <div id="prevTitle" class="preview-header">Sélectionnez un module</div>
+            <div id="prevBadge" class="preview-badge" style="display:none;">QBC Framework</div>
+            <div id="prevBody" class="preview-body">
+                <p class="fr-txt" style="color:#aaa; font-style:italic;">Cliquez sur l'un des modules de la grille centrale pour inspecter sa documentation en direct.</p>
+                <p class="en-txt" style="color:#aaa; font-style:italic;">Click on any module from the center grid network to review its system documentation logs.</p>
+            </div>
+        </div>
     </div>
-</div>
-<div style="text-align: center; margin-top: 20px;">
-    <!-- Bouton de retour vers la fiche technique Wurm -->
-    <a href="index.html" class="back-btn">
-        <span class="lang-fr">⬅️ Retour à la Fiche Wurm</span>
-        <span class="lang-en">⬅️ Back to Wurm Specs</span>
-    </a>
-</div>
 
 <script>
-    // --- MOTEUR DE SELECTION DE LANGUE INTERACTIF ---
-    function changerLangue(langue) {
-        const elFr = document.querySelectorAll('.lang-fr');
-        const elEn = document.querySelectorAll('.lang-en');
-        const boutons = document.querySelectorAll('.lang-btn');
-        boutons.forEach(b => b.classList.remove('active-lang'));
-        
-        if (langue === 'fr') {
-            elFr.forEach(e => e.style.display = 'block');
-            elEn.forEach(e => e.style.display = 'none');
-            document.getElementById('btn-fr').classList.add('active-lang');
-        } else {
-            elFr.forEach(e => e.style.display = 'none');
-            elEn.forEach(e => e.style.display = 'block');
-            document.getElementById('id-btn-en').classList.add('active-lang');
-        }
-    }
+const QBC_MODS_DATABASE = [
+    // =========================================================================
+    // 🏘️ SECTION : PROPRIETES & REVENDICATIONS (cat-deeds)
+    // =========================================================================
+    {
+        cat: "cat-deeds", name: "banker",
+        fr: "Ajoute des banquiers pour stocker vos pièces en sécurité.",
+        en: "Adds local bank tellers to securely store your coins.",
+        detFr: "<h4>🪙 COFFRE BANCAIRE INTERACTIF</h4><p>Ce mod permet aux maires de placer un PNJ banquier dans leur domaine. Les joueurs peuvent y déposer leurs pièces pour éviter de les perdre lors d'une mort prématurée dans la nature sauvage.</p>",
+        detEn: "<h4>🪙 INTERACTIVE BANK VAULT</h4><p>This mod allows mayors to place a banker NPC inside their village. Players can deposit hard currency to prevent losing wealth upon sudden death in the dangerous wild.</p>"
+    },
+    {
+        cat: "cat-deeds", name: "chestclaim",
+        fr: "Sécurise vos coffres personnels placés hors des villages.",
+        en: "Secures your personal chests placed outside deed borders.",
+        detFr: "<h4>🔐 VERROUILLAGE SÉCURISÉ</h4><p>Permet d'appliquer des droits de verrouillage stricts sur vos boîtes de stockage en pleine forêt. Empêche les maraudeurs de piller vos précieuses ressources d'artisanat.</p>",
+        detEn: "<h4>🔐 WILDERNESS STORAGE SECURITY</h4><p>Enables strict locking rights on storage containers out in deep woods. Prevents passing looters from stealing your high quality crafting materials.</p>"
+    },
+    {
+        cat: "cat-deeds", name: "deedmaker",
+        fr: "Ajuste les configurations et les coûts de fondation des mairies.",
+        en: "Tweaks town foundation configurations and coin costs.",
+        detFr: "<h4>🏘️ OPTIMISATION DES REVENUS</h4><p>Ajuste les menus d'achat de parcelles de terrain. Permet de concevoir des zones de guildes d'un diamètre parfait dès le départ sans gaspiller vos économies.</p>",
+        detEn: "<h4>🏘️ PARCEL SIZE TWEAKS</h4><p>Optimizes initial settlement purchasing menus. Allows designing clean starting compound grids without draining community silver pools.</p>"
+    },
+    {
+        cat: "cat-deeds", name: "deedmod",
+        fr: "Permet la gestion avancée des droits des gardes de village.",
+        en: "Advanced control framework for automated village guards.",
+        detFr: "<h4>🛡️ COMMANDEMENT DES SENTINELLES</h4><p>Ajoute des menus pour modifier les cibles prioritaires de vos gardes de mairies. Permet d'ajuster leur agressivité envers les monstres de failles ou les intrus hostiles.</p>",
+        detEn: "<h4>🛡️ SENTINEL COMBAT PROFILES</h4><p>Adds granular management tools to set automated guard targets. Easily scale up hostility parameters against rift entities or trespassers.</p>"
+    },
+    {
+        cat: "cat-deeds", name: "deliverycontracts",
+        fr: "Introduit un système complet de contrats de fret de livraison.",
+        en: "Introduces an end-to-end freight shipping contract network.",
+        detFr: "<h4>📦 CONTRATS DE LIVRAISON COMMERCIALS</h4><p>Crée des tableaux d'affichage de quêtes marchandes. Transportez de lourds paniers de ressources de port en port en charrette ou en bateau pour toucher des primes.</p>",
+        detEn: "<h4>📦 COMMERCIAL FREIGHT SHIPPING</h4><p>Creates trade mission notice boards. Transport heavy cargo crates from harbor to harbor via wagon or boat to collect automated coin payouts.</p>"
+    },
+    {
+        cat: "cat-deeds", name: "upkeepcosts",
+        fr: "Réduit et équilibre les frais d'entretien mensuels des mairies.",
+        en: "Balances and lowers monthly upkeep settlement taxes.",
+        detFr: "<h4>🪙 RESTRUCTURATION ÉCONOMIQUE</h4><p>Diminue la consommation de monnaie requise pour maintenir vos gardes actifs et vos palissades protégées. Idéal pour pérenniser les petits avant-postes.</p>",
+        detEn: "<h4>🪙 SETTLEMENT UPKEEP REDUCTION</h4><p>Lowers the silver drain needed to keep local defenders fed and boundary claims protected. Perfect to sustain casual micro compounds.</p>"
+    },
+    {
+        cat: "cat-deeds", name: "NoMailCost",
+        fr: "Supprime les taxes d'envoi d'objets par boîtes aux lettres.",
+        en: "Removes currency requirements for inter-player postal mail.",
+        detFr: "<h4>📬 POSTE SANS SOUCI</h4><p>Permet d'échanger du minerai, des outils de craft ou des composants magiques instantanément d'un bout à l'autre de la carte sans dépenser un seul sou.</p>",
+        detEn: "<h4>📬 ZERO FEE POSTAL NETWORK</h4><p>Enables swift tools and resources distribution across remote map sectors between your secondary models or allies without coin costs.</p>"
+    },
+    {
+        cat: "cat-deeds", name: "NoHolyGround",
+        fr: "Retire les restrictions de construction système sur zones sacrées.",
+        en: "Removes building vertical layout blocks near divine areas.",
+        detFr: "<h4>🏛️ AMÉNAGEMENT RELIGIEUX</h4><p>Autorise le pelletage, le pavage de chemins et l'installation de petites structures à côté des autels sacrés sans déclencher de blocage réseau.</p>",
+        detEn: "<h4>🏛️ SANCTUARY FREEDOM</h4><p>Allows terrain adjustments, path decorations, and light fencing assembly loops directly near ancient deity structures without hard engine blocks.</p>"
+    },
+    // =========================================================================
+    // ⛏️ SECTION : OUTILS & NIVELLEMENT (cat-mining)
+    // =========================================================================
+    {
+        cat: "cat-mining", name: "betterdig",
+        fr: "Nivellement et terrassement automatique à hauteur fixe.",
+        en: "Automated horizontal slope constraints for terraforming loops.",
+        detFr: "<h4>⛏️ NIVELLEMENT INTÉGRAL</h4><p>Évite les dénivelés accidentels lors du pelletage. Le sol se bloque automatiquement sur le niveau de la première tuile sélectionnée pour des routes de guilde parfaites.</p>",
+        detEn: "<h4>⛏️ PERFECT LEVELING</h4><p>Prevents unwanted elevation slips during shoveling. Ground slopes instantly lock onto your initial targeted coordinate height values for clean pathways.</p>"
+    },
+    {
+        cat: "cat-mining", name: "diglikeminingmod",
+        fr: "Permet d'extraire la terre de surface à la vitesse du minage.",
+        en: "Accelerates flat surface dirt digging routines execution speeds.",
+        detFr: "<h4>🪓 CHANTIER DE PELLE RAPIDE</h4><p>Accélère considérablement le pelletage en extérieur, idéal pour creuser de grands canaux de navigation, des fossés de châteaux ou aplanir des collines.</p>",
+        detEn: "<h4>🪚 LAND MASS REMOVAL</h4><p>Drastically speeds up open-air soil removals, tailored to clear massive sea canal passages, castle moats, or flatten mountain landscapes.</p>"
+    },
+    {
+        cat: "cat-mining", name: "digtoground",
+        fr: "Aplatit instantanément la terre sous les pieds du personnage.",
+        en: "Locks dirt slopes actions right beneath character coordinates.",
+        detFr: "<h4>👣 PISTE RAPIDE AU SOL</h4><p>Le sol s'aligne directement sur votre hauteur actuelle en une seule action de pelle, accélérant le nettoyage des parcelles de terrain accidentées.</p>",
+        detEn: "<h4>👣 PLUMB LEVELING</h4><p>Ground elevation drops immediately match your active model height, vastly lowering overall landscaping labor requirements on rugged zones.</p>"
+    },
+    {
+        cat: "cat-mining", name: "onetilemining",
+        fr: "Extraction complète des filons de mine depuis un point fixe.",
+        en: "Centralized ore vein extraction from individual block stand.",
+        detFr: "<h4>💎 EXTRACTEUR FIXE DE GROTTE</h4><p>Permet de miner tous les côtés d'une galerie souterraine sans bouger son personnage, réduisant les allers-retours fatigants dans les tunnels sombres.</p>",
+        detEn: "<h4>💎 STATIONARY MINING</h4><p>Allows tapping into all surrounding rock walls inside shafts without moving, saving massive time during deep cavern grinds.</p>"
+    },
+    {
+        cat: "cat-mining", name: "setheight",
+        fr: "Outil d'administration pour forcer la hauteur géologique.",
+        en: "Admin management tool to set precise terrain altitude levels.",
+        detFr: "<h4>🛠️ MODIFICATEUR DE RELIEF ADMIN</h4><p>Permet aux maîtres de jeu d'égaliser instantanément de grandes surfaces accidentées pour préparer le terrain pour l'implantation de structures publiques.</p>",
+        detEn: "<h4>🛠️ ALTITUDE INJECTOR</h4><p>Allows game masters to instantly flatten complex uneven land blocks to easily lay down clean platforms for community event building designs.</p>"
+    },
+    {
+        cat: "cat-mining", name: "MightyMattockMod",
+        fr: "Augmente l'efficacité d'extraction de la pioche-pioche.",
+        en: "Scales up global resource yields for mattock mining tasks.",
+        detFr: "<h4>🎛️ INSTRUMENT HYBRIDE MINES</h4><p>Combine le minage de la roche et la coupe des racines encombrantes dans un outil hybride surpuissant pour optimiser le travail de vos mineurs.</p>",
+        detEn: "<h4>🎛️ HYBRID EXCAVATOR</h4><p>Blends traditional stone mining with tree roots clearing loops into an optimized hybrid instrument for advanced mining operations.</p>"
+    },
+    {
+        cat: "cat-mining", name: "shopanvil",
+        fr: "Enclumes publiques faisant office de stations de réparation.",
+        en: "Public smithing anvils serving as tool repair benches.",
+        detFr: "<h4>🔨 REPOUTAGE D'OUTILS PUBLIC</h4><p>Permet de restaurer instantanément l'usure de ses outils d'artisanat directement depuis les enclumes installées dans les forges de la communauté.</p>",
+        detEn: "<h4>🔨 COMMERCE ANVILS</h4><p>Allows blacksmiths to instantly restore damaged crafting utensils durability metrics directly from community marketplace local forges.</p>"
+    },
+    {
+        cat: "cat-mining", name: "SmeltPurifyMod",
+        fr: "Purification des métaux bruts lors de la fonte pour monter le QL.",
+        en: "Ore smelting optimization script refining starting purity.",
+        detFr: "<h4>🔥 HAUT-FOURNEAU RAFFINÉ</h4><p>Filtre automatiquement les impuretés dans les fours, augmentant le niveau de qualité (QL) de vos lingots de fer ou de cuivre fraîchement fondus.</p>",
+        detEn: "<h4>🔥 PURIFIED SMELTING</h4><p>Purifies carbon components inside active kilns, scaling up initial quality metrics for freshly outputted metal bars.</p>"
+    },
+    {
+        cat: "cat-mining", name: "NoSaltOrSand",
+        fr: "Bloque l'ensablement et l'érosion des terres côtières.",
+        en: "Stops natural soil decay and sand erosion near beach coastlines.",
+        detFr: "<h4>🏖️ BARRIÈRE DE SEL ET SABLE</h4><p>Empêche l'eau de mer de détruire l'herbe verte et les cultures fertiles de vos fermes situées à proximité immédiate des plages de l'océan.</p>",
+        detEn: "<h4>🏖️ SHORELINE INTEGRITY</h4><p>Prevents tidal water vectors from altering fertile coastal farm grass blocks into barren sand tiles near settlements landmarks.</p>"
+    },
+    {
+        cat: "cat-mining", name: "BuildingSkillMod",
+        fr: "Équilibre et ajuste les gains d'expérience en maçonnerie.",
+        en: "Rebalances experience curves coefficients for architecture tasks.",
+        detFr: "<h4>🧱 APPRENTISSAGE MACONNERIE</h4><p>Permet de bâtir des structures en pierre et des châteaux complexes sans subir de blocages frustrants de progression de niveau d'artisanat.</p>",
+        detEn: "<h4>🧱 REBALANCED MASONRY</h4><p>Facilitates advanced high-tier stone castles assembly loops without hitches by adjusting structural learning rates algorithms.</p>"
+    },
+    {
+        cat: "cat-mining", name: "nobuildlimit",
+        fr: "Supprime les limites de hauteur pour les constructions.",
+        en: "Removes vertical structural height limits for houses.",
+        detFr: "<h4>🏰 SANS LIMITE DE PLAFOND</h4><p>Libère la créativité des architectes en permettant de créer des tours de guilde de plusieurs étages et des citadelles colossales sans blocage.</p>",
+        detEn: "<h4>🏰 VERTICAL FREEDOM</h4><p>Unlocks architect creativity by allowing multi-story guild towers and massive keeps assembly without vertical hard wall limits.</p>"
+    },
+    {
+        cat: "cat-mining", name: "SimpleConcrete",
+        fr: "Simplifie la recette de fabrication des dalles de béton.",
+        en: "Simplifies raw ingredient needs for crafting concrete tiles.",
+        detFr: "<h4>👷 PAVAGE DE GRANDES ROUTES</h4><p>Permet de relier vos avant-postes par de belles routes lisses en béton beaucoup plus rapidement en abaissant les prérequis de composants.</p>",
+        detEn: "<h4>👷 BASIC CONCRETE MIX</h4><p>Speeds up custom highway network paving loops by adjusting the raw stone materials count required to produce solid blocks.</p>"
+    },
+    {
+        cat: "cat-mining", name: "TreeStumpSizeHack",
+        fr: "Hitbox des souches d'arbres réduite pour faciliter le nettoyage.",
+        en: "Alters tree stumps hitbox sizes for easier extraction.",
+        detFr: "<h4>🪵 DÉRACINEMENT DE SOUCHES</h4><p>Rend les vieilles souches d'arbres coupés très faciles à cibler et à déraciner à la pelle pour nettoyer vos terrains de guilde.</p>",
+        detEn: "<h4>🪵 STUMP REMOVAL ADJUSTMENT</h4><p>Makes leftover logs stumps significantly easier to target and dig up with standard shovels when clearing active land claims.</p>"
+    },
+    // =========================================================================
+    // 🌾 SECTION : AGRICULTURE & ÉLEVAGE (cat-nature)
+    // =========================================================================
+    {
+        cat: "cat-nature", name: "betterfarm",
+        fr: "Affiche l'état d'avancement et les besoins de vos cultures.",
+        en: "Displays advanced UI feedback for crops growth cycles.",
+        detFr: "<h4>🌱 ANALYSE DES CULTURES</h4><p>Permet de voir immédiatement si un champ a besoin d'être désherbé, arrosé ou s'il est prêt pour la moisson sans utiliser d'outil d'analyse complexe.</p>",
+        detEn: "<h4>🌱 ADVANCED FARMING FEEDBACK</h4><p>Provides instant feedback to know if a tile requires weeding, fertilizing, or if it is fully grown without surveying instruments.</p>"
+    },
+    {
+        cat: "cat-nature", name: "creatureagemod",
+        fr: "Indique l'âge exact de vos animaux en jours de vie réels.",
+        en: "Prints explicit detailed age markers on your creatures.",
+        detFr: "<h4>🐾 CYCLE BIOLOGIQUE ÉTENDU</h4><p>Affiche le stade d'évolution exact de vos animaux (jeune, mature, vénérable) directement lors de l'examen, idéal pour planifier l'élevage.</p>",
+        detEn: "<h4>🐾 EXPANDED BIOLOGY STAGES</h4><p>Allows tracking animal development cycles with extreme precision to easily filter your top breeding studs.</p>"
+    },
+    {
+        cat: "cat-nature", name: "cropmod",
+        fr: "Empêche la mort naturelle et le pourrissement des récoltes mûres.",
+        en: "Halts natural plant decay once crops hit maximum growth.",
+        detFr: "<h4>🌾 SÉCURITÉ DE MOISSON INDÉFINIE</h4><p>Vos légumes et céréales restent à leur niveau de récolte maximal et n'expirent jamais, attendant votre retour pour la récolte.</p>",
+        detEn: "<h4>🌾 PAUSED CROPS ROT</h4><p>Perfect for casual players: your farmlands pause their timers at peak harvest phase, waiting for your next login to gather grains.</p>"
+    },
+    {
+        cat: "cat-nature", name: "inbreedwarning",
+        fr: "Alerte de consanguinité pour la sécurité de votre élevage.",
+        en: "Triggers animal inbreeding risk check alerts.",
+        detFr: "<h4>🧬 SÉCURITÉ PATRILINÉAIRE</h4><p>Affiche un message d'avertissement rouge si vous tentez de faire s'accoupler deux bêtes partageant le même arbre généalogique, protégeant vos lignées.</p>",
+        detEn: "<h4>🧬 GENETIC SAFEGUARDS</h4><p>Displays clear red notice flags during animal grooming if parents match, preserving your lineages from negative mutations.</p>"
+    },
+    {
+        cat: "cat-nature", name: "ModifyGestationPeriod",
+        fr: "Raccourcit la durée de grossesse des femelles de la ferme.",
+        en: "Shortens pregnancy gestation timers for all animals.",
+        detFr: "<h4>🍼 MATERNITÉ ACCÉLÉRÉE</h4><p>Permet d'accélérer l'élevage en réduisant le temps d'attente hors-ligne avant la naissance des poulains et des veaux.</p>",
+        detEn: "<h4>🍼 QUICK GESTATION</h4><p>Accelerates farming loops by lowering real-world wait times before farm animals give birth to fresh offspring.</p>"
+    },
+    {
+        cat: "cat-nature", name: "EnhancedChickenCoop",
+        fr: "Augmente la capacité et automatise la ponte des poulaillers.",
+        en: "Expands storage capacity and egg collection inside Coops.",
+        detFr: "<h4> Rooster INDUSTRIEL</h4><p>Permet d'abriter plus de poules dans un seul enclos en bois tout en centralisent la récolte quotidienne d'œufs frais de cuisine.</p>",
+        detEn: "<h4>🐓 AUTOMATED CHICKEN COOP</h4><p>Allows packing more poultry inside a single small structural unit while gathering daily food drops efficiently.</p>"
+    },
+    {
+        cat: "cat-nature", name: "harvesthelper",
+        fr: "Calendrier d'herboristerie indiquant les saisons de cueillette.",
+        en: "Lunar tracking calendar marking active harvesting seasons.",
+        detFr: "<h4>🍂 SAISONS DE CUEILLETTE</h4><p>Indique précisément quel mois de l'année Wurm permet de cueillir des baies, des fruits ou des plantes médicinales sauvages.</p>",
+        detEn: "<h4>🍂 HARVEST ALMANAC</h4><p>Shows farmers and herbalists exactly which seasonal cycles activate wild items growth on trees and bushes.</p>"
+    },
+    {
+        cat: "cat-nature", name: "hitchlimits",
+        fr: "Augmente le nombre maximal d'animaux attelables aux charrettes.",
+        en: "Expands animal hitch count maximums on heavy wagons.",
+        detFr: "<h4>🐎 TRACTION MULTI-MOUNT</h4><p>Permet de lier jusqu'à 4 ou 6 chevaux en simultané sur les grands chariots de transport pour franchir les collines escarpées.</p>",
+        detEn: "<h4>🐎 MULTI-MOUNT HITCHING</h4><p>Allows attaching up to 4 or 6 horses simultaneously onto heavy transport carriages to carry massive tonnage upward slopes.</p>"
+    },
+    {
+        cat: "cat-nature", name: "milkreset",
+        fr: "Ajuste et réinitialise les temps de recharge de la traite des vaches.",
+        en: "Resets milk production timers to fixed intervals.",
+        detFr: "<h4>🥛 PRODUCTION LAITIÈRE AXÉE</h4><p>Permet une production de lait stable toutes les 24 heures pour alimenter régulièrement les recettes de vos artisans cuisiniers.</p>",
+        detEn: "<h4>🥛 REFRESHED DAIRY CHAINS</h4><p>Normalizes dairy farming resources collection tasks every day to easily feed your guild cooking recipes requirements.</p>"
+    },
+    {
+        cat: "cat-nature", name: "PickMoreSprouts",
+        fr: "Permet de couper plusieurs boutures arboricoles d'un seul coup.",
+        en: "Enables multi-sprouts harvesting per tree cutting action.",
+        detFr: "<h4>🌲 MULTI-BOUTURES RAPIDES</h4><p>Optimise le travail des forestiers en extrayant jusqu'à 3 boutures à la fois pour accélérer les chantiers de reforestation massive.</p>",
+        detEn: "<h4>🌲 MULTI-SPROUT HARVEST</h4><p>Optimizes foresters speed by yielding up to 3 tree cuttings at once, vastly speeding up structural reforestation efforts.</p>"
+    },
+    {
+        cat: "cat-nature", name: "renameAnimals",
+        fr: "Permet de renommer librement vos familiers et bêtes d'élevage.",
+        en: "Allows custom renaming fields for farm animals and pets.",
+        detFr: "<h4>🏷️ MARQUAGE PERSONNALISÉ</h4><p>Ajoute une option textuelle pour donner un nom unique à vos étalons de combat ou à vos gardiens de domaine préférés.</p>",
+        detEn: "<h4>🏷️ CREATURE NICKNAMING</h4><p>Adds a clean text interface to assign special names to your war steeds or favorite settlement livestock protectors.</p>"
+    },
+    // =========================================================================
+    // 🔨 SECTION : ARTISANAT, BULK & ÉCONOMIE (cat-craft)
+    // =========================================================================
+    {
+        cat: "cat-craft", name: "alchemy",
+        fr: "Système de création et de filtrage d'alchimie amélioré.",
+        en: "Enhanced alchemy brewing and composition mechanics filter.",
+        detFr: "<h4>🧪 ALCHIMIE AVANCÉE</h4><p>Permet de trier les herbes et de combiner les fluides avec une plus grande précision pour concevoir des potions de bonus de statistiques propres.</p>",
+        detEn: "<h4>🧪 ADVANCED BREWING</h4><p>Allows sorting herbs and combining chemical liquids with better precision to brew clean utility stat-boosting potions.</p>"
+    },
+    {
+        cat: "cat-craft", name: "bulkmod",
+        fr: "Gestion rapide et optimisée des coffres de stockage de masse.",
+        en: "Fast bulk storage container interaction handling scripts.",
+        detFr: "<h4>📦 STOCKAGE DE MASSE</h4><p>Permet de vider des inventaires entiers de pierres, de minerai ou de terre dans vos grands silos de guilde en un seul clic.</p>",
+        detEn: "<h4>📦 BULK STREAMLINING</h4><p>Enables emptying full character inventories of rocks, ore, or dirt into your massive compound silos in a single click.</p>"
+    },
+    {
+        cat: "cat-craft", name: "bulkseparated",
+        fr: "Insulation des ressources bulk par paliers de qualité (QL).",
+        en: "Insulates bulk stored resources by quality level brackets.",
+        detFr: "<h4>⚖️ SÉPARATION DES QUALITÉS</h4><p>Empêche vos matériaux d'artisanat d'élite d'être mélangés avec des pierres ou des bois bas de gamme, protégeant vos moyennes de forge.</p>",
+        detEn: "<h4>⚖️ QL INSULATION</h4><p>Prevents high-tier crafting resources from being blended with low-QL raw supplies, fully protecting your blacksmith averages.</p>"
+    },
+    {
+        cat: "cat-craft", name: "DoubleBulkCapacity",
+        fr: "Double l'espace de stockage maximal de tous les conteneurs de masse.",
+        en: "Doubles maximum item limits for massive bulk containers.",
+        detFr: "<h4>🎛️ CAPACITÉ SOULEVÉE</h4><p>Pousse les volumes de stockage à des échelles géantes pour permettre aux grands forgerons d'entasser des dizaines de milliers de lingots.</p>",
+        detEn: "<h4>🎛️ DOUBLE SILO LIMITS</h4><p>Expands container volumes to giant figures allowing advanced blacksmiths to stockpile tens of thousands of metal bars.</p>"
+    },
+    {
+        cat: "cat-craft", name: "decorations",
+        fr: "Pack de mobilier et d'objets décoratifs intérieurs médiévaux.",
+        en: "Medieval housing furniture and interior decorations bundle.",
+        detFr: "<h4>🎨 MOBILIER ROYAL</h4><p>Ajoute des lits de maître, des chaises royales, des armoires et des bannières héraldiques pour personnaliser l'intérieur de vos châteaux.</p>",
+        detEn: "<h4>🎨 ROYAL DECORS</h4><p>Adds master bedding, royal chairs, cabinets, and flags to highly customize the interiors of your medieval stone castles.</p>"
+    },
+    {
+        cat: "cat-craft", name: "DyeMaker",
+        fr: "Teintures sur mesure par extraction de pigments naturels.",
+        en: "Custom dye creation via extraction of natural pigments.",
+        detFr: "<h4>🌈 NUANCIER ARTISANAL</h4><p>Permet d'extraire les colorants de plantes et minéraux pour personnaliser vos armures en cuir, vos boucliers ou les voiles de vos navires.</p>",
+        detEn: "<h4>🌈 CRAFTED PIGMENTS</h4><p>Allows isolating pigments from rocks and flowers to easily customize your scale armors, wooden shields, or boat canvas canvas.</p>"
+    },
+    {
+        cat: "cat-craft", name: "fuelStorage",
+        fr: "Silos de carburant reliés aux fours industriels pour stockage.",
+        en: "Automated fuel storage connection units for industrial kilns.",
+        detFr: "<h4>🔥 ALIMENTATION AUTOMATIQUE</h4><p>Relie une réserve de bois ou de charbon de bois directement à vos hauts-fourneaux pour automatiser l'alimentation lors des fontes massives.</p>",
+        detEn: "<h4>🔥 KILN REFUELERS</h4><p>Hooks a custom charcoal box option directly to active smelting systems to sustain continuous fires during craft grinds.</p>"
+    },
+    {
+        cat: "cat-craft", name: "Signs",
+        fr: "Permet de fabriquer des panneaux et d'y écrire vos textes.",
+        en: "Enables crafting and writing custom texts on road signs.",
+        detFr: "<h4>🪧 SIGNALISATION DE CITÉ</h4><p>Permet de façonner des panneaux en bois ou pierre. Idéal pour inscrire des directions, messages d'accueil ou nommer vos rues.</p>",
+        detEn: "<h4>🪧 STREET SIGNALING</h4><p>Allows producing wooden or stone signs. Perfect to type custom directions, welcome messages at gates, or name custom streets grids.</p>"
+    },
+    {
+        cat: "cat-craft", name: "windmill",
+        fr: "Rend les grands moulins à vent opérationnels pour moudre le grain.",
+        en: "Activates structural windmills utilities to process grain fields.",
+        detFr: "<h4>🌾 MEUNERIE MÉCANIQUE</h4><p>Automatise le broyage des sacs de céréales en farine de cuisine fine pour alimenter les recettes et grands bonus de nourriture.</p>",
+        detEn: "<h4>🌾 MECHANICAL WINDMILL</h4><p>Automates complex grains processing into fine cooking flour to easily fuel your advanced high-tier food buffs loops.</p>"
+    },
 
-    // SÉCURITÉ ACTIVE : Bloque le Clic Droit et l'inspection de vos scripts
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'i')) { e.preventDefault(); }
-        if (e.key === 'F12') { e.preventDefault(); }
+    // =========================================================================
+    // 🔮 SECTION : Noyau, Magie & Administration (cat-core)
+    // =========================================================================
+    {
+        cat: "cat-core", name: "hwportals",
+        fr: "Réseau de portails de téléportation magiques inter-capitales.",
+        en: "Magical teleportation structures highway road network lines.",
+        detFr: "<h4>🌀 MONOLITHES RUNIQUES</h4><p>Active d'anciennes structures runiques pour voyager instantanément entre les principaux marchés et avant-postes QBC.</p>",
+        detEn: "<h4>🌀 RUNIC GATEWAYS</h4><p>Activates ancient runic monoliths allowing rapid travel loops between the main trade city sectors of the QBC network.</p>"
+    },
+    {
+        cat: "cat-core", name: "loottables",
+        fr: "Optimisation et équilibrage des butins trouvés sur les Boss.",
+        en: "Drop balances and scaling fixes on massive rare bosses.",
+        detFr: "<h4>⚔️ BALANCEMENT DES BUTINS</h4><p>Ajuste intelligemment la rareté des outils d'élite, composants divins ou armures légendaires ramassés sur les boss rares.</p>",
+        detEn: "<h4>⚔️ SCALED BOSS LOOT</h4><p>Intelligently tweaks probabilities for rare weapons, divine parts, or legendary heavy armors dropped by major world bosses.</p>"
+    },
+    {
+        cat: "cat-core", name: "MarkAndRecall",
+        fr: "Sorts mystiques d'ancrage de zone et de rappel téléportatif.",
+        en: "Mystical position anchoring and recall teleportation spells.",
+        detFr: "<h4>✨ MARQUE DE RETOUR</h4><p>Permet aux prêtres de marquer un point au sol pour s'y téléporter en cas d'urgence absolue, n'importe où sur la carte.</p>",
+        detEn: "<h4>✨ RECALL SPIRE</h4><p>Allows high-level priests to anchor a magical point on a tile to warp back instantly from anywhere in case of mortal peril.</p>"
+    },
+    {
+        cat: "cat-core", name: "ServerTweaks",
+        fr: "Pack d'optimisation machine pour l'hébergement et la stabilité.",
+        en: "Performance framework optimizing memory and tick speed stability.",
+        detFr: "<h4>⚙️ PURGE DE MÉMOIRE</h4><p>Nettoie la mémoire vive (RAM) de l'hébergement en arrière-plan pour bloquer les pics de latence lors des sauvegardes automatiques.</p>",
+        detEn: "<h4>⚙️ RAM FLUSHER</h4><p>Cleans up host RAM footprint in the background, preventing server lag spikes during mid-day automated backup routines.</p>"
+    },
+    {
+        cat: "cat-core", name: "VoteReward",
+        fr: "Distribution automatique de récompenses de vote en jeu.",
+        en: "Automated distribution of vote rewards items onto characters.",
+        detFr: "<h4>🗳️ MERCI AUX VOTANTS</h4><p>Lien communautaire direct : voter pour le site web donne un bonus de sommeil ou injecte des outils dans la banque de votre personnage.</p>",
+        detEn: "<h4>🗳️ VOTE REWARDS SYSTEM</h4><p>QBC community bridge: voting for the portal updates character stats with sleep bonuses or sends items directly into bank boxes.</p>"
+    }
+];
+
+// =========================================================================
+// 🎛️ MOTEUR TECHNIQUE SPATIAL & MÉDIÉVAL DASHBOARD PRO 2026
+// =========================================================================
+function buildQbcDashboard() {
+    const feed = document.getElementById('modulesFeed');
+    if (!feed) return;
+
+    // 1. Injecte la liste principale détaillée
+    QBC_MODS_DATABASE.forEach((mod, index) => {
+        const itemHtml = `<div class="module-item" data-cat="${mod.cat}" onclick="previewQbcModule(event, ${index}, false)">${mod.name}</div>`;
+        feed.insertAdjacentHTML('beforeend', itemHtml);
     });
+
+    // 2. Base de données complémentaire de vos autres dossiers réels (Rangement étanche sans aucun doublon)
+    const extraModsList = [
+        { cat: "cat-core", name: "AddKingdomItems" }, { cat: "cat-core", name: "AddMissionItems" },
+        { cat: "cat-core", name: "AntiMycelium" }, { cat: "cat-core", name: "默默-archeotweaks" },
+        { cat: "cat-core", name: "archeotweaks" }, { cat: "cat-core", name: "dungeon" }, 
+        { cat: "cat-core", name: "EpicCurve" }, { cat: "cat-core", name: "eventmod" }, 
+        { cat: "cat-core", name: "halloween" }, { cat: "cat-core", name: "HMWIMC" },
+        { cat: "cat-core", name: "Joke" }, { cat: "cat-core", name: "karmaactions" }, 
+        { cat: "cat-core", name: "LoadAltar" }, { cat: "cat-core", name: "meditatemod" }, 
+        { cat: "cat-core", name: "ModelMeImpressed" }, { cat: "cat-core", name: "PollSpawner" }, 
+        { cat: "cat-core", name: "re-enablealliances" }, { cat: "cat-core", name: "riftevent" }, 
+        { cat: "cat-core", name: "Roll" }, { cat: "cat-core", name: "sacrificemod" }, 
+        { cat: "cat-core", name: "salvemod" }, { cat: "cat-core", name: "scriptrunner" }, 
+        { cat: "cat-core", name: "servermap" }, { cat: "cat-core", name: "serverpacks" }, 
+        { cat: "cat-core", name: "serverplayercounter" }, { cat: "cat-core", name: "soulstealing" }, 
+        { cat: "cat-core", name: "Spellcraft" }, { cat: "cat-core", name: "SpellFavorCost" }, 
+        { cat: "cat-core", name: "spellmod" }, { cat: "cat-core", name: "Survival" }, 
+        { cat: "cat-core", name: "TentSleep" }, { cat: "cat-core", name: "tileExport" }, 
+        { cat: "cat-core", name: "TimedPay" }, { cat: "cat-core", name: "TreasureHunting" },
+        
+        { cat: "cat-combat", name: "Archery" }, { cat: "cat-combat", name: "ArmourStands" }, 
+        { cat: "cat-combat", name: "Armoury" }, { cat: "cat-combat", name: "Bardings" }, 
+        { cat: "cat-combat", name: "BountyOnBurn" }, { cat: "cat-combat", name: "fixguards" }, 
+        { cat: "cat-combat", name: "RepairTower" }, { cat: "cat-combat", name: "ShorterFemaleSleeves" }, 
+        { cat: "cat-combat", name: "StarterGear" }, { cat: "cat-combat", name: "TabardMod" }, 
+        { cat: "cat-combat", name: "taxidermy" }, { cat: "cat-combat", name: "TemplarReplacer" },
+        
+        { cat: "cat-nature", name: "AshProduce" }, { cat: "cat-nature", name: "boatmod" }, 
+        { cat: "cat-nature", name: "branchesAndTwigsWithPruning" }, { cat: "cat-nature", name: "CustomWagons" }, 
+        { cat: "cat-nature", name: "fishytweaks" }, { cat: "cat-nature", name: "KingdomSails" }, 
+        { cat: "cat-nature", name: "LeadMore" }, { cat: "cat-nature", name: "minipets" }, 
+        { cat: "cat-nature", name: "movemod" }, { cat: "cat-nature", name: "movetocenter" }, 
+        { cat: "cat-nature", name: "Reedlands" }, { cat: "cat-nature", name: "Unleash" },
+        
+        { cat: "cat-craft", name: "christmasmod" }, { cat: "cat-craft", name: "Coffee" }, 
+        { cat: "cat-craft", name: "combiner" }, { cat: "cat-craft", name: "CookingMod" }, 
+        { cat: "cat-craft", name: "customtrader" }, { cat: "cat-craft", name: "txt-FireBurnTime" }, 
+        { cat: "cat-craft", name: "KingdomStuff" }, { cat: "cat-craft", name: "MorePotables" }, 
+        { cat: "cat-craft", name: "waxed" }
+    ];
+
+    // Injecte proprement le restant des extensions d'arrière-plan sans doublons
+    extraModsList.forEach((extra, idx) => {
+        const itemHtml = `<div class="module-item" data-cat="${extra.cat}" onclick="previewQbcModule(event, ${idx}, true, '${extra.name}')">${extra.name}</div>`;
+        feed.insertAdjacentHTML('beforeend', itemHtml);
+    });
+}
+
+// Gère l'affichage immédiat dans le cadre de droite
+function previewQbcModule(evt, index, isExtra, extraName) {
+    document.querySelectorAll('.module-item').forEach(i => i.classList.remove('active'));
+    evt.currentTarget.classList.add('active');
+
+    const titleEl = document.getElementById('prevTitle');
+    const badgeEl = document.getElementById('prevBadge');
+    const bodyEl = document.getElementById('prevBody');
+
+    badgeEl.style.display = "inline-block";
+
+    if (!isExtra) {
+        const mod = QBC_MODS_DATABASE[index];
+        titleEl.innerText = mod.name;
+        badgeEl.innerText = "Module Configuré";
+        badgeEl.style.color = "#00ff00"; badgeEl.style.borderColor = "#00ff00"; badgeEl.style.background = "rgba(0,255,0,0.1)";
+        
+        const isEnglish = document.body.className.includes('lang-en-mode');
+        bodyEl.innerHTML = isEnglish ? mod.detEn : mod.detFr;
+    } else {
+        titleEl.innerText = extraName;
+        badgeEl.innerText = "Arrière-Plan (Core)";
+        badgeEl.style.color = "#ff9900"; badgeEl.style.borderColor = "#ff9900"; badgeEl.style.background = "rgba(255,153,0,0.1)";
+        
+        bodyEl.innerHTML = `
+            <h4 class="fr-txt">⚙️ INFRASTRUCTURE SUITE</h4>
+            <h4 class="en-txt">⚙️ INFRASTRUCTURE SUITE</h4>
+            <p class="fr-txt">Ce script ou dossier s'exécute de manière autonome en arrière-plan sur le serveur hébergé chez <strong>Legion Hosting</strong>.</p>
+            <p class="en-txt">This script or directory runs autonomously in the background on your core server machine at <strong>Legion Hosting</strong>.</p>
+            <ul>
+                <li class="fr-txt">Ajuste automatiquement l'allocation de la mémoire RAM.</li>
+                <li class="en-txt">Automatically optimizes active RAM memory allocation.</li>
+                <li class="fr-txt">Sécurise la synchronisation des données de jeu.</li>
+                <li class="en-txt">Secures structural gameplay database writing.</li>
+            </ul>`;
+    }
+}
+
+// Gère le filtrage par onglets cliqués à gauche
+function switchCategory(evt, catId) {
+    document.querySelectorAll('.cat-tab-btn').forEach(b => b.classList.remove('active'));
+    evt.currentTarget.classList.add('active');
+
+    document.querySelectorAll('.module-item').forEach(item => {
+        if (catId === 'all' || item.getAttribute('data-cat') === catId) {
+            item.style.display = "flex";
+        } else {
+            item.style.display = "none";
+        }
+    });
+}
+
+// Initialisation globale
+buildQbcDashboard();
+
+function syncBackButton() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeServer = urlParams.get('server') || 'wurm1';
+    document.getElementById('back-btn').href = "index.html?server=" + activeServer;
+}
+syncBackButton();
+
+// Protection anti-copie discrète
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+    if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+    }
+});
 </script>
 </body>
 </html>
+
 
