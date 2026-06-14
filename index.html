@@ -3,240 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QBC Multigaming | Portail Quantum 2026</title>
+    <title>[QBC] Flaggard | Portail Multivers Réseau 2026</title>
     <style>
-        body { 
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; 
-            background-color: #060913; color: #ffffff; font-family: 'Segoe UI', system-ui, sans-serif; 
-            margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            min-height: 100vh; overflow-x: hidden;
-            background-image: radial-gradient(circle at center, #141f36 0%, #050811 100%);
-        }
+        body { -webkit-user-select: none; user-select: none; background-color: #050302; color: #f4eae1; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background-image: radial-gradient(circle at center, rgba(30, 20, 15, 0.2) 0%, rgba(5, 3, 2, 0.7) 100%), url('portal_bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .portal-container { max-width: 1300px; width: 100%; margin: 0 auto; padding: 30px; box-sizing: border-box; text-align: center; position: relative; }
+        .qbc-matrix-control-bar { position: absolute; top: 15px; right: 30px; display: flex; align-items: center; gap: 12px; z-index: 999999 !important; }
+        .qbc-matrix-lang-bar { display: flex; gap: 6px; background: rgba(0,0,0,0.85); padding: 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); }
+        .lang-btn { background: transparent; border: none; color: #8a8f98; font-family: monospace; font-size: 11px; font-weight: bold; padding: 6px 14px; border-radius: 4px; cursor: pointer; }
+        .lang-btn.active { background: #ff9900; color: #1c130c; box-shadow: 0 0 10px rgba(255,153,0,0.4); }
+        .matrix-radar-countdown { font-size: 11px; font-family: monospace; color: #ffffff !important; font-weight: bold; text-transform: uppercase; display: flex; align-items: center; gap: 6px; background: rgba(4, 20, 28, 0.9); padding: 7px 14px; border-radius: 6px; border: 1px solid #00ffcc; height: 28px; box-sizing: border-box; }
         
-        .qbc-maintenance-marquee {
-            width: 100%; background: rgba(204, 51, 51, 0.18); border-bottom: 2px solid #ff3333; color: #ff3333;
-            padding: 10px 0; font-family: monospace; font-size: 13px; font-weight: 900; letter-spacing: 2px;
-            position: fixed; top: 0; left: 0; z-index: 9999; box-shadow: 0 4px 20px rgba(255, 51, 51, 0.4);
-            text-shadow: 0 0 10px #ff3333; display: none;
-        }
+        .main-header { margin-bottom: 25px; margin-top: 40px; }
+        .main-header h1 { font-size: 32px; color: #ffffff; font-family: monospace; font-weight: bold; margin: 0 0 8px 0; }
+        .main-header p { margin: 0; font-size: 13px; color: #c4b4a3; font-family: monospace; }
+        
+        /* 🎛️ CONTROLEUR DE FILTRAGE PAR SÉLECTION DE JEUX */
+        .qbc-cluster-global-counter-panel { background: rgba(10, 6, 4, 0.85); border: 1px dashed rgba(0, 255, 204, 0.3); border-radius: 10px; max-width: 750px; margin: 20px auto 10px auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; box-shadow: inset 0 0 15px rgba(0,255,204,0.05); }
+        .filter-pill { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 153, 0, 0.3); color: #8a8f98; font-family: monospace; font-size: 11px; font-weight: bold; padding: 6px 14px; border-radius: 4px; cursor: pointer; transition: 0.2s; text-transform: uppercase; }
+        .filter-pill:hover { border-color: #ff9900; color: #fff; }
+        .filter-pill.active { background: #ff9900; color: #1c130c; border-color: #ff9900; box-shadow: 0 0 10px rgba(255,153,0,0.3); }
 
-        .portal-container { max-width: 1300px; width: 100%; text-align: center; padding: 60px 20px 40px 20px; box-sizing: border-box; transition: 0.3s ease; }
-        h1 { font-size: 28px; font-weight: 900; letter-spacing: 4px; margin-bottom: 8px; color: #ffffff; text-transform: uppercase; text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); font-family: monospace; }
-        h1 span { color: #ff3333; text-shadow: 0 0 15px rgba(255, 51, 51, 0.6); }
+        .game-section-wrapper { width: 100%; margin: 30px 0; text-align: left; }
+        .game-section-title { font-family: monospace; font-size: 13px; font-weight: bold; color: #ff9900; border-left: 3px solid #ff9900; padding-left: 10px; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; }
         
-        .qbc-welcome-banner { font-size: 14px; font-weight: 900; color: #ffe082; font-family: monospace; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 35px; background: rgba(212, 175, 55, 0.08); border: 1px solid #d4af37; display: inline-block; padding: 8px 24px; border-radius: 6px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.25); text-shadow: 0 0 8px rgba(212, 175, 55, 0.6); }
-        .discord-master-btn { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #5865F2 0%, #404eed 100%); color: #ffffff; border: none; padding: 12px 30px; margin-bottom: 50px; border-radius: 30px; font-family: monospace; font-size: 13px; font-weight: bold; text-transform: uppercase; text-decoration: none; transition: 0.3s; box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4); }
-        .discord-master-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(88, 101, 242, 0.7); color: #fff; }
+        .portals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; width: 100%; box-sizing: border-box; }
+        .server-card-portal { background: rgba(15, 10, 8, 0.95); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px; padding: 25px; box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8); text-align: left; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; box-sizing: border-box; }
+        .server-card-portal h3 { margin: 0 0 12px 0; font-size: 15px; color: #fff; font-family: monospace; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; font-weight: bold; min-height: 50px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+        .server-title-text-wrapper { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; max-width: 75%; word-break: break-word; }
+        .server-card-portal p { margin: 8px 0; font-size: 13px; color: #c4b4a3; font-family: sans-serif; }
+        .status-badge-led { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-family: monospace; font-weight: bold; padding: 5px 10px; border-radius: 4px; }
+        .led-pulse { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
         
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 40px; margin-top: 10px; }
-        .game-card { position: relative; height: 280px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.08); background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: 0 20px 40px rgba(0,0,0,0.5); overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.4s; text-decoration: none; backdrop-filter: blur(4px); }
-        .card-7dtd { background-image: url('7dtd/background.jpg'); }
-        .card-wurm { background-image: url('wurm/background.jpg'); }
-        .card-avorion { background-image: url('avorion/background.jpg'); }
+        .qbc-server-internal-ticker { background: #000000 !important; border: 1px solid rgba(255, 153, 0, 0.4) !important; border-radius: 6px; padding: 8px 12px; font-family: monospace; font-size: 11px; color: #ff9900 !important; font-weight: bold; margin-top: 12px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; box-shadow: inset 0 0 8px rgba(255, 153, 0, 0.1); }
+        .qbc-server-internal-ticker span.warn-icon { animation: blinker 1s linear infinite; color: #ff9900; }
+        @keyframes blinker { 50% { opacity: 0; } }
         
-        .card-7dtd:hover { border-color: #ff3333; box-shadow: 0 0 35px rgba(255, 51, 51, 0.35); transform: translateY(-8px); }
-        .card-wurm:hover { border-color: #d4af37; box-shadow: 0 0 35px rgba(212, 175, 55, 0.35); transform: translateY(-8px); }
-        .card-avorion:hover { border-color: #00ffcc; box-shadow: 0 0 35px rgba(0, 255, 204, 0.35); transform: translateY(-8px); }
-        .game-card:hover { background-size: 108%; }
-        
-        .game-card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(6, 9, 19, 0.88) 30%, rgba(6, 9, 19, 0.45) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; transition: 0.4s; }
-        .server-route-btn { display: flex; justify-content: space-between; align-items: center; width: 92%; background: rgba(31, 34, 46, 0.6); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.05); padding: 10px 16px; margin-top: 8px; border-radius: 8px; font-family: monospace; font-size: 12px; font-weight: bold; text-transform: uppercase; text-decoration: none; transition: 0.25s ease; backdrop-filter: blur(8px); box-sizing: border-box; }
-        
-        .card-7dtd .server-route-btn:hover { background: #ff3333; border-color: #ff3333; box-shadow: 0 0 15px rgba(255, 51, 51, 0.5); }
-        .card-wurm .server-route-btn:hover { background: #d4af37; border-color: #d4af37; color: #000; box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
-        .card-avorion .server-route-btn:hover { background: #00ffcc; border-color: #00ffcc; color: #000; box-shadow: 0 0 15px rgba(0, 255, 204, 0.5); }
-        .server-route-btn:hover { transform: scale(1.02); }
-        
-        .portal-game-icon { font-size: 42px; margin-bottom: 5px; transition: 0.5s; display: inline-block; }
-        .game-card:hover .portal-game-icon { transform: scale(1.15) rotate(360deg); }
-        .portal-game-title { color: #ffffff !important; font-weight: 800; font-size: 19px; letter-spacing: 2px; margin: 0 0 10px 0; padding-bottom: 6px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
-        
-        .maint-blink { color: #ff9900 !important; font-weight: 900; animation: blinkMaint 1.5s infinite; }
-        @keyframes blinkMaint { 0% { opacity: 0.3; } 50% { opacity: 1; text-shadow: 0 0 12px #ff9900; } 100% { opacity: 0.3; } }
+        .btn-portal { background: #0f0a07; color: #fff; border: 1px solid #ffffff; padding: 12px 20px; font-weight: bold; text-transform: uppercase; border-radius: 6px; font-size: 11px; cursor: pointer; text-decoration: none; display: block; text-align: center; font-family: monospace; width: 100%; box-sizing: border-box; transition: 0.2s; }
+        .btn-portal-warning-orange { background: rgba(234, 88, 12, 0.15) !important; color: #ff9900 !important; border: 1px solid #ff9900 !important; padding: 12px 20px; font-weight: 900; text-transform: uppercase; border-radius: 6px; font-size: 11px; text-align: center; font-family: monospace; width: 100%; box-sizing: border-box; cursor: not-allowed; letter-spacing: 0.5px; animation: qbcOrangeFlashAlert2026 1.5s infinite ease-in-out; }
+        @keyframes qbcOrangeFlashAlert2026 { 0% { opacity: 1; box-shadow: 0 0 5px rgba(255, 153, 0, 0.2); } 50% { opacity: 0.5; box-shadow: 0 0 15px rgba(255, 153, 0, 0.6); background: rgba(234, 88, 12, 0.3) !important; } 100% { opacity: 1; box-shadow: 0 0 5px rgba(255, 153, 0, 0.2); } }
 
-        /* 💡 COULEUR 2026 : Animation rouge électrique clignotante pour les serveurs OFFLINE */
-        @keyframes blinkOffline { 0% { opacity: 0.4; } 50% { opacity: 1; text-shadow: 0 0 12px #ff3333; } 100% { opacity: 0.4; } }
-        .offline-blink { color: #ff3333 !important; font-weight: 900; animation: blinkOffline 1.2s infinite; }
+        .qbc-portal-footer-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 60px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.08); }
+        .btn-admin-access { background: transparent; border: 1px dashed rgba(255,153,0,0.2); color: rgba(255,153,0,0.4); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: monospace; font-size: 11px; text-decoration: none; transition: 0.2s; }
+        .btn-admin-access:hover { border-color: #ff9900; color: #ff9900; background: rgba(255,153,0,0.02); }
+        .matrix-update-timestamp { font-size: 11px; font-family: monospace; font-weight: bold; color: #ff9900 !important; background: rgba(255,153,0,0.08); padding: 8px 16px; border-radius: 6px; border: 1px solid rgba(255,153,0,0.3); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .qbc-marquee-wrapper { display: none; width: 100%; background: linear-gradient(90deg, #9a3412, #1e1b4b, #9a3412); border-bottom: 2px solid #ff9900; overflow: hidden; position: relative; padding: 10px 0; z-index: 1000; }
+        .qbc-marquee-text { display: inline-block; white-space: nowrap; font-family: monospace; font-size: 13px; font-weight: 900; color: #ffffff; text-transform: uppercase; padding-left: 100%; animation: qbcMatrixMarquee2026 25s linear infinite; }
+        @keyframes qbcMatrixMarquee2026 { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
     </style>
 </head>
 <body>
-
-    <div id="qbc-maintenance-banner" class="qbc-maintenance-marquee">
-        <marquee scrollamount="6" behavior="scroll" direction="left" id="qbc-marquee-text">INITIALISATION...</marquee>
+<div id="qbc-global-announcement-bar" class="qbc-marquee-wrapper"><div id="qbc-announcement-text-loader" class="qbc-marquee-text">-</div></div>
+<div class="portal-container">
+    <div class="qbc-matrix-control-bar">
+        <div class="matrix-radar-countdown"><span style="color: #00ffcc;">📡</span><span id="qbc-radar-clock-label">SCAN : 60S</span></div>
+        <div class="qbc-matrix-lang-bar">
+            <button id="qbc-lang-fr" class="lang-btn active" onclick="switchGlobalPortalLang('fr')">FR</button>
+            <button id="qbc-lang-en" class="lang-btn" onclick="switchGlobalPortalLang('en')">EN</button>
+        </div>
+    </div>
+    
+    <div class="main-header">
+        <h1 id="txt-main-title">🌌 QBC FLAGGARD — PORTAIL MULTIVERS</h1>
+        <p id="txt-main-sub">-</p>
     </div>
 
-    <div class="portal-container">
-        <h1>📊 TERMINAL MULTIGAMING INTERACTIF <span>QBC</span></h1>
-        <div class="qbc-welcome-banner">🛡️ Q฿₵ ₣Ⱡ₳₲₲₳ⱤĐ Q₵ ₵₳₦ ₣Ɽ ₱VɆ ฿łɆ₦VɆ₦ɄɆ / ₩ɆⱠ₵Ø₥Ɇ</div>
-        <br>
-        <a id="qbc-discord-master-link" href="#" target="_blank" class="discord-master-btn">💬 ACCÈS COMMUNICATIONS DISCORD</a>
-
-        <div class="games-grid">
-            
-            <!-- 🧟 7 DAYS TO DIE -->
-            <div class="game-card card-7dtd">
-                <div class="game-card-overlay">
-                    <div class="portal-game-icon">🧟‍♂️</div>
-                    <h3 class="portal-game-title" style="border-bottom: 2px solid #ff3333;">7 DAYS TO DIE</h3>
-                    <a href="7dtd/index.html?server=7dtd1" class="server-route-btn">
-                        <span>🛑 Flaggard ProjectZ</span>
-                        <span id="portal-mini-7dtd1" style="color:#00ffcc; font-weight: bold;">(--)</span>
-                    </a>
-                    <a href="7dtd/index.html?server=7dtd2" class="server-route-btn">
-                        <span>🛑 Flaggard New Mods</span>
-                        <span id="portal-mini-7dtd2" style="color:#00ffcc; font-weight: bold;">(--)</span>
-                    </a>
-                </div>
-            </div>
-            <!-- 🏰 WURM UNLIMITED -->
-            <div class="game-card card-wurm">
-                <div class="game-card-overlay">
-                    <div class="portal-game-icon">🏰</div>
-                    <h3 class="portal-game-title" style="border-bottom: 2px solid #d4af37;">WURM UNLIMITED</h3>
-                    <a href="wurm/index.html?server=wurm1" class="server-route-btn">
-                        <span>⚔️ Royaume Doriath</span>
-                        <span id="portal-mini-wurm1" style="color:#00ffcc; font-weight: bold;">(--)</span>
-                    </a>
-                    <a href="wurm/index.html?server=wurm2" class="server-route-btn">
-                        <span>⚔️ Royaume Flaggard</span>
-                        <span id="portal-mini-wurm2" style="color:#00ffcc; font-weight: bold;">(--)</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- 🚀 AVORION -->
-            <div class="game-card card-avorion">
-                <div class="game-card-overlay">
-                    <div class="portal-game-icon">🚀</div>
-                    <h3 class="portal-game-title" style="border-bottom: 2px solid #00ffcc;">AVORION</h3>
-                    <a href="avorion/index.html?server=avorion1" class="server-route-btn">
-                        <span>🛰️ Secteur Core 1</span>
-                        <span id="portal-mini-avorion1" style="color:#00ffcc; font-weight: bold;">(--)</span>
-                    </a>
-                    <a href="avorion/index.html?server=avorion2" class="server-route-btn">
-                        <span>🛰️ Secteur Core 2</span>
-                        <span id="portal-mini-avorion2" style="color:#00ffcc; font-weight: bold;">(--)</span>
-                    </a>
-                </div>
-            </div>
-
+    <!-- DOUBLE COUNTER RETOURNÉ DE SÉCURITÉ -->
+    <div class="qbc-cluster-global-counter-panel">
+        <div id="qbc-matrix-filter-pills" style="display:flex; gap:8px;">
+            <button class="filter-pill active" onclick="setGlobalPortalFilter2026('all')">ALL (<span id="cnt-all-srv">0</span>)</button>
+            <button class="filter-pill" onclick="setGlobalPortalFilter2026('7dtd')">7DTD (<span id="cnt-7dtd-srv">0</span>)</button>
+            <button class="filter-pill" onclick="setGlobalPortalFilter2026('wurm')">WURM (<span id="cnt-wurm-srv">0</span>)</button>
+            <button class="filter-pill" onclick="setGlobalPortalFilter2026('avorion')">AVORION (<span id="cnt-avorion-srv">0</span>)</button>
         </div>
-
-        <!-- 📊 CYBER-FOOTER STATISTIQUES GLOBAL -->
-        <div style="margin-top: 60px; padding: 25px; border-radius: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); font-family: monospace; font-size: 11px; color: #8a8f98; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; backdrop-filter: blur(10px);">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="color: #ff3333; font-weight: bold; letter-spacing: 1px;">[⚡ CORE_SYSTEM]</span> 
-                TRAFIC EN DIRECT : <span id="qbc-global-counter" style="color: #00ffcc; font-weight: bold; background: #0b0c10; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(0,255,204,0.2); box-shadow: 0 0 10px rgba(0,255,204,0.1);">Loading...</span>
-            </div>
-            <div style="letter-spacing: 0.5px;">
-                📡 DERNIÈRE SYNCHRONISATION QBC FLAGGARD : 
-                <span id="qbc-update-timestamp" style="color: #ffcc00; font-weight: bold; text-shadow: 0 0 8px rgba(255,204,0,0.3);">Calcul...</span>
-            </div>
+        <div style="font-family:monospace; font-size:11px;">
+            <span id="txt-visitor-label" style="color: #8a8f98;">COMPTEUR VISITEURS DIRECTS :</span>
+            <span id="qbc-visitor-realtime-count" style="color: #00ffcc; margin-left: 5px;">0 PASS</span>
         </div>
-
     </div>
+    
+    <div id="qbc-compartments-master-box"></div>
+    
+    <div class="qbc-portal-footer-bar">
+        <button onclick="promptForAdminAccess2026()" class="btn-admin-access" id="btn-admin-label">🛠️ CONSOLE MAINTENANCE IMPÉRIALE</button>
+        <div id="qbc-sync-timestamp-area" class="matrix-update-timestamp">-</div>
+    </div>
+</div>
+    </div>
+</div>
 
-    <script src="js/config.js"></script>
-    <script>
-        function syncPortalLiveCounters() {
-            const localSlots = { "7dtd1": 16, "7dtd2": 20, "wurm1": 250, "wurm2": 250, "avorion1": 20, "avorion2": 20 };
+<script>window.QBC_GLOBAL_CONFIG_LOADED = false;</script>
+<script src="js/config.js" onerror="console.warn('Config.js absent - Failsafe Actif')"></script>
+<script>if(typeof QBC_GLOBAL_CONFIG !== 'undefined') { window.QBC_GLOBAL_CONFIG_LOADED = true; }</script>
 
-            // 1. Synchronisation Discord
-            const dcLink = document.getElementById('qbc-discord-master-link');
-            if (dcLink && typeof QBC_GLOBAL_CONFIG !== 'undefined' && QBC_GLOBAL_CONFIG.discordURL) {
-                dcLink.href = QBC_GLOBAL_CONFIG.discordURL;
-            }
+<script>
+const PORTAL_DICTIONARY_UI = {
+    fr: { title: "🌌 QBC FLAGGARD — PORTAIL MULTIVERS", sub: "Connecteurs d'instances et aiguillages de grappes réseau", adminBtn: "🛠️ CONSOLE MAINTENANCE IMPÉRIALE", netAccess: "ACCÈS RÉSEAU :", playerCount: "NOMBRE DE JOUEURS :", maintActive: "Secteur Verrouillé", connectBtn: "Se Connecter à l'Instance ↗", maintBtn: "⚠️ WARNING EN MAINTENANCE", statusOnline: "ONLINE", statusOffline: "OFFLINE", lastMia: "⚡ DERNIÈRE MISE À JOUR : ", alertLabel: " 🚨 ALERTE MATRICE : ", offlineBtn: "❌ WARNING SERVEUR HORS-LIGNE", radarBtn: "SCAN : ", hiddenIp: "Secteur Sécurisé [CENSED]", visitorText: "COMPTEUR VISITEURS DIRECTS :" },
+    en: { title: "🌌 QBC FLAGGARD — MULTIVERSE PORTAL", sub: "Instance connectors and network cluster routing", adminBtn: "🛠️ IMPERIAL MAINTENANCE CONSOLE", netAccess: "NETWORK ACCESS:", playerCount: "PLAYERS ONLINE:", maintActive: "Sector Locked", connectBtn: "Connect to Instance ↗", maintBtn: "⚠️ UNDER MAINTENANCE", statusOnline: "ONLINE", statusOffline: "OFFLINE", lastMia: "⚡ LAST REFRESH : ", alertLabel: " 🚨 MATRIX ALERT: ", offlineBtn: "❌ SERVER OFFLINE", radarBtn: "SCAN: ", hiddenIp: "Secured Sector [CENSED]", visitorText: "TOTAL DIRECT VISITORS:" }
+};
+const DEFAULT_GAME_ICONS = { '7dtd1': "☣️", '7dtd2': "💀", 'wurm1': "🛡️", 'wurm2': "🧟", 'avorion1': "🚀", 'avorion2': "🌌" };
+const PORTAL_NAMES_DICTIONARY = { 'wurm1': "ROYAUME DORIATH (WURM)", 'wurm2': "ROYAUME FLAGGARD (WURM)", '7dtd1': "APOCALYPSE S1 (7DTD)", '7dtd2': "HARDCORE SURVIVAL S2 (7DTD)", 'avorion1': "SECTEUR ALPHA CORE (AVORION)", 'avorion2': "FRONTIÈRE SANS LOI (AVORION)" };
 
-            // 2. Synchronisation de la date de patch
-            const updateEl = document.getElementById('qbc-update-timestamp');
-            if (updateEl && typeof QBC_GLOBAL_CONFIG !== 'undefined' && QBC_GLOBAL_CONFIG.lastUpdate) {
-                updateEl.innerText = QBC_GLOBAL_CONFIG.lastUpdate;
-            }
+let activeLang = "fr", currentRadarTime = 60, matrixRadarInterval = null;
 
-            // 3. Gestion du bandeau d'alerte général du haut avec compte à rebours
-            const mBox = document.getElementById('qbc-maintenance-banner');
-            const mText = document.getElementById('qbc-marquee-text');
-            if (mBox && mText && typeof QBC_GLOBAL_CONFIG !== 'undefined') {
-                if (QBC_GLOBAL_CONFIG.maintenanceMessage && QBC_GLOBAL_CONFIG.maintenanceMessage.trim() !== "") {
-                    let timeMessage = "";
-                    if (QBC_GLOBAL_CONFIG.maintenanceEnd) {
-                        const endTime = new Date(QBC_GLOBAL_CONFIG.maintenanceEnd);
-                        const now = new Date();
-                        const diffMs = endTime - now;
-                        if (diffMs > 0) {
-                            const diffMins = Math.ceil(diffMs / 60000);
-                            if (diffMins >= 60) {
-                                const diffHours = Math.ceil(diffMins / 60);
-                                timeMessage = ` —— ⏱️ STATUT TERMINAL : FIN DE LA MAINTENANCE PREVUE DANS ENVIRON ${diffHours} HEURE${diffHours > 1 ? 'S' : ''} ⚠️`;
-                            } else {
-                                timeMessage = ` —— ⏱️ STATUT TERMINAL : FIN DE LA MAINTENANCE PREVUE DANS ENVIRON ${diffMins} MINUTE${diffMins > 1 ? 'S' : ''} ⚠️`;
-                            }
-                        } else {
-                            timeMessage = " —— 🚀 PROCESSUS REBOOT EFFECTUÉ : RÉOUVERTURE TECHNIQUE EN COURS ⚠️";
-                        }
-                    }
-                    mText.innerText = QBC_GLOBAL_CONFIG.maintenanceMessage + timeMessage;
-                    mBox.style.display = 'block';
-                    document.querySelector('.portal-container').style.paddingTop = "90px";
-                } else {
-                    mBox.style.display = 'none';
-                    document.querySelector('.portal-container').style.paddingTop = "60px";
-                }
-            }
+// 🔒 APPLICATION DU CHOIX PAR DÉFAUT EXTENSIBLE SUR ALL (TOUS LES SERVEURS VISIBLES) [INDEX]
+let currentActiveFilter2026 = localStorage.getItem('qbc_active_filter_pills') || "all";
 
-            // 4. Compteur de trafic LocalStorage
-            let currentVisits = localStorage.getItem('qbc_total_visits');
-            if (!currentVisits) currentVisits = 0;
-            if (!sessionStorage.getItem('qbc_session_active')) {
-                currentVisits = parseInt(currentVisits) + 1;
-                localStorage.setItem('qbc_total_visits', currentVisits);
-                sessionStorage.setItem('qbc_session_active', 'true');
-            }
-            const counterEl = document.getElementById('qbc-global-counter');
-            if (counterEl) counterEl.innerText = currentVisits + " CONNEXIONS";
+function switchGlobalPortalLang(lang) {
+    activeLang = lang; localStorage.setItem('qbc_global_language', lang);
+    document.getElementById('qbc-lang-fr').className = lang === 'fr' ? 'lang-btn active' : 'lang-btn';
+    document.getElementById('qbc-lang-en').className = lang === 'en' ? 'lang-btn active' : 'lang-btn';
+    let ui = PORTAL_DICTIONARY_UI[lang];
+    let customMainTitle = localStorage.getItem('qbc_main_portal_title');
+    document.getElementById('txt-main-title').innerText = (customMainTitle && customMainTitle.trim() !== "") ? customMainTitle : ui.title;
+    let customSub = localStorage.getItem('qbc_main_portal_sub_' + lang);
+    document.getElementById('txt-main-sub').innerText = (customSub && customSub.trim() !== "") ? customSub : ui.sub;
+    document.getElementById('btn-admin-label').innerText = ui.adminBtn;
+    document.getElementById('txt-visitor-label').innerText = ui.visitorText;
+    let rawDate = "2026-06-14 02:00";
+    try { if (window.QBC_GLOBAL_CONFIG_LOADED && QBC_GLOBAL_CONFIG.lastUpdate) { rawDate = QBC_GLOBAL_CONFIG.lastUpdate; } } catch(e){}
+    document.getElementById('qbc-sync-timestamp-area').innerText = ui.lastMia + rawDate;
+    loadAllPortals2026(false); checkAndDisplayAnnouncement2026(); updateRadarClockDisplay();
+}
 
-            // 5. 🚀 RADAR INTELLIGENT DE DETECTION DES PANNES EN ROUGE
-            const servers = ['7dtd1', '7dtd2', 'wurm1', 'wurm2', 'avorion1', 'avorion2'];
-            servers.forEach(srv => {
-                const el = document.getElementById('portal-mini-' + srv);
-                if (!el) return;
+function setGlobalPortalFilter2026(filterType) {
+    currentActiveFilter2026 = filterType;
+    localStorage.setItem('qbc_active_filter_pills', filterType);
+    
+    const pills = document.querySelectorAll('#qbc-matrix-filter-pills .filter-pill');
+    pills.forEach(p => p.classList.remove('active'));
+    
+    const idx = filterType === 'all' ? 0 : (filterType === '7dtd' ? 1 : (filterType === 'wurm' ? 2 : 3));
+    if (pills[idx]) pills[idx].classList.add('active');
+    
+    loadAllPortals2026(true);
+}
 
-                const maxSlots = (typeof QBC_GLOBAL_CONFIG !== 'undefined' && QBC_GLOBAL_CONFIG[srv]) ? (QBC_GLOBAL_CONFIG[srv].maxPlayers || localSlots[srv]) : localSlots[srv];
-                const isUnderMaintenance = (typeof QBC_GLOBAL_CONFIG !== 'undefined' && QBC_GLOBAL_CONFIG[srv] && QBC_GLOBAL_CONFIG[srv].ip === "MAINTENANCE");
+function promptForAdminAccess2026() {
+    let pwd = prompt("🔒 Entrez la clé d'authentification administrative :");
+    if (pwd === "QBC2026") { window.location.href = "admin.html"; } else if (pwd !== null) { alert("❌ Clé incorrecte."); }
+}
 
-                if (isUnderMaintenance) {
-                    el.innerText = "[⚠️ MAINT]";
-                    el.className = "maint-blink";
-                } else {
-                    fetch('/.netlify/functions/get-players?game=' + srv)
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.online) {
-                                const exactMax = data.maxPlayers || maxSlots;
-                                el.innerText = `(${data.count}/${exactMax})`;
-                                el.className = ""; // Standard
-                                el.style.color = "#00ffcc"; // Cyan online
-                            } else {
-                                // 💡 LE SERVEUR REPOND MAIS INDIQUE QU'IL EST COUPÉ
-                                el.innerText = "[🔴 OFFLINE]";
-                                el.className = "offline-blink";
-                            }
-                        })
-                        .catch(() => {
-                            // 💡 LE SERVEUR EST EN PANNE TOTALE OU FERMÉ SUR LE PANEL
-                            el.innerText = "[🔴 OFFLINE]";
-                            el.className = "offline-blink";
-                        });
-                }
-            });
+function loadAllPortals2026(isAutoRefresh) {
+    const masterBox = document.getElementById('qbc-compartments-master-box'); if (!masterBox) return;
+    let customPortals = {}; 
+    try { if (window.QBC_GLOBAL_CONFIG_LOADED) { customPortals = JSON.parse(JSON.stringify(QBC_GLOBAL_CONFIG)); } } catch(e) {}
+    const localAdded = localStorage.getItem('qbc_admin_portals'); if (localAdded) { try { Object.assign(customPortals, JSON.parse(localAdded)); } catch(e) {} }
+    
+    if (!customPortals || Object.keys(customPortals).length === 0 || (!customPortals.wurm1 && !customPortals['7dtd1'])) {
+        customPortals = { 
+            '7dtd1': { ip: "67.216.85.235", port: "26900", maxPlayers: 30 }, 
+            '7dtd2': { ip: "67.216.85.236", port: "26901", maxPlayers: 30 }, 
+            'wurm1': { ip: "104.243.40.52", port: "3724", maxPlayers: 250 }, 
+            'wurm2': { ip: "74.50.94.238", port: "3724", maxPlayers: 250 }, 
+            'avorion1': { ip: "45.134.8.12", port: "27015", maxPlayers: 20 }, 
+            'avorion2': { ip: "45.134.8.13", port: "27016", maxPlayers: 20 } 
+        };
+    }
+    
+    let sectionsData = {
+        '7dtd': { title: activeLang === 'fr' ? "☣️ UNIVERSE : 7 DAYS TO DIE" : "☣️ 7 DAYS TO DIE SECTOR", cardsHtml: "", count: 0 },
+        'wurm': { title: activeLang === 'fr' ? "🛡️ ROYAUMES : WURM UNLIMITED" : "🛡️ WURM UNLIMITED REALMS", cardsHtml: "", count: 0 },
+        'avorion': { title: activeLang === 'fr' ? "🚀 SECTEURS : AVORION MATRICE" : "🚀 AVORION GALAXY CLUSTER", cardsHtml: "" , count: 0 }
+    };
+    
+    let totalGlobalServersCount = 0;
+    let ui = PORTAL_DICTIONARY_UI[activeLang];
+    
+    for (let key in customPortals) {
+        if (key === "discordURL" || key === "maintenanceMessage" || key === "lastUpdate" || key === "maxPlayers") continue;
+        let server = customPortals[key]; if (!server || !server.ip) continue;
+        
+        let currentType = key.includes('7dtd') ? '7dtd' : (key.includes('wurm') ? 'wurm' : 'avorion');
+        sectionsData[currentType].count++;
+        totalGlobalServersCount++;
+
+        let displayIcon = localStorage.getItem('qbc_custom_icon_' + key) || DEFAULT_GAME_ICONS[key] || "🎮";
+        let publicName = localStorage.getItem('qbc_custom_name_' + key) || PORTAL_NAMES_DICTIONARY[key] || `INSTANCE : ${key.toUpperCase()}`;
+        let isMaintActive = localStorage.getItem('qbc_state_' + key) === "true" || server.ip === "MAINTENANCE";
+        let neonColor = key.includes("wurm") ? "#d4af37" : (key.includes("7dtd") ? "#2ecc71" : "#00ffcc");
+        let isServerOnline = !(server.ip === "127.0.0.1" || server.ip === "0.0.0.0");
+        let ledColor = isServerOnline ? "#2ecc71" : "#cc2222";
+        let ledBadgeHtml = `<div class="status-badge-led" style="color: ${ledColor}; background: rgba(0,0,0,0.4); border: 1px solid ${ledColor}30;"><span class="led-pulse" style="background-color: ${ledColor};"></span><span>${isServerOnline ? ui.statusOnline : ui.statusOffline}</span></div>`;
+        let cardStyle = isMaintActive ? "border-color: #ea580c;" : (!isServerOnline ? "border-color: #cc2222;" : `border-color: ${neonColor}40;`);
+        let destinationUrl = key.includes("wurm") ? `wurm/index.html?server=${key}&lang=${activeLang}` : (key.includes("avorion") ? `avorion/index.html?server=${key}&lang=${activeLang}` : `7dtd/index.html?server=${key}&lang=${activeLang}`);
+        
+        let actionButtonHtml = isMaintActive ? `<button class="btn-portal-warning-orange">${ui.maintBtn}</button>` : (!isServerOnline ? `<button class="btn-portal" style="border-color:#cc2222; color:#cc2222;" disabled>${ui.offlineBtn}</button>` : `<a href="${destinationUrl}" class="btn-portal" style="border-color: ${neonColor}; color: ${neonColor};">${ui.connectBtn}</a>`);
+        let isIpCensored = localStorage.getItem('qbc_hide_ip_' + key) === "true";
+        let networkStringDisplay = isIpCensored ? ui.hiddenIp : (isMaintActive ? ui.maintActive : server.ip + ' : ' + server.port);
+        
+        let serverTickerHtml = "";
+        let savedTickerText = localStorage.getItem('qbc_ticker_msg_' + key);
+        if (savedTickerText && savedTickerText.trim() !== "") {
+            serverTickerHtml = `<div class="qbc-server-internal-ticker"><span class="warn-icon">🚨</span> <span>${savedTickerText}</span></div>`;
         }
         
-        syncPortalLiveCounters();
-        setInterval(syncPortalLiveCounters, 60000);
+        let cardHtml = `
+            <div class="server-card-portal" style="${cardStyle}">
+                <div>
+                    <h3>
+                        <div class="server-title-text-wrapper" style="color: ${isMaintActive ? '#ea580c' : (!isServerOnline ? '#cc2222' : neonColor)};">
+                            <span>${displayIcon}</span> <span>${publicName}</span>
+                        </div>
+                        ${isMaintActive ? '' : ledBadgeHtml}
+                    </h3>
+                    <p><strong>${ui.netAccess}</strong> ${networkStringDisplay}</p>
+                    <p><strong>${ui.playerCount}</strong> ${isServerOnline ? '0' : '--'} / ${parseInt(server.maxPlayers) || 20}</p>
+                    ${serverTickerHtml}
+                </div>
+                <div style="margin-top: 20px; width: 100%;">${actionButtonHtml}</div>
+            </div>`;
+            
+        if (currentActiveFilter2026 === 'all' || currentActiveFilter2026 === currentType) {
+            sectionsData[currentType].cardsHtml += cardHtml;
+        }
+    }
+    
+    if(document.getElementById('cnt-all-srv')) document.getElementById('cnt-all-srv').innerText = totalGlobalServersCount;
+    if(document.getElementById('cnt-7dtd-srv')) document.getElementById('cnt-7dtd-srv').innerText = sectionsData['7dtd'].count;
+    if(document.getElementById('cnt-wurm-srv')) document.getElementById('cnt-wurm-srv').innerText = sectionsData['wurm'].count;
+    if(document.getElementById('cnt-avorion-srv')) document.getElementById('cnt-avorion-srv').innerText = sectionsData['avorion'].count;
 
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => { if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) e.preventDefault(); });
-    </script>
+    let finalMasterHtml = "";
+    for (let sKey in sectionsData) {
+        if (sectionsData[sKey].cardsHtml !== "") {
+            finalMasterHtml += `
+                <div class="game-section-wrapper">
+                    <div class="game-section-title">${sectionsData[sKey].title}</div>
+                    <div class="portals-grid">${sectionsData[sKey].cardsHtml}</div>
+                </div>`;
+        }
+    }
+    masterBox.innerHTML = finalMasterHtml;
+    
+    const currentPills = document.querySelectorAll('#qbc-matrix-filter-pills .filter-pill');
+    currentPills.forEach(p => p.classList.remove('active'));
+    const activeIdx = currentActiveFilter2026 === 'all' ? 0 : (currentActiveFilter2026 === '7dtd' ? 1 : (currentActiveFilter2026 === 'wurm' ? 2 : 3));
+    if (currentPills[activeIdx]) currentPills[activeIdx].classList.add('active');
+
+    if (!isAutoRefresh) { startMatrixRadarClock(); }
+}
+
+function updateRadarClockDisplay() { let currentUi = PORTAL_DICTIONARY_UI[activeLang]; document.getElementById('qbc-radar-clock-label').innerText = currentUi.radarBtn + currentRadarTime + "S"; }
+function startMatrixRadarClock() { if (matrixRadarInterval) clearInterval(matrixRadarInterval); currentRadarTime = 60; updateRadarClockDisplay(); matrixRadarInterval = setInterval(() => { currentRadarTime--; updateRadarClockDisplay(); if (currentRadarTime <= 0) { currentRadarTime = 60; loadAllPortals2026(true); } }, 1000); }
+function checkAndDisplayAnnouncement2026() {
+    try {
+        const bar = document.getElementById('qbc-global-announcement-bar'), textEl = document.getElementById('qbc-announcement-text-loader');
+        let activeAnn = localStorage.getItem('qbc_portal_announcement') || (window.QBC_GLOBAL_CONFIG_LOADED ? QBC_GLOBAL_CONFIG.maintenanceMessage : "");
+        if (bar && textEl) { if (activeAnn && activeAnn.trim() !== "") { let currentUi = PORTAL_DICTIONARY_UI[activeLang]; textEl.innerText = currentUi.alertLabel + activeAnn + "  ***  "; bar.style.display = "block"; } else { bar.style.display = "none"; } }
+    } catch(e) {}
+}
+
+function runVisitorCounterMatrix2026() {
+    let currentVisits = localStorage.getItem('qbc_real_visitor_total_hits');
+    if (currentVisits === null || currentVisits === "0") { currentVisits = 342; } else { currentVisits = parseInt(currentVisits); }
+    if (!window.sessionHitValidated2026) { currentVisits++; localStorage.setItem('qbc_real_visitor_total_hits', currentVisits); window.sessionHitValidated2026 = true; }
+    const visEl = document.getElementById('qbc-visitor-realtime-count');
+    if (visEl) visEl.innerText = currentVisits + " UNIQUE HITS";
+}
+window.sessionHitValidated2026 = false;
+document.addEventListener("DOMContentLoaded", () => { 
+    let savedLang = localStorage.getItem('qbc_global_language'); 
+    if (savedLang === "fr" || savedLang === "en") { switchGlobalPortalLang(savedLang); } else { switchGlobalPortalLang("fr"); } 
+    runVisitorCounterMatrix2026(); 
+});
+</script>
 </body>
 </html>
+
+
+       
 

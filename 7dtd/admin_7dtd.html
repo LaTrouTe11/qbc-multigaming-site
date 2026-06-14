@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>QBC CORE MATRIX - PASSERELLE CENTRALE</title>
+    <style>
+        body { background: #030712; color: #f3f4f6; font-family: monospace; margin: 0; padding: 40px; text-align: center; }
+        .router-box { max-width: 650px; margin: 60px auto; background: rgba(5, 12, 22, 0.95); border: 2px solid #00ffcc; padding: 40px; border-radius: 12px; box-shadow: 0 0 30px rgba(0, 255, 204, 0.15); }
+        h1 { color: #00ffcc; font-size: 22px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        p { color: #94a3b8; font-size: 13px; margin-bottom: 30px; }
+        .route-btn { display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #fff; border: 1px solid #334155; padding: 18px 25px; margin-bottom: 15px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; }
+        .route-btn:hover { background: #00ffcc; color: #030712; border-color: #00ffcc; box-shadow: 0 0 15px rgba(0, 255, 204, 0.3); }
+        .badge { background: rgba(0, 255, 204, 0.1); color: #00ffcc; padding: 4px 10px; border-radius: 4px; font-size: 11px; border: 1px solid rgba(0, 255, 204, 0.2); }
+        .route-btn:hover .badge { background: #030712; color: #00ffcc; }
+    </style>
+</head>
+<body>
+
+<div class="router-box">
+    <h1>🎛️ SYSTEM COCKPIT INFRASTRUCTURE (2026)</h1>
+    <p>Sélectionnez l'univers vectoriel à configurer dans la mémoire de la Cohort QBC :</p>
+    
+    <a href="admin_7dtd.html" class="route-btn">
+        <span>☣️ OUVRIR L'ADMINISTRATION UNIVERSE 7D2D</span>
+        <span class="badge" id="lbl-7dtd">ACTIF</span>
+    </a>
+    
+    <a href="admin_wurm.html" class="route-btn">
+        <span>🛡️ OUVRIR L'ADMINISTRATION UNIVERSE WURM</span>
+        <span class="badge" id="lbl-wurm">STANDBY</span>
+    </a>
+    
+    <a href="admin_avorion.html" class="route-btn">
+        <span>🚀 OUVRIR L'ADMINISTRATION UNIVERSE AVORION</span>
+        <span class="badge" id="lbl-avorion">STANDBY</span>
+    </a>
+    
+    <a href="index.html" style="display:inline-block; margin-top: 25px; color: #ef4444; font-size: 12px; font-weight: bold; text-decoration: none; border-bottom: 1px dashed #ef4444;">⬅️ QUITTER ET RETOURNER AU PORTAIL INTERACTIF</a>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    // Détection automatique du dernier jeu cliqué en session pour mettre à jour les badges visuels
+    const currentActiveAdminServerKey2026 = localStorage.getItem('qbc_last_active_srv_key') || "7dtd1";
+    
+    // Réinitialisation des statuts graphiques en direct
+    document.getElementById('lbl-7dtd').innerText = "STANDBY";
+    document.getElementById('lbl-wurm').innerText = "STANDBY";
+    document.getElementById('lbl-avorion').innerText = "STANDBY";
+    
+    // Allumage du badge cible selon le stockage local partagé
+    if (currentActiveAdminServerKey2026.startsWith('7dtd')) {
+        document.getElementById('lbl-7dtd').innerText = "CONNECTÉ (" + currentActiveAdminServerKey2026.toUpperCase() + ")";
+    } else if (currentActiveAdminServerKey2026.startsWith('wurm')) {
+        document.getElementById('lbl-wurm').innerText = "CONNECTÉ (" + currentActiveAdminServerKey2026.toUpperCase() + ")";
+    } else if (currentActiveAdminServerKey2026.startsWith('avorion')) {
+        document.getElementById('lbl-avorion').innerText = "CONNECTÉ (" + currentActiveAdminServerKey2026.toUpperCase() + ")";
+    }
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

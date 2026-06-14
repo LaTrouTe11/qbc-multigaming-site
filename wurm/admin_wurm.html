@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>QBC MATRIX - CONSOLE WURM</title>
+    <style>
+        body { background: #030712; color: #f3f4f6; font-family: monospace; margin: 0; padding: 20px; }
+        .admin-nav a { background: #1e293b; color: #fff; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin-right: 10px; font-weight: bold; font-size: 12px; display: inline-block; border: 1px solid #334155; }
+        .admin-nav a.current { background: #00ffcc !important; color: #030712 !important; border-color: #00ffcc; }
+        .srv-btn { display: block; width: 100%; background: #1e293b; color: #94a3b8; border: 1px solid #334155; padding: 12px; border-radius: 4px; text-align: left; cursor: pointer; font-weight: bold; margin-bottom: 10px; }
+        .srv-btn.active { background: #00ffcc !important; color: #030712 !important; border-color: #00ffcc; }
+        .form-control { width: 100%; background: #0f172a; border: 1px solid #1e293b; color: #fff; padding: 10px; border-radius: 4px; box-sizing: border-box; margin-bottom: 12px; }
+        .info-block { background: #070f1e; border: 1px solid #1e293b; padding: 15px; border-radius: 6px; margin-bottom: 15px; }
+        .info-label { display: block; font-size: 11px; font-weight: bold; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
+        .btn-matrix-save { background: #10b981; color: #fff; border: none; width: 100%; padding: 14px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+    <div class="admin-nav" style="display: flex; align-items: center; background: #070f1e; padding: 10px; border-radius: 6px; border: 1px solid #1e293b; margin-bottom: 20px;">
+        <span style="color: #00ffcc; font-weight: bold; margin-right: 15px; font-size:12px;">🛰️ PASSERELLE DE VOL :</span>
+        <a href="../7dtd/admin_7dtd.html">☣️ CONSOLE 7DTD</a>
+        <a href="admin_wurm.html" class="current">🛡️ CONSOLE WURM</a>
+        <a href="../avorion/admin_avorion.html">🚀 CONSOLE AVORION</a>
+        <a href="../index.html" style="margin-left: auto; background: transparent; border-color: #00ffcc; color: #00ffcc;">⬅️ PORTAIL</a>
+    </div>
+
+    <div style="background: #070f1e; border: 1px solid #ff0055; padding: 10px; border-radius: 6px; font-weight: bold; color: #ff0055; display: flex; align-items: center; gap: 10px; margin-bottom: 25px;">
+        <span>🚨 ALERTE MATRICE GLOBALE (S'AFFICHE PARTOUT) :</span>
+        <input type="text" id="qbc_global_ticker_input" class="form-control" style="margin:0; flex:1;">
+    </div>
+
+    <div style="display: flex; gap: 25px; align-items: flex-start;">
+        <!-- UNIQMENT LES SERVEURS WURM ICI -->
+        <div style="min-width: 280px; width: 280px; background: rgba(5,12,22,0.9); border: 1px solid #00ffcc; padding: 15px; border-radius: 8px;">
+            <h3 style="color:#00ffcc; margin-top:0; font-size:12px; text-transform:uppercase;">🛡️ UNIVERSE WURM ACTIVE</h3>
+            <button class="srv-btn active" id="btn-wurm1" onclick="selectWurmInstance('wurm1')">🌾 ROYAUME DORIATH</button>
+            <button class="srv-btn" id="btn-wurm2" onclick="selectWurmInstance('wurm2')">🏰 ROYAUME FLAGGARD</button>
+        </div>
+
+        <div class="admin-panel" style="flex:1;">
+            <h2 id="current-panel-title" style="margin:0 0 20px 0; color:#fff; font-size:16px;">CONFIGURATION ACTIVE</h2>
+            <form onsubmit="saveWurmConfig(event)">
+                <div class="info-block"><span class="info-label">✨ NOM DU ROYAUME :</span><input type="text" id="srv_custom_name" class="form-control"></div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                    <div class="info-block"><span class="info-label">📡 ADRESSE IP :</span><input type="text" id="srv_ip" class="form-control"></div>
+                    <div class="info-block"><span class="info-label">🔌 PORT D'ACCÈS :</span><input type="text" id="srv_port" class="form-control"></div>
+                </div>
+                <div class="info-block" style="border-color:#ff9900;"><span class="info-label" style="color:#ff9900;">⚡ FLUX DES REBOOTS / NOTIFICATIONS DU ROYAUME :</span><input type="text" id="srv_ticker_msg" class="form-control"></div>
+                <div class="info-block">
+                    <h3>🌾 PARAMÈTRES TOPOGRAPHIQUES</h3>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                        <div><span class="info-label">🗺️ STRUCTURE DE LA MAP :</span><input type="text" id="srv_map_name" class="form-control"></div>
+                        <div><span class="info-label">⏳ CYCLE HORAIRE :</span><input type="text" id="srv_world_time" class="form-control"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-matrix-save">Enregistrer Univers Wurm ✅</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+let currentSrv = "wurm1";
+function selectWurmInstance(key) {
+    currentSrv = key;
+    document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + key).classList.add('active');
+    localStorage.setItem('qbc_last_active_srv_key', key);
+    loadWurmConfig();
+}
+function loadWurmConfig() {
+    document.getElementById('qbc_global_ticker_input').value = localStorage.getItem('qbc_global_ticker_msg') || "";
+    document.getElementById('srv_custom_name').value = localStorage.getItem('qbc_custom_name_2026_' + currentSrv) || (currentSrv === "wurm1" ? "ROYAUME DORIATH" : "ROYAUME FLAGGARD");
+    document.getElementById('srv_ip').value = localStorage.getItem('qbc_ip_2026_' + currentSrv) || "74.50.94.238";
+    document.getElementById('srv_port').value = localStorage.getItem('qbc_port_2026_' + currentSrv) || (currentSrv === "wurm1" ? "5517" : "5518");
+    document.getElementById('srv_ticker_msg').value = localStorage.getItem('qbc_ticker_msg_2026_' + currentSrv) || "";
+    document.getElementById('srv_map_name').value = localStorage.getItem('qbc_map_name_2026_' + currentSrv) || "Doriath Map [16x16]";
+    document.getElementById('srv_world_time').value = localStorage.getItem('qbc_world_time_2026_' + currentSrv) || "Heure Locale";
+    document.getElementById('current-panel-title').innerText = "CONFIGURATION : " + document.getElementById('srv_custom_name').value;
+}
+function saveWurmConfig(e) {
+    e.preventDefault();
+    localStorage.setItem('qbc_global_ticker_msg', document.getElementById('qbc_global_ticker_input').value);
+    localStorage.setItem('qbc_custom_name_2026_' + currentSrv, document.getElementById('srv_custom_name').value);
+    localStorage.setItem('qbc_ip_2026_' + currentSrv, document.getElementById('srv_ip').value);
+    localStorage.setItem('qbc_port_2026_' + currentSrv, document.getElementById('srv_port').value);
+    localStorage.setItem('qbc_ticker_msg_2026_' + currentSrv, document.getElementById('srv_ticker_msg').value);
+    localStorage.setItem('qbc_map_name_2026_' + currentSrv, document.getElementById('srv_map_name').value);
+    localStorage.setItem('qbc_world_time_2026_' + currentSrv, document.getElementById('srv_world_time').value);
+    alert("DONNÉES DU SOUVERAIN SYNCHRONISÉES ! 🌾");
+    loadWurmConfig();
+}
+window.addEventListener("DOMContentLoaded", () => {
+    localStorage.setItem('qbc_last_active_srv_key', currentSrv);
+    loadWurmConfig();
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

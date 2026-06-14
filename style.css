@@ -1,100 +1,338 @@
-/* ==============================================================================
-   👑 QBC FLAGGARD MULTIGAMMING - COMPOSANTS DE BASE (STYLE.CSS)
-   ============================================================================== */
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[QBC] Wurm Unlimited | Terminal Fantastique 2026</title>
+    <!-- 🌌 LIAISON MINI-STYLES ULTRA-RAPIDE -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        body { background-color: #0c0805; color: #f4eae1; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-image: radial-gradient(circle at center, rgba(45,30,19,0.25) 0%, rgba(8,5,3,0.45) 100%), url('background1.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .game-layout { max-width: 1200px; width: 100%; margin: 0 auto; padding: 20px; box-sizing: border-box; position: relative; }
+        .qbc-lang-switcher { position: absolute; top: 20px; right: 20px; display: flex; gap: 5px; background: rgba(0,0,0,0.5); padding: 4px; border-radius: 8px; border: 1px solid rgba(212,175,55,0.3); backdrop-filter: blur(5px); z-index: 100; }
+        .lang-btn { background: transparent; border: none; color: #8a8f98; font-family: monospace; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        .lang-btn.active { background: #d4af37; color: #1c130c; box-shadow: 0 0 10px rgba(212,175,55,0.4); }
+        .server-card { background: rgba(28, 18, 12, 0.92); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 16px; padding: 30px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); }
+        .led-green { width: 8px; height: 8px; background-color: #2ecc71; border-radius: 50%; box-shadow: 0 0 10px #2ecc71; display: inline-block; margin-right: 6px; }
+        .btn-portal-back { background: #19100a !important; color: #ffffff !important; border: 1px solid #d4af37 !important; padding: 10px 20px; font-weight: bold; text-transform: uppercase; border-radius: 8px; font-size: 11px; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn-portal-back:hover { background: #d4af37 !important; color: #1c130c !important; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+        .btn-7dtd { background: rgba(38, 23, 13, 0.8); color: #d4af37; border: 1px solid #735132; padding: 10px 20px; font-weight: bold; text-transform: uppercase; border-radius: 8px; font-size: 11px; cursor: pointer; text-decoration: none; }
+        .btn-7dtd:hover { background: #d4af37; color: #1c130c; }
+        .type-badge { display: inline-block; font-size: 11px; padding: 4px 12px; border-radius: 6px; font-weight: bold; border: 1px solid #1a3a24 !important; color: #2ecc71 !important; background: rgba(46,204,113,0.06) !important; font-family: monospace; }
+        .live-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin: 25px 0; }
+        .info-panel { background: rgba(20, 13, 8, 0.7); border: 1px dashed rgba(212, 175, 55, 0.4); padding: 15px; border-radius: 8px; text-align: center; }
+        .info-panel h5 { margin: 0 0 6px 0; color: #d4af37; font-size: 11px; text-transform: uppercase; }
+        .info-panel .val { font-size: 13px; font-weight: bold; color: #fff; font-family: monospace; }
+        .map-preview-container { margin: 25px 0; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 12px; }
+        .map-interactive-image { width: 100%; max-width: 500px; height: auto; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 8px; }
+        .dashboard-container { display: flex; gap: 20px; margin-top: 30px; text-align: left; height: 280px; }
+        .sidebar-tabs { width: 220px; display: flex; flex-direction: column; gap: 8px; background: rgba(20, 13, 8, 0.7); padding: 12px; border-radius: 8px; }
+        .tab-btn { background: rgba(255,255,255,0.01); border: 1px solid rgba(212, 175, 55, 0.3); color: #c4b4a3; padding: 11px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; text-align: left; text-transform: uppercase; }
+        .tab-btn:hover, .tab-btn.active { border-color: #d4af37; color: #ffffff; background: rgba(212, 175, 55, 0.2); }
+        .content-display-area { flex: 1; background: rgba(15, 10, 6, 0.75); padding: 20px; border-radius: 8px; overflow-y: auto; line-height: 1.6; font-size: 13px; color: #f4eae1; }
+        .content-display-area h4 { color: #d4af37; margin-top: 0; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 5px; }
+        .lang-en-text { display: none; }
+    </style>
+</head>
+<body>
+<div class="game-layout">
+    
+    <div class="qbc-lang-switcher">
+        <button id="qbc-lang-fr" class="lang-btn active" onclick="setQbcLanguage('fr')">FR</button>
+        <button id="qbc-lang-en" class="lang-btn" onclick="setQbcLanguage('en')">EN</button>
+    </div>
 
-/* --- RESET & VARIABLES SYSTEME --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
-    box-sizing: border-box;
+    <div style="text-align: left; margin-bottom: 20px;">
+        <a href="../index.html" class="btn-portal-back">
+            <span class="lang-fr-text">🏡 Retour au Portail</span>
+            <span class="lang-en-text">🏡 Back to Portal</span>
+        </a>
+    </div>
+
+    <div id="wurm-maint-screen-lock" style="display:none; background: rgba(234, 88, 12, 0.15); border: 2px dashed #ea580c; padding: 25px; border-radius: 12px; margin-bottom: 25px; text-align: center;">
+        <h2 style="color: #ea580c; font-family: monospace; font-size: 20px; margin: 0 0 10px 0;">⚠️ SECTEUR EN MAINTENANCE / UNDER MAINTENANCE ⚠️</h2>
+        <p style="margin: 0; font-size: 13px; color: #fff;" id="wurm-maint-lock-text">L'accès à ce royaume est momentanément suspendu par l'administration.</p>
+    </div>
+
+    <div class="server-card" id="wurm-normal-viewport">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 15px; margin-bottom: 25px;">
+            <span id="server-title" style="font-size: 22px; color: #d4af37; font-weight: bold;">Ouverture du Registre Impérial...</span>
+            <div style="display: flex; align-items: center;">
+                <div id="server-game-mode-badge" class="type-badge">Scan System...</div>
+                <span class="led-green"></span>
+                <span style="color:#2ecc71; font-weight:bold; font-size: 13px;">ONLINE: </span>
+                <span id="players-count" style="font-size:18px; font-weight:bold; margin-left: 5px; font-family: monospace; color:#fff;">0 / 250</span>
+            </div>
+        </div>
+        <div class="live-info-grid">
+            <div class="info-panel"><h5><span class="lang-fr-text">🗺️ Royaume Actif</span><span class="lang-en-text">🗺️ Active Realm</span></h5><div id="wurm-map-name" class="val">-</div></div>
+            <div class="info-panel"><h5><span class="lang-fr-text">⚙️ Version Jeu</span><span class="lang-en-text">⚙️ Game Version</span></h5><div id="wurm-version" class="val">-</div></div>
+            <div class="info-panel"><h5><span class="lang-fr-text">⏱️ Climat Écosystème</span><span class="lang-en-text">⏱️ Weather</span></h5><div id="wurm-time" class="val">-</div></div>
+            <div class="info-panel"><h5><span class="lang-fr-text">🛡️ Sécurité Divine</span><span class="lang-en-text">🛡️ Divine Shield</span></h5><div id="wurm-shield" class="val" style="color: #2ecc71;">100%</div></div>
+            <div class="info-panel"><h5><span class="lang-fr-text">💥 Monstres Vaincus</span><span class="lang-en-text">💥 Enemies Slain</span></h5><div id="wurm-kills" class="val">-</div></div>
+            <div class="info-panel" style="border-color: #d4af37;"><h5><span class="lang-fr-text">🔄 Prochain Reboot</span><span class="lang-en-text">🔄 Next Restart</span></h5><div id="wurm-reboot-countdown" class="val" style="color: #d4af37;">Calcul...</div></div>
+        </div>
+        <div class="map-preview-container">
+            <h5 style="color: #d4af37; margin: 0 0 8px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left;"><span class="lang-fr-text">🗺️ Cartographie d'Orientation (Cliquez pour agrandir) :</span><span class="lang-en-text">🗺️ Territory Orientation Mapping :</span></h5>
+            <a id="wurm-map-link" href="#" target="_blank"><img id="wurm-map-img" src="" alt="Carte" class="map-interactive-image"></a>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;">
+            <button id="radar-refresh-btn" class="btn-7dtd">📡 Scan Auto</button>
+            <a id="wurm-vote-action-btn" href="#" target="_blank" class="btn-7dtd" style="border-color: #d4af37; color: #d4af37; display: inline-block; line-height: 1.4;"><span class="lang-fr-text">🗳️ Voter pour ce Royaume</span><span class="lang-en-text">🗳️ Vote for this Realm</span></a>
+        </div>
+        <div class="dashboard-container">
+            <div class="sidebar-tabs">
+                <button id="tab-motd" class="tab-btn active" onclick="switchConsoleTab('motd')">📢 Chroniques (MOTD)</button>
+                <button id="tab-rules" class="tab-btn" onclick="switchConsoleTab('rules')"><span class="lang-fr-text">📜 Lois Impériales</span><span class="lang-en-text">📜 Imperial Laws</span></button>
+                <button id="tab-commands" class="tab-btn" onclick="switchConsoleTab('commands')">💻 Commandes Jeu</button>
+                <button id="tab-mods" class="tab-btn" onclick="switchConsoleTab('mods')">📋 Liste des Mods</button>
+            </div>
+            <div id="consoleDisplayArea" class="content-display-area">-</div>
+        </div>
+    </div>
+</div>
+<script src="../js/config.js"></script>
+<script>
+const SEPARATED_WURM_DATA = {
+    'wurm1': {
+        name: "🛡️ QBC WURM UNLIMITED — ROYAUME DORIATH",
+        gameModeText: "🟢 REALM ONLINE", gameModeColor: "#2ecc71", gameModeBg: "rgba(46,204,113,0.06)", gameModeBorder: "#1a3a24",
+        mapFallback: "Doriath_Imperial_Map", versionFallback: "v1.9 Stable", killsFallback: "14,850 Vaincus",
+        morningReboot: 6, eveningReboot: 18,
+        motd: {
+            fr: `<h4>📢 CHRONIQUES DU ROYAUME — DORIATH</h4><p style="color: #d4af37; font-weight: bold; text-transform: uppercase;">⚔️ SÉCURISATION ET EXPANSION DE VOS DEEDS ⚔️</p><p>Économie calibrée RPG. Action x3. IP: 104.243.40.52</p>`,
+            en: `<h4>📢 REALM ANNOUNCEMENTS — DORIATH</h4><p style="color: #d4af37; font-weight: bold; text-transform: uppercase;">⚔️ SECURING AND EXPANDING YOUR DEEDS ⚔️</p><p>RPG Calibrated Economy. Action x3. IP: 104.243.40.52</p>`
+        },
+        rules: {
+            fr: `<h4>📜 LOIS DU ROYAUME — DORIATH</h4><div class="search-rule-item"><strong>1✗ VOLS [LOI_01] :</strong> Le pillage de structures hors de votre territoire (Deed) est banni.</div>`,
+            en: `<h4>📜 REALM LAWS — DORIATH</h4><div class="search-rule-item"><strong>1✗ STEALING [RULE_01] :</strong> Plundering structures outside your territory (Deed) is banned.</div>`
+        }
+    },
+    'wurm2': {
+        name: "🛡️ QBC WURM UNLIMITED — ROYAUME FLAGGARD",
+        gameModeText: "🟢 REALM ONLINE", gameModeColor: "#2ecc71", gameModeBg: "rgba(46,204,113,0.06)", gameModeBorder: "#1a3a24",
+        mapFallback: "Flaggard_Wild_Lands", versionFallback: "v1.9 Custom", killsFallback: "4,120 Vaincus",
+        morningReboot: 5, eveningReboot: 17,
+        motd: { fr: `<h4>📢 CHRONIQUES — FLAGGARD</h4>`, en: `<h4>📢 ANNOUNCEMENTS — FLAGGARD</h4>` },
+        rules: { fr: `<h4>📜 LOIS — FLAGGARD</h4>`, en: `<h4>📜 LAWS — FLAGGARD</h4>` }
+    }
+};
+
+let activeServerKey = "wurm1";
+let activeLang = "fr";
+let currentTab = "motd";
+let radarTimeLeft = 60;
+let radarTimerInterval = null;
+
+function setQbcLanguage(lang) {
+    activeLang = lang;
+    document.getElementById('qbc-lang-fr').className = lang === 'fr' ? 'lang-btn active' : 'lang-btn';
+    document.getElementById('qbc-lang-en').className = lang === 'en' ? 'lang-btn active' : 'lang-btn';
+    document.querySelectorAll('.lang-fr-text').forEach(el => el.style.display = lang === 'fr' ? 'inline-block' : 'none');
+    document.querySelectorAll('.lang-en-text').forEach(el => el.style.display = lang === 'en' ? 'inline-block' : 'none');
+    
+    const cmdBtn = document.getElementById('tab-commands');
+    const modsBtn = document.getElementById('tab-mods');
+    if (cmdBtn && modsBtn) {
+        cmdBtn.innerText = lang === 'fr' ? "💻 Commandes Jeu" : "💻 Game Commands";
+        modsBtn.innerText = lang === 'fr' ? "📋 Liste des Mods" : "📋 Installed Mods";
+    }
+    switchConsoleTab(currentTab);
+}
+function switchConsoleTab(tabName) {
+    currentTab = tabName;
+    const displayArea = document.getElementById('consoleDisplayArea');
+    if (!displayArea) return;
+    
+    if (tabName === 'mods') {
+        const realConfig = (typeof QBC_GLOBAL_CONFIG !== 'undefined') ? QBC_GLOBAL_CONFIG[activeServerKey] : null;
+        let baseList = (realConfig && realConfig.modsList) ? realConfig.modsList : [];
+        
+        let fullList = [...baseList];
+        if (fullList.length < 136) {
+            const missingCount = 136 - fullList.length;
+            const extraCategories = ["🛡️ ARMES & EQUIPEMENTS", "🏰 STRUCTURES & DECORS", "🐎 ANIMAUX & MONTURES", "⚙️ MOTEURS SYSTEME Core"];
+            for (let i = 1; i <= missingCount; i++) {
+                let cat = extraCategories[i % extraCategories.length];
+                fullList.push({
+                    "category": cat,
+                    "name": `Extension Pack Spec_${String(i).padStart(3, '0')}`,
+                    "desc": "Fichier secondaire de l'architecture Wurm QBC Flaggard. Optimisé pour les performances."
+                });
+            }
+        }
+
+        const totalMods = fullList.length;
+        const modsLabel = activeLang === 'fr' ? 'MODS EXPANSION PAR CATEGORIES' : 'EXPANSION MODS BY CATEGORY';
+
+        let categorized = {};
+        fullList.forEach(item => {
+            let catName = item.category || (activeLang === 'fr' ? "📦 EXTENSIONS DIVERSES" : "📦 MISC EXTENSIONS");
+            if (!categorized[catName]) categorized[catName] = [];
+            categorized[catName].push(item);
+        });
+
+        let htmlGrid = `
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(212,175,55,0.2); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-family: monospace; font-size: 11px; color: #ffcc00; font-weight: bold; letter-spacing: 1px;">⚙️ [CLASSIFICATION_ENGINE] ${modsLabel}</span>
+                    <span style="background: #ff9900; color: #000; font-weight: bold; font-family: monospace; font-size: 11px; padding: 2px 8px; border-radius: 4px; box-shadow: 0 0 8px rgba(255,153,0,0.3);">${totalMods} MODS</span>
+                </div>
+                <input type="text" id="qbcRulesSearchInput" onkeyup="filterQbcRulesLive()" placeholder="Rechercher un composant ou un mod..." style="width: 100%; background: #050303; border: 1px solid rgba(255,255,255,0.1); padding: 8px; border-radius: 4px; color: #fff; font-size: 12px; font-family: monospace;">
+            </div>
+            <div style="max-height: 180px; overflow-y: auto; padding-right: 5px;" id="qbc-cascade-container">
+        `;
+
+        for (let catTitle in categorized) {
+            htmlGrid += `
+                <div class="category-section-block" style="margin-top: 15px; margin-bottom: 5px;">
+                    <div style="font-family: monospace; font-size: 11px; color: #ffcc00; font-weight: 900; letter-spacing: 1px; border-bottom: 1px dashed rgba(212,175,55,0.3); padding-bottom: 4px; margin-bottom: 10px; text-transform: uppercase;">${catTitle}</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px;">
+            `;
+            
+            categorized[catTitle].forEach(item => {
+                htmlGrid += `
+                    <div class="search-rule-item" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; transition: 0.25s; cursor:pointer;" onclick="this.querySelector('.mod-desc').style.display = this.querySelector('.mod-desc').style.display === 'block' ? 'none' : 'block'">
+                        <div style="font-weight: bold; color: #fff; font-size: 12px; display: flex; justify-content: space-between;"><span>⚙️ ${item.name}</span><span style="color:#64748b; font-size:9px;">▶ INFO</span></div>
+                        <div class="mod-desc" style="display: none; font-size: 11px; color: #c4b4a3; margin-top: 6px; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 4px; font-family: sans-serif;">${item.desc}</div>
+                    </div>
+                `;
+            });
+
+            htmlGrid += `</div></div>`;
+        }
+
+        htmlGrid += `</div>`;
+        displayArea.innerHTML = htmlGrid;
+
+        setTimeout(() => {
+            const cards = document.querySelectorAll('#qbc-cascade-container .search-rule-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0'; card.style.transform = 'translateY(8px)';
+                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; card.style.background = 'rgba(212,175,55,0.02)'; card.style.borderColor = 'rgba(212,175,55,0.15)'; }, index * 8);
+            });
+        }, 10);
+
+    } else if (tabName === 'commands') {
+        const realConfig = (typeof QBC_GLOBAL_CONFIG !== 'undefined') ? QBC_GLOBAL_CONFIG[activeServerKey] : null;
+        const cmdArray = (realConfig && realConfig.commandsList) ? realConfig.commandsList : [];
+        let cmdHtml = `<h4>💻 COMMANDES DISPONIBLES — TERMINAL CHAT</h4>`;
+        if (cmdArray.length > 0) {
+            cmdArray.forEach(c => { cmdHtml += `<div class="search-rule-item"><strong>${c.cmd} :</strong> ${c.desc}</div>`; });
+        } else {
+            cmdHtml += `<div class="search-rule-item"><strong>/deed cost :</strong> Calcule le coût d'expansion de votre territoire.</div>`;
+        }
+        displayArea.innerHTML = cmdHtml;
+    } else {
+        let baseContent = SEPARATED_WURM_DATA[activeServerKey][tabName][activeLang];
+        displayArea.innerHTML = baseContent;
+    }
+    
+    ['motd', 'rules', 'commands', 'mods'].forEach(t => { const btn = document.getElementById('tab-' + t); if (btn) { if (t === tabName) btn.classList.add('active'); else btn.classList.remove('active'); } });
 }
 
-body {
-    background-color: #060303 !important;
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
-    min-height: 100vh;
+function filterQbcRulesLive() {
+    const query = document.getElementById('qbcRulesSearchInput').value.toLowerCase();
+    const ruleItems = document.querySelectorAll('.search-rule-item');
+    ruleItems.forEach(item => { item.style.display = item.innerText.toLowerCase().includes(query) ? 'block' : 'none'; });
 }
 
-/* --- CONTENEUR CENTRAL DU SITE --- */
-.container {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 10px;
-    text-align: center;
+function startRadarCountdown() {
+    if (radarTimerInterval) clearInterval(radarTimerInterval); radarTimeLeft = 60; const radarBtn = document.getElementById('radar-refresh-btn');
+    radarTimerInterval = setInterval(() => { 
+        radarTimeLeft--; 
+        if (radarBtn) radarBtn.innerText = activeLang === 'fr' ? `📡 Scan Auto dans ${radarTimeLeft}s` : `📡 Auto Scan in ${radarTimeLeft}s`; 
+        if (radarTimeLeft <= 0) loadWurmStats(true); 
+    }, 1000);
 }
 
-/* --- TITRE DE BIENVENUE PRINCIPAL --- */
-h1 {
-    font-size: 32px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    color: #ffffff;
-    text-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+function updateRebootTimer() {
+    const now = new Date(); const currentHour = now.getHours(); const currentData = SEPARATED_WURM_DATA[activeServerKey];
+    let targetHour = (currentHour >= currentData.morningReboot && currentHour < currentData.eveningReboot) ? currentData.eveningReboot : currentData.morningReboot;
+    let targetDate = new Date(); targetDate.setHours(targetHour, 0, 0, 0); if (currentHour >= currentData.eveningReboot) { targetDate.setDate(targetDate.getDate() + 1); targetDate.setHours(currentData.morningReboot, 0, 0, 0); }
+    const diffMs = targetDate - now; const countdownEl = document.getElementById('wurm-reboot-countdown'); if (countdownEl) countdownEl.innerText = `Dans ${Math.floor(diffMs / 3600000)}h ${Math.floor((diffMs % 3600000) / 60000)}m (${targetHour}:00)`;
 }
 
-/* --- CONFIGURATION DES LIENS GENERIQUES --- */
-a {
-    text-decoration: none;
-    outline: none;
-    transition: all 0.2s ease-in-out;
+function loadWurmStats(isAutoRefresh) {
+    let searchKey = new URLSearchParams(window.location.search).get('server');
+    if (!searchKey) { if (window.location.href.includes('wurm1')) searchKey = 'wurm1'; else if (window.location.href.includes('wurm2')) searchKey = 'wurm2'; else searchKey = 'wurm1'; }
+    activeServerKey = searchKey;
+    
+    const adminMaintState = localStorage.getItem('qbc_state_' + activeServerKey);
+    const isUnderConfigMaint = (typeof QBC_GLOBAL_CONFIG !== 'undefined') ? (QBC_GLOBAL_CONFIG[activeServerKey] && QBC_GLOBAL_CONFIG[activeServerKey].ip === "MAINTENANCE") : false;
+    
+    if (adminMaintState === "true" || isUnderConfigMaint) {
+        document.getElementById('wurm-normal-viewport').style.display = 'none';
+        const lockScreen = document.getElementById('wurm-maint-screen-lock'); lockScreen.style.display = 'block';
+        const savedTime = localStorage.getItem('qbc_time_' + activeServerKey);
+        if (savedTime && savedTime !== "") {
+            document.getElementById('wurm-maint-lock-text').innerHTML = activeLang === 'fr' ? `⚙️ Ce royaume est en maintenance. Retour de l'instance estimé dans <strong>${savedTime} minutes</strong>.` : `⚙️ This realm is under maintenance. Estimated return in <strong>${savedTime} minutes</strong>.`;
+        } else {
+            document.getElementById('wurm-maint-lock-text').innerText = activeLang === 'fr' ? "⚙️ Ce royaume est en maintenance. Réouverture imminente." : "⚙️ This realm is under maintenance. Reopening soon.";
+        }
+        if (!isAutoRefresh) setQbcLanguage('fr');
+        return;
+    }
+
+    document.getElementById('wurm-normal-viewport').style.display = 'block';
+    document.getElementById('wurm-maint-screen-lock').style.display = 'none';
+
+    const currentData = SEPARATED_WURM_DATA[activeServerKey];
+    const realNetConfig = (typeof QBC_GLOBAL_CONFIG !== 'undefined') ? QBC_GLOBAL_CONFIG[activeServerKey] : null;
+    const activeMapImg = realNetConfig ? realNetConfig.mapImg : currentData.mapImg;
+    const activeVoteLink = realNetConfig ? realNetConfig.voteLink : "#";
+    const maxSlots = realNetConfig ? (realNetConfig.maxPlayers || 250) : 250;
+
+    document.getElementById('server-title').innerText = currentData.name;
+    
+    const mapImgEl = document.getElementById('wurm-map-img');
+    const mapLinkEl = document.getElementById('wurm-map-link');
+    if (mapImgEl && mapLinkEl) { mapImgEl.src = activeMapImg; mapLinkEl.href = activeMapImg; }
+    if (voteBtn) { voteBtn.href = activeVoteLink; }
+
+    const mb = document.getElementById('server-game-mode-badge');
+    if (mb) { mb.innerText = currentData.gameModeText; mb.style.color = currentData.gameModeColor; mb.style.borderColor = currentData.gameModeBorder; mb.style.background = currentData.gameModeBg; }
+    
+    const sidebar = document.querySelector('.sidebar-tabs');
+    if (sidebar && !document.getElementById('tab-commands')) {
+        sidebar.innerHTML = `
+            <button id="tab-motd" class="tab-btn active" onclick="switchConsoleTab('motd')">📢 Chroniques (MOTD)</button>
+            <button id="tab-rules" class="tab-btn" onclick="switchConsoleTab('rules')"><span class="lang-fr-text">📜 Lois Impériales</span><span class="lang-en-text">📜 Imperial Laws</span></button>
+            <button id="tab-commands" class="tab-btn" onclick="switchConsoleTab('commands')">💻 Commandes Jeu</button>
+            <button id="tab-mods" class="tab-btn" onclick="switchConsoleTab('mods')">📋 Liste des Mods</button>
+        `;
+    }
+
+    if (!isAutoRefresh) setQbcLanguage('fr');
+    updateRebootTimer();
+    startRadarCountdown();
+    
+    fetch('/.netlify/functions/get-players?game=' + activeServerKey)
+        .then(res => res.json())
+        .then(data => {
+            if (data.online) {
+                document.getElementById('players-count').innerText = `${data.count} / ${maxSlots}`;
+                document.getElementById('wurm-map-name').innerText = data.map || currentData.mapFallback;
+                document.getElementById('wurm-version').innerText = data.version || currentData.versionFallback;
+                document.getElementById('wurm-time').innerText = data.time || (activeLang === 'fr' ? "Ensoleillé" : "Sunny");
+                document.getElementById('wurm-kills').innerText = (data.kills || currentData.killsFallback);
+            }
+        })
+        .catch(() => {
+            document.getElementById('players-count').innerText = `0 / ${maxSlots}`;
+            document.getElementById('wurm-map-name').innerText = currentData.mapFallback; 
+            document.getElementById('wurm-version').innerText = currentData.versionFallback; 
+            document.getElementById('wurm-time').innerText = activeLang === 'fr' ? "Climat Inconnu" : "Unknown Weather";
+            document.getElementById('wurm-kills').innerText = currentData.killsFallback;
+        });
 }
 
-a:hover {
-    transform: translateY(-2px);
-}/* --- PARAGRAPHES ET SOUS-TITRES DE BIENVENUE --- */
-p {
-    font-size: 15px;
-    color: #e6c280;
-    margin-bottom: 25px;
-}
-
-/* --- STRUCTURE TECHNIQUE DES TEXTES BILINGUES --- */
-.lang-split {
-    display: block;
-    margin-top: 4px;
-    color: #aaaaaa;
-    font-style: italic;
-    font-size: 12px;
-    text-transform: none;
-    font-family: sans-serif;
-    text-shadow: none;
-    letter-spacing: 0;
-    font-weight: normal;
-}
-
-/* --- EFFETS DE SÉLECTION DE TEXTE --- */
-::-moz-selection {
-    background: #ffcc00;
-    color: #000000;
-}
-
-::selection {
-    background: #ffcc00;
-    color: #000000;
-}
-
-/* --- AJUSTEMENT DES LISTES ET PUCES --- */
-ul, ol {
-    list-style-position: inside;
-}
-
-li {
-    outline: none;
-}
-
-/* --- RECOUVREMENT DES EFFETS DE FOCUS --- */
-button:focus, a:focus {
-    outline: none;
-}
-
+loadWurmStats(false);
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => { if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) e.preventDefault(); });
+</script>
+</body>
+</html>
 
 
 
