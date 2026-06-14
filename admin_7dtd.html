@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>CONSOLES QBC 2026 - GESTION 7DTD</title>
+    <style>
+        body { background: #0f172a; color: #fff; font-family: monospace; padding: 20px; }
+        .box { border: 1px solid #ef4444; padding: 20px; border-radius: 8px; background: rgba(239,68,68,0.02); max-width: 600px; margin: 0 auto; }
+        h1 { color: #ef4444; margin-top: 0; border-bottom: 1px solid #ef4444; padding-bottom: 10px; }
+        label { display: block; margin: 15px 0 5px; color: #94a3b8; }
+        input, textarea { width: 100%; padding: 10px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 4px; box-sizing: border-box; font-family: monospace; }
+        .btn-group { margin-top: 20px; display: flex; gap: 10px; }
+        button { flex: 1; padding: 12px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-family: monospace; }
+        .btn-add { background: #ef4444; color: #fff; }
+        .btn-save { background: #22c55e; color: #fff; }
+        .status { margin-top: 15px; font-size: 12px; color: #e2e8f0; text-align: center; font-weight: bold; }
+        .srv-item { background: #1e293b; padding: 15px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #ef4444; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>☣️ ADMINISTRATION 7 DAYS TO DIE</h1>
+    
+    <label>🚨 Alerte Matrice Globale (Bandeau défilant général) :</label>
+    <input type="text" id="global-ticker-input" placeholder="Message réseau global...">
+
+    <div id="servers-list-container"></div>
+
+    <div class="btn-group">
+        <button class="btn-add" onclick="addNewServerSlot()">➕ ADD SERVEUR</button>
+        <button class="btn-save" onclick="saveDataToGitHub()">💾 ENREGISTRER / UPDATE</button>
+    </div>
+
+    <div id="sync-status-msg" class="status">Statut réseau : Prêt</div>
+</div>
+
+<script>
+    const gameType = '7dtd'; // Identification stricte du secteur
+    const targetFile = 'fichierjs/7dtd.js';
+    let localServersList = [];
+
+    window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById('sync-status-msg').innerText = "Connexion GitHub en cours...";
+        fetch(targetFile)
+            .then(res => res.json())
+            .then(data => {
+                if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
+                localServersList = data.servers || [];
+                renderServersForm();
+                document.getElementById('sync-status-msg').innerText = "Données synchronisées avec succès !";
+            })
+            .catch(() => {
+                document.getElementById('sync-status-msg').innerText = "Aucune donnée trouvée. Prêt à créer le fichier.";
+                renderServersForm();
+            });
+    });
+
+    function renderServersForm() {
+        const container = document.getElementById("servers-list-container");
+        container.innerHTML = "";
+        localServersList.forEach((srv, index) => {
+            container.innerHTML += `
+                <div class="srv-item">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <span style="font-weight:bold; color:#ef4444;">SERVEUR #${index + 1}</span>
+                        <button onclick="removeServerSlot(${index})" style="background:#ef4444; color:#fff; padding:3px 8px; font-size:11px; flex:none; width:auto;">🗑️ DELETE</button>
+                    </div>
+                    <label>Nom du serveur :</label>
+                    <input type="text" value="${srv.name}" onchange="updateSrvData(${index}, 'name', this.value)">
+                    <label>Adresse IP :</label>
+                    <input type="text" value="${srv.ip}" onchange="updateSrvData(${index}, 'ip', this.value)">
+                    <label>Port :</label>
+                    <input type="text" value="${srv.port}" onchange="updateSrvData(${index}, 'port', this.value)">
+                    <label>Message de Maintenance (Optionnel) :</label>
+                    <input type="text" value="${srv.rebootAlert || ''}" placeholder="Ex: Reboot à 20h" onchange="updateSrvData(${index}, 'rebootAlert', this.value)">
+                </div>
+            `;
+        });
+    }
+
+    function addNewServerSlot() {
+        localServersList.push({ name: "Nouveau Serveur 7DTD", ip: "0.0.0.0", port: "26900", rebootAlert: "" });
+        renderServersForm();
+    }
+
+    function removeServerSlot(index) {
+        localServersList.splice(index, 1);
+        renderServersForm();
+    }
+
+    function updateSrvData(index, key, value) {
+        localServersList[index][key] = value;
+    }
+
+    function saveDataToGitHub() {
+        document.getElementById('sync-status-msg').innerText = "Envoi des données sur GitHub...";
+        
+        const payload = {
+            globalTicker: document.getElementById('global-ticker-input').value,
+            servers: localServersList,
+            lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
+        };
+
+        // Appel simulé du moteur admin.js pour modifier le fichier
+        if (window.parent && typeof window.parent.executeGitHubCommit === "function") {
+            window.parent.executeGitHubCommit(targetFile, payload, (success, time) => {
+                if(success) document.getElementById('sync-status-msg').innerText = "Mise à jour OK à " + time;
+                else document.getElementById('sync-status-msg').innerText = "Erreur de transmission réseau.";
+            });
+        } else {
+            // Backup LocalStorage si exécuté hors ligne sans le script admin.js principal
+            localStorage.setItem('qbc_local_backup_' + gameType, JSON.stringify(payload));
+            document.getElementById('sync-status-msg').innerText = "Enregistré localement (Simulation) à " + payload.lastUpdate;
+        }
+    }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
