@@ -110,10 +110,13 @@
             lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
         };
 
+        // ADRESSE DE L'API CORRIGÉE POUR WURM
         const url = "https://github.com" + targetFile;
+        
         const headers = {
             "Authorization": "token " + myToken,
-            "Accept": "application/vnd.github.v3+json"
+            "Accept": "application/vnd.github.v3+json",
+            "Content-Type": "application/json"
         };
 
         fetch(url, { headers: headers })
@@ -149,6 +152,7 @@
 </script>
 </body>
 </html>
+
 
 
 
