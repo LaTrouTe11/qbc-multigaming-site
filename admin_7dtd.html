@@ -29,32 +29,27 @@
 
     <div class="btn-group">
         <button class="btn-add" onclick="addNewServerSlot()">➕ ADD SERVEUR</button>
-        <button class="btn-save" onclick="saveDataToGitHub()">💾 ENREGISTRER / UPDATE</button>
+        <button class="btn-save" onclick="saveLocalData()">💾 ENREGISTRER L'INSTANCE</button>
     </div>
 
     <div id="sync-status-msg" class="status" style="background: #1e293b; color: #94a3b8;">Statut : Prêt</div>
 </div>
 
 <script>
-    // VOTRE JETON DE SÉCURITÉ DE DÉPART STRICTEMENT SÉCURISÉ
-    const myToken = "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"; 
-    
-    const targetFile = 'fichierjs/7dtd.js';
+    const storageKey = 'qbc_backup_7dtd';
     let localServersList = [];
 
     window.addEventListener("DOMContentLoaded", () => {
-        fetch(targetFile)
-            .then(res => res.json())
-            .then(data => {
-                if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
-                localServersList = data.servers || [];
-                renderServersForm();
-                showStatus("Données chargées avec succès !", "#22c55e", "rgba(34,197,94,0.1)");
-            })
-            .catch(() => {
-                showStatus("Nouveau fichier prêt à être créé.", "#38bdf8", "rgba(56,189,248,0.1)");
-                renderServersForm();
-            });
+        const savedData = localStorage.getItem(storageKey);
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
+            localServersList = data.servers || [];
+            showStatus("Données chargées depuis la mémoire !", "#22c55e", "rgba(34,197,94,0.1)");
+        } else {
+            showStatus("Aucun serveur en mémoire. Prêt à créer.", "#38bdf8", "rgba(56,189,248,0.1)");
+        }
+        renderServersForm();
     });
 
     function renderServersForm() {
@@ -101,58 +96,18 @@
         el.style.background = bg;
     }
 
-    function saveDataToGitHub() {
-        showStatus("Envoi en cours vers GitHub...", "#eab308", "rgba(234,179,8,0.1)");
-        
+    function saveLocalData() {
         const payload = {
             globalTicker: document.getElementById('global-ticker-input').value,
             servers: localServersList,
             lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
         };
-
-        // LIGNE API CORRIGÉE ET NETTOYÉE CONTRE TOUTE ERREUR DE SYNTAXE
-        const url = "https://github.com" + targetFile;
-        
-        const headers = {
-            "Authorization": "token " + myToken,
-            "Accept": "application/vnd.github.v3+json",
-            "Content-Type": "application/json"
-        };
-
-        fetch(url, { headers: headers })
-            .then(res => res.status === 404 ? null : res.json())
-            .then(fileData => {
-                const sha = fileData ? fileData.sha : null;
-                const contentString = JSON.stringify(payload, null, 2);
-                const contentBase64 = btoa(unescape(encodeURIComponent(contentString)));
-
-                const bodyPayload = {
-                    message: "🤖 Update 7DTD via Console Autonome",
-                    content: contentBase64
-                };
-                if (sha) bodyPayload.sha = sha;
-
-                return fetch(url, {
-                    method: "PUT",
-                    headers: headers,
-                    body: JSON.stringify(bodyPayload)
-                });
-            })
-            .then(response => {
-                if (response.ok) {
-                    showStatus("✅ MISE À JOUR OK À " + payload.lastUpdate, "#22c55e", "rgba(34,197,94,0.1)");
-                } else {
-                    showStatus("❌ Erreur GitHub (Vérifiez l'état de validité de votre Token)", "#ef4444", "rgba(239,68,68,0.1)");
-                }
-            })
-            .catch(() => {
-                showStatus("❌ Échec critique de la transmission réseau.", "#ef4444", "rgba(239,68,68,0.1)");
-            });
+        localStorage.setItem(storageKey, JSON.stringify(payload));
+        showStatus("✅ ENREGISTRÉ DANS LA MÉMOIRE DU PORTAIL !", "#22c55e", "rgba(34,197,94,0.1)");
     }
 </script>
 </body>
 </html>
-
 
 
 
