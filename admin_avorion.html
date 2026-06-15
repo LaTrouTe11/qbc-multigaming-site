@@ -110,13 +110,10 @@
             lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
         };
 
-        // LIGNE CORRIGÉE : ADRESSE DE L'API CLASSIQUE SANS BLOCAGE INTERNE
         const url = "https://github.com" + targetFile;
-        
         const headers = {
             "Authorization": "token " + myToken,
-            "Accept": "application/vnd.github.v3+json",
-            "Content-Type": "application/json"
+            "Accept": "application/vnd.github.v3+json"
         };
 
         fetch(url, { headers: headers })
