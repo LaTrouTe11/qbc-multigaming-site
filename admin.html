@@ -4,46 +4,31 @@
     <meta charset="UTF-8">
     <title>QBC CORE MATRIX - PASSERELLE CENTRALE</title>
     <style>
-        body { background: #030712; color: #f3f4f6; font-family: monospace; margin: 0; padding: 40px; text-align: center; }
-        .router-box { max-width: 650px; margin: 60px auto; background: rgba(5, 12, 22, 0.95); border: 2px solid #00ffcc; padding: 40px; border-radius: 12px; box-shadow: 0 0 30px rgba(0, 255, 204, 0.15); }
-        h1 { color: #00ffcc; font-size: 22px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        p { color: #94a3b8; font-size: 13px; margin-bottom: 30px; }
-        .route-btn { display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #fff; border: 1px solid #334155; padding: 18px 25px; margin-bottom: 15px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.2s; }
-        .route-btn:hover { background: #00ffcc; color: #030712; border-color: #00ffcc; box-shadow: 0 0 15px rgba(0, 255, 204, 0.3); }
-        .badge { background: rgba(0, 255, 204, 0.1); color: #00ffcc; padding: 4px 10px; border-radius: 4px; font-size: 11px; border: 1px solid rgba(0, 255, 204, 0.2); }
+        body { background: #0f172a; color: #fff; font-family: monospace; padding: 40px; text-align: center; }
+        .menu-box { border: 2px solid #334155; padding: 30px; border-radius: 12px; background: rgba(30,41,59,0.5); max-width: 600px; margin: 0 auto; }
+        h1 { color: #38bdf8; font-size: 20px; margin-bottom: 30px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
+        .btn-link { display: block; padding: 15px; margin: 15px 0; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 14px; transition: transform 0.2s; text-transform: uppercase; }
+        .btn-link:hover { transform: scale(1.02); }
+        .btn-7dtd { background: #ef4444; color: #fff; border: 1px solid #b91c1c; }
+        .btn-avorion { background: #14b8a6; color: #fff; border: 1px solid #0f766e; }
+        .btn-wurm { background: #00ffcc; color: #02231c; border: 1px solid #0d9488; }
+        .btn-home { background: #1e293b; color: #94a3b8; border: 1px solid #334155; margin-top: 25px; }
     </style>
 </head>
 <body>
-<div class="router-box">
+
+<div class="menu-box">
     <h1>🎛️ SYSTEM COCKPIT INFRASTRUCTURE (2026)</h1>
-    <p>Sélectionnez l'univers vectoriel à configurer dans la mémoire de la Cohort QBC :</p>
+    <p style="color: #64748b; font-size: 12px; margin-bottom: 20px;">Sélectionnez l'univers vectoriel à configurer dans la mémoire de la Cohort QBC :</p>
     
-    <a href="7dtd/admin_7dtd.html" class="route-btn">
-        <span>☣️ OUVRIR L'ADMINISTRATION UNIVERSE 7D2D</span>
-        <span class="badge" id="lbl-7dtd">STANDBY</span>
-    </a>
-    <a href="wurm/admin_wurm.html" class="route-btn">
-        <span>🛡️ OUVRIR L'ADMINISTRATION UNIVERSE WURM</span>
-        <span class="badge" id="lbl-wurm">STANDBY</span>
-    </a>
-    <a href="avorion/admin_avorion.html" class="route-btn">
-        <span>🚀 OUVRIR L'ADMINISTRATION UNIVERSE AVORION</span>
-        <span class="badge" id="lbl-avorion">STANDBY</span>
-    </a>
-    <a href="index.html" style="display:inline-block; margin-top: 25px; color: #ef4444; font-size: 12px; font-weight: bold; text-decoration: none; border-bottom: 1px dashed #ef4444;">⬅️ QUITTER ET REVENIR AU PORTAIL INTERACTIF</a>
+    <!-- LIENS NETTOYÉS ET ALIGNÉS À LA RACINE -->
+    <a href="admin_7dtd.html" class="btn-link btn-7dtd">☣️ Ouvrir l'administration Universe 7D2D</a>
+    <a href="admin_wurm.html" class="btn-link btn-wurm">🛡️ Ouvrir l'administration Universe Wurm</a>
+    <a href="admin_avorion.html" class="btn-link btn-avorion">🚀 Ouvrir l'administration Universe Avorion</a>
+    
+    <a href="index.html" class="btn-link btn-home">⬅️ Quitter et retourner au portail interactif</a>
 </div>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-    const activeKey = localStorage.getItem('qbc_last_active_srv_key') || "7dtd1";
-    if (activeKey.startsWith('7dtd')) {
-        window.location.href = "7dtd/admin_7dtd.html";
-    } else if (activeKey.startsWith('wurm')) {
-        window.location.href = "wurm/admin_wurm.html";
-    } else if (activeKey.startsWith('avorion')) {
-        window.location.href = "avorion/admin_avorion.html";
-    }
-});
-</script>
+
 </body>
 </html>
 
