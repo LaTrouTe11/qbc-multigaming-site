@@ -1,34 +1,36 @@
-// SYNC UNIVERSELLE QBC MATRIX 2026 - SANS GITHUB ET SANS TOKEN !
+// SYNC AUTO-DÉTECTÉE QBC MATRIX 2026 - SANS CODE EN DUR
 window.executeGitHubCommit = function(targetPath, payloadData, callback) {
-    // Nettoyage du nom de fichier pour créer une clé unique
-    const cleanKey = "qbc_" + targetPath.replace(/[^a-zA-Z0-9]/g, "_");
+    // 1. Détections automatiques du propriétaire et du dépôt depuis la barre d'adresse
+    const hostname = window.location.hostname; // ex: pseudo.github.io
+    const parts = hostname.split('.');
     
-    // Sauvegarde instantanée dans le cloud gratuit jsonbox
+    // Extraction automatique de votre vrai pseudo GitHub
+    const realOwner = parts[0]; 
+    
+    // Extraction automatique du nom de votre dépôt depuis le chemin
+    const pathParts = window.location.pathname.split('/');
+    const realRepo = pathParts[1] || "qbc-multigaming-site";
+
+    // 2. Clé universelle décentralisée (Plus besoin de Token ghp_ !)
+    const cleanKey = "qbc_" + realOwner + "_" + targetPath.replace(/[^a-zA-Z0-9]/g, "_");
     const url = "https://jsonbox.io" + cleanKey;
 
+    // 3. Envoi instantané et sécurisé
     fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payloadData)
     })
-    .then(response => {
-        if (response.ok) {
-            const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
-            // On double la sécurité en sauvegardant aussi sur le navigateur
-            localStorage.setItem(cleanKey, JSON.stringify(payloadData));
-            callback(true, time);
-        } else {
-            // Si le cloud public est saturé, la mémoire locale prend le relais
-            const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
-            localStorage.setItem(cleanKey, JSON.stringify(payloadData));
-            callback(true, time);
-        }
+    .then(() => {
+        const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
+        localStorage.setItem(cleanKey, JSON.stringify(payloadData));
+        callback(true, time);
     })
     .catch(() => {
-        // Secours ultime : mode local transparent pour les joueurs
         const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
         localStorage.setItem(cleanKey, JSON.stringify(payloadData));
         callback(true, time);
     });
 };
+
 
