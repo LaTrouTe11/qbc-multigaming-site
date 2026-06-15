@@ -2,35 +2,45 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>QBC CORE MATRIX - PASSERELLE CENTRALE</title>
+    <title>QBC MATRIX - PANNEAU SUPRÊME ADMIN</title>
     <style>
         body { background: #0f172a; color: #fff; font-family: monospace; padding: 40px; text-align: center; }
-        .menu-box { border: 2px solid #334155; padding: 30px; border-radius: 12px; background: rgba(30,41,59,0.5); max-width: 600px; margin: 0 auto; }
-        h1 { color: #38bdf8; font-size: 20px; margin-bottom: 30px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
-        .btn-link { display: block; padding: 15px; margin: 15px 0; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 14px; transition: transform 0.2s; text-transform: uppercase; }
-        .btn-link:hover { transform: scale(1.02); }
+        .menu-box { border: 2px solid #334155; padding: 30px; border-radius: 12px; background: rgba(30,41,59,0.5); max-width: 600px; margin: 0 auto; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); }
+        h1 { color: #38bdf8; font-size: 22px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .badge { display: inline-block; background: #38bdf8; color: #0f172a; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 25px; }
+        .btn-link { display: block; padding: 15px; margin: 15px 0; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 14px; transition: all 0.2s ease; text-transform: uppercase; }
+        .btn-link:hover { transform: scale(1.02); filter: brightness(1.1); }
         .btn-7dtd { background: #ef4444; color: #fff; border: 1px solid #b91c1c; }
         .btn-avorion { background: #14b8a6; color: #fff; border: 1px solid #0f766e; }
         .btn-wurm { background: #00ffcc; color: #02231c; border: 1px solid #0d9488; }
         .btn-home { background: #1e293b; color: #94a3b8; border: 1px solid #334155; margin-top: 25px; }
+        .footer-credit { color: #475569; font-size: 11px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="menu-box">
-    <h1>🎛️ SYSTEM COCKPIT INFRASTRUCTURE (2026)</h1>
-    <p style="color: #64748b; font-size: 12px; margin-bottom: 20px;">Sélectionnez l'univers vectoriel à configurer dans la mémoire de la Cohort QBC :</p>
+    <h1>🎛️ QBC INFRASTRUCTURE COCKPIT</h1>
+    <div class="badge">NIVEAU DIX : SUPRÊME ADMIN</div>
     
-    <!-- DES LIENS SÉCURISÉS ACCESSIBLES DIRECTEMENT À LA RACINE -->
-    <a href="admin_7dtd.html" class="btn-link btn-7dtd">☣️ Ouvrir l'administration Universe 7D2D</a>
-    <a href="admin_wurm.html" class="btn-link btn-wurm">🛡️ Ouvrir l'administration Universe Wurm</a>
-    <a href="admin_avorion.html" class="btn-link btn-avorion">🚀 Ouvrir l'administration Universe Avorion</a>
+    <p style="color: #64748b; font-size: 12px; margin-bottom: 25px; line-height: 1.5;">
+        Accès direct aux matrices de configuration décentralisées.<br>
+        Sélectionnez l'instance vectorielle à piloter sur le réseau :
+    </p>
     
-    <a href="index.html" class="btn-link btn-home">⬅️ Quitter et retourner au portail interactif</a>
+    <!-- LIENS DIRECTS ET NETTOYÉS À LA RACINE DU PROJET -->
+    <a href="admin_7dtd.html" class="btn-link btn-7dtd">☣️ Piloter l'univers 7 Days to Die</a>
+    <a href="admin_wurm.html" class="btn-link btn-wurm">🛡️ Piloter l'univers Wurm Unlimited</a>
+    <a href="admin_avorion.html" class="btn-link btn-avorion">🚀 Piloter l'univers Avorion Galaxy</a>
+    
+    <a href="index.html" class="btn-link btn-home">⬅️ Quitter le cockpit et revenir au portail</a>
+    
+    <div class="footer-credit">Système d'administration sécurisé Cloud (2026)</div>
 </div>
 
 </body>
 </html>
+
 
 
 
