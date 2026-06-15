@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CONSOLES QBC 2026 - GESTION 7DTD</title>
+    <!-- INCLUSION DU MOTEUR DE LIAISON GITHUB -->
+    <script src="admin.js"></script>
     <style>
         body { background: #0f172a; color: #fff; font-family: monospace; padding: 20px; }
         .box { border: 1px solid #ef4444; padding: 20px; border-radius: 8px; background: rgba(239,68,68,0.02); max-width: 600px; margin: 0 auto; }
@@ -102,14 +104,18 @@
             lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
         };
 
-        // Appel simulé du moteur admin.js pour modifier le fichier
-        if (window.parent && typeof window.parent.executeGitHubCommit === "function") {
+        // CORRECTION DE LA LIAISON DIRECTE SANS CORRUPTION PARENTE
+        if (typeof window.executeGitHubCommit === "function") {
+            window.executeGitHubCommit(targetFile, payload, (success, time) => {
+                if(success) document.getElementById('sync-status-msg').innerText = "Mise à jour OK à " + time;
+                else document.getElementById('sync-status-msg').innerText = "Erreur de transmission réseau.";
+            });
+        } else if (window.parent && typeof window.parent.executeGitHubCommit === "function") {
             window.parent.executeGitHubCommit(targetFile, payload, (success, time) => {
                 if(success) document.getElementById('sync-status-msg').innerText = "Mise à jour OK à " + time;
                 else document.getElementById('sync-status-msg').innerText = "Erreur de transmission réseau.";
             });
         } else {
-            // Backup LocalStorage si exécuté hors ligne sans le script admin.js principal
             localStorage.setItem('qbc_local_backup_' + gameType, JSON.stringify(payload));
             document.getElementById('sync-status-msg').innerText = "Enregistré localement (Simulation) à " + payload.lastUpdate;
         }
@@ -117,7 +123,6 @@
 </script>
 </body>
 </html>
-
 
 
 
