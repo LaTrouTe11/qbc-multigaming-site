@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>CONSOLE QBC - 7DTD</title>
-    <!-- APPEL DU NOUVEAU SCRIPT INDÉPENDANT POUR BRISER LE CACHE -->
+    <!-- APPEL DU NOUVEAU MOTEUR SANS TOKEN -->
     <script src="matrix_sync.js"></script>
     <style>
         body { background: #0f172a; color: #fff; font-family: monospace; padding: 20px; }
@@ -39,21 +39,33 @@
 
 <script>
     const targetFile = 'fichierjs/7dtd.js';
+    const storageKey = "qbc_fichierjs_7dtd_js"; // Clé d'alignement avec le moteur cloud
     let localServersList = [];
 
     window.addEventListener("DOMContentLoaded", () => {
-        fetch(targetFile)
-            .then(res => res.json())
-            .then(data => {
-                if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
-                localServersList = data.servers || [];
-                renderServersForm();
-                showStatus("Données chargées avec succès !", "#22c55e", "rgba(34,197,94,0.1)");
-            })
-            .catch(() => {
-                showStatus("Prêt à initialiser le fichier.", "#38bdf8", "rgba(56,189,248,0.1)");
-                renderServersForm();
-            });
+        // Chargement prioritaire depuis le cloud/local décentralisé
+        const savedData = localStorage.getItem(storageKey);
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
+            localServersList = data.servers || [];
+            renderServersForm();
+            showStatus("Données synchronisées avec succès !", "#22c55e", "rgba(34,197,94,0.1)");
+        } else {
+            // Secours sur le fichier d'origine
+            fetch(targetFile)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
+                    localServersList = data.servers || [];
+                    renderServersForm();
+                    showStatus("Données initialisées !", "#22c55e", "rgba(34,197,94,0.1)");
+                })
+                .catch(() => {
+                    showStatus("Prêt à créer l'instance.", "#38bdf8", "rgba(56,189,248,0.1)");
+                    renderServersForm();
+                });
+        }
     });
 
     function renderServersForm() {
@@ -101,7 +113,7 @@
     }
 
     function sendData() {
-        showStatus("Envoi en cours vers GitHub...", "#eab308", "rgba(234,179,8,0.1)");
+        showStatus("Synchronisation sur la matrice centrale...", "#eab308", "rgba(234,179,8,0.1)");
         
         const payload = {
             globalTicker: document.getElementById('global-ticker-input').value,
@@ -114,16 +126,17 @@
                 if (success) {
                     showStatus("✅ MISE À JOUR OK À " + time, "#22c55e", "rgba(34,197,94,0.1)");
                 } else {
-                    showStatus("❌ Échec : Clé Token rejetée (Générez un nouveau token classique).", "#ef4444", "rgba(239,68,68,0.1)");
+                    showStatus("❌ Échec critique de synchronisation.", "#ef4444", "rgba(239,68,68,0.1)");
                 }
             });
         } else {
-            showStatus("❌ Erreur : Script matrix_sync.js introuvable.", "#ef4444", "rgba(239,68,68,0.1)");
+            showStatus("❌ Erreur structurelle matrix_sync.js.", "#ef4444", "rgba(239,68,68,0.1)");
         }
     }
 </script>
 </body>
 </html>
+
 
 
 
