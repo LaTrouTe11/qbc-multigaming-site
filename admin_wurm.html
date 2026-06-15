@@ -2,29 +2,27 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>CONSOLES QBC 2026 - GESTION WURM</title>
-    <!-- INCLUSION DU MOTEUR DE LIAISON GITHUB -->
-    <script src="admin.js"></script>
+    <title>CONSOLE QBC - WURM</title>
     <style>
         body { background: #0f172a; color: #fff; font-family: monospace; padding: 20px; }
         .box { border: 1px solid #00ffcc; padding: 20px; border-radius: 8px; background: rgba(0,255,204,0.02); max-width: 600px; margin: 0 auto; }
         h1 { color: #00ffcc; margin-top: 0; border-bottom: 1px solid #00ffcc; padding-bottom: 10px; }
         label { display: block; margin: 15px 0 5px; color: #94a3b8; }
-        input, textarea { width: 100%; padding: 10px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 4px; box-sizing: border-box; font-family: monospace; }
+        input { width: 100%; padding: 10px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 4px; box-sizing: border-box; font-family: monospace; }
         .btn-group { margin-top: 20px; display: flex; gap: 10px; }
         button { flex: 1; padding: 12px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-family: monospace; }
         .btn-add { background: #00ffcc; color: #02231c; }
         .btn-save { background: #22c55e; color: #fff; }
-        .status { margin-top: 15px; font-size: 12px; color: #e2e8f0; text-align: center; font-weight: bold; }
+        .status { margin-top: 15px; font-size: 13px; text-align: center; font-weight: bold; padding: 8px; border-radius: 4px; }
         .srv-item { background: #1e293b; padding: 15px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #00ffcc; }
     </style>
 </head>
 <body>
 
 <div class="box">
-    <h1>🛡️ ADMINISTRATION WURM UNLIMITED</h1>
+    <h1>🛡️ CONSOLE WURM UNLIMITED</h1>
     
-    <label>🚨 Alerte Matrice Globale (Bandeau défilant général) :</label>
+    <label>🚨 Alerte Matrice Globale (Bandeau du haut) :</label>
     <input type="text" id="global-ticker-input" placeholder="Message réseau global...">
 
     <div id="servers-list-container"></div>
@@ -34,26 +32,27 @@
         <button class="btn-save" onclick="saveDataToGitHub()">💾 ENREGISTRER / UPDATE</button>
     </div>
 
-    <div id="sync-status-msg" class="status">Statut réseau : Prêt</div>
+    <div id="sync-status-msg" class="status" style="background: #1e293b; color: #94a3b8;">Statut : Prêt</div>
 </div>
 
 <script>
-    const gameType = 'wurm'; 
+    // VOTRE TOKEN DU DÉBUT :
+    const myToken = "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"; 
+    
     const targetFile = 'fichierjs/wurm.js';
     let localServersList = [];
 
     window.addEventListener("DOMContentLoaded", () => {
-        document.getElementById('sync-status-msg').innerText = "Connexion GitHub en cours...";
         fetch(targetFile)
             .then(res => res.json())
             .then(data => {
                 if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
                 localServersList = data.servers || [];
                 renderServersForm();
-                document.getElementById('sync-status-msg').innerText = "Données synchronisées avec succès !";
+                showStatus("Données chargées avec succès !", "#22c55e", "rgba(34,197,94,0.1)");
             })
             .catch(() => {
-                document.getElementById('sync-status-msg').innerText = "Aucune donnée trouvée. Prêt à créer le fichier.";
+                showStatus("Nouveau fichier prêt à être créé.", "#38bdf8", "rgba(56,189,248,0.1)");
                 renderServersForm();
             });
     });
@@ -74,15 +73,15 @@
                     <input type="text" value="${srv.ip}" onchange="updateSrvData(${index}, 'ip', this.value)">
                     <label>Port :</label>
                     <input type="text" value="${srv.port}" onchange="updateSrvData(${index}, 'port', this.value)">
-                    <label>Message de Maintenance (Optionnel) :</label>
-                    <input type="text" value="${srv.rebootAlert || ''}" placeholder="Ex: Reboot à 20h" onchange="updateSrvData(${index}, 'rebootAlert', this.value)">
+                    <label>Message de Maintenance :</label>
+                    <input type="text" value="${srv.rebootAlert || ''}" placeholder="Ex: En maintenance" onchange="updateSrvData(${index}, 'rebootAlert', this.value)">
                 </div>
             `;
         });
     }
 
     function addNewServerSlot() {
-        localServersList.push({ name: "Nouveau Royaume Wurm", ip: "0.0.0.0", port: "5517", rebootAlert: "" });
+        localServersList.push({ name: "Nouveau Royaume Wurm", ip: "74.50.94.238", port: "5517", rebootAlert: "" });
         renderServersForm();
     }
 
@@ -95,8 +94,15 @@
         localServersList[index][key] = value;
     }
 
+    function showStatus(text, color, bg) {
+        const el = document.getElementById('sync-status-msg');
+        el.innerText = text;
+        el.style.color = color;
+        el.style.background = bg;
+    }
+
     function saveDataToGitHub() {
-        document.getElementById('sync-status-msg').innerText = "Envoi des données sur GitHub...";
+        showStatus("Envoi en cours vers GitHub...", "#eab308", "rgba(234,179,8,0.1)");
         
         const payload = {
             globalTicker: document.getElementById('global-ticker-input').value,
@@ -104,20 +110,41 @@
             lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
         };
 
-        if (typeof window.executeGitHubCommit === "function") {
-            window.executeGitHubCommit(targetFile, payload, (success, time) => {
-                if(success) document.getElementById('sync-status-msg').innerText = "Mise à jour OK à " + time;
-                else document.getElementById('sync-status-msg').innerText = "Erreur de transmission réseau.";
+        const url = "https://github.com" + targetFile;
+        const headers = {
+            "Authorization": "token " + myToken,
+            "Accept": "application/vnd.github.v3+json"
+        };
+
+        fetch(url, { headers: headers })
+            .then(res => res.status === 404 ? null : res.json())
+            .then(fileData => {
+                const sha = fileData ? fileData.sha : null;
+                const contentString = JSON.stringify(payload, null, 2);
+                const contentBase64 = btoa(unescape(encodeURIComponent(contentString)));
+
+                const bodyPayload = {
+                    message: "🤖 Update Wurm",
+                    content: contentBase64
+                };
+                if (sha) bodyPayload.sha = sha;
+
+                return fetch(url, {
+                    method: "PUT",
+                    headers: headers,
+                    body: JSON.stringify(bodyPayload)
+                });
+            })
+            .then(response => {
+                if (response.ok) {
+                    showStatus("✅ MISE À JOUR OK À " + payload.lastUpdate, "#22c55e", "rgba(34,197,94,0.1)");
+                } else {
+                    showStatus("❌ Erreur GitHub (Vérifiez votre clé Token)", "#ef4444", "rgba(239,68,68,0.1)");
+                }
+            })
+            .catch(() => {
+                showStatus("❌ Échec de la connexion réseau.", "#ef4444", "rgba(239,68,68,0.1)");
             });
-        } else if (window.parent && typeof window.parent.executeGitHubCommit === "function") {
-            window.parent.executeGitHubCommit(targetFile, payload, (success, time) => {
-                if(success) document.getElementById('sync-status-msg').innerText = "Mise à jour OK à " + time;
-                else document.getElementById('sync-status-msg').innerText = "Erreur de transmission réseau.";
-            });
-        } else {
-            localStorage.setItem('qbc_local_backup_' + gameType, JSON.stringify(payload));
-            document.getElementById('sync-status-msg').innerText = "Enregistré localement (Simulation) à " + payload.lastUpdate;
-        }
     }
 </script>
 </body>
