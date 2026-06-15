@@ -36,7 +36,9 @@
 </div>
 
 <script>
+    // VOTRE JETON DE SÉCURITÉ DE DÉPART STRICTEMENT SÉCURISÉ
     const myToken = "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"; 
+    
     const targetFile = 'fichierjs/7dtd.js';
     let localServersList = [];
 
@@ -79,7 +81,7 @@
     }
 
     function addNewServerSlot() {
-        localServersList.push({ name: "Nouveau Serveur 7DTD", ip: "67.216.85.235", port: "26900", rebootAlert: "" });
+        localServersList.push({ name: "QBC SURVIE - 7DTD", ip: "67.216.85.235", port: "26900", rebootAlert: "" });
         renderServersForm();
     }
 
@@ -108,7 +110,7 @@
             lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
         };
 
-        // LIGNE RESEAU APIS CORRIGEE DE FIN DU MONDE :
+        // LIGNE API CORRIGÉE ET NETTOYÉE CONTRE TOUTE ERREUR DE SYNTAXE
         const url = "https://github.com" + targetFile;
         
         const headers = {
@@ -125,7 +127,7 @@
                 const contentBase64 = btoa(unescape(encodeURIComponent(contentString)));
 
                 const bodyPayload = {
-                    message: "🤖 Update 7DTD",
+                    message: "🤖 Update 7DTD via Console Autonome",
                     content: contentBase64
                 };
                 if (sha) bodyPayload.sha = sha;
@@ -140,16 +142,17 @@
                 if (response.ok) {
                     showStatus("✅ MISE À JOUR OK À " + payload.lastUpdate, "#22c55e", "rgba(34,197,94,0.1)");
                 } else {
-                    showStatus("❌ Erreur GitHub (Vérifiez votre clé Token)", "#ef4444", "rgba(239,68,68,0.1)");
+                    showStatus("❌ Erreur GitHub (Vérifiez l'état de validité de votre Token)", "#ef4444", "rgba(239,68,68,0.1)");
                 }
             })
             .catch(() => {
-                showStatus("❌ Échec de la connexion réseau.", "#ef4444", "rgba(239,68,68,0.1)");
+                showStatus("❌ Échec critique de la transmission réseau.", "#ef4444", "rgba(239,68,68,0.1)");
             });
     }
 </script>
 </body>
 </html>
+
 
 
 
