@@ -2,35 +2,198 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>QBC CORE - COCKPIT ADMINISTRATION</title>
+    <title>PANNEAU DE CONTRÔLE SUPRÊME - QBC MATRIX</title>
+    <!-- EMBARKEMENT DU MOTEUR MATRIX SYNC SANS TOKEN -->
+    <script src="matrix_sync.js"></script>
     <style>
-        body { background: #0f172a; color: #fff; font-family: monospace; padding: 40px; text-align: center; }
-        .menu-box { border: 2px solid #334155; padding: 30px; border-radius: 12px; background: rgba(30,41,59,0.5); max-width: 600px; margin: 0 auto; }
-        h1 { color: #38bdf8; font-size: 20px; margin-bottom: 25px; border-bottom: 1px solid #334155; padding-bottom: 15px; text-transform: uppercase; }
-        .btn-link { display: block; padding: 15px; margin: 15px 0; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 14px; transition: transform 0.2s; text-transform: uppercase; }
-        .btn-link:hover { transform: scale(1.02); filter: brightness(1.1); }
-        .btn-7dtd { background: #ef4444; color: #fff; border: 1px solid #b91c1c; }
-        .btn-avorion { background: #14b8a6; color: #fff; border: 1px solid #0f766e; }
-        .btn-wurm { background: #00ffcc; color: #02231c; border: 1px solid #0d9488; }
-        .btn-home { background: #1e293b; color: #94a3b8; border: 1px solid #334155; margin-top: 25px; }
+        body { background: #0f172a; color: #fff; font-family: monospace; padding: 20px; }
+        .main-container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #38bdf8; text-align: center; border-bottom: 2px solid #1e293b; padding-bottom: 15px; text-transform: uppercase; }
+        .sector-box { background: rgba(30,41,59,0.4); border: 1px solid #1e293b; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
+        .title-7dtd { color: #ef4444; border-bottom: 1px solid #ef4444; }
+        .title-avorion { color: #14b8a6; border-bottom: 1px solid #14b8a6; }
+        .title-wurm { color: #00ffcc; border-bottom: 1px solid #00ffcc; }
+        label { display: block; margin: 15px 0 5px; color: #94a3b8; font-weight: bold; }
+        input[type="text"] { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 4px; box-sizing: border-box; font-family: monospace; }
+        .control-group { background: #1e293b; padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px dashed #475569; }
+        .btn-group { margin-top: 15px; display: flex; gap: 10px; }
+        button { flex: 1; padding: 10px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-family: monospace; text-transform: uppercase; }
+        .btn-add { background: #334155; color: #fff; }
+        .btn-save { background: #22c55e; color: #fff; font-size: 13px; }
+        .toggle-btn { padding: 5px 12px; cursor: pointer; border-radius: 4px; border: none; font-weight: bold; }
+        .srv-item { background: #0f172a; padding: 15px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #38bdf8; }
+        .status-bar { text-align: center; font-weight: bold; padding: 8px; border-radius: 4px; margin-top: 10px; font-size: 12px; }
     </style>
 </head>
 <body>
 
-<div class="menu-box">
-    <h1>🎛️ QBC SUPRÊME PANNEAU COCKPIT</h1>
-    <p style="color: #64748b; font-size: 12px; margin-bottom: 20px;">Sélectionnez la console de jeu à administrer (Maintenance, Warning, Éteindre) :</p>
+<div class="main-container">
+    <h1>🎛️ COCKPIT CENTRAL DE GESTION SUPRÊME</h1>
     
-    <!-- LIENS DIRECTS ALIGNÉS À LA RACINE -->
-    <a href="admin_7dtd.html" class="btn-link btn-7dtd">☣️ Ouvrir Gestionnaire 7 Days to Die (Mods)</a>
-    <a href="admin_wurm.html" class="btn-link btn-wurm">🛡️ Ouvrir Gestionnaire Wurm Unlimited</a>
-    <a href="admin_avorion.html" class="btn-link btn-avorion">🚀 Ouvrir Gestionnaire Avorion Galaxy</a>
-    
-    <a href="index.html" class="btn-link btn-home">⬅️ Quitter et retourner au portail public</a>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="index.html" style="color: #64748b; text-decoration: none;">⬅️ Retourner au Portail Principal</a>
+    </div>
+
+    <!-- ================= SECTEUR 1 : 7D2D ================= -->
+    <div class="sector-box" style="border-top: 4px solid #ef4444;">
+        <h2 class="title-7dtd">☣️ SECTEUR 7 DAYS TO DIE (136 MODS ACTIVE)</h2>
+        <div class="control-group">
+            <span style="color: #ef4444;">ÉTAT DU PORTAIL :</span>
+            <button type="button" id="toggle-7dtd" class="toggle-btn" style="background:#22c55e; color:#fff;" onclick="changeState('7dtd')">ONLINE</button>
+            <label>🚨 ALERTE WARNING / TICKER DE MAINTENANCE :</label>
+            <input type="text" id="ticker-7dtd" placeholder="Message d'alerte pour les joueurs de 7DTD...">
+        </div>
+        <div id="container-7dtd"></div>
+        <div class="btn-group">
+            <button class="btn-add" onclick="addSlot('7dtd')">➕ AJOUTER MACHINE</button>
+            <button class="btn-save" style="background:#ef4444;" onclick="pushMatrix('7dtd')">💾 ENREGISTRER SECTEUR 7DTD</button>
+        </div>
+        <div id="status-7dtd" class="status-bar" style="background: #1e293b; color: #94a3b8;">Statut : Prêt</div>
+    </div>
+
+    <!-- ================= SECTEUR 2 : WURM ================= -->
+    <div class="sector-box" style="border-top: 4px solid #00ffcc;">
+        <h2 class="title-wurm">🛡️ SECTEUR WURM UNLIMITED</h2>
+        <div class="control-group">
+            <span style="color: #00ffcc;">ÉTAT DU PORTAIL :</span>
+            <button type="button" id="toggle-wurm" class="toggle-btn" style="background:#22c55e; color:#fff;" onclick="changeState('wurm')">ONLINE</button>
+            <label>🚨 ALERTE WARNING / TICKER DE MAINTENANCE :</label>
+            <input type="text" id="ticker-wurm" placeholder="Message d'alerte pour les joueurs de Wurm...">
+        </div>
+        <div id="container-wurm"></div>
+        <div class="btn-group">
+            <button class="btn-add" onclick="addSlot('wurm')">➕ AJOUTER MACHINE</button>
+            <button class="btn-save" style="background:#0d9488;" onclick="pushMatrix('wurm')">💾 ENREGISTRER SECTEUR WURM</button>
+        </div>
+        <div id="status-wurm" class="status-bar" style="background: #1e293b; color: #94a3b8;">Statut : Prêt</div>
+    </div>
+
+    <!-- ================= SECTEUR 3 : AVORION ================= -->
+    <div class="sector-box" style="border-top: 4px solid #14b8a6;">
+        <h2 class="title-avorion">🚀 SECTEUR AVORION GALAXY</h2>
+        <div class="control-group">
+            <span style="color: #14b8a6;">ÉTAT DU PORTAIL :</span>
+            <button type="button" id="toggle-avorion" class="toggle-btn" style="background:#22c55e; color:#fff;" onclick="changeState('avorion')">ONLINE</button>
+            <label>🚨 ALERTE WARNING / TICKER DE MAINTENANCE :</label>
+            <input type="text" id="ticker-avorion" placeholder="Message d'alerte pour les joueurs d'Avorion...">
+        </div>
+        <div id="container-avorion"></div>
+        <div class="btn-group">
+            <button class="btn-add" onclick="addSlot('avorion')">➕ AJOUTER MACHINE</button>
+            <button class="btn-save" style="background:#0f766e;" onclick="pushMatrix('avorion')">💾 ENREGISTRER SECTEUR AVORION</button>
+        </div>
+        <div id="status-avorion" class="status-bar" style="background: #1e293b; color: #94a3b8;">Statut : Prêt</div>
+    </div>
 </div>
 
+<script>
+    const configs = {
+        '7dtd': { file: 'fichierjs/7dtd.js', key: 'qbc_fichierjs_7dtd_js', list: [], maintenance: false, color: '#ef4444' },
+        'wurm': { file: 'fichierjs/wurm.js', key: 'qbc_fichierjs_wurm_js', list: [], maintenance: false, color: '#00ffcc' },
+        'avorion': { file: 'fichierjs/avorion.js', key: 'qbc_fichierjs_avorion_js', list: [], maintenance: false, color: '#14b8a6' }
+    };
+
+    window.addEventListener("DOMContentLoaded", () => {
+        Object.keys(configs).forEach(id => {
+            const saved = localStorage.getItem(configs[id].key);
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('ticker-' + id).value = data.globalTicker || '';
+                configs[id].maintenance = data.isMaintenance || false;
+                configs[id].list = data.servers || [];
+                updateUI(id);
+            } else {
+                fetch(configs[id].file)
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById('ticker-' + id).value = data.globalTicker || '';
+                        configs[id].maintenance = data.isMaintenance || false;
+                        configs[id].list = data.servers || [];
+                        updateUI(id);
+                    }).catch(() => { updateUI(id); });
+            }
+        });
+    });
+
+    function changeState(id) {
+        configs[id].maintenance = !configs[id].maintenance;
+        updateUI(id);
+    }
+
+    function updateUI(id) {
+        const btn = document.getElementById("toggle-" + id);
+        if (configs[id].maintenance) {
+            btn.innerText = "🛑 MAINTENANCE / OFFLINE";
+            btn.style.background = "#ef4444";
+        } else {
+            btn.innerText = "🟢 SYSTEM ONLINE";
+            btn.style.background = "#22c55e";
+        }
+
+        const container = document.getElementById("container-" + id);
+        container.innerHTML = "";
+        configs[id].list.forEach((srv, index) => {
+            container.innerHTML += `
+                <div class="srv-item" style="border-left-color: ${configs[id].color}">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <span style="font-weight:bold; color:${configs[id].color}">MACHINE #${index + 1}</span>
+                        <button onclick="removeSlot('${id}', ${index})" style="background:#ef4444; color:#fff; padding:2px 8px; font-size:11px; flex:none; width:auto;">🗑️ REMOVE</button>
+                    </div>
+                    <label>Nom de l'instance :</label>
+                    <input type="text" value="${srv.name}" onchange="updateValue('${id}', ${index}, 'name', this.value)">
+                    <label>Adresse IP :</label>
+                    <input type="text" value="${srv.ip}" onchange="updateValue('${id}', ${index}, 'ip', this.value)">
+                    <label>Port réseau :</label>
+                    <input type="text" value="${srv.port}" onchange="updateValue('${id}', ${index}, 'port', this.value)">
+                    <label>MOTD d'état en direct :</label>
+                    <input type="text" value="${srv.rebootAlert || ''}" placeholder="Ex: En cours de redémarrage" onchange="updateValue('${id}', ${index}, 'rebootAlert', this.value)">
+                </div>
+            `;
+        });
+    }
+
+    function addSlot(id) {
+        let defaultData = { name: "Nouveau Serveur", ip: "127.0.0.1", port: "26900", rebootAlert: "" };
+        configs[id].list.push(defaultData);
+        updateUI(id);
+    }
+
+    function removeSlot(id, index) {
+        configs[id].list.splice(index, 1);
+        updateUI(id);
+    }
+
+    function updateValue(id, index, key, val) {
+        configs[id].list[index][key] = val;
+    }
+
+    function pushMatrix(id) {
+        const stBar = document.getElementById("status-" + id);
+        stBar.innerText = "Transmission en cours...";
+        stBar.style.color = "#eab308";
+
+        const payload = {
+            globalTicker: document.getElementById('ticker-' + id).value,
+            isMaintenance: configs[id].maintenance,
+            servers: configs[id].list,
+            lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
+        };
+        if (typeof window.executeGitHubCommit === "function") {
+            window.executeGitHubCommit(configs[id].file, payload, (success, time) => {
+                if (success) {
+                    stBar.innerText = "✅ MISE À JOUR RÉUSSI À " + time;
+                    stBar.style.color = "#22c55e";
+                } else {
+                    stBar.innerText = "❌ Échec de synchronisation Matrix.";
+                    stBar.style.color = "#ef4444";
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>
+
 
 
 
