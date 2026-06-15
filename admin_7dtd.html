@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CONSOLE QBC - 7DTD</title>
+    <!-- APPEL DU NOUVEAU SCRIPT INDÉPENDANT POUR BRISER LE CACHE -->
+    <script src="matrix_sync.js"></script>
     <style>
         body { background: #0f172a; color: #fff; font-family: monospace; padding: 20px; }
         .box { border: 1px solid #ef4444; padding: 20px; border-radius: 8px; background: rgba(239,68,68,0.02); max-width: 600px; margin: 0 auto; }
@@ -22,34 +24,36 @@
 <div class="box">
     <h1>☣️ CONSOLE 7 DAYS TO DIE</h1>
     
-    <label>🚨 Alerte Matrice Globale (Bandeau du haut) :</label>
+    <label>🚨 Alerte Matrice Globale :</label>
     <input type="text" id="global-ticker-input" placeholder="Message réseau global...">
 
     <div id="servers-list-container"></div>
 
     <div class="btn-group">
         <button class="btn-add" onclick="addNewServerSlot()">➕ ADD SERVEUR</button>
-        <button class="btn-save" onclick="saveLocalData()">💾 ENREGISTRER L'INSTANCE</button>
+        <button class="btn-save" onclick="sendData()">💾 ENREGISTRER / UPDATE</button>
     </div>
 
     <div id="sync-status-msg" class="status" style="background: #1e293b; color: #94a3b8;">Statut : Prêt</div>
 </div>
 
 <script>
-    const storageKey = 'qbc_backup_7dtd';
+    const targetFile = 'fichierjs/7dtd.js';
     let localServersList = [];
 
     window.addEventListener("DOMContentLoaded", () => {
-        const savedData = localStorage.getItem(storageKey);
-        if (savedData) {
-            const data = JSON.parse(savedData);
-            if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
-            localServersList = data.servers || [];
-            showStatus("Données chargées depuis la mémoire !", "#22c55e", "rgba(34,197,94,0.1)");
-        } else {
-            showStatus("Aucun serveur en mémoire. Prêt à créer.", "#38bdf8", "rgba(56,189,248,0.1)");
-        }
-        renderServersForm();
+        fetch(targetFile)
+            .then(res => res.json())
+            .then(data => {
+                if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
+                localServersList = data.servers || [];
+                renderServersForm();
+                showStatus("Données chargées avec succès !", "#22c55e", "rgba(34,197,94,0.1)");
+            })
+            .catch(() => {
+                showStatus("Prêt à initialiser le fichier.", "#38bdf8", "rgba(56,189,248,0.1)");
+                renderServersForm();
+            });
     });
 
     function renderServersForm() {
@@ -96,18 +100,35 @@
         el.style.background = bg;
     }
 
-    function saveLocalData() {
+    function sendData() {
+        showStatus("Envoi en cours vers GitHub...", "#eab308", "rgba(234,179,8,0.1)");
+        
         const payload = {
             globalTicker: document.getElementById('global-ticker-input').value,
             servers: localServersList,
             lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
         };
-        localStorage.setItem(storageKey, JSON.stringify(payload));
-        showStatus("✅ ENREGISTRÉ DANS LA MÉMOIRE DU PORTAIL !", "#22c55e", "rgba(34,197,94,0.1)");
+
+        if (typeof window.executeGitHubCommit === "function") {
+            window.executeGitHubCommit(targetFile, payload, (success, time) => {
+                if (success) {
+                    showStatus("✅ MISE À JOUR OK À " + time, "#22c55e", "rgba(34,197,94,0.1)");
+                } else {
+                    showStatus("❌ Échec : Clé Token rejetée (Générez un nouveau token classique).", "#ef4444", "rgba(239,68,68,0.1)");
+                }
+            });
+        } else {
+            showStatus("❌ Erreur : Script matrix_sync.js introuvable.", "#ef4444", "rgba(239,68,68,0.1)");
+        }
     }
 </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
