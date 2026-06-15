@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>CONSOLE QBC - WURM</title>
+    <script src="matrix_sync.js"></script>
     <style>
         body { background: #0f172a; color: #fff; font-family: monospace; padding: 20px; }
         .box { border: 1px solid #00ffcc; padding: 20px; border-radius: 8px; background: rgba(0,255,204,0.02); max-width: 600px; margin: 0 auto; }
@@ -22,39 +23,46 @@
 <div class="box">
     <h1>🛡️ CONSOLE WURM UNLIMITED</h1>
     
-    <label>🚨 Alerte Matrice Globale (Bandeau du haut) :</label>
+    <label>🚨 Alerte Matrice Globale :</label>
     <input type="text" id="global-ticker-input" placeholder="Message réseau global...">
 
     <div id="servers-list-container"></div>
 
     <div class="btn-group">
         <button class="btn-add" onclick="addNewServerSlot()">➕ ADD SERVEUR</button>
-        <button class="btn-save" onclick="saveDataToGitHub()">💾 ENREGISTRER / UPDATE</button>
+        <button class="btn-save" onclick="sendData()">💾 ENREGISTRER / UPDATE</button>
     </div>
 
     <div id="sync-status-msg" class="status" style="background: #1e293b; color: #94a3b8;">Statut : Prêt</div>
 </div>
 
 <script>
-    // VOTRE TOKEN DU DÉBUT :
-    const myToken = "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"; 
-    
     const targetFile = 'fichierjs/wurm.js';
+    const storageKey = "qbc_fichierjs_wurm_js"; 
     let localServersList = [];
 
     window.addEventListener("DOMContentLoaded", () => {
-        fetch(targetFile)
-            .then(res => res.json())
-            .then(data => {
-                if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
-                localServersList = data.servers || [];
-                renderServersForm();
-                showStatus("Données chargées avec succès !", "#22c55e", "rgba(34,197,94,0.1)");
-            })
-            .catch(() => {
-                showStatus("Nouveau fichier prêt à être créé.", "#38bdf8", "rgba(56,189,248,0.1)");
-                renderServersForm();
-            });
+        const savedData = localStorage.getItem(storageKey);
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
+            localServersList = data.servers || [];
+            renderServersForm();
+            showStatus("Données synchronisées avec succès !", "#22c55e", "rgba(34,197,94,0.1)");
+        } else {
+            fetch(targetFile)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.globalTicker) document.getElementById('global-ticker-input').value = data.globalTicker;
+                    localServersList = data.servers || [];
+                    renderServersForm();
+                    showStatus("Données initialisées !", "#22c55e", "rgba(34,197,94,0.1)");
+                })
+                .catch(() => {
+                    showStatus("Prêt à créer l'instance.", "#38bdf8", "rgba(56,189,248,0.1)");
+                    renderServersForm();
+                });
+        }
     });
 
     function renderServersForm() {
@@ -81,7 +89,7 @@
     }
 
     function addNewServerSlot() {
-        localServersList.push({ name: "Nouveau Royaume Wurm", ip: "74.50.94.238", port: "5517", rebootAlert: "" });
+        localServersList.push({ name: "QBC ROYAUME - WURM", ip: "74.50.94.238", port: "5517", rebootAlert: "" });
         renderServersForm();
     }
 
@@ -101,8 +109,8 @@
         el.style.background = bg;
     }
 
-    function saveDataToGitHub() {
-        showStatus("Envoi en cours vers GitHub...", "#eab308", "rgba(234,179,8,0.1)");
+    function sendData() {
+        showStatus("Synchronisation sur la matrice centrale...", "#eab308", "rgba(234,179,8,0.1)");
         
         const payload = {
             globalTicker: document.getElementById('global-ticker-input').value,
@@ -110,51 +118,21 @@
             lastUpdate: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
         };
 
-        // ADRESSE DE L'API CORRIGÉE POUR WURM
-        const url = "https://github.com" + targetFile;
-        
-        const headers = {
-            "Authorization": "token " + myToken,
-            "Accept": "application/vnd.github.v3+json",
-            "Content-Type": "application/json"
-        };
-
-        fetch(url, { headers: headers })
-            .then(res => res.status === 404 ? null : res.json())
-            .then(fileData => {
-                const sha = fileData ? fileData.sha : null;
-                const contentString = JSON.stringify(payload, null, 2);
-                const contentBase64 = btoa(unescape(encodeURIComponent(contentString)));
-
-                const bodyPayload = {
-                    message: "🤖 Update Wurm",
-                    content: contentBase64
-                };
-                if (sha) bodyPayload.sha = sha;
-
-                return fetch(url, {
-                    method: "PUT",
-                    headers: headers,
-                    body: JSON.stringify(bodyPayload)
-                });
-            })
-            .then(response => {
-                if (response.ok) {
-                    showStatus("✅ MISE À JOUR OK À " + payload.lastUpdate, "#22c55e", "rgba(34,197,94,0.1)");
+        if (typeof window.executeGitHubCommit === "function") {
+            window.executeGitHubCommit(targetFile, payload, (success, time) => {
+                if (success) {
+                    showStatus("✅ MISE À JOUR OK À " + time, "#22c55e", "rgba(34,197,94,0.1)");
                 } else {
-                    showStatus("❌ Erreur GitHub (Vérifiez votre clé Token)", "#ef4444", "rgba(239,68,68,0.1)");
+                    showStatus("❌ Échec critique de synchronisation.", "#ef4444", "rgba(239,68,68,0.1)");
                 }
-            })
-            .catch(() => {
-                showStatus("❌ Échec de la connexion réseau.", "#ef4444", "rgba(239,68,68,0.1)");
             });
+        } else {
+            showStatus("❌ Erreur structurelle matrix_sync.js.", "#ef4444", "rgba(239,68,68,0.1)");
+        }
     }
 </script>
 </body>
 </html>
-
-
-
 
 
 
