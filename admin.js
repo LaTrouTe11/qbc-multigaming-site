@@ -1,30 +1,26 @@
-// CONFIGURATION DE LA MATRIX APIS GITHUB 2026
-const ghConfig = {
-    token: "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", // Remplacer par votre token personnel sécurisé
-    owner: "sitewurm", // Remplacer par votre nom d'utilisateur GitHub
-    repo: "qbc-wurm-server"   // Remplacer par le nom de votre dépôt GitHub
-};
-
 // Moteur de transmission asynchrone universel pour les 3 consoles admin
 window.executeGitHubCommit = function(targetPath, jsonData, callback) {
-    const url = `https://github.com{ghConfig.owner}/${ghConfig.repo}/contents/${targetPath}`;
+    // CORRECTION DE L'URL API GITHUB AVEC LES BONNES BARRES ET LE SYMBOLE $
+    const url = "https://github.com" + ghConfig.owner + "/" + ghConfig.repo + "/contents/" + targetPath;
+    
     const headers = {
-        "Authorization": `token ${ghConfig.token}`,
-        "Accept": "application/vnd.github.v3+json"
+        "Authorization": "token " + ghConfig.token,
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json"
     };
 
     // 1. Récupération du SHA (obligatoire pour modifier un fichier existant)
-    fetch(url, { headers })
+    fetch(url, { headers: headers })
         .then(res => res.status === 404 ? null : res.json())
         .then(fileData => {
             const sha = fileData ? fileData.sha : null;
             
-            // Préparation des données encodées en Base64 pour l'API GitHub
+            // Préparation des données encodées en Base64
             const contentString = JSON.stringify(jsonData, null, 2);
             const contentBase64 = btoa(unescape(encodeURIComponent(contentString)));
 
             const bodyPayload = {
-                message: `🤖 Matrix Auto-Update : Synchronisation du secteur [${targetPath}]`,
+                message: "🤖 Update : " + targetPath,
                 content: contentBase64
             };
             if (sha) bodyPayload.sha = sha;
