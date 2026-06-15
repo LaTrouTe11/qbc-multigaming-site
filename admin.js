@@ -1,8 +1,8 @@
 // CONFIGURATION DE LA MATRIX APIS GITHUB 2026
 const ghConfig = {
-    token: "ghp_VOTRE_TOKEN_ICI", // Remplacer par votre token personnel sécurisé
-    owner: "VOTRE_PSEUDO_GITHUB", // Remplacer par votre nom d'utilisateur GitHub
-    repo: "VOTRE_DEPOT_NETLIFY"   // Remplacer par le nom de votre dépôt GitHub
+    token: "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", // Remplacer par votre token personnel sécurisé
+    owner: "sitewurm", // Remplacer par votre nom d'utilisateur GitHub
+    repo: "qbc-wurm-server"   // Remplacer par le nom de votre dépôt GitHub
 };
 
 // Moteur de transmission asynchrone universel pour les 3 consoles admin
