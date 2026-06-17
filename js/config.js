@@ -1,5 +1,5 @@
 // ===================================================================
-// 🔐 BASE DE DONNÉES DE PRODUCTION V55.0 - PATH: js/config.js
+// 🔐 BASE DE DONNÉES UNIFIÉE MATRIX V50.0 - PORTAIL SERVEUR QBC 2026
 // ===================================================================
 window.qbcClusterData = {
     global: { 
@@ -8,7 +8,7 @@ window.qbcClusterData = {
         indexSubTitle: "Portail d'Accès aux Instances Réseau", 
         warn: "PREWARNING : ⚠️ Initialisation du Cluster QBC. Aucune coupure signalée.", 
         title: "Bienvenue sur le Réseau QBC", 
-        desc: "Pilotez vos accès à travers nos clusters de jeux interconnectés. Les informations de reboot, les statuts réseau RMI et les fichiers de configurations de nos instances Legion Hosting lues en temps réel.", 
+        desc: "Pilotez vos accès à travers nos clusters de jeux interconnectés. Les informations de reboot, les statuts réseau RMI et les fichiers de configurations de nos instances lues en temps réel.", 
         portalTheme: "standard", 
         securityNoCopy: "false", 
         global_badge: "⚠️ ", 
@@ -81,8 +81,3 @@ window.qbcClusterData = {
         votes: "3" 
     }
 };
-
-// Injection sécurisée avec tolérance d'environnement local et distant
-if (typeof window !== 'undefined') {
-    window.qbcClusterData = window.qbcClusterData || qbcClusterData;
-}
