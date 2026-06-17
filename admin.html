@@ -188,8 +188,8 @@ function loadQbcActivePaneForm() {
                     </div>
                 ` : ''}
             </div>`;
-
     } else {
+
         titleNode.innerText = `⚙️ Configuration: \${srv.name}`;
         if (delBtn) delBtn.style.setProperty('display', 'block', 'important');
         formContainer.innerHTML = `
@@ -224,7 +224,8 @@ function loadQbcActivePaneForm() {
             <div class="form-group"><label>🟢 Statut Énergie :</label>
                 <select id="cfg-srv-status"><option value="online" \${srv.status==='online'?'selected':''}>🟩 EN LIGNE</option><option value="offline" \${srv.status==='offline'?'selected':''}>🟥 COUPÉ</option></select>
             </div>
-            <div class="form-group"><label>👥 Capacité Joueurs :</label><input type="text" id="cfg-srv-slots" value="\${srv.slots || '0/40'}"></div>
+            <!-- 🟢 APRÈS (Variable libérée et étanche) -->
+            <div class="form-group"><label>👥 Capacité Joueurs :</label><input type="text" id="cfg-srv-slots" value="${srv.slots || '0/40'}"></div>
             <div class="form-group"><label>🔥 Compteur de Votes :</label><input type="text" id="cfg-srv-votes" value="${srv.votes || '0'}"></div>
             <div class="form-group"><label>Nom de l'Instance :</label><input type="text" id="cfg-srv-name" value="${srv.name}"></div>
             <div class="form-group"><label>Adresse Réseau (IP:Port) :</label><input type="text" id="cfg-srv-ip" value="${srv.ip}"></div>
@@ -236,6 +237,7 @@ function loadQbcActivePaneForm() {
     }
 }
 
+// 💾 MOTEUR DE SAUVEGARDE UNIFIÉ ET ÉTANCHE AVEC ALLUMAGE LED SYNC v72.0
 function saveQbcDynamicConfiguration() {
     if (activeTabId === "global") {
         qbcClusterData.global.portalTheme = document.getElementById('cfg-portal-theme').value;
@@ -261,11 +263,36 @@ function saveQbcDynamicConfiguration() {
         qbcClusterData[activeTabId].rb = document.getElementById('cfg-srv-rb').value;
         qbcClusterData[activeTabId].wn_text = document.getElementById('cfg-srv-wn-text').value;
     }
+    
+    // Écriture forcée dans le stockage local
     localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData));
+    
+    // 🎨 APPLICATION DU THÈME EN DIRECT SUR L'ADMIN AU CLIC
+    const adminThemeMap = {
+        'standard': "radial-gradient(circle at center, rgba(30, 20, 15, 0.4) 0%, rgba(5, 3, 2, 0.95) 100%)",
+        'noel': "linear-gradient(135deg, #051923 0%, #001219 100%)",
+        'halloween': "linear-gradient(135deg, #1c0a00 0%, #0b0500 100%)",
+        'paques': "linear-gradient(135deg, #0d1f10 0%, #050f06 100%)",
+        'cyberpunk': "linear-gradient(135deg, #140114 0%, #070008 100%)",
+        'apocalypse': "linear-gradient(135deg, #1c0000 0%, #0a0000 100%)",
+        'space': "linear-gradient(135deg, #000814 0%, #00010c 100%)"
+    };
+    if (qbcClusterData.global && qbcClusterData.global.portalTheme && adminThemeMap[qbcClusterData.global.portalTheme]) {
+        document.body.style.setProperty('background', adminThemeMap[qbcClusterData.global.portalTheme], 'important');
+    }
+
+    // 🚨 ALLUMAGE SÉCURISÉ DE LA LED TURQUOISE SUR TOUS LES ONGLETS
     const led = document.getElementById("sync-success-led");
-    if(led) { led.style.setProperty('display', 'block', 'important'); setTimeout(() => { led.style.setProperty('display', 'none', 'important'); }, 2000); }
+    if (led) {
+        led.style.setProperty('display', 'inline-block', 'important');
+        setTimeout(() => { 
+            led.style.setProperty('display', 'none', 'important'); 
+        }, 2000);
+    }
+    
     buildQbcAdminSidebarTabs();
 }
+
 
 function createNewQbcServerInstance() {
     const id = "srv_" + Date.now();
