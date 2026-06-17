@@ -223,11 +223,12 @@
 
             let currentPlayers = "0";
             let maxPlayers = "40";
-            if (srvSlots.includes('/')) {
-                let parts = srvSlots.split('/');
-                currentPlayers = parts[0].trim();
-                maxPlayers = parts[1].trim();
-            }
+            if (srvSlots && srvSlots.includes('/')) {
+            let parts = srvSlots.split('/');
+            currentPlayers = parts[0].trim(); // 🟢 GAUCHE (Ex: 0)
+            maxPlayers = parts[1].trim();     // 🟢 DROITE (Ex: 250)
+}
+
 
             masterGrid.innerHTML += `
                 <div class="server-card-portal" style="border: 1px solid ${neonColor} !important; box-shadow: ${neonGlowStyle} !important;">
