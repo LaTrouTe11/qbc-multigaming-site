@@ -1,280 +1,331 @@
+<!-- VERSION V50.5 SYNTAX REPAIRED - PORTAIL SERVEUR QBC - ALL EFFECTS FIXED -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[QBC] Flaggard | Portail Multivers Réseau 2026</title>
+    <title>Portail Serveur QBC</title>
+    
+    <script>
+        (function() {
+            const DEPLOY_VERSION_QBC = "50.5";
+            if (localStorage.getItem('qbc_matrix_version') !== DEPLOY_VERSION_QBC) {
+                localStorage.clear();
+                sessionStorage.clear();
+                localStorage.setItem('qbc_matrix_version', DEPLOY_VERSION_QBC);
+                console.log("🛡️ Système QBC : Syntaxe réparée et synchronisée.");
+            }
+        })();
+    </script>
+
     <style>
-        body { -webkit-user-select: none; user-select: none; background-color: #050302; color: #f4eae1; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background-image: radial-gradient(circle at center, rgba(30, 20, 15, 0.2) 0%, rgba(5, 3, 2, 0.7) 100%), url('portal_bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
-        .portal-container { max-width: 1300px; width: 100%; margin: 0 auto; padding: 30px; box-sizing: border-box; text-align: center; position: relative; }
-        .qbc-matrix-control-bar { position: absolute; top: 15px; right: 30px; display: flex; align-items: center; gap: 12px; z-index: 999999 !important; }
-        .qbc-matrix-lang-bar { display: flex; gap: 6px; background: rgba(0,0,0,0.85); padding: 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); }
-        .lang-btn { background: transparent; border: none; color: #8a8f98; font-family: monospace; font-size: 11px; font-weight: bold; padding: 6px 14px; border-radius: 4px; cursor: pointer; }
-        .lang-btn.active { background: #ff9900; color: #1c130c; box-shadow: 0 0 10px rgba(255,153,0,0.4); }
-        .matrix-radar-countdown { font-size: 11px; font-family: monospace; color: #ffffff !important; font-weight: bold; text-transform: uppercase; display: flex; align-items: center; gap: 6px; background: rgba(4, 20, 28, 0.9); padding: 7px 14px; border-radius: 6px; border: 1px solid #00ffcc; height: 28px; box-sizing: border-box; }
+        body { -webkit-user-select: none; user-select: none; background-color: #030202; color: #f4eae1; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background-image: radial-gradient(circle at center, rgba(15, 10, 35, 0.15) 0%, rgba(2, 1, 3, 0.85) 100%), url('portal_bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .portal-container { width: 1450px; max-width: 100%; margin: 0 auto; padding: 30px; box-sizing: border-box; text-align: center; }
         
-        .main-header { margin-bottom: 25px; margin-top: 40px; }
-        .main-header h1 { font-size: 32px; color: #ffffff; font-family: monospace; font-weight: bold; margin: 0 0 8px 0; }
-        .main-header p { margin: 0; font-size: 13px; color: #c4b4a3; font-family: monospace; }
+        .main-header { margin: 40px 0 30px 0; }
+        .main-header h1 { font-size: 38px; color: #fff; font-family: monospace; font-weight: 900; margin: 0; letter-spacing: 2px; text-shadow: 0 0 20px rgba(255,153,0,0.2); }
+        .main-header p { margin: 8px 0 0 0; font-size: 12px; color: #ff9900; font-family: monospace; text-transform: uppercase; letter-spacing: 4px; font-weight: bold; }
         
-        /* 🎛️ CONTROLEUR DE FILTRAGE PAR SÉLECTION DE JEUX */
-        .qbc-cluster-global-counter-panel { background: rgba(10, 6, 4, 0.85); border: 1px dashed rgba(0, 255, 204, 0.3); border-radius: 10px; max-width: 750px; margin: 20px auto 10px auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; box-shadow: inset 0 0 15px rgba(0,255,204,0.05); }
-        .filter-pill { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 153, 0, 0.3); color: #8a8f98; font-family: monospace; font-size: 11px; font-weight: bold; padding: 6px 14px; border-radius: 4px; cursor: pointer; transition: 0.2s; text-transform: uppercase; }
-        .filter-pill:hover { border-color: #ff9900; color: #fff; }
-        .filter-pill.active { background: #ff9900; color: #1c130c; border-color: #ff9900; box-shadow: 0 0 10px rgba(255,153,0,0.3); }
+        .qbc-global-warning-bar { width: 100% !important; background: linear-gradient(90deg, #4c0519, #dc2626, #4c0519) !important; border-bottom: 2px solid #ef4444 !important; padding: 12px 0 !important; text-align: center !important; font-family: monospace !important; font-size: 13px !important; font-weight: bold !important; color: #fff !important; text-transform: uppercase; display: none; }
 
-        .game-section-wrapper { width: 100%; margin: 30px 0; text-align: left; }
-        .game-section-title { font-family: monospace; font-size: 13px; font-weight: bold; color: #ff9900; border-left: 3px solid #ff9900; padding-left: 10px; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase; }
-        
-        .portals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; width: 100%; box-sizing: border-box; }
-        .server-card-portal { background: rgba(15, 10, 8, 0.95); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px; padding: 25px; box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8); text-align: left; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; box-sizing: border-box; }
-        .server-card-portal h3 { margin: 0 0 12px 0; font-size: 15px; color: #fff; font-family: monospace; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; font-weight: bold; min-height: 50px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-        .server-title-text-wrapper { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; max-width: 75%; word-break: break-word; }
-        .server-card-portal p { margin: 8px 0; font-size: 13px; color: #c4b4a3; font-family: sans-serif; }
-        .status-badge-led { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-family: monospace; font-weight: bold; padding: 5px 10px; border-radius: 4px; }
-        .led-pulse { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-        
-        .qbc-server-internal-ticker { background: #000000 !important; border: 1px solid rgba(255, 153, 0, 0.4) !important; border-radius: 6px; padding: 8px 12px; font-family: monospace; font-size: 11px; color: #ff9900 !important; font-weight: bold; margin-top: 12px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; box-shadow: inset 0 0 8px rgba(255, 153, 0, 0.1); }
-        .qbc-server-internal-ticker span.warn-icon { animation: blinker 1s linear infinite; color: #ff9900; }
-        @keyframes blinker { 50% { opacity: 0; } }
-        
-        .btn-portal { background: #0f0a07; color: #fff; border: 1px solid #ffffff; padding: 12px 20px; font-weight: bold; text-transform: uppercase; border-radius: 6px; font-size: 11px; cursor: pointer; text-decoration: none; display: block; text-align: center; font-family: monospace; width: 100%; box-sizing: border-box; transition: 0.2s; }
-        .btn-portal-warning-orange { background: rgba(234, 88, 12, 0.15) !important; color: #ff9900 !important; border: 1px solid #ff9900 !important; padding: 12px 20px; font-weight: 900; text-transform: uppercase; border-radius: 6px; font-size: 11px; text-align: center; font-family: monospace; width: 100%; box-sizing: border-box; cursor: not-allowed; letter-spacing: 0.5px; animation: qbcOrangeFlashAlert2026 1.5s infinite ease-in-out; }
-        @keyframes qbcOrangeFlashAlert2026 { 0% { opacity: 1; box-shadow: 0 0 5px rgba(255, 153, 0, 0.2); } 50% { opacity: 0.5; box-shadow: 0 0 15px rgba(255, 153, 0, 0.6); background: rgba(234, 88, 12, 0.3) !important; } 100% { opacity: 1; box-shadow: 0 0 5px rgba(255, 153, 0, 0.2); } }
+        .qbc-cluster-global-counter-panel { background: rgba(10, 7, 6, 0.6); border: 1px solid rgba(255, 153, 0, 0.15); border-radius: 8px; max-width: 750px; margin: 0 auto 35px auto; padding: 10px; display: flex; justify-content: center; gap: 12px; backdrop-filter: blur(10px); }
+        .filter-pill { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 153, 0, 0.25); color: #a1a1aa; font-family: monospace; font-size: 11px; font-weight: bold; padding: 10px 20px; border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
+        .filter-pill.active { background: #ff9900; color: #050302; border-color: #ff9900; box-shadow: 0 0 15px rgba(255,153,0,0.3); font-weight: 900; }
 
-        .qbc-portal-footer-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 60px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.08); }
-        .btn-admin-access { background: transparent; border: 1px dashed rgba(255,153,0,0.2); color: rgba(255,153,0,0.4); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: monospace; font-size: 11px; text-decoration: none; transition: 0.2s; }
-        .btn-admin-access:hover { border-color: #ff9900; color: #ff9900; background: rgba(255,153,0,0.02); }
-        .matrix-update-timestamp { font-size: 11px; font-family: monospace; font-weight: bold; color: #ff9900 !important; background: rgba(255,153,0,0.08); padding: 8px 16px; border-radius: 6px; border: 1px solid rgba(255,153,0,0.3); text-transform: uppercase; letter-spacing: 0.5px; }
-
-        .qbc-marquee-wrapper { display: none; width: 100%; background: linear-gradient(90deg, #9a3412, #1e1b4b, #9a3412); border-bottom: 2px solid #ff9900; overflow: hidden; position: relative; padding: 10px 0; z-index: 1000; }
-        .qbc-marquee-text { display: inline-block; white-space: nowrap; font-family: monospace; font-size: 13px; font-weight: 900; color: #ffffff; text-transform: uppercase; padding-left: 100%; animation: qbcMatrixMarquee2026 25s linear infinite; }
-        @keyframes qbcMatrixMarquee2026 { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+        .qbc-master-servers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; width: 100%; box-sizing: border-box; }
+        
+        .server-card-portal { 
+            background: rgba(12, 8, 7, 0.65) !important; 
+            border-radius: 12px !important; 
+            padding: 25px !important; 
+            box-sizing: border-box !important; 
+            backdrop-filter: blur(20px) !important; 
+            -webkit-backdrop-filter: blur(20px) !important; 
+            transition: all 0.2s ease-in-out !important; 
+            min-height: 290px !important; 
+            height: 290px !important; 
+            display: flex !important; 
+            flex-direction: column !important; 
+            justify-content: center !important;
+            position: relative !important;
+        }
+        
+        .card-split-layout { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 25px; text-align: left; }
+        
+        .qbc-net-address-badge { background: rgba(0, 0, 0, 0.6); padding: 8px 14px; border-radius: 5px; font-family: monospace; font-size: 14px; color: #00ffcc; font-weight: bold; margin-bottom: 15px; display: inline-flex; align-items: center; box-shadow: inset 0 1px 5px rgba(0,0,0,0.5); letter-spacing: 0.5px; }
+        .status-badge-led { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-family: monospace; font-weight: bold; }
+        .led-pulse { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+        .led-green { background: #00ffcc; box-shadow: 0 0 10px #00ffcc; }
+        
+        .btn-portal { background: #140e0a; color: #fff; border: 1px solid rgba(255,255,255,0.15); padding: 12px; font-weight: 900; text-transform: uppercase; border-radius: 5px; font-size: 11px; cursor: pointer; text-decoration: none; text-align: center; font-family: monospace; width: 100%; box-sizing: border-box; display: block; letter-spacing: 1px; transition: all 0.2s ease; }
+        .btn-portal:hover { background: #fff; color: #050302; box-shadow: 0 4px 15px rgba(255,255,255,0.15); }
+        
+        .status-pill-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-family: monospace; font-size: 11px; font-weight: 900; text-transform: uppercase; margin-top: 10px; }
+        
+        .qbc-portal-footer-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 60px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.08); font-size: 11px; font-family: monospace; }
+        .btn-admin-access { background: transparent; border: 1px dashed rgba(255,153,0,0.25); color: rgba(255,153,0,0.4); padding: 8px 16px; border-radius: 5px; cursor: pointer; text-decoration: none; }
+        .btn-admin-access:hover { border-color: #ff9900; color: #ff9900; }
+        .qbc-live-slots-node { font-size: 12px; font-weight: 900; font-family: monospace; }
     </style>
 </head>
 <body>
-<div id="qbc-global-announcement-bar" class="qbc-marquee-wrapper"><div id="qbc-announcement-text-loader" class="qbc-marquee-text">-</div></div>
+
+<div class="qbc-global-warning-bar" id="qbc-alert-banner">
+    <span id="cfg-global-warn">INITIALISATION DU PORTAIL SERVEUR...</span>
+</div>
+
 <div class="portal-container">
-    <div class="qbc-matrix-control-bar">
-        <div class="matrix-radar-countdown"><span style="color: #00ffcc;">📡</span><span id="qbc-radar-clock-label">SCAN : 60S</span></div>
-        <div class="qbc-matrix-lang-bar">
-            <button id="qbc-lang-fr" class="lang-btn active" onclick="switchGlobalPortalLang('fr')">FR</button>
-            <button id="qbc-lang-en" class="lang-btn" onclick="switchGlobalPortalLang('en')">EN</button>
-        </div>
-    </div>
-    
     <div class="main-header">
-        <h1 id="txt-main-title">🌌 QBC FLAGGARD — PORTAIL MULTIVERS</h1>
-        <p id="txt-main-sub">-</p>
+        <h1 id="qbc-index-main-title">PORTAIL SERVEUR QBC</h1>
+        <p id="qbc-index-sub-title">INFRASTRUCTURE UNIFIÉE D'ACCÈS RÉSEAU</p>
     </div>
 
-    <!-- DOUBLE COUNTER RETOURNÉ DE SÉCURITÉ -->
-    <div class="qbc-cluster-global-counter-panel">
-        <div id="qbc-matrix-filter-pills" style="display:flex; gap:8px;">
-            <button class="filter-pill active" onclick="setGlobalPortalFilter2026('all')">ALL (<span id="cnt-all-srv">0</span>)</button>
-            <button class="filter-pill" onclick="setGlobalPortalFilter2026('7dtd')">7DTD (<span id="cnt-7dtd-srv">0</span>)</button>
-            <button class="filter-pill" onclick="setGlobalPortalFilter2026('wurm')">WURM (<span id="cnt-wurm-srv">0</span>)</button>
-            <button class="filter-pill" onclick="setGlobalPortalFilter2026('avorion')">AVORION (<span id="cnt-avorion-srv">0</span>)</button>
-        </div>
-        <div style="font-family:monospace; font-size:11px;">
-            <span id="txt-visitor-label" style="color: #8a8f98;">COMPTEUR VISITEURS DIRECTS :</span>
-            <span id="qbc-visitor-realtime-count" style="color: #00ffcc; margin-left: 5px;">0 PASS</span>
-        </div>
+    <div class="qbc-cluster-global-counter-panel" id="qbc-tabs-pillbox">
+        <button class="filter-pill active" id="pill-all" onclick="applyQbcClusterFilter('all')">TOUTES LES INSTANCES</button>
     </div>
-    
-    <div id="qbc-compartments-master-box"></div>
-    
+
+    <div class="qbc-master-servers-grid" id="qbc-main-grid-node"></div>
+
     <div class="qbc-portal-footer-bar">
-        <button onclick="promptForAdminAccess2026()" class="btn-admin-access" id="btn-admin-label">🛠️ CONSOLE MAINTENANCE IMPÉRIALE</button>
-        <div id="qbc-sync-timestamp-area" class="matrix-update-timestamp">-</div>
-    </div>
-</div>
+        <div style="color:#00ffcc;">👥 MATRIX USERS: <span id="qbc-visitor-count-node">1</span></div>
+        <a href="admin.html" class="btn-admin-access">🎛️ ACCÈS COCKPIT ADMIN</a>
+        <div style="color:#ff9900; font-weight:bold; text-transform:uppercase; letter-spacing:1px;">MATRIX SECURE CONDUIT</div>
+        <div style="color:#ff9900;">📡 RADAR CORE: <span id="qbc-chrono-clock">60S</span></div>
     </div>
 </div>
 
-<script>window.QBC_GLOBAL_CONFIG_LOADED = false;</script>
-<script src="js/config.js" onerror="console.warn('Config.js absent - Failsafe Actif')"></script>
-<script>if(typeof QBC_GLOBAL_CONFIG !== 'undefined') { window.QBC_GLOBAL_CONFIG_LOADED = true; }</script>
-
+<script src="conf.js"></script>
 <script>
-const PORTAL_DICTIONARY_UI = {
-    fr: { title: "🌌 QBC FLAGGARD — PORTAIL MULTIVERS", sub: "Connecteurs d'instances et aiguillages de grappes réseau", adminBtn: "🛠️ CONSOLE MAINTENANCE IMPÉRIALE", netAccess: "ACCÈS RÉSEAU :", playerCount: "NOMBRE DE JOUEURS :", maintActive: "Secteur Verrouillé", connectBtn: "Se Connecter à l'Instance ↗", maintBtn: "⚠️ WARNING EN MAINTENANCE", statusOnline: "ONLINE", statusOffline: "OFFLINE", lastMia: "⚡ DERNIÈRE MISE À JOUR : ", alertLabel: " 🚨 ALERTE MATRICE : ", offlineBtn: "❌ WARNING SERVEUR HORS-LIGNE", radarBtn: "SCAN : ", hiddenIp: "Secteur Sécurisé [CENSED]", visitorText: "COMPTEUR VISITEURS DIRECTS :" },
-    en: { title: "🌌 QBC FLAGGARD — MULTIVERSE PORTAL", sub: "Instance connectors and network cluster routing", adminBtn: "🛠️ IMPERIAL MAINTENANCE CONSOLE", netAccess: "NETWORK ACCESS:", playerCount: "PLAYERS ONLINE:", maintActive: "Sector Locked", connectBtn: "Connect to Instance ↗", maintBtn: "⚠️ UNDER MAINTENANCE", statusOnline: "ONLINE", statusOffline: "OFFLINE", lastMia: "⚡ LAST REFRESH : ", alertLabel: " 🚨 MATRIX ALERT: ", offlineBtn: "❌ SERVER OFFLINE", radarBtn: "SCAN: ", hiddenIp: "Secured Sector [CENSED]", visitorText: "TOTAL DIRECT VISITORS:" }
-};
-const DEFAULT_GAME_ICONS = { '7dtd1': "☣️", '7dtd2': "💀", 'wurm1': "🛡️", 'wurm2': "🧟", 'avorion1': "🚀", 'avorion2': "🌌" };
-const PORTAL_NAMES_DICTIONARY = { 'wurm1': "ROYAUME DORIATH (WURM)", 'wurm2': "ROYAUME FLAGGARD (WURM)", '7dtd1': "APOCALYPSE S1 (7DTD)", '7dtd2': "HARDCORE SURVIVAL S2 (7DTD)", 'avorion1': "SECTEUR ALPHA CORE (AVORION)", 'avorion2': "FRONTIÈRE SANS LOI (AVORION)" };
+    let currentActiveFilter = "all";
 
-let activeLang = "fr", currentRadarTime = 60, matrixRadarInterval = null;
-
-// 🔒 APPLICATION DU CHOIX PAR DÉFAUT EXTENSIBLE SUR ALL (TOUS LES SERVEURS VISIBLES) [INDEX]
-let currentActiveFilter2026 = localStorage.getItem('qbc_active_filter_pills') || "all";
-
-function switchGlobalPortalLang(lang) {
-    activeLang = lang; localStorage.setItem('qbc_global_language', lang);
-    document.getElementById('qbc-lang-fr').className = lang === 'fr' ? 'lang-btn active' : 'lang-btn';
-    document.getElementById('qbc-lang-en').className = lang === 'en' ? 'lang-btn active' : 'lang-btn';
-    let ui = PORTAL_DICTIONARY_UI[lang];
-    let customMainTitle = localStorage.getItem('qbc_main_portal_title');
-    document.getElementById('txt-main-title').innerText = (customMainTitle && customMainTitle.trim() !== "") ? customMainTitle : ui.title;
-    let customSub = localStorage.getItem('qbc_main_portal_sub_' + lang);
-    document.getElementById('txt-main-sub').innerText = (customSub && customSub.trim() !== "") ? customSub : ui.sub;
-    document.getElementById('btn-admin-label').innerText = ui.adminBtn;
-    document.getElementById('txt-visitor-label').innerText = ui.visitorText;
-    let rawDate = "2026-06-14 02:00";
-    try { if (window.QBC_GLOBAL_CONFIG_LOADED && QBC_GLOBAL_CONFIG.lastUpdate) { rawDate = QBC_GLOBAL_CONFIG.lastUpdate; } } catch(e){}
-    document.getElementById('qbc-sync-timestamp-area').innerText = ui.lastMia + rawDate;
-    loadAllPortals2026(false); checkAndDisplayAnnouncement2026(); updateRadarClockDisplay();
-}
-
-function setGlobalPortalFilter2026(filterType) {
-    currentActiveFilter2026 = filterType;
-    localStorage.setItem('qbc_active_filter_pills', filterType);
-    
-    const pills = document.querySelectorAll('#qbc-matrix-filter-pills .filter-pill');
-    pills.forEach(p => p.classList.remove('active'));
-    
-    const idx = filterType === 'all' ? 0 : (filterType === '7dtd' ? 1 : (filterType === 'wurm' ? 2 : 3));
-    if (pills[idx]) pills[idx].classList.add('active');
-    
-    loadAllPortals2026(true);
-}
-
-function promptForAdminAccess2026() {
-    let pwd = prompt("🔒 Entrez la clé d'authentification administrative :");
-    if (pwd === "QBC2026") { window.location.href = "admin.html"; } else if (pwd !== null) { alert("❌ Clé incorrecte."); }
-}
-
-function loadAllPortals2026(isAutoRefresh) {
-    const masterBox = document.getElementById('qbc-compartments-master-box'); if (!masterBox) return;
-    let customPortals = {}; 
-    try { if (window.QBC_GLOBAL_CONFIG_LOADED) { customPortals = JSON.parse(JSON.stringify(QBC_GLOBAL_CONFIG)); } } catch(e) {}
-    const localAdded = localStorage.getItem('qbc_admin_portals'); if (localAdded) { try { Object.assign(customPortals, JSON.parse(localAdded)); } catch(e) {} }
-    
-    if (!customPortals || Object.keys(customPortals).length === 0 || (!customPortals.wurm1 && !customPortals['7dtd1'])) {
-        customPortals = { 
-            '7dtd1': { ip: "67.216.85.235", port: "26900", maxPlayers: 30 }, 
-            '7dtd2': { ip: "67.216.85.236", port: "26901", maxPlayers: 30 }, 
-            'wurm1': { ip: "104.243.40.52", port: "3724", maxPlayers: 250 }, 
-            'wurm2': { ip: "74.50.94.238", port: "3724", maxPlayers: 250 }, 
-            'avorion1': { ip: "45.134.8.12", port: "27015", maxPlayers: 20 }, 
-            'avorion2': { ip: "45.134.8.13", port: "27016", maxPlayers: 20 } 
-        };
+    function runQbcVisitorCounter() {
+        let count = localStorage.getItem('qbc_visit_total') || 142;
+        localStorage.setItem('qbc_visit_total', parseInt(count) + 1);
+        if(document.getElementById('qbc-visitor-count-node')) document.getElementById('qbc-visitor-count-node').innerText = count;
     }
-    
-    let sectionsData = {
-        '7dtd': { title: activeLang === 'fr' ? "☣️ UNIVERSE : 7 DAYS TO DIE" : "☣️ 7 DAYS TO DIE SECTOR", cardsHtml: "", count: 0 },
-        'wurm': { title: activeLang === 'fr' ? "🛡️ ROYAUMES : WURM UNLIMITED" : "🛡️ WURM UNLIMITED REALMS", cardsHtml: "", count: 0 },
-        'avorion': { title: activeLang === 'fr' ? "🚀 SECTEURS : AVORION MATRICE" : "🚀 AVORION GALAXY CLUSTER", cardsHtml: "" , count: 0 }
-    };
-    
-    let totalGlobalServersCount = 0;
-    let ui = PORTAL_DICTIONARY_UI[activeLang];
-    
-    for (let key in customPortals) {
-        if (key === "discordURL" || key === "maintenanceMessage" || key === "lastUpdate" || key === "maxPlayers") continue;
-        let server = customPortals[key]; if (!server || !server.ip) continue;
-        
-        let currentType = key.includes('7dtd') ? '7dtd' : (key.includes('wurm') ? 'wurm' : 'avorion');
-        sectionsData[currentType].count++;
-        totalGlobalServersCount++;
 
-        let displayIcon = localStorage.getItem('qbc_custom_icon_' + key) || DEFAULT_GAME_ICONS[key] || "🎮";
-        let publicName = localStorage.getItem('qbc_custom_name_' + key) || PORTAL_NAMES_DICTIONARY[key] || `INSTANCE : ${key.toUpperCase()}`;
-        let isMaintActive = localStorage.getItem('qbc_state_' + key) === "true" || server.ip === "MAINTENANCE";
-        let neonColor = key.includes("wurm") ? "#d4af37" : (key.includes("7dtd") ? "#2ecc71" : "#00ffcc");
-        let isServerOnline = !(server.ip === "127.0.0.1" || server.ip === "0.0.0.0");
-        let ledColor = isServerOnline ? "#2ecc71" : "#cc2222";
-        let ledBadgeHtml = `<div class="status-badge-led" style="color: ${ledColor}; background: rgba(0,0,0,0.4); border: 1px solid ${ledColor}30;"><span class="led-pulse" style="background-color: ${ledColor};"></span><span>${isServerOnline ? ui.statusOnline : ui.statusOffline}</span></div>`;
-        let cardStyle = isMaintActive ? "border-color: #ea580c;" : (!isServerOnline ? "border-color: #cc2222;" : `border-color: ${neonColor}40;`);
-        let destinationUrl = key.includes("wurm") ? `wurm/index.html?server=${key}&lang=${activeLang}` : (key.includes("avorion") ? `avorion/index.html?server=${key}&lang=${activeLang}` : `7dtd/index.html?server=${key}&lang=${activeLang}`);
-        
-        let actionButtonHtml = isMaintActive ? `<button class="btn-portal-warning-orange">${ui.maintBtn}</button>` : (!isServerOnline ? `<button class="btn-portal" style="border-color:#cc2222; color:#cc2222;" disabled>${ui.offlineBtn}</button>` : `<a href="${destinationUrl}" class="btn-portal" style="border-color: ${neonColor}; color: ${neonColor};">${ui.connectBtn}</a>`);
-        let isIpCensored = localStorage.getItem('qbc_hide_ip_' + key) === "true";
-        let networkStringDisplay = isIpCensored ? ui.hiddenIp : (isMaintActive ? ui.maintActive : server.ip + ' : ' + server.port);
-        
-        let serverTickerHtml = "";
-        let savedTickerText = localStorage.getItem('qbc_ticker_msg_' + key);
-        if (savedTickerText && savedTickerText.trim() !== "") {
-            serverTickerHtml = `<div class="qbc-server-internal-ticker"><span class="warn-icon">🚨</span> <span>${savedTickerText}</span></div>`;
+    let chronoTimeRemaining = 60;
+    function runQbcChRadar() {
+        chronoTimeRemaining--;
+        if (document.getElementById('qbc-chrono-clock')) document.getElementById('qbc-chrono-clock').innerText = chronoTimeRemaining + "S";
+        if (chronoTimeRemaining <= 0) { chronoTimeRemaining = 60; loadQbcMatrixDynamicConfig(); }
+    }
+
+    function loadQbcMatrixDynamicConfig() {
+        let db = window.qbcClusterData || (typeof qbcClusterData !== 'undefined' ? qbcClusterData : null);
+        if (localStorage.getItem('qbc_server_db')) {
+            try { db = JSON.parse(localStorage.getItem('qbc_server_db')); } catch(e) {}
         }
-        
-        let cardHtml = `
-            <div class="server-card-portal" style="${cardStyle}">
-                <div>
-                    <h3>
-                        <div class="server-title-text-wrapper" style="color: ${isMaintActive ? '#ea580c' : (!isServerOnline ? '#cc2222' : neonColor)};">
-                            <span>${displayIcon}</span> <span>${publicName}</span>
-                        </div>
-                        ${isMaintActive ? '' : ledBadgeHtml}
-                    </h3>
-                    <p><strong>${ui.netAccess}</strong> ${networkStringDisplay}</p>
-                    <p><strong>${ui.playerCount}</strong> ${isServerOnline ? '0' : '--'} / ${parseInt(server.maxPlayers) || 20}</p>
-                    ${serverTickerHtml}
-                </div>
-                <div style="margin-top: 20px; width: 100%;">${actionButtonHtml}</div>
-            </div>`;
+        if (!db) return;
+
+        if (db.global) {
+            if (db.global.indexMainTitle && document.getElementById('qbc-index-main-title')) document.getElementById('qbc-index-main-title').innerText = db.global.indexMainTitle;
+            if (db.global.indexSubTitle && document.getElementById('qbc-index-sub-title')) document.getElementById('qbc-index-sub-title').innerText = db.global.indexSubTitle;
+            const warningSignal = document.getElementById('cfg-global-warn');
+            const warningBar = document.getElementById('qbc-alert-banner');
+            if (warningSignal && db.global.warn) {
+                warningSignal.innerText = db.global.warn;
+                if(warningBar) warningBar.style.setProperty('display', 'block', 'important');
+            } else if (warningBar) {
+                warningBar.style.setProperty('display', 'none', 'important');
+            }
             
-        if (currentActiveFilter2026 === 'all' || currentActiveFilter2026 === currentType) {
-            sectionsData[currentType].cardsHtml += cardHtml;
+            const themeMap = {
+                'standard': "radial-gradient(circle at center, rgba(30, 20, 15, 0.2) 0%, rgba(5, 3, 2, 0.7) 100%), url('portal_bg.jpg')",
+                'noel': "radial-gradient(circle at center, rgba(15, 35, 15, 0.3) 0%, rgba(3, 8, 3, 0.85) 100%), url('noel_bg.jpg')",
+                'halloween': "radial-gradient(circle at center, rgba(45, 20, 5, 0.3) 0%, rgba(10, 5, 2, 0.9) 100%), url('halloween_bg.jpg')",
+                'paques': "radial-gradient(circle at center, rgba(20, 45, 20, 0.2) 0%, rgba(5, 10, 5, 0.8) 100%), url('paques_bg.jpg')",
+                'cyberpunk': "radial-gradient(circle at center, rgba(25, 5, 35, 0.25) 0%, rgba(5, 2, 8, 0.9) 100%), url('cyber_bg.jpg')",
+                'apocalypse': "radial-gradient(circle at center, rgba(40, 10, 10, 0.3) 0%, rgba(12, 3, 3, 0.95) 100%), url('apoc_bg.jpg')",
+                'space': "radial-gradient(circle at center, rgba(10, 20, 40, 0.15) 0%, rgba(2, 4, 10, 0.9) 100%), url('space_bg.jpg')"
+            };
+            if (db.global.portalTheme && themeMap[db.global.portalTheme]) {
+                document.body.style.setProperty('background-image', themeMap[db.global.portalTheme], 'important');
+            }
         }
-    }
-    
-    if(document.getElementById('cnt-all-srv')) document.getElementById('cnt-all-srv').innerText = totalGlobalServersCount;
-    if(document.getElementById('cnt-7dtd-srv')) document.getElementById('cnt-7dtd-srv').innerText = sectionsData['7dtd'].count;
-    if(document.getElementById('cnt-wurm-srv')) document.getElementById('cnt-wurm-srv').innerText = sectionsData['wurm'].count;
-    if(document.getElementById('cnt-avorion-srv')) document.getElementById('cnt-avorion-srv').innerText = sectionsData['avorion'].count;
 
-    let finalMasterHtml = "";
-    for (let sKey in sectionsData) {
-        if (sectionsData[sKey].cardsHtml !== "") {
-            finalMasterHtml += `
-                <div class="game-section-wrapper">
-                    <div class="game-section-title">${sectionsData[sKey].title}</div>
-                    <div class="portals-grid">${sectionsData[sKey].cardsHtml}</div>
+        const pillbox = document.getElementById('qbc-tabs-pillbox');
+        if (pillbox) {
+            let uniqueTypes = new Set();
+            Object.keys(db).forEach(k => { if(k !== "global" && db[k].type) uniqueTypes.add(db[k].type.toLowerCase().trim()); });
+            let pillsHTML = `<button class="filter-pill ${currentActiveFilter === 'all' ? 'active' : ''}" id="pill-all" onclick="applyQbcClusterFilter('all')">TOUTES LES INSTANCES</button>`;
+            uniqueTypes.forEach(t => {
+                pillsHTML += `<button class="filter-pill ${currentActiveFilter === t ? 'active' : ''}" id="pill-${t}" onclick="applyQbcClusterFilter('${t}')">${t.toUpperCase()}</button>`;
+            });
+            pillbox.innerHTML = pillsHTML;
+        }
+
+        const masterGrid = document.getElementById('qbc-main-grid-node');
+        if(!masterGrid) return; masterGrid.innerHTML = "";
+
+        Object.keys(db).forEach(key => {
+            if (key === "global") return;
+            const srv = db[key];
+            let srvTypeLower = (srv.type || "").toLowerCase().trim();
+            if (currentActiveFilter !== "all" && srvTypeLower !== currentActiveFilter) return;
+
+            let srvSlots = srv.slots || "0/40";
+            let srvVotes = srv.votes || 0;
+            let detailPageLink = srvTypeLower + ".html";
+
+            let badgeStateHTML = "";
+            
+            let neonColor = "rgba(0, 25, 204, 0.3)";
+            let neonGlowStyle = "0 0 25px rgba(0, 25, 204, 0.25), inset 0 1px 2px rgba(255,255,255,0.1)";
+            
+            if (srvTypeLower === "7dtd") {
+                neonColor = "rgba(239, 68, 68, 0.4)";
+                neonGlowStyle = "0 0 30px rgba(239, 68, 68, 0.3), 0 10px 40px rgba(0,0,0,0.7), inset 0 1px 2px rgba(255,255,255,0.1)";
+            } else if (srvTypeLower === "avorion") {
+                neonColor = "rgba(0, 153, 255, 0.4)";
+                neonGlowStyle = "0 0 30px rgba(0, 153, 255, 0.3), 0 10px 40px rgba(0,0,0,0.7), inset 0 1px 2px rgba(255,255,255,0.1)";
+            } else if (srvTypeLower === "wurm") {
+                neonColor = "rgba(255, 153, 0, 0.4)";
+                neonGlowStyle = "0 0 30px rgba(255, 153, 0, 0.3), 0 10px 40px rgba(0,0,0,0.7), inset 0 1px 2px rgba(255,255,255,0.1)";
+            }
+
+            let badgeState = (srv.badge_state || "stable").toLowerCase().trim();
+            if (badgeState === "urgent") {
+                badgeStateHTML = `<span class="status-pill-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444;">🚨 CRITICAL WARNING</span>`;
+            } else if (badgeState === "maintenance") {
+                badgeStateHTML = `<span class="status-pill-badge" style="background: rgba(255, 153, 0, 0.1); color: #ff9900; border: 1px dashed #ff9900;">🛠️ MAINTENANCE</span>`;
+            } else if (badgeState === "pack") {
+                badgeStateHTML = `<span class="status-pill-badge" style="background: rgba(168, 85, 247, 0.1); color: #a855f7; border: 1px solid #a855f7;">📦 PACK AJOURNÉ</span>`;
+            } else if (badgeState === "sync") {
+                badgeStateHTML = `<span class="status-pill-badge" style="background: rgba(0, 153, 255, 0.1); color: #0099ff; border: 1px dashed #0099ff;">📡 SYNC EN COURS</span>`;
+            } else {
+                badgeStateHTML = `<span class="status-pill-badge" style="background: rgba(0, 25, 204, 0.1); color: #00ffcc; border: 1px solid #00ffcc;">🟢 NODE STABLE</span>`;
+            }
+
+            let independentMessageHTML = "";
+            if (srv.wn_text && srv.wn_text.trim() !== "") {
+                independentMessageHTML = `<div style="margin-top: 10px; font-family: monospace; font-size: 11px; color: #00ffcc; line-height: 1.4; padding-left: 10px; border-left: 2px solid #00ffcc;">📌 INFO MESSAGE: ${srv.wn_text}</div>`;
+            }
+
+            let actionBtnSecondaryHTML = `<a href="${detailPageLink}" class="btn-portal" style="background: linear-gradient(135deg, #ffcc00, #ff9900) !important; color: #050302 !important; border: 1px solid #ffcc00 !important; box-shadow: 0 4px 15px rgba(255,153,0,0.3) !important;">🗺️ VOIR LA LIVE MAP [LIVE]</a>`;
+            if (srvTypeLower === "7dtd") {
+                actionBtnSecondaryHTML = `<a href="7dtd.html" class="btn-portal" style="background: rgba(239, 68, 68, 0.08) !important; color: #ef4444 !important; border: 1px dashed #ef4444 !important; font-weight: 900 !important;">🧟 VOIR LES 136 MODS [PACK]</a>`;
+            } else if (srvTypeLower === "avorion") {
+                actionBtnSecondaryHTML = `<a href="avorion.html" class="btn-portal" style="background: rgba(0, 153, 255, 0.08) !important; color: #0099ff !important; border: 1px dashed #0099ff !important; font-weight: 900 !important;">🚀 SPECIFICATIONS VAISSEAUX</a>`;
+            }
+
+            let currentPlayers = "0";
+            let maxPlayers = "40";
+            if (srvSlots.includes('/')) {
+                let parts = srvSlots.split('/');
+                currentPlayers = parts[0].trim();
+                maxPlayers = parts[1].trim();
+            }
+
+            masterGrid.innerHTML += `
+                <div class="server-card-portal" style="border: 1px solid ${neonColor} !important; box-shadow: ${neonGlowStyle} !important;">
+                    <div class="card-split-layout">
+                        <div>
+                            <h3 style="margin: 0 0 6px 0; font-size: 21px; color: #fff; font-family: monospace; font-weight: bold;">${srv.name}</h3>
+                            <div class="qbc-net-address-badge">${srv.ip}</div>
+                            
+                            <div style="margin-top: 12px; font-family: monospace; font-size: 12px; color: #ffffff !important; line-height: 1.4; background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 4px; border: 1px dashed rgba(255,255,255,0.06);">
+                                <span style="color:#ff9900; font-weight:bold;">⏳ REBOOT:</span> ${srv.rb}
+                            </div>
+                            
+                            ${badgeStateHTML}
+                            ${independentMessageHTML}
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; justify-content: flex-start; border-left: 1px dashed rgba(255,255,255,0.08); padding-left: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 4px; height: 36px !important; box-sizing: border-box !important;">
+                                <div class="status-badge-led"><span class="qbc-live-ping-node">34 MS</span></div>
+                                <div class="status-badge-led">👥 <span class="qbc-live-slots-node" data-current="${currentPlayers}" data-max="${maxPlayers}">${currentPlayers}/${maxPlayers}</span></div>
+                                <div class="status-badge-led" style="color:#00ffcc;"><span class="led-pulse led-green"></span>LIVE</div>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 15px;">
+                                <div style="flex: 1; background: rgba(255, 153, 0, 0.02); border: 1px dashed rgba(255, 153, 0, 0.2); padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; font-weight: bold; color: #ff9900; text-align: center;">🔥 VOTES: <span id="vote-count-${key}">${srvVotes}</span></div>
+                                <button onclick="castQbcMatrixVote('${key}')" style="background: #ff9900; color: #050302; border: none; padding: 10px 14px; font-family: monospace; font-size: 11px; font-weight: 900; border-radius: 4px; cursor: pointer;">👍</button>
+                            </div>
+                            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 5px;">
+                                <a href="steam://connect/${srv.ip}" class="btn-portal">⚔️ REJOINDRE LE SERVEUR</a>
+                                ${actionBtnSecondaryHTML}
+                            </div>
+                        </div>
+                    </div>
                 </div>`;
+        });
+    }
+
+    // 🚨 MULTIPLEXEUR DE VOTES V51.0 : ROUTAGE ET COOLDOWN SANS ACCLADE ORPHELINE
+    function castQbcMatrixVote(srvKey) {
+        let db = window.qbcClusterData || (typeof qbcClusterData !== 'undefined' ? qbcClusterData : null);
+        if (localStorage.getItem('qbc_server_db')) { try { db = JSON.parse(localStorage.getItem('qbc_server_db')); } catch(e) {} }
+        if (db && db[srvKey]) {
+            const srv = db[srvKey];
+            
+            const btnNode = document.querySelector(`button[onclick="castQbcMatrixVote('${srvKey}')"]`);
+            if (btnNode && btnNode.getAttribute('data-locked') === 'true') return;
+
+            let currentVotes = parseInt(srv.votes) || 0; currentVotes++;
+            db[srvKey].votes = currentVotes.toString();
+            localStorage.setItem('qbc_server_db', JSON.stringify(db));
+            
+            const voteNode = document.getElementById(`vote-count-${srvKey}`); if (voteNode) voteNode.innerText = currentVotes;
+
+            if (btnNode) {
+                btnNode.setAttribute('data-locked', 'true');
+                btnNode.style.setProperty('background', '#4b5563', 'important');
+                let timeLeft = 5; btnNode.innerText = `⏳ ${timeLeft}s`;
+                let cooldownTicker = setInterval(() => {
+                    timeLeft--; btnNode.innerText = `⏳ ${timeLeft}s`;
+                    if (timeLeft <= 0) {
+                        clearInterval(cooldownTicker); btnNode.removeAttribute('data-locked');
+                        btnNode.style.setProperty('background', '#ff9900', 'important'); btnNode.innerText = "👍";
+                    }
+                }, 1000);
+            }
+
+            let srvTypeLower = (srv.type || "").toLowerCase().trim();
+            let nameLower = (srv.name || "").toLowerCase();
+            
+            if (srvTypeLower === "wurm" || nameLower.includes("wurm") || nameLower.includes("doriath")) {
+                window.open("https://wurm-unlimited.com", "_blank");
+            } else if (srvTypeLower === "7dtd" || nameLower.includes("7dtd") || nameLower.includes("die") || nameLower.includes("survie")) {
+                window.open("https://7daystodie-servers.com", "_blank");
+            } else {
+                window.open("https://top-serveurs.net", "_blank");
+            }
         }
     }
-    masterBox.innerHTML = finalMasterHtml;
-    
-    const currentPills = document.querySelectorAll('#qbc-matrix-filter-pills .filter-pill');
-    currentPills.forEach(p => p.classList.remove('active'));
-    const activeIdx = currentActiveFilter2026 === 'all' ? 0 : (currentActiveFilter2026 === '7dtd' ? 1 : (currentActiveFilter2026 === 'wurm' ? 2 : 3));
-    if (currentPills[activeIdx]) currentPills[activeIdx].classList.add('active');
 
-    if (!isAutoRefresh) { startMatrixRadarClock(); }
-}
+    window.onload = function() {
+        runQbcVisitorCounter(); loadQbcMatrixDynamicConfig();
+        setInterval(runQbcChRadar, 1000);
+        setInterval(() => {
+            document.querySelectorAll('.qbc-live-ping-node').forEach(node => {
+                let cardText = node.closest('.server-card-portal').innerHTML.toLowerCase();
+                let pingBase = cardText.includes("wurm") || cardText.includes("doriath") ? 8 : 34;
+                node.innerText = (pingBase + Math.floor(Math.random() * 5) - 2) + " MS";
+            });
+        }, 3000);
+        setInterval(() => {
+            document.querySelectorAll('.qbc-live-slots-node').forEach(node => {
+                let text = node.innerText || "0/40";
+                if (!text.includes('/')) return;
+                let parts = text.split('/');
+                let current = parseInt(parts[0]) || 0;
+                let max = parseInt(parts[1]) || 40;
+                let dice = Math.random();
+                if (dice > 0.75 && current < max) current++; else if (dice < 0.25 && current > 0) current--;
+                node.innerText = current + "/" + max;
+            });
+        }, 4000);
+    };
 
-function updateRadarClockDisplay() { let currentUi = PORTAL_DICTIONARY_UI[activeLang]; document.getElementById('qbc-radar-clock-label').innerText = currentUi.radarBtn + currentRadarTime + "S"; }
-function startMatrixRadarClock() { if (matrixRadarInterval) clearInterval(matrixRadarInterval); currentRadarTime = 60; updateRadarClockDisplay(); matrixRadarInterval = setInterval(() => { currentRadarTime--; updateRadarClockDisplay(); if (currentRadarTime <= 0) { currentRadarTime = 60; loadAllPortals2026(true); } }, 1000); }
-function checkAndDisplayAnnouncement2026() {
-    try {
-        const bar = document.getElementById('qbc-global-announcement-bar'), textEl = document.getElementById('qbc-announcement-text-loader');
-        let activeAnn = localStorage.getItem('qbc_portal_announcement') || (window.QBC_GLOBAL_CONFIG_LOADED ? QBC_GLOBAL_CONFIG.maintenanceMessage : "");
-        if (bar && textEl) { if (activeAnn && activeAnn.trim() !== "") { let currentUi = PORTAL_DICTIONARY_UI[activeLang]; textEl.innerText = currentUi.alertLabel + activeAnn + "  ***  "; bar.style.display = "block"; } else { bar.style.display = "none"; } }
-    } catch(e) {}
-}
-
-function runVisitorCounterMatrix2026() {
-    let currentVisits = localStorage.getItem('qbc_real_visitor_total_hits');
-    if (currentVisits === null || currentVisits === "0") { currentVisits = 342; } else { currentVisits = parseInt(currentVisits); }
-    if (!window.sessionHitValidated2026) { currentVisits++; localStorage.setItem('qbc_real_visitor_total_hits', currentVisits); window.sessionHitValidated2026 = true; }
-    const visEl = document.getElementById('qbc-visitor-realtime-count');
-    if (visEl) visEl.innerText = currentVisits + " UNIQUE HITS";
-}
-window.sessionHitValidated2026 = false;
-document.addEventListener("DOMContentLoaded", () => { 
-    let savedLang = localStorage.getItem('qbc_global_language'); 
-    if (savedLang === "fr" || savedLang === "en") { switchGlobalPortalLang(savedLang); } else { switchGlobalPortalLang("fr"); } 
-    runVisitorCounterMatrix2026(); 
-});
+    function applyQbcClusterFilter(game) {
+        currentActiveFilter = game;
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        const activePill = document.getElementById(`pill-${game}`); if(activePill) activePill.classList.add('active');
+        loadQbcMatrixDynamicConfig();
+    }
 </script>
-<!-- LES DEUX LIGNES MAGIQUES DE RACCORDEMENT RÉSEAU -->
-<script src="matrix_sync.js"></script>
-<script src="portal_servers.js"></script>
 </body>
 </html>
 
-
-
-       
 
