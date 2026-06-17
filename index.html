@@ -174,15 +174,17 @@
                 warningBar.style.setProperty('display', 'none', 'important');
             }
             
+            // 🎨 MOTIFS ET THÈMES SANS IMAGES MANQUANTES - VERSION ULTRA-STABLE V67.0
             const themeMap = {
-                'standard': "radial-gradient(circle at center, rgba(30, 20, 15, 0.2) 0%, rgba(5, 3, 2, 0.7) 100%), url('portal_bg.jpg')",
-                'noel': "radial-gradient(circle at center, rgba(15, 35, 15, 0.3) 0%, rgba(3, 8, 3, 0.85) 100%), url('noel_bg.jpg')",
-                'halloween': "radial-gradient(circle at center, rgba(45, 20, 5, 0.3) 0%, rgba(10, 5, 2, 0.9) 100%), url('halloween_bg.jpg')",
-                'paques': "radial-gradient(circle at center, rgba(20, 45, 20, 0.2) 0%, rgba(5, 10, 5, 0.8) 100%), url('paques_bg.jpg')",
-                'cyberpunk': "radial-gradient(circle at center, rgba(25, 5, 35, 0.25) 0%, rgba(5, 2, 8, 0.9) 100%), url('cyber_bg.jpg')",
-                'apocalypse': "radial-gradient(circle at center, rgba(40, 10, 10, 0.3) 0%, rgba(12, 3, 3, 0.95) 100%), url('apoc_bg.jpg')",
-                'space': "radial-gradient(circle at center, rgba(10, 20, 40, 0.15) 0%, rgba(2, 4, 10, 0.9) 100%), url('space_bg.jpg')"
+                'standard': "radial-gradient(circle at center, rgba(30, 20, 15, 0.4) 0%, rgba(5, 3, 2, 0.95) 100%)",
+                'noel': "linear-gradient(135deg, #051923 0%, #001219 100%)",
+                'halloween': "linear-gradient(135deg, #1c0a00 0%, #0b0500 100%)",
+                'paques': "linear-gradient(135deg, #0d1f10 0%, #050f06 100%)",
+                'cyberpunk': "linear-gradient(135deg, #140114 0%, #070008 100%)",
+                'apocalypse': "linear-gradient(135deg, #1c0000 0%, #0a0000 100%)",
+                'space': "linear-gradient(135deg, #000814 0%, #00010c 100%)"
             };
+
             if (db.global.portalTheme && themeMap[db.global.portalTheme]) {
                 document.body.style.setProperty('background-image', themeMap[db.global.portalTheme], 'important');
             }
