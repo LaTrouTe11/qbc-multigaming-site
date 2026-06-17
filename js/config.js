@@ -6,7 +6,7 @@
         "badge_state": "stable",
         "wn_text": "Live Map opérationnelle ! Fondez votre village dès ce soir.",
         "status": "online",
-        "slots": "0/250",
+        "slots": "250", // 🟢 METTEZ UNIQUEMENT 250 (L'admin ajoutera le 0/ tout seul)
         "votes": "45",
         "game_icon": "👑 "
     },
@@ -18,7 +18,7 @@
         "badge_state": "stable",
         "wn_text": "Royaume secondaire ouvert au déploiement.",
         "status": "online",
-        "slots": "0/40",
+        "slots": "40",  // 🟢 METTEZ UNIQUEMENT 40 (L'admin ajoutera le 0/ tout seul)
         "votes": "12",
         "game_icon": "👑 "
     },
