@@ -155,39 +155,40 @@ function loadQbcActivePaneForm() {
                 <button type="button" onclick="switchGlobalSubTab('styles')" style="flex: 1; background: ${window.currentGlobalSubTab==='styles'?'#00ffcc':'#1c130c'}; color: ${window.currentGlobalSubTab==='styles'?'#050302':'#c4b4a3'}; border: 1px solid #00ffcc; padding: 6px; font-family: monospace; font-size: 11px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase;">🎨 Thèmes</button>
             </div>
             <div id="sub-tab-content-zone">
-                \${window.currentGlobalSubTab === 'titres' ? \`
-                    <div class="form-group"><label>Grand Titre Index :</label><input type="text" id="cfg-index-main-title" value="\${srv.indexMainTitle || ''}"></div>
-                    <div class="form-group"><label>Sous-Titre Index :</label><input type="text" id="cfg-index-sub-title" value="\${srv.indexSubTitle || ''}"></div>
-                    <div class="form-group"><label>Titre Message Bienvenue :</label><input type="text" id="cfg-welcome-title" value="\${srv.title || ''}"></div>
-                    <div class="form-group"><label>Corps Texte Bienvenue :</label><textarea id="cfg-welcome-desc" rows="3">\${srv.desc || ''}</textarea></div>
-                    <div class="form-group"><label>🔐 Sécurité Anti-Copie (true/false) :</label><input type="text" id="cfg-global-nocopy" value="\${srv.securityNoCopy || 'false'}"></div>
-                \` : ''}
-                \${window.currentGlobalSubTab === 'alertes' ? \`
+                ${window.currentGlobalSubTab === 'titres' ? `
+                    <div class="form-group"><label>Grand Titre Index :</label><input type="text" id="cfg-index-main-title" value="${srv.indexMainTitle || ''}"></div>
+                    <div class="form-group"><label>Sous-Titre Index :</label><input type="text" id="cfg-index-sub-title" value="${srv.indexSubTitle || ''}"></div>
+                    <div class="form-group"><label>Titre Message Bienvenue :</label><input type="text" id="cfg-welcome-title" value="${srv.title || ''}"></div>
+                    <div class="form-group"><label>Corps Texte Bienvenue :</label><textarea id="cfg-welcome-desc" rows="3">${srv.desc || ''}</textarea></div>
+                    <div class="form-group"><label>🔐 Sécurité Anti-Copie (true/false) :</label><input type="text" id="cfg-global-nocopy" value="${srv.securityNoCopy || 'false'}"></div>
+                ` : ''}
+                ${window.currentGlobalSubTab === 'alertes' ? `
                     <div style="border:1px dashed #ef4444; padding:15px; border-radius:8px;">
                         <div class="form-group"><label>🚨 Icône Alerte :</label>
                             <select id="cfg-global-badge-select">
-                                <option value="🚨 " \${srv.global_badge==='🚨 '?'selected':''}>🚨 Flash Rouge</option>
-                                <option value="⚠️ " \${srv.global_badge==='⚠️ '?'selected':''}>⚠️ Attention Orange</option>
-                                <option value="" \${srv.global_badge===''?'selected':''}>❌ Désactiver</option>
+                                <option value="🚨 " ${srv.global_badge==='🚨 '?'selected':''}>🚨 Flash Rouge</option>
+                                <option value="⚠️ " ${srv.global_badge==='⚠️ '?'selected':''}>⚠️ Attention Orange</option>
+                                <option value="" ${srv.global_badge===''?'selected':''}>❌ Désactiver</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>📝 Texte du Bandeau d'Urgence :</label><input type="text" id="cfg-global-warn-text" value="\${srv.global_warn_text || ''}"></div>
+                        <div class="form-group"><label>📝 Texte du Bandeau d'Urgence :</label><input type="text" id="cfg-global-warn-text" value="${srv.global_warn_text || ''}"></div>
                     </div>
-                \` : ''}
-                \${window.currentGlobalSubTab === 'styles' ? \`
+                ` : ''}
+                ${window.currentGlobalSubTab === 'styles' ? `
                     <div class="form-group"><label>🎨 Ambiance Visuelle Portail :</label>
                         <select id="cfg-portal-theme">
-                            <option value="standard" \${srv.portalTheme==='standard'?'selected':''}>🌌 Standard d'Origine</option>
-                            <option value="noel" \${srv.portalTheme==='noel'?'selected':''}>🎄 Noël Féerique</option>
-                            <option value="halloween" \${srv.portalTheme==='halloween'?'selected':''}>🎃 Halloween Horreur</option>
-                            <option value="paques" \${srv.portalTheme==='paques'?'selected':''}>🥚 Pâques Printemps</option>
-                            <option value="cyberpunk" \${srv.portalTheme==='cyberpunk'?'selected':''}>🌆 Ambiance Cyberpunk</option>
-                            <option value="apocalypse" \${srv.portalTheme==='apocalypse'?'selected':''}>🔥 Fin des Temps</option>
-                            <option value="space" \${srv.portalTheme==='space'?'selected':''}>🚀 Vide Spatial</option>
+                            <option value="standard" ${srv.portalTheme==='standard'?'selected':''}>🌌 Standard d'Origine</option>
+                            <option value="noel" ${srv.portalTheme==='noel'?'selected':''}>🎄 Noël Féerique</option>
+                            <option value="halloween" ${srv.portalTheme==='halloween'?'selected':''}>🎃 Halloween Horreur</option>
+                            <option value="paques" ${srv.portalTheme==='paques'?'selected':''}>🥚 Pâques Printemps</option>
+                            <option value="cyberpunk" ${srv.portalTheme==='cyberpunk'?'selected':''}>🌆 Ambiance Cyberpunk</option>
+                            <option value="apocalypse" ${srv.portalTheme==='apocalypse'?'selected':''}>🔥 Fin des Temps</option>
+                            <option value="space" ${srv.portalTheme==='space'?'selected':''}>🚀 Vide Spatial</option>
                         </select>
                     </div>
-                \` : ''}
+                ` : ''}
             </div>`;
+
     } else {
         titleNode.innerText = `⚙️ Configuration: \${srv.name}`;
         if (delBtn) delBtn.style.setProperty('display', 'block', 'important');
