@@ -234,3 +234,62 @@ function loadQbcActivePaneForm() {
             </div>`;
     }
 }
+
+function saveQbcDynamicConfiguration() {
+    if (activeTabId === "global") {
+        qbcClusterData.global.portalTheme = document.getElementById('cfg-portal-theme').value;
+        qbcClusterData.global.indexMainTitle = document.getElementById('cfg-index-main-title').value;
+        qbcClusterData.global.indexSubTitle = document.getElementById('cfg-index-sub-title').value;
+        qbcClusterData.global.title = document.getElementById('cfg-welcome-title').value;
+        qbcClusterData.global.desc = document.getElementById('cfg-welcome-desc').value;
+        qbcClusterData.global.securityNoCopy = document.getElementById('cfg-global-nocopy').value;
+        
+        const badge = document.getElementById('cfg-global-badge-select').value;
+        const txt = document.getElementById('cfg-global-warn-text').value;
+        qbcClusterData.global.global_badge = badge; qbcClusterData.global.global_warn_text = txt;
+        qbcClusterData.global.warn = txt.trim() !== "" ? "PREWARNING : " + badge + txt : "";
+    } else {
+        qbcClusterData[activeTabId].type = document.getElementById('cfg-srv-type').value;
+        qbcClusterData[activeTabId].game_icon = document.getElementById('cfg-srv-game-icon').value;
+        qbcClusterData[activeTabId].badge_state = document.getElementById('cfg-srv-badge-state').value;
+        qbcClusterData[activeTabId].slots = document.getElementById('cfg-srv-slots').value;
+        qbcClusterData[activeTabId].votes = document.getElementById('cfg-srv-votes').value;
+        qbcClusterData[activeTabId].name = document.getElementById('cfg-srv-name').value;
+        qbcClusterData[activeTabId].status = document.getElementById('cfg-srv-status').value;
+        qbcClusterData[activeTabId].ip = document.getElementById('cfg-srv-ip').value;
+        qbcClusterData[activeTabId].rb = document.getElementById('cfg-srv-rb').value;
+        qbcClusterData[activeTabId].wn_text = document.getElementById('cfg-srv-wn-text').value;
+    }
+    localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData));
+    const led = document.getElementById("sync-success-led");
+    if(led) { led.style.setProperty('display', 'block', 'important'); setTimeout(() => { led.style.setProperty('display', 'none', 'important'); }, 2000); }
+    buildQbcAdminSidebarTabs();
+}
+
+function createNewQbcServerInstance() {
+    const id = "srv_" + Date.now();
+    qbcClusterData[id] = { type: "wurm", game_icon: "👑 ", name: "Nouvelle Instance", ip: "0.0.0.0", rb: "RAS", badge_state: "stable", wn_text: "", status: "online", slots: "0/40", votes: "0" };
+    localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); buildQbcAdminSidebarTabs();
+}
+function deleteCurrentServerInstance() {
+    if(activeTabId !== "global" && confirm("Supprimer définitivement ?")) { 
+        delete qbcClusterData[activeTabId]; localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); 
+        activeTabId = "global"; buildQbcAdminSidebarTabs(); loadQbcActivePaneForm(); 
+    }
+}
+
+if (sessionStorage.getItem('qbc_admin_authenticated') === 'true') {
+    window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("qbc-auth-gate").style.setProperty('display', 'none', 'important');
+        document.getElementById("qbc-admin-core").style.setProperty('display', 'block', 'important');
+        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm();
+    });
+} else {
+    window.addEventListener("DOMContentLoaded", () => {
+        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm();
+    });
+}
+</script>
+</body>
+</html>
+
