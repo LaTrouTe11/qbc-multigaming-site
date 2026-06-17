@@ -4,7 +4,7 @@
     <link rel="icon" href="data:,">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[QBC] Matrix | Cockpit Dynamic Server Manager v65.0</title>
+    <title>[QBC] Matrix | Cockpit Dynamic Server Manager v77.0</title>
     <style>
         body { background-color: #050302; color: #f4eae1; font-family: monospace; margin: 0; padding: 20px; min-height: 100vh; box-sizing: border-box; }
         .admin-wrapper { max-width: 1300px; margin: 0 auto; background: #0f0a07; border: 1px solid #ff9900; border-radius: 12px; padding: 25px; box-shadow: 0 0 30px rgba(255,153,0,0.15); position: relative; }
@@ -79,34 +79,23 @@
     </div>
 </div>
 
-<!-- LIAISON VERS VOTRE DOSSIER DE SCRIPT JS -->
 <script src="js/config.js"></script>
-
 <script>
-// 🛡️ SÉCURITÉ DE HAUTE DISPONIBILITÉ : EN-TÊTE ET DISPATCH REPRIS AVANT CHARGEMENT
 const SECRET_KEY_MASTER = "QBC2026";
 let activeTabId = "global";
 if (!window.currentGlobalSubTab) window.currentGlobalSubTab = "titres";
 
-// Vérification de sécurité de la base de données
 let qbcClusterData = window.qbcClusterData || {
-    global: { type: "portal", indexMainTitle: "QBC Multigaming", indexSubTitle: "Portail d'Accès aux Instances Réseau", warn: "", title: "Bienvenue sur le Réseau QBC", desc: "", portalTheme: "standard", securityNoCopy: "false", global_badge: "", global_warn_text: "" },
-    wurm1: { type: "wurm", game_icon: "👑 ", name: "Doriath (Monde Principal)", ip: "67.216.85.235:27016", rb: "Tous les lundis à 04:00 AM", badge_state: "stable", wn_text: "Live Map opérationnelle !", status: "online", slots: "12/40", votes: "45" }
+    global: { type: "portal", indexMainTitle: "QBC Multigaming", indexSubTitle: "Portail d'Accès aux Instances Réseau", warn: "", title: "Bienvenue sur le Réseau QBC", desc: "", portalTheme: "standard", securityNoCopy: "false", global_badge: "", global_warn_text: "" }
 };
-
-if (localStorage.getItem('qbc_server_db')) {
-    try { qbcClusterData = JSON.parse(localStorage.getItem('qbc_server_db')); } catch(e) {}
-}
+if (localStorage.getItem('qbc_server_db')) { try { qbcClusterData = JSON.parse(localStorage.getItem('qbc_server_db')); } catch(e) {} }
 
 function toggleQbcAdminPasswordVisibility() {
     const passInput = document.getElementById("qbc-pass-key");
     const eyeIcon = document.getElementById("qbc-eye-icon");
     if (passInput && eyeIcon) {
-        if (passInput.type === "password") {
-            passInput.type = "text"; eyeIcon.innerText = "🔒";
-        } else {
-            passInput.type = "password"; eyeIcon.innerText = "👁️";
-        }
+        if (passInput.type === "password") { passInput.type = "text"; eyeIcon.innerText = "🔒"; } 
+        else { passInput.type = "password"; eyeIcon.innerText = "👁️"; }
     }
 }
 
@@ -118,7 +107,8 @@ function validateQbcAdminAuth() {
         if(errorNode) errorNode.style.setProperty('display', 'none', 'important');
         document.getElementById("qbc-auth-gate").style.setProperty('display', 'none', 'important');
         document.getElementById("qbc-admin-core").style.setProperty('display', 'block', 'important');
-        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm();
+        buildQbcAdminSidebarTabs(); 
+        loadQbcActivePaneForm();
     } else {
         if(errorNode) errorNode.style.setProperty('display', 'block', 'important');
     }
@@ -189,55 +179,51 @@ function loadQbcActivePaneForm() {
                 ` : ''}
             </div>`;
     } else {
-
-        titleNode.innerText = `⚙️ Configuration: \${srv.name}`;
+        titleNode.innerText = `⚙️ Configuration: ${srv.name}`;
         if (delBtn) delBtn.style.setProperty('display', 'block', 'important');
         formContainer.innerHTML = `
             <div class="form-group"><label>🎮 Catégorie Multi-Filtre :</label>
                 <select id="cfg-srv-type">
-                    <option value="wurm" \${srv.type==='wurm'?'selected':''}>WURM UNLIMITED</option>
-                    <option value="7dtd" \${srv.type==='7dtd'?'selected':''}>7 DAYS TO DIE</option>
-                    <option value="avorion" \${srv.type==='avorion'?'selected':''}>AVORION</option>
+                    <option value="wurm" ${srv.type==='wurm'?'selected':''}>WURM UNLIMITED</option>
+                    <option value="7dtd" ${srv.type==='7dtd'?'selected':''}>7 DAYS TO DIE</option>
+                    <option value="avorion" ${srv.type==='avorion'?'selected':''}>AVORION</option>
                 </select>
             </div>
             <div class="form-group" style="border: 1px dashed #00ffcc; padding: 12px; border-radius: 6px; background: rgba(0,255,204,0.02);">
                 <label style="color:#00ffcc;">🎭 Icône Décorative du Titre :</label>
                 <select id="cfg-srv-game-icon">
-                    <option value="👑 " \${srv.game_icon==='👑 '?'selected':''}>👑 Couronne Royale</option>
-                    <option value="⚔️ " \${srv.game_icon==='⚔️ '?'selected':''}>⚔️ Épées de Combat</option>
-                    <option value="🧟 " \${srv.game_icon==='🧟 '?'selected':''}>🧟 Zombie Infecté</option>
-                    <option value="💀 " \${srv.game_icon==='💀 '?'selected':''}>💀 Crâne de Mort PvP</option>
-                    <option value="🚀 " \${srv.game_icon==='🚀 '?'selected':''}>🚀 Fusée Spatiale</option>
-                    <option value="🌌 " \${srv.game_icon==='🌌 '?'selected':''}>🌌 Galaxie / Cosmos</option>
+                    <option value="👑 " ${srv.game_icon==='👑 '?'selected':''}>👑 Couronne Royale</option>
+                    <option value="⚔️ " ${srv.game_icon==='⚔️ '?'selected':''}>⚔️ Épées de Combat</option>
+                    <option value="🧟 " ${srv.game_icon==='🧟 '?'selected':''}>🧟 Zombie Infecté</option>
+                    <option value="💀 " ${srv.game_icon==='💀 '?'selected':''}>💀 Crâne de Mort PvP</option>
+                    <option value="🚀 " ${srv.game_icon==='🚀 '?'selected':''}>🚀 Fusée Spatiale</option>
+                    <option value="🌌 " ${srv.game_icon==='🌌 '?'selected':''}>🌌 Galaxie / Cosmos</option>
                 </select>
             </div>
             <div class="form-group" style="border: 1px dashed #00ffcc; padding: 12px; border-radius: 6px; background: rgba(0,255,204,0.02); margin-top:10px;">
                 <label style="color:#00ffcc;">🏷️ Sélectionner le Badge d'État Visuel :</label>
                 <select id="cfg-srv-badge-state">
-                    <option value="stable" \${srv.badge_state==='stable'?'selected':''}>🟢 NODE STABLE</option>
-                    <option value="urgent" \${srv.badge_state==='urgent'?'selected':''}>🚨 CRITICAL WARNING</option>
-                    <option value="maintenance" \${srv.badge_state==='maintenance'?'selected':''}>🛠️ MAINTENANCE PLANIFIÉE</option>
-                    <option value="pack" \${srv.badge_state==='pack'?'selected':''}>📦 PACK AJOURNÉ</option>
-                    <option value="sync" \${srv.badge_state==='sync'?'selected':''}>📡 SYNC EN COURS</option>
+                    <option value="stable" ${srv.badge_state==='stable'?'selected':''}>🟢 NODE STABLE</option>
+                    <option value="urgent" ${srv.badge_state==='urgent'?'selected':''}>🚨 CRITICAL WARNING</option>
+                    <option value="maintenance" ${srv.badge_state==='maintenance'?'selected':''}>🛠️ MAINTENANCE PLANIFIÉE</option>
+                    <option value="pack" ${srv.badge_state==='pack'?'selected':''}>📦 PACK AJOURNÉ</option>
+                    <option value="sync" ${srv.badge_state==='sync'?'selected':''}>📡 SYNC EN COURS</option>
                 </select>
             </div>
             <div class="form-group"><label>🟢 Statut Énergie :</label>
-                <select id="cfg-srv-status"><option value="online" \${srv.status==='online'?'selected':''}>🟩 EN LIGNE</option><option value="offline" \${srv.status==='offline'?'selected':''}>🟥 COUPÉ</option></select>
+                <select id="cfg-srv-status"><option value="online" ${srv.status==='online'?'selected':''}>🟩 EN LIGNE</option><option value="offline" ${srv.status==='offline'?'selected':''}>🟥 COUPÉ</option></select>
             </div>
-            <!-- 🟢 APRÈS (Variable libérée et étanche) -->
             <div class="form-group"><label>👥 Capacité Joueurs :</label><input type="text" id="cfg-srv-slots" value="${srv.slots || '0/40'}"></div>
             <div class="form-group"><label>🔥 Compteur de Votes :</label><input type="text" id="cfg-srv-votes" value="${srv.votes || '0'}"></div>
             <div class="form-group"><label>Nom de l'Instance :</label><input type="text" id="cfg-srv-name" value="${srv.name}"></div>
             <div class="form-group"><label>Adresse Réseau (IP:Port) :</label><input type="text" id="cfg-srv-ip" value="${srv.ip}"></div>
             <div class="form-group"><label>Cycle de Reboot :</label><input type="text" id="cfg-srv-rb" value="${srv.rb}"></div>
-            <div class="form-group" style="border: 1px dashed rgba(0,255,204,0.2); padding: 15px; border-radius: 6px; background: rgba(0,255,204,0.01);">
-                <label style="color:#00ffcc;">📣 Note Spécifique / Message d'Update du Serveur :</label>
-                <input type="text" id="cfg-srv-wn-text" value="${srv.wn_text || ''}">
-            </div>`;
+            <div class="form-group" style="border: 1px dashed rgba(0,255,204,0.2); padding: 15px; border-radius: 6px; background: rgba(0,255,204,0.01);"><label style="color:#00ffcc;">📣 Note Spécifique :</label><input type="text" id="cfg-srv-wn-text" value="${srv.wn_text || ''}"></div>`;
     }
 }
+}
 
-// 💾 MOTEUR DE SAUVEGARDE UNIFIÉ INTÉGRIAL SÉCURISÉ V75.0 (SANS CRASH VALUE)
+// 💾 MOTEUR DE SAUVEGARDE INTÉGRAL SÉCURISÉ V75.0 (SANS CRASH VALUE)
 function saveQbcDynamicConfiguration() {
     if (activeTabId === "global") {
         if (document.getElementById('cfg-portal-theme')) qbcClusterData.global.portalTheme = document.getElementById('cfg-portal-theme').value;
@@ -267,7 +253,6 @@ function saveQbcDynamicConfiguration() {
         if (document.getElementById('cfg-srv-wn-text')) qbcClusterData[activeTabId].wn_text = document.getElementById('cfg-srv-wn-text').value;
     }
     
-    // Synchro locale immédiate
     localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData));
     
     // 🎨 APPLICATION DU THÈME EN DIRECT SUR L'ADMINISTRATION
@@ -284,7 +269,7 @@ function saveQbcDynamicConfiguration() {
         document.body.style.setProperty('background', adminThemeMap[qbcClusterData.global.portalTheme], 'important');
     }
 
-    // 🚨 ALLUMAGE DU MESSAGE OK SUR TOUS LES ONGLETS SANS APPARTENANCE
+    // 🚨 NOTIFICATION LED DE SUCCÈS
     const led = document.getElementById("sync-success-led");
     if (led) {
         led.style.setProperty('display', 'inline-block', 'important');
@@ -293,17 +278,20 @@ function saveQbcDynamicConfiguration() {
     buildQbcAdminSidebarTabs();
 }
 
-
-
 function createNewQbcServerInstance() {
     const id = "srv_" + Date.now();
     qbcClusterData[id] = { type: "wurm", game_icon: "👑 ", name: "Nouvelle Instance", ip: "0.0.0.0", rb: "RAS", badge_state: "stable", wn_text: "", status: "online", slots: "0/40", votes: "0" };
-    localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); buildQbcAdminSidebarTabs();
+    localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); 
+    buildQbcAdminSidebarTabs();
 }
+
 function deleteCurrentServerInstance() {
     if(activeTabId !== "global" && confirm("Supprimer définitivement ?")) { 
-        delete qbcClusterData[activeTabId]; localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); 
-        activeTabId = "global"; buildQbcAdminSidebarTabs(); loadQbcActivePaneForm(); 
+        delete qbcClusterData[activeTabId]; 
+        localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); 
+        activeTabId = "global"; 
+        buildQbcAdminSidebarTabs(); 
+        loadQbcActivePaneForm(); 
     }
 }
 
@@ -311,14 +299,15 @@ if (sessionStorage.getItem('qbc_admin_authenticated') === 'true') {
     window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("qbc-auth-gate").style.setProperty('display', 'none', 'important');
         document.getElementById("qbc-admin-core").style.setProperty('display', 'block', 'important');
-        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm();
+        buildQbcAdminSidebarTabs(); 
+        loadQbcActivePaneForm();
     });
 } else {
     window.addEventListener("DOMContentLoaded", () => {
-        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm();
+        buildQbcAdminSidebarTabs(); 
+        loadQbcActivePaneForm();
     });
 }
 </script>
 </body>
 </html>
-
