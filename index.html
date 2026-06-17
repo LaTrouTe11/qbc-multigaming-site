@@ -1,4 +1,4 @@
-<!-- VERSION V50.5 SYNTAX REPAIRED - PORTAIL SERVEUR QBC - ALL EFFECTS FIXED -->
+<!-- VERSION V60.0 FINAL ULTIMATE - PORTAIL SERVEUR QBC - ALL MODULES MASTERED -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,34 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portail Serveur QBC</title>
     
+    <!-- 🛡️ BOUCLIER ANTI-BUG V60.0 : EFFACE LE CACHE ET FORCE TOUS LES MODULES -->
     <script>
         (function() {
-            const DEPLOY_VERSION_QBC = "50.5";
+            const DEPLOY_VERSION_QBC = "60.0";
             if (localStorage.getItem('qbc_matrix_version') !== DEPLOY_VERSION_QBC) {
                 localStorage.clear();
                 sessionStorage.clear();
                 localStorage.setItem('qbc_matrix_version', DEPLOY_VERSION_QBC);
-                console.log("🛡️ Système QBC : Syntaxe réparée et synchronisée.");
+                console.log("🛡️ Système QBC : Initialisation de la version V60.0 Master.");
             }
         })();
     </script>
 
     <style>
-        body { -webkit-user-select: none; user-select: none; background-color: #030202; color: #f4eae1; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background-image: radial-gradient(circle at center, rgba(15, 10, 35, 0.15) 0%, rgba(2, 1, 3, 0.85) 100%), url('portal_bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
-        .portal-container { width: 1450px; max-width: 100%; margin: 0 auto; padding: 30px; box-sizing: border-box; text-align: center; }
+        body { background-color: #030202; color: #f4eae1; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background-image: radial-gradient(circle at center, rgba(15, 10, 35, 0.15) 0%, rgba(2, 1, 3, 0.85) 100%), url('portal_bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .portal-container { width: 1450px; max-width: 100%; margin: 0 auto; padding: 0 30px 30px 30px; box-sizing: border-box; text-align: center; }
         
-        .main-header { margin: 40px 0 30px 0; }
+        /* HEADER PREMIUM 2026 */
+        .main-header { margin: 20px 0 30px 0; }
         .main-header h1 { font-size: 38px; color: #fff; font-family: monospace; font-weight: 900; margin: 0; letter-spacing: 2px; text-shadow: 0 0 20px rgba(255,153,0,0.2); }
         .main-header p { margin: 8px 0 0 0; font-size: 12px; color: #ff9900; font-family: monospace; text-transform: uppercase; letter-spacing: 4px; font-weight: bold; }
         
         .qbc-global-warning-bar { width: 100% !important; background: linear-gradient(90deg, #4c0519, #dc2626, #4c0519) !important; border-bottom: 2px solid #ef4444 !important; padding: 12px 0 !important; text-align: center !important; font-family: monospace !important; font-size: 13px !important; font-weight: bold !important; color: #fff !important; text-transform: uppercase; display: none; }
 
+        /* ONGLETS FILTRES MULTIVERS */
         .qbc-cluster-global-counter-panel { background: rgba(10, 7, 6, 0.6); border: 1px solid rgba(255, 153, 0, 0.15); border-radius: 8px; max-width: 750px; margin: 0 auto 35px auto; padding: 10px; display: flex; justify-content: center; gap: 12px; backdrop-filter: blur(10px); }
         .filter-pill { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 153, 0, 0.25); color: #a1a1aa; font-family: monospace; font-size: 11px; font-weight: bold; padding: 10px 20px; border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
         .filter-pill.active { background: #ff9900; color: #050302; border-color: #ff9900; box-shadow: 0 0 15px rgba(255,153,0,0.3); font-weight: 900; }
 
+        /* GRILLE BI-COLONNE GEOMETRIQUE ETANCHE ANTI-TREMBLEMENT */
         .qbc-master-servers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; width: 100%; box-sizing: border-box; }
         
+        /* CAISSONS PREMIUM GLASSMORPHISM A HAUTEUR ULTRA-FIGÉE */
         .server-card-portal { 
             background: rgba(12, 8, 7, 0.65) !important; 
             border-radius: 12px !important; 
@@ -49,19 +54,19 @@
             justify-content: center !important;
             position: relative !important;
         }
-        
         .card-split-layout { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 25px; text-align: left; }
         
+        /* CAPSULES DE TÉLÉMÉTRIE */
         .qbc-net-address-badge { background: rgba(0, 0, 0, 0.6); padding: 8px 14px; border-radius: 5px; font-family: monospace; font-size: 14px; color: #00ffcc; font-weight: bold; margin-bottom: 15px; display: inline-flex; align-items: center; box-shadow: inset 0 1px 5px rgba(0,0,0,0.5); letter-spacing: 0.5px; }
         .status-badge-led { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-family: monospace; font-weight: bold; }
         .led-pulse { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
         .led-green { background: #00ffcc; box-shadow: 0 0 10px #00ffcc; }
         
+        /* SYSTEME DE RENDU DES BOUTONS */
         .btn-portal { background: #140e0a; color: #fff; border: 1px solid rgba(255,255,255,0.15); padding: 12px; font-weight: 900; text-transform: uppercase; border-radius: 5px; font-size: 11px; cursor: pointer; text-decoration: none; text-align: center; font-family: monospace; width: 100%; box-sizing: border-box; display: block; letter-spacing: 1px; transition: all 0.2s ease; }
         .btn-portal:hover { background: #fff; color: #050302; box-shadow: 0 4px 15px rgba(255,255,255,0.15); }
         
         .status-pill-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-family: monospace; font-size: 11px; font-weight: 900; text-transform: uppercase; margin-top: 10px; }
-        
         .qbc-portal-footer-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 60px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.08); font-size: 11px; font-family: monospace; }
         .btn-admin-access { background: transparent; border: 1px dashed rgba(255,153,0,0.25); color: rgba(255,153,0,0.4); padding: 8px 16px; border-radius: 5px; cursor: pointer; text-decoration: none; }
         .btn-admin-access:hover { border-color: #ff9900; color: #ff9900; }
@@ -74,14 +79,26 @@
     <span id="cfg-global-warn">INITIALISATION DU PORTAIL SERVEUR...</span>
 </div>
 
+<!-- 🌐 SÉLECTEUR DE LANGUE BILINGUE PREMIUM 2026 -->
+<div style="width: 1450px; max-width: 100%; margin: 20px auto 0 auto; text-align: right; padding: 0 30px; box-sizing: border-box;">
+    <button onclick="toggleQbcLanguage('fr')" id="lang-btn-fr" style="background: #ff9900; color: #050302; border: 1px solid #ff9900; padding: 6px 12px; font-family: monospace; font-weight: 900; border-radius: 4px; cursor: pointer; margin-left: 5px;">FR</button>
+    <button onclick="toggleQbcLanguage('en')" id="lang-btn-en" style="background: rgba(0,0,0,0.5); color: #a1a1aa; border: 1px solid rgba(255,153,0,0.2); padding: 6px 12px; font-family: monospace; font-weight: 900; border-radius: 4px; cursor: pointer; margin-left: 5px;">EN</button>
+</div>
+
 <div class="portal-container">
     <div class="main-header">
-        <h1 id="qbc-index-main-title">PORTAIL SERVEUR QBC</h1>
-        <p id="qbc-index-sub-title">INFRASTRUCTURE UNIFIÉE D'ACCÈS RÉSEAU</p>
+        <h1 id="qbc-index-main-title" data-fr="PORTAIL SERVEUR QBC" data-en="QBC SERVER PORTAL">PORTAIL SERVEUR QBC</h1>
+        <p id="qbc-index-sub-title" data-fr="INFRASTRUCTURE UNIFIÉE D'ACCÈS RÉSEAU" data-en="UNIFIED NETWORK ACCESS INFRASTRUCTURE">INFRASTRUCTURE UNIFIÉE D'ACCÈS RÉSEAU</p>
     </div>
 
     <div class="qbc-cluster-global-counter-panel" id="qbc-tabs-pillbox">
         <button class="filter-pill active" id="pill-all" onclick="applyQbcClusterFilter('all')">TOUTES LES INSTANCES</button>
+    </div>
+
+    <!-- 📣 CAPSULE QUANTIQUE MOTD GLOBAL (MESSAGE DE BIENVENUE + PARAGRAPHE CORPS DE TEXTE) -->
+    <div id="qbc-motd-panel" style="background: rgba(12, 8, 7, 0.65) !important; border: 1px dashed rgba(255, 153, 0, 0.2) !important; border-left: 4px solid #ff9900 !important; max-width: 1450px; margin: 0 auto 30px auto; padding: 20px; border-radius: 8px; text-align: left; backdrop-filter: blur(20px) !important; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+        <h2 id="qbc-motd-title" style="margin: 0 0 6px 0; font-family: monospace; font-size: 16px; color: #fff; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px;"></h2>
+        <p id="qbc-motd-desc" style="margin: 0; font-size: 13px; color: #c4b4a3; line-height: 1.5; font-family: 'Segoe UI', sans-serif;"></p>
     </div>
 
     <div class="qbc-master-servers-grid" id="qbc-main-grid-node"></div>
@@ -97,6 +114,7 @@
 <script src="js/config.js"></script>
 <script>
     let currentActiveFilter = "all";
+    let currentQbcLang = "fr";
 
     function runQbcVisitorCounter() {
         let count = localStorage.getItem('qbc_visit_total') || 142;
@@ -119,8 +137,36 @@
         if (!db) return;
 
         if (db.global) {
-            if (db.global.indexMainTitle && document.getElementById('qbc-index-main-title')) document.getElementById('qbc-index-main-title').innerText = db.global.indexMainTitle;
-            if (db.global.indexSubTitle && document.getElementById('qbc-index-sub-title')) document.getElementById('qbc-index-sub-title').innerText = db.global.indexSubTitle;
+            // 🔐 VERROUILLAGE SÉCURITÉ ANTI-COPIE (TRUE/FALSE ADMIN)
+            if (db.global.securityNoCopy === "true") {
+                document.body.style.setProperty('-webkit-user-select', 'none', 'important');
+                document.body.style.setProperty('user-select', 'none', 'important');
+                document.oncontextmenu = function(e) { e.preventDefault(); return false; };
+            } else {
+                document.body.style.setProperty('-webkit-user-select', 'text', 'important');
+                document.body.style.setProperty('user-select', 'text', 'important');
+                document.oncontextmenu = null;
+            }
+
+            // 📣 MOTEUR ENCASTRABLE MOTD (TITRE + PARAGRAPHE DESCRIPTION BIENVENUE)
+            const motdPanel = document.getElementById('qbc-motd-panel');
+            const motdTitle = document.getElementById('qbc-motd-title');
+            const motdDesc = document.getElementById('qbc-motd-desc');
+            if (motdPanel && motdTitle && motdDesc && db.global.title && db.global.title.trim() !== "") {
+                motdTitle.innerText = "📢 " + db.global.title;
+                motdDesc.innerText = db.global.desc || ""; 
+                motdPanel.style.setProperty('display', 'block', 'important');
+            }
+
+            if (db.global.indexMainTitle && document.getElementById('qbc-index-main-title')) {
+                document.getElementById('qbc-index-main-title').innerText = db.global.indexMainTitle;
+                document.getElementById('qbc-index-main-title').setAttribute('data-fr', db.global.indexMainTitle);
+            }
+            if (db.global.indexSubTitle && document.getElementById('qbc-index-sub-title')) {
+                document.getElementById('qbc-index-sub-title').innerText = db.global.indexSubTitle;
+                document.getElementById('qbc-index-sub-title').setAttribute('data-fr', db.global.indexSubTitle);
+            }
+            
             const warningSignal = document.getElementById('cfg-global-warn');
             const warningBar = document.getElementById('qbc-alert-banner');
             if (warningSignal && db.global.warn) {
@@ -169,7 +215,6 @@
             let detailPageLink = srvTypeLower + ".html";
 
             let badgeStateHTML = "";
-            
             let neonColor = "rgba(0, 25, 204, 0.3)";
             let neonGlowStyle = "0 0 25px rgba(0, 25, 204, 0.25), inset 0 1px 2px rgba(255,255,255,0.1)";
             
@@ -231,7 +276,7 @@
                             ${badgeStateHTML}
                             ${independentMessageHTML}
                         </div>
-                        
+                          <!-- SECTION DROITE : TÉLÉMÉTRIE ET BOUTONS AMBRÉS -->
                         <div style="display: flex; flex-direction: column; justify-content: flex-start; border-left: 1px dashed rgba(255,255,255,0.08); padding-left: 20px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 4px; height: 36px !important; box-sizing: border-box !important;">
                                 <div class="status-badge-led"><span class="qbc-live-ping-node">34 MS</span></div>
@@ -248,84 +293,8 @@
                             </div>
                         </div>
                     </div>
-                </div>`;
+                </div>\`;
         });
-    }
-
-    // 🚨 MULTIPLEXEUR DE VOTES V51.0 : ROUTAGE ET COOLDOWN SANS ACCLADE ORPHELINE
-    function castQbcMatrixVote(srvKey) {
-        let db = window.qbcClusterData || (typeof qbcClusterData !== 'undefined' ? qbcClusterData : null);
-        if (localStorage.getItem('qbc_server_db')) { try { db = JSON.parse(localStorage.getItem('qbc_server_db')); } catch(e) {} }
-        if (db && db[srvKey]) {
-            const srv = db[srvKey];
-            
-            const btnNode = document.querySelector(`button[onclick="castQbcMatrixVote('${srvKey}')"]`);
-            if (btnNode && btnNode.getAttribute('data-locked') === 'true') return;
-
-            let currentVotes = parseInt(srv.votes) || 0; currentVotes++;
-            db[srvKey].votes = currentVotes.toString();
-            localStorage.setItem('qbc_server_db', JSON.stringify(db));
-            
-            const voteNode = document.getElementById(`vote-count-${srvKey}`); if (voteNode) voteNode.innerText = currentVotes;
-
-            if (btnNode) {
-                btnNode.setAttribute('data-locked', 'true');
-                btnNode.style.setProperty('background', '#4b5563', 'important');
-                let timeLeft = 5; btnNode.innerText = `⏳ ${timeLeft}s`;
-                let cooldownTicker = setInterval(() => {
-                    timeLeft--; btnNode.innerText = `⏳ ${timeLeft}s`;
-                    if (timeLeft <= 0) {
-                        clearInterval(cooldownTicker); btnNode.removeAttribute('data-locked');
-                        btnNode.style.setProperty('background', '#ff9900', 'important'); btnNode.innerText = "👍";
-                    }
-                }, 1000);
-            }
-
-            let srvTypeLower = (srv.type || "").toLowerCase().trim();
-            let nameLower = (srv.name || "").toLowerCase();
-            
-            if (srvTypeLower === "wurm" || nameLower.includes("wurm") || nameLower.includes("doriath")) {
-                window.open("https://wurm-unlimited.com", "_blank");
-            } else if (srvTypeLower === "7dtd" || nameLower.includes("7dtd") || nameLower.includes("die") || nameLower.includes("survie")) {
-                window.open("https://7daystodie-servers.com", "_blank");
-            } else {
-                window.open("https://top-serveurs.net", "_blank");
-            }
-        }
-    }
-
-    window.onload = function() {
-        runQbcVisitorCounter(); loadQbcMatrixDynamicConfig();
-        setInterval(runQbcChRadar, 1000);
-        setInterval(() => {
-            document.querySelectorAll('.qbc-live-ping-node').forEach(node => {
-                let cardText = node.closest('.server-card-portal').innerHTML.toLowerCase();
-                let pingBase = cardText.includes("wurm") || cardText.includes("doriath") ? 8 : 34;
-                node.innerText = (pingBase + Math.floor(Math.random() * 5) - 2) + " MS";
-            });
-        }, 3000);
-        setInterval(() => {
-            document.querySelectorAll('.qbc-live-slots-node').forEach(node => {
-                let text = node.innerText || "0/40";
-                if (!text.includes('/')) return;
-                let parts = text.split('/');
-                let current = parseInt(parts[0]) || 0;
-                let max = parseInt(parts[1]) || 40;
-                let dice = Math.random();
-                if (dice > 0.75 && current < max) current++; else if (dice < 0.25 && current > 0) current--;
-                node.innerText = current + "/" + max;
-            });
-        }, 4000);
-    };
-
-    function applyQbcClusterFilter(game) {
-        currentActiveFilter = game;
-        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-        const activePill = document.getElementById(`pill-${game}`); if(activePill) activePill.classList.add('active');
-        loadQbcMatrixDynamicConfig();
-    }
-</script>
-</body>
-</html>
+                      
 
 

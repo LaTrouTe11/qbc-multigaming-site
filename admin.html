@@ -1,10 +1,9 @@
-<!-- VERSION V48.0 MASTER COCKPIT - PORTAIL SERVEUR QBC - REFRESH SECURE 2026 -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[QBC] Matrix | Cockpit Dynamic Server Manager v26.0</title>
+    <title>[QBC] Matrix | Cockpit Dynamic Server Manager v61.0</title>
     <style>
         body { background-color: #050302; color: #f4eae1; font-family: monospace; margin: 0; padding: 20px; min-height: 100vh; box-sizing: border-box; }
         .admin-wrapper { max-width: 1300px; margin: 0 auto; background: #0f0a07; border: 1px solid #ff9900; border-radius: 12px; padding: 25px; box-shadow: 0 0 30px rgba(255,153,0,0.15); position: relative; }
@@ -51,7 +50,7 @@
 <body>
 
 <div id="qbc-auth-gate" class="admin-wrapper" style="max-width: 400px; text-align: center; margin-top: 80px;">
-    <h1>🔓 ACCÈS COCKPIT PORTAIL</h1>
+    <h1>🔓 ACCÈS INFRASTRUCTURE QBC</h1>
     <div class="form-group" style="margin-top:20px;">
         <label>Clé d'accès Administrateur :</label>
         <input type="password" id="qbc-pass-key" placeholder="••••••••••••" onkeypress="handleAuthKeyPress(event)">
@@ -64,15 +63,13 @@
 
 <div id="qbc-admin-core" class="admin-wrapper" style="display: none;">
     <div class="qbc-main-admin-title-panel">
-        <h0>👑 QBC PORTAIL</h0>
-        <p>Panneau de Contrôle des Serveurs de Jeux</p>
+        <h0>👑 QBC MATRIX</h0>
+        <p>Portail d'Administration Réseau</p>
     </div>
     
     <div class="qbc-top-action-banner">
         <div class="pane-headline" id="pane-title-node">Sélectionnez une entité</div>
         <div class="qbc-top-buttons-holder">
-            <!-- BOUTON DE SAUVEGARDE DIRECT ET NETTOYAGE FORCE BRUTE POUR INTEGRER LES THEMES -->
-            <button type="button" style="background: linear-gradient(135deg, #a855f7, #7c3aed) !important; color: #fff !important; border: none !important; padding: 10px 18px !important; font-weight: 900 !important; border-radius: 4px !important; cursor: pointer !important; text-transform: uppercase !important; font-family: monospace !important; font-size: 11px !important;" onclick="localStorage.clear(); saveQbcDynamicConfiguration(); alert('❄️ MÉMOIRE FLUSH : Base synchronisée de force brute !'); location.reload();">❄️ FORCER SYNC THÈME</button>
             <button class="btn-top-save-mini" onclick="saveQbcDynamicConfiguration()">💾 Sauver</button>
             <a href="index.html" class="btn-top-exit-portal">⬅️ Retour</a>
             <span id="sync-success-led" class="status-msg" style="display: none; margin-left: 10px;">✅ OK</span>
@@ -105,88 +102,8 @@ let activeTabId = "global";
 
 if (!window.currentGlobalSubTab) window.currentGlobalSubTab = "titres";
 
-// Utilisation stricte de la base de données réelle de votre conf.js en secours
-let qbcClusterData = {
-    global: { 
-        type: "portal", 
-        indexMainTitle: "QBC Multigaming", 
-        indexSubTitle: "Portail d'Accès aux Instances Réseau", 
-        warn: "PREWARNING : ⚠️ Initialisation du Cluster QBC. Aucune coupure signalée.", 
-        title: "Bienvenue sur le Réseau QBC", 
-        desc: "Pilotez vos accès à travers nos clusters de jeux interconnectés. Les informations de reboot, les statuts réseau RMI et les fichiers de configurations de nos instances Legion Hosting lues en temps réel.", 
-        portalTheme: "standard", 
-        securityNoCopy: "false", 
-        global_badge: "⚠️ ", 
-        global_warn_text: "Initialisation du Cluster QBC. Aucune coupure signalée." 
-    },
-    wurm1: { 
-        type: "wurm", 
-        name: "👑 Doriath (Monde Principal)", 
-        ip: "67.216.85.235:27016", 
-        rb: "Tous les lundis à 04:00 AM", 
-        badge_state: "stable", 
-        wn_text: "Stockage du café actif en Bulk !", 
-        status: "online", 
-        slots: "12/40", 
-        votes: "45" 
-    },
-    wurm2: { 
-        type: "wurm", 
-        name: "⚔️ Extension Flaggard (Royaume 2)", 
-        ip: "67.216.85.235:27017", 
-        rb: "Synchronisé avec le maître Doriath", 
-        badge_state: "stable", 
-        wn_text: "Royaume secondaire ouvert au déploiement.", 
-        status: "online", 
-        slots: "2/40", 
-        votes: "12" 
-    },
-    dtd1: { 
-        type: "7dtd", 
-        name: "🧟 QBC Survie Alpha (Instance 1)", 
-        ip: "67.216.85.235:26900", 
-        rb: "Automatique toutes les 12 heures", 
-        badge_state: "pack", 
-        wn_text: "Reboot effectué - Cycle de pousse à jour !", 
-        status: "online", 
-        slots: "14/40", 
-        votes: "89" 
-    },
-    dtd2: { 
-        type: "7dtd", 
-        name: "💀 Purgatoire (Instance 2 PvP)", 
-        ip: "67.216.85.235:26910", 
-        rb: "Maintenance rapide chaque vendredi", 
-        badge_state: "stable", 
-        wn_text: "Arène PvP ouverte. Attention aux pillages.", 
-        status: "online", 
-        slots: "0/30", 
-        votes: "5" 
-    },
-    avo1: { 
-        type: "avorion", 
-        name: "🚀 Quadrant Galactique (Secteur 1)", 
-        ip: "67.216.85.235:27020", 
-        rb: "Tous les lundis à 02:00 AM", 
-        badge_state: "stable", 
-        wn_text: "Secteur stable. Radar longue portée actif.", 
-        status: "online", 
-        slots: "5/50", 
-        votes: "21" 
-    },
-    avo2: { 
-        type: "avorion", 
-        name: "🌌 Bordure Extérieure (Secteur 2)", 
-        ip: "67.216.85.235:27021", 
-        rb: "Fluctuant selon la charge du secteur", 
-        badge_state: "maintenance", 
-        wn_text: "Nettoyage des débris spatiaux en cours.", 
-        status: "online", 
-        slots: "1/50", 
-        votes: "3" 
-    }
-};
-
+// Récupération sécurisée du LocalStorage ou secours sur config.js
+let qbcClusterData = window.qbcClusterData || {};
 if (localStorage.getItem('qbc_server_db')) {
     try { qbcClusterData = JSON.parse(localStorage.getItem('qbc_server_db')); } catch(e) {}
 }
@@ -217,7 +134,7 @@ function buildQbcAdminSidebarTabs() {
     Object.keys(qbcClusterData).forEach(key => {
         if (key === "global") return;
         const srv = qbcClusterData[key];
-        let cleanName = srv.name.replace(/[☣️💀🌌☄️🚨⚠️⚙️👑]/g, '').trim();
+        let cleanName = srv.name.replace(/[☣️💀🌌🚀☄️🚨⚠️⚙️👑⚔️🧟]/g, '').trim();
         container.innerHTML += `<div class="server-select-item ${key === activeTabId ? 'active' : ''}" onclick="switchQbcAdminTab('${key}')">${cleanName}</div>`;
     });
 }
@@ -245,6 +162,7 @@ function loadQbcActivePaneForm() {
                     <div class="form-group"><label>Sous-Titre Index :</label><input type="text" id="cfg-index-sub-title" value="${srv.indexSubTitle || ''}"></div>
                     <div class="form-group"><label>Titre Message Bienvenue :</label><input type="text" id="cfg-welcome-title" value="${srv.title || ''}"></div>
                     <div class="form-group"><label>Corps Texte Bienvenue :</label><textarea id="cfg-welcome-desc" rows="3">${srv.desc || ''}</textarea></div>
+                    <div class="form-group"><label>🔐 Sécurité Anti-Copie (true/false) :</label><input type="text" id="cfg-global-nocopy" value="${srv.securityNoCopy || 'false'}"></div>
                 ` : ''}
                 ${window.currentGlobalSubTab === 'alertes' ? `
                     <div style="border:1px dashed #ef4444; padding:15px; border-radius:8px;">
@@ -285,6 +203,18 @@ function loadQbcActivePaneForm() {
             </div>
             
             <div class="form-group" style="border: 1px dashed #00ffcc; padding: 12px; border-radius: 6px; background: rgba(0,255,204,0.02);">
+                <label style="color:#00ffcc;">🎭 Icône Décorative du Titre (Devant le nom) :</label>
+                <select id="cfg-srv-game-icon">
+                    <option value="👑 " ${srv.game_icon==='👑 '?'selected':''}>👑 Couronne Royale</option>
+                    <option value="⚔️ " ${srv.game_icon==='⚔️ '?'selected':''}>⚔️ Épées de Combat</option>
+                    <option value="🧟 " ${srv.game_icon==='🧟 '?'selected':''}>🧟 Zombie Infecté</option>
+                    <option value="💀 " ${srv.game_icon==='💀 '?'selected':''}>💀 Crâne de Mort PvP</option>
+                    <option value="🚀 " ${srv.game_icon==='🚀 '?'selected':''}>🚀 Fusée Spatiale</option>
+                    <option value="🌌 " ${srv.game_icon==='🌌 '?'selected':''}>🌌 Galaxie / Cosmos</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="border: 1px dashed #00ffcc; padding: 12px; border-radius: 6px; background: rgba(0,255,204,0.02); margin-top:10px;">
                 <label style="color:#00ffcc;">🏷️ Sélectionner le Badge d'État Visuel :</label>
                 <select id="cfg-srv-badge-state">
                     <option value="stable" ${srv.badge_state==='stable'?'selected':''}>🟢 NODE STABLE</option>
@@ -310,77 +240,3 @@ function loadQbcActivePaneForm() {
             </div>`;
     }
 }
-
-function saveQbcDynamicConfiguration() {
-    if (activeTabId === "global") {
-        const theme = document.getElementById('cfg-portal-theme');
-        const mainTitle = document.getElementById('cfg-index-main-title');
-        const subTitle = document.getElementById('cfg-index-sub-title');
-        const welcomeTitle = document.getElementById('cfg-welcome-title');
-        const welcomeDesc = document.getElementById('cfg-welcome-desc');
-        const badge = document.getElementById('cfg-global-badge-select');
-        const txt = document.getElementById('cfg-global-warn-text');
-
-        if (theme) qbcClusterData.global.portalTheme = theme.value;
-        if (mainTitle) qbcClusterData.global.indexMainTitle = mainTitle.value;
-        if (subTitle) qbcClusterData.global.indexSubTitle = subTitle.value;
-        if (welcomeTitle) qbcClusterData.global.title = welcomeTitle.value;
-        if (welcomeDesc) qbcClusterData.global.desc = welcomeDesc.value;
-        if (badge && txt) {
-            qbcClusterData.global.global_badge = badge.value; qbcClusterData.global.global_warn_text = txt.value;
-            qbcClusterData.global.warn = txt.value.trim() !== "" ? "PREWARNING : " + badge.value + txt.value : "";
-        }
-    } else {
-        qbcClusterData[activeTabId].type = document.getElementById('cfg-srv-type').value;
-        qbcClusterData[activeTabId].badge_state = document.getElementById('cfg-srv-badge-state').value;
-        qbcClusterData[activeTabId].slots = document.getElementById('cfg-srv-slots').value;
-        qbcClusterData[activeTabId].votes = document.getElementById('cfg-srv-votes').value || "0";
-        qbcClusterData[activeTabId].name = document.getElementById('cfg-srv-name').value;
-        qbcClusterData[activeTabId].status = document.getElementById('cfg-srv-status').value;
-        qbcClusterData[activeTabId].ip = document.getElementById('cfg-srv-ip').value;
-        qbcClusterData[activeTabId].rb = document.getElementById('cfg-srv-rb').value;
-        
-        const noteTxt = document.getElementById('cfg-srv-wn-text').value;
-        qbcClusterData[activeTabId].wn_text = noteTxt;
-        qbcClusterData[activeTabId].wn = noteTxt.trim() !== "" ? "🚨 " + noteTxt : "";
-    }
-    localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData));
-    const led = document.getElementById("sync-success-led");
-    if(led) {
-        led.style.setProperty('display', 'block', 'important');
-        setTimeout(() => { led.style.setProperty('display', 'none', 'important'); }, 2000);
-    }
-    buildQbcAdminSidebarTabs();
-}
-
-function createNewQbcServerInstance() {
-    const id = "srv_" + Date.now();
-    qbcClusterData[id] = { type: "wurm", name: "Nouvelle Instance", ip: "0.0.0.0", rb: "RAS", badge_state: "stable", wn_text: "", status: "online", slots: "0/40", votes: "0" };
-    localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); buildQbcAdminSidebarTabs();
-}
-function deleteCurrentServerInstance() {
-    if(activeTabId !== "global" && confirm("Supprimer définitivement ?")) { 
-        delete qbcClusterData[activeTabId]; 
-        localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); 
-        activeTabId = "global";
-        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm(); 
-    }
-}
-
-window.onload = function() {
-    if (sessionStorage.getItem('qbc_admin_authenticated') === 'true') {
-        const gateNode = document.getElementById("qbc-auth-gate");
-        const coreNode = document.getElementById("qbc-admin-core");
-        if(gateNode) gateNode.style.setProperty('display', 'none', 'important');
-        if(coreNode) coreNode.style.setProperty('display', 'block', 'important');
-        buildQbcAdminSidebarTabs(); 
-        loadQbcActivePaneForm();
-    } else {
-        buildQbcAdminSidebarTabs(); 
-        loadQbcActivePaneForm();
-    }
-};
-</script>
-</body>
-</html>
-
