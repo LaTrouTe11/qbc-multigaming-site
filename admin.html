@@ -258,7 +258,16 @@ function saveQbcDynamicConfiguration() {
         if (document.getElementById('cfg-srv-type')) qbcClusterData[activeTabId].type = document.getElementById('cfg-srv-type').value;
         if (document.getElementById('cfg-srv-game-icon')) qbcClusterData[activeTabId].game_icon = document.getElementById('cfg-srv-game-icon').value;
         if (document.getElementById('cfg-srv-badge-state')) qbcClusterData[activeTabId].badge_state = document.getElementById('cfg-srv-badge-state').value;
-        if (document.getElementById('cfg-srv-slots')) qbcClusterData[activeTabId].slots = document.getElementById('cfg-srv-slots').value;
+        // 🔐 CONVERTISSEUR AUTOMATIQUE COMPATIBLE TÉLÉMÉTRIE v84.0
+        if (document.getElementById('cfg-srv-slots')) {
+            let rawSlots = document.getElementById('cfg-srv-slots').value.trim();
+            if (rawSlots !== "" && !rawSlots.includes('/')) {
+                qbcClusterData[activeTabId].slots = "0/" + rawSlots; // Si vous tapez 250, ça enregistre "0/250" !
+            } else {
+                qbcClusterData[activeTabId].slots = rawSlots; // Si c'est déjà au bon format, ça le laisse tranquille
+            }
+        }
+
         if (document.getElementById('cfg-srv-votes')) qbcClusterData[activeTabId].votes = document.getElementById('cfg-srv-votes').value;
         if (document.getElementById('cfg-srv-name')) qbcClusterData[activeTabId].name = document.getElementById('cfg-srv-name').value;
         if (document.getElementById('cfg-srv-status')) qbcClusterData[activeTabId].status = document.getElementById('cfg-srv-status').value;
