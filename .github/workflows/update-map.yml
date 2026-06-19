@@ -22,6 +22,6 @@ jobs:
         username: ${{ secrets.LEGION_USER }}
         password: ${{ secrets.LEGION_PASS }}
         port: ${{ secrets.LEGION_PORT }}
-        protocol: ftps # 👈 Modifié ici pour utiliser la connexion sécurisée acceptée
+        protocol: ftp # 👈 Changé en ftp classique pour éviter le blocage de sécurité (Timeout)
         local-dir: ./map-folder-1/
         server-dir: /wurmmapgen/output/
