@@ -16,5 +16,5 @@ git push origin master:gh-pages --force
 echo ===================================================
 echo     La carte de Doriath a ete mise a jour !
 echo ===================================================
-pause
+
 
