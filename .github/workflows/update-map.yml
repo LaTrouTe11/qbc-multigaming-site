@@ -1,0 +1,27 @@
+name: Synchro Carte Wurm Legion Hosting
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Connexion au dépôt GitHub
+      uses: actions/checkout@v4
+
+    - name: Créer le dossier temporaire
+      run: mkdir -p ./map-folder-1/
+
+    - name: Télécharger la carte du Serveur 1 depuis Legion Hosting
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.LEGION_HOST }}
+        username: ${{ secrets.LEGION_USER }}
+        password: ${{ secrets.LEGION_PASS }}
+        port: ${{ secrets.LEGION_PORT }}
+        protocol: ftp # 👈 Changé en ftp classique pour éviter le blocage de sécurité (Timeout)
+        local-dir: ./map-folder-1/
+        server-dir: /wurmmapgen/output/

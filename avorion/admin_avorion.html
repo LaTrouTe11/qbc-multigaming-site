@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>QBC MATRIX - CONSOLE AVORION</title>
+    <style>
+        body { background: #022c22; color: #ccfbf1; font-family: monospace; margin: 0; padding: 20px; }
+        .admin-nav a { background: #115e59; color: #ccfbf1; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin-right: 10px; font-weight: bold; font-size: 12px; display: inline-block; border: 1px solid #14b8a6; }
+        .admin-nav a.current { background: #00ffcc !important; color: #022c22 !important; border-color: #00ffcc; box-shadow: 0 0 10px #00ffcc; }
+        .srv-btn { display: block; width: 100%; background: #115e59; color: #99f6e4; border: 1px solid #14b8a6; padding: 12px; border-radius: 4px; text-align: left; cursor: pointer; font-weight: bold; margin-bottom: 10px; }
+        .srv-btn.active { background: #00ffcc !important; color: #022c22 !important; border-color: #00ffcc; }
+        .form-control { width: 100%; background: #042f2e; border: 1px solid #14b8a6; color: #fff; padding: 10px; border-radius: 4px; box-sizing: border-box; margin-bottom: 12px; }
+        .info-block { background: #022c22; border: 1px solid #14b8a6; padding: 15px; border-radius: 6px; margin-bottom: 15px; }
+        .info-label { display: block; font-size: 11px; font-weight: bold; color: #99f6e4; margin-bottom: 5px; text-transform: uppercase; }
+        .btn-matrix-save { background: #00ffcc; color: #022c22; border: none; width: 100%; padding: 14px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px rgba(0,255,204,0.4); }
+    </style>
+</head>
+<body>
+    <div class="admin-nav" style="display: flex; align-items: center; background: #042f2e; padding: 10px; border-radius: 6px; border: 1px solid #14b8a6; margin-bottom: 20px;">
+        <span style="color: #00ffcc; font-weight: bold; margin-right: 15px; font-size:12px;">🛰️ ORDINATEUR DE VOL :</span>
+        <a href="../7dtd/admin_7dtd.html">☣️ CONSOLE 7DTD</a>
+        <a href="../wurm/admin_wurm.html">🛡️ CONSOLE WURM</a>
+        <a href="admin_avorion.html" class="current">🚀 CONSOLE AVORION</a>
+        <a href="../index.html" style="margin-left: auto; background: transparent; border-color: #00ffcc; color: #00ffcc;">⬅️ PORTAIL</a>
+    </div>
+
+    <div style="background: #042f2e; border: 1px solid #ff0055; padding: 10px; border-radius: 6px; font-weight: bold; color: #ff0055; display: flex; align-items: center; gap: 10px; margin-bottom: 25px;">
+        <span>🚨 ALERTE MATRICE GLOBALE (S'AFFICHE PARTOUT) :</span>
+        <input type="text" id="qbc_global_ticker_input" class="form-control" style="margin:0; flex:1;">
+    </div>
+
+    <div style="display: flex; gap: 25px; align-items: flex-start;">
+        <!-- UNIQMENT LES SERVEURS AVORION ICI -->
+        <div style="min-width: 280px; width: 280px; background: #042f2e; border: 1px solid #00ffcc; padding: 15px; border-radius: 8px;">
+            <h3 style="color:#00ffcc; margin-top:0; font-size:12px; text-transform:uppercase;">🚀 UNIVERSE AVORION ACTIVE</h3>
+            <button class="srv-btn active" id="btn-avorion1" onclick="selectAvorionInstance('avorion1')">🛰️ ALPHA CORE GALAXY</button>
+            <button class="srv-btn" id="btn-avorion2" onclick="selectAvorionInstance('avorion2')">🛸 FRONTIÈRE SANS LOI</button>
+        </div>
+
+        <div class="admin-panel" style="flex:1; background: #042f2e; border: 1px solid #14b8a6; padding: 25px; border-radius: 8px;">
+            <h2 id="current-panel-title" style="margin:0 0 20px 0; color:#00ffcc; font-size:16px;">COCKPIT ACTIF</h2>
+            <form onsubmit="saveAvorionConfig(event)">
+                <div class="info-block"><span class="info-label">✨ NOM DU QUADRANT :</span><input type="text" id="srv_custom_name" class="form-control"></div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                    <div class="info-block"><span class="info-label">📡 COORDONNÉES IP :</span><input type="text" id="srv_ip" class="form-control"></div>
+                    <div class="info-block"><span class="info-label">🔌 PORT DE LA BALISE :</span><input type="text" id="srv_port" class="form-control"></div>
+                </div>
+                <div class="info-block" style="border-color:#ff9900;"><span class="info-label" style="color:#ff9900;">⚡ FLUX DES SAUTS / REBOOTS DU SECTEUR :</span><input type="text" id="srv_ticker_msg" class="form-control"></div>
+                <div class="info-block">
+                    <h3>🌌 STATUT DE LA FLOTTE INTERSTELLAIRE</h3>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                        <div><span class="info-label">🗺️ SECTEUR CENTRAL :</span><input type="text" id="srv_map_name" class="form-control"></div>
+                        <div><span class="info-label">⏳ PHASE COSMIQUE :</span><input type="text" id="srv_world_time" class="form-control"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-matrix-save">Enregistrer Ordinateur de Vol ✅</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+let currentSrv = "avorion1";
+function selectAvorionInstance(key) {
+    currentSrv = key;
+    document.querySelectorAll('.srv-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + key).classList.add('active');
+    localStorage.setItem('qbc_last_active_srv_key', key);
+    loadAvorionConfig();
+}
+function loadAvorionConfig() {
+    document.getElementById('qbc_global_ticker_input').value = localStorage.getItem('qbc_global_ticker_msg') || "";
+    document.getElementById('srv_custom_name').value = localStorage.getItem('qbc_custom_name_2026_' + currentSrv) || (currentSrv === "avorion1" ? "ALPHA CORE" : "FRONTIÈRE SANS LOI");
+    document.getElementById('srv_ip').value = localStorage.getItem('qbc_ip_2026_' + currentSrv) || "45.134.8.12";
+    document.getElementById('srv_port').value = localStorage.getItem('qbc_port_2026_' + currentSrv) || (currentSrv === "avorion1" ? "27015" : "27016");
+    document.getElementById('srv_ticker_msg').value = localStorage.getItem('qbc_ticker_msg_2026_' + currentSrv) || "";
+    document.getElementById('srv_map_name').value = localStorage.getItem('qbc_map_name_2026_' + currentSrv) || "Quadrant Core [0:0]";
+    document.getElementById('srv_world_time').value = localStorage.getItem('qbc_world_time_2026_' + currentSrv) || "Phase Cosmique 4";
+    document.getElementById('current-panel-title').innerText = "SPATIAL : " + document.getElementById('srv_custom_name').value;
+}
+function saveAvorionConfig(e) {
+    e.preventDefault();
+    localStorage.setItem('qbc_global_ticker_msg', document.getElementById('qbc_global_ticker_input').value);
+    localStorage.setItem('qbc_custom_name_2026_' + currentSrv, document.getElementById('srv_custom_name').value);
+    localStorage.setItem('qbc_ip_2026_' + currentSrv, document.getElementById('srv_ip').value);
+    localStorage.setItem('qbc_port_2026_' + currentSrv, document.getElementById('srv_port').value);
+    localStorage.setItem('qbc_ticker_msg_2026_' + currentSrv, document.getElementById('srv_ticker_msg').value);
+    localStorage.setItem('qbc_map_name_2026_' + currentSrv, document.getElementById('srv_map_name').value);
+    localStorage.setItem('qbc_world_time_2026_' + currentSrv, document.getElementById('srv_world_time').value);
+    alert("COORDINATION RADAR AVORION MISE À JOUR ! 🛰️");
+    loadAvorionConfig();
+}
+window.addEventListener("DOMContentLoaded", () => {
+    localStorage.setItem('qbc_last_active_srv_key', currentSrv);
+    loadAvorionConfig();
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

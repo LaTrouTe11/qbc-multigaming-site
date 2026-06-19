@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>🗳 ... Espace de Vote | QBC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="lang-fr-mode">
+<div class="container">
+
+    <div class="lang-selector-top">
+        <select class="lang-select-box" onchange="document.body.className = this.value === 'en' ? 'lang-en-mode' : 'lang-fr-mode'">
+            <option value="fr">🍁 Français</option>
+            <option value="en">🦅 English</option>
+        </select>
+    </div>
+
+    <h1 class="fr-txt">🗳️ OFFREDUES, VOTES ET RECOMPENSES DE DORIATH</h1>
+    <h1 class="en-txt">🗳️ VOTES AND REWARDS SYSTEM FOR DORIATH</h1>
+
+    <div class="medieval-nav">
+        <a href="index.html" class="nav-link fr-txt">🏡 Forteresse</a><a href="index.html" class="nav-link en-txt">🏡 Fortress</a>
+        <a href="mods.html" class="nav-link fr-txt">🛠️ Mods</a><a href="mods.html" class="nav-link en-txt">🛠️ Mods</a>
+        <a href="vote.html" class="nav-link active fr-txt">🗳️ Vote</a><a href="vote.html" class="nav-link active en-txt">🗳️ Vote</a>
+    </div>
+
+    <div class="map-selection-container">
+        <!-- COFFRE DE VOTE SITE 1 -->
+        <div class="map-card">
+            <h3>Site 1 (Wurm Unlimited Net)</h3>
+            <p class="fr-txt">Offrez votre vote sacre a QBC Flaggard pour debloquer instantanement 10 pieces de cuivre a votre connexion avec la commande en jeu <strong>/vote</strong>.</p>
+            <p class="en-txt">Cast your vote for QBC Flaggard to immediately unlock 10 copper coins in-game using the chat utility command <strong>/vote</strong>.</p>
+            <a href="https://wurm-unlimited.com" target="_blank" class="map-btn">VOTER SUR SITE 1</a>
+        </div>
+
+        <!-- COFFRE DE VOTE SITE 2 -->
+        <div class="map-card">
+            <h3>Site 2 (GameMonitoring)</h3>
+            <p class="fr-txt">Soutenez le classement general de nos royaumes pour attirer de nouveaux chevaliers et marchands au sein du Flaggard Cluster.</p>
+            <p class="en-txt">Support the global tracking ranking of our empires to attract new active players and merchants inside the Flaggard Cluster universe.</p>
+            <a href="https://gamemonitoring.net" target="_blank" class="map-btn">VOTER SUR SITE 2</a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

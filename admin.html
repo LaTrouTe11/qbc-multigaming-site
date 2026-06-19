@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="icon" href="data:,">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[QBC] Matrix | Cockpit Dynamic Server Manager v65.0</title>
+    <style>
+        body { background-color: #050302; color: #f4eae1; font-family: monospace; margin: 0; padding: 20px; min-height: 100vh; box-sizing: border-box; }
+        .admin-wrapper { max-width: 1300px; margin: 0 auto; background: #0f0a07; border: 1px solid #ff9900; border-radius: 12px; padding: 25px; box-shadow: 0 0 30px rgba(255,153,0,0.15); position: relative; }
+        .qbc-main-admin-title-panel { text-align: left; margin-bottom: 20px; border-bottom: 1px dashed rgba(255, 153, 0, 0.2); padding-bottom: 15px; }
+        .qbc-main-admin-title-panel h0 { font-size: 26px; color: #ffffff; font-weight: 900; letter-spacing: 1px; display: block; margin: 0; }
+        .qbc-main-admin-title-panel p { margin: 5px 0 0 0; font-size: 12px; color: #ff9900; text-transform: uppercase; font-weight: bold; }
+        .qbc-top-action-banner { display: flex !important; justify-content: space-between !important; align-items: center !important; background: #000000 !important; border: 1px solid rgba(255,153,0,0.2) !important; padding: 15px 20px !important; border-radius: 8px !important; margin-bottom: 20px !important; box-sizing: border-box !important; width: 100% !important; }
+        .qbc-top-buttons-holder { display: flex !important; gap: 10px !important; align-items: center !important; }
+        .cockpit-layout { display: flex !important; flex-direction: row !important; gap: 25px !important; min-height: 520px !important; box-sizing: border-box !important; width: 100% !important; }
+        .sidebar-servers { width: 320px !important; display: flex !important; flex-direction: column !important; gap: 10px !important; border-right: 1px solid rgba(255, 153, 0, 0.2) !important; padding-right: 20px !important; flex-shrink: 0 !important; }
+        .server-select-item { background: #1c130c; border: 1px solid rgba(255,153,0,0.2); border-radius: 6px; padding: 12px; cursor: pointer; text-align: left; font-weight: bold; font-size: 11px; transition: 0.2s; color: #c4b4a3; display: flex; align-items: center; justify-content: space-between; }
+        .server-select-item:hover { border-color: #ff9900; color: #fff; background: rgba(255,153,0,0.05); }
+        .server-select-item.active { background: #ff9900; color: #050302; border-color: #ff9900; box-shadow: 0 0 10px rgba(255,153,0,0.3); }
+        .btn-action-add { background: #00ffcc !important; color: #050302 !important; border: none !important; padding: 12px !important; border-radius: 6px !important; font-weight: 900 !important; font-family: monospace !important; font-size: 11px !important; cursor: pointer !important; text-transform: uppercase !important; text-align: center !important; margin-top: 10px !important; box-shadow: 0 0 10px rgba(0,255,204,0.1) !important; width: 100% !important; }
+        .btn-top-save-mini { background: #00ffcc !important; color: #050203 !important; border: none !important; padding: 10px 18px !important; font-weight: 900 !important; border-radius: 4px !important; cursor: pointer !important; text-transform: uppercase !important; font-family: monospace !important; font-size: 11px !important; }
+        .btn-top-exit-portal { background: linear-gradient(135deg, #ff9900, #ea580c) !important; color: #050302 !important; border: none !important; padding: 10px 18px !important; border-radius: 4px !important; text-decoration: none !important; font-size: 11px !important; font-weight: 900 !important; text-transform: uppercase; font-family: monospace !important; }
+        .btn-save { background: #00ffcc !important; color: #050203 !important; border: none !important; padding: 14px 20px !important; font-weight: 900 !important; border-radius: 6px !important; cursor: pointer !important; text-transform: uppercase !important; font-family: monospace !important; font-size: 12px !important; width: 100%; box-sizing: border-box; }
+        .btn-action-del { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; }
+        .main-editor-pane { flex: 1 !important; background: #000000 !important; border: 1px solid rgba(255,255,255,0.05) !important; border-radius: 8px !important; padding: 25px !important; box-sizing: border-box !important; }
+        .pane-headline { color: #00ffcc; font-size: 16px; font-weight: 900; text-transform: uppercase; border-left: 4px solid #00ffcc; padding-left: 12px; margin: 0; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-size: 11px; color: #8a8f98; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; }
+        input[type="text"], input[type="password"], textarea, select { width: 100%; background: #0f0a07; border: 1px solid rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; color: #fff; font-family: monospace; box-sizing: border-box; font-size: 13px; }
+        input:focus, textarea:focus, select:focus { border-color: #ff9900; outline: none; background: #000; }
+        .status-msg { color: #00ffcc; font-weight: bold; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div id="qbc-auth-gate" class="admin-wrapper" style="max-width: 400px; text-align: center; margin-top: 80px;">
+    <h1>🔓 ACCÈS INFRASTRUCTURE QBC</h1>
+    <div class="form-group" style="margin-top:20px; text-align:left;">
+        <label>Clé d'accès Administrateur :</label>
+        <div style="position: relative !important; display: flex !important; align-items: center !important;">
+            <input type="password" id="qbc-pass-key" placeholder="••••••••••••" onkeypress="handleAuthKeyPress(event)" style="padding-right: 45px !important; width: 100% !important; box-sizing: border-box !important;">
+            <span onclick="toggleQbcAdminPasswordVisibility()" id="qbc-eye-icon" style="position: absolute !important; right: 15px !important; cursor: pointer !important; font-size: 16px !important; user-select: none !important;">👁️</span>
+        </div>
+    </div>
+    <button style="background: linear-gradient(135deg, #ff9900, #ea580c); color: #050302; border: none; padding: 12px 24px; font-weight: 900; border-radius: 6px; cursor: pointer; text-transform: uppercase; width: 100%; font-family: monospace;" onclick="validateQbcAdminAuth()">Déverrouiller le Cockpit</button>
+    <p id="auth-error-msg" style="color:#ef4444; font-size:11px; margin-top:12px; font-weight:bold; display:none;">⚠️ CLÉ ERRONÉE - ACCÈS REJETÉ</p>
+    <br><br>
+    <a href="index.html" style="color:#8a8f98; text-decoration:none; font-size:11px; text-transform:uppercase; font-weight:bold;">⬅️ Retour à l'accueil</a>
+</div>
+
+<div id="qbc-admin-core" class="admin-wrapper" style="display: none;">
+    <div class="qbc-main-admin-title-panel">
+        <h0>👑 QBC MATRIX</h0>
+        <p>Portail d'Administration Réseau</p>
+    </div>
+    <div class="qbc-top-action-banner">
+        <div class="pane-headline" id="pane-title-node">Sélectionnez une entité</div>
+        <div class="qbc-top-buttons-holder">
+            <button class="btn-top-save-mini" onclick="saveQbcDynamicConfiguration()">💾 Sauver</button>
+            <a href="index.html" class="btn-top-exit-portal">⬅️ Retour</a>
+            <span id="sync-success-led" class="status-msg" style="display: none; margin-left: 10px;">✅ OK</span>
+        </div>
+    </div>
+    <div class="cockpit-layout">
+        <div class="sidebar-servers">
+            <div id="qbc-dynamic-tabs-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+            <button class="btn-action-add" onclick="createNewQbcServerInstance()">➕ Créer Nouvelle Instance</button>
+        </div>
+        <div class="main-editor-pane">
+            <div id="form-container-core"></div>
+            <div id="action-buttons-footer" style="margin-top: 25px; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn-save" id="btn-save-cluster" onclick="saveQbcDynamicConfiguration()">💾 Enregistrer les Modifications</button>
+                <div style="text-align: right; margin-top: 5px;">
+                    <button class="btn-action-del" id="btn-delete-node" onclick="deleteCurrentServerInstance()">🗑️ Supprimer l'Instance</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LIAISON VERS VOTRE DOSSIER DE SCRIPT JS -->
+<script src="js/config.js"></script>
+
+<script>
+// 🛡️ SÉCURITÉ DE HAUTE DISPONIBILITÉ : EN-TÊTE ET DISPATCH REPRIS AVANT CHARGEMENT
+const SECRET_KEY_MASTER = "QBC2026";
+let activeTabId = "global";
+if (!window.currentGlobalSubTab) window.currentGlobalSubTab = "titres";
+
+// Vérification de sécurité de la base de données
+let qbcClusterData = window.qbcClusterData || {
+    global: { type: "portal", indexMainTitle: "QBC Multigaming", indexSubTitle: "Portail d'Accès aux Instances Réseau", warn: "", title: "Bienvenue sur le Réseau QBC", desc: "", portalTheme: "standard", securityNoCopy: "false", global_badge: "", global_warn_text: "" },
+    wurm1: { type: "wurm", game_icon: "👑 ", name: "Doriath (Monde Principal)", ip: "67.216.85.235:27016", rb: "Tous les lundis à 04:00 AM", badge_state: "stable", wn_text: "Live Map opérationnelle !", status: "online", slots: "12/40", votes: "45" }
+};
+
+if (localStorage.getItem('qbc_server_db')) {
+    try { qbcClusterData = JSON.parse(localStorage.getItem('qbc_server_db')); } catch(e) {}
+}
+
+function toggleQbcAdminPasswordVisibility() {
+    const passInput = document.getElementById("qbc-pass-key");
+    const eyeIcon = document.getElementById("qbc-eye-icon");
+    if (passInput && eyeIcon) {
+        if (passInput.type === "password") {
+            passInput.type = "text"; eyeIcon.innerText = "🔒";
+        } else {
+            passInput.type = "password"; eyeIcon.innerText = "👁️";
+        }
+    }
+}
+
+function validateQbcAdminAuth() {
+    const enteredKey = document.getElementById("qbc-pass-key").value;
+    const errorNode = document.getElementById("auth-error-msg");
+    if (enteredKey === SECRET_KEY_MASTER) {
+        sessionStorage.setItem('qbc_admin_authenticated', 'true');
+        if(errorNode) errorNode.style.setProperty('display', 'none', 'important');
+        document.getElementById("qbc-auth-gate").style.setProperty('display', 'none', 'important');
+        document.getElementById("qbc-admin-core").style.setProperty('display', 'block', 'important');
+        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm();
+    } else {
+        if(errorNode) errorNode.style.setProperty('display', 'block', 'important');
+    }
+}
+function handleAuthKeyPress(e) { if (e.key === "Enter") validateQbcAdminAuth(); }
+
+function buildQbcAdminSidebarTabs() {
+    const container = document.getElementById("qbc-dynamic-tabs-list");
+    if (!container) return; container.innerHTML = "";
+    container.innerHTML += `<div class="server-select-item ${activeTabId === 'global' ? 'active' : ''}" onclick="switchQbcAdminTab('global')">⚙️ CONFIGURATION PORTAIL</div>`;
+    Object.keys(qbcClusterData).forEach(key => {
+        if (key === "global") return;
+        const srv = qbcClusterData[key];
+        let cleanName = srv.name.replace(/[☣️💀🌌🚀☄️🚨⚠️⚙️👑⚔️🧟]/g, '').trim();
+        container.innerHTML += `<div class="server-select-item ${key === activeTabId ? 'active' : ''}" onclick="switchQbcAdminTab('${key}')">${cleanName}</div>`;
+    });
+}
+function switchQbcAdminTab(key) { activeTabId = key; buildQbcAdminSidebarTabs(); loadQbcActivePaneForm(); }
+function switchGlobalSubTab(subTabName) { window.currentGlobalSubTab = subTabName; loadQbcActivePaneForm(); }
+
+function loadQbcActivePaneForm() {
+    const formContainer = document.getElementById("form-container-core");
+    const titleNode = document.getElementById("pane-title-node");
+    const delBtn = document.getElementById("btn-delete-node");
+    if (!formContainer) return; const srv = qbcClusterData[activeTabId];
+
+    if (activeTabId === "global") {
+        titleNode.innerText = "⚙️ Configuration Générale du Portail";
+        if (delBtn) delBtn.style.setProperty('display', 'none', 'important');
+        formContainer.innerHTML = `
+            <div style="display: flex; gap: 6px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,153,0,0.2); padding-bottom: 10px;">
+                <button type="button" onclick="switchGlobalSubTab('titres')" style="flex: 1; background: ${window.currentGlobalSubTab==='titres'?'#ff9900':'#1c130c'}; color: ${window.currentGlobalSubTab==='titres'?'#050302':'#c4b4a3'}; border: 1px solid #ff9900; padding: 6px; font-family: monospace; font-size: 11px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase;">📝 Titres</button>
+                <button type="button" onclick="switchGlobalSubTab('alertes')" style="flex: 1; background: ${window.currentGlobalSubTab==='alertes'?'#ef4444':'#1c130c'}; color: ${window.currentGlobalSubTab==='alertes'?'#fff':'#c4b4a3'}; border: 1px solid #ef4444; padding: 6px; font-family: monospace; font-size: 11px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase;">🚨 Alertes</button>
+                <button type="button" onclick="switchGlobalSubTab('styles')" style="flex: 1; background: ${window.currentGlobalSubTab==='styles'?'#00ffcc':'#1c130c'}; color: ${window.currentGlobalSubTab==='styles'?'#050302':'#c4b4a3'}; border: 1px solid #00ffcc; padding: 6px; font-family: monospace; font-size: 11px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase;">🎨 Thèmes</button>
+            </div>
+            <div id="sub-tab-content-zone">
+                ${window.currentGlobalSubTab === 'titres' ? `
+                    <div class="form-group"><label>Grand Titre Index :</label><input type="text" id="cfg-index-main-title" value="${srv.indexMainTitle || ''}"></div>
+                    <div class="form-group"><label>Sous-Titre Index :</label><input type="text" id="cfg-index-sub-title" value="${srv.indexSubTitle || ''}"></div>
+                    <div class="form-group"><label>Titre Message Bienvenue :</label><input type="text" id="cfg-welcome-title" value="${srv.title || ''}"></div>
+                    <div class="form-group"><label>Corps Texte Bienvenue :</label><textarea id="cfg-welcome-desc" rows="3">${srv.desc || ''}</textarea></div>
+                    <div class="form-group"><label>🔐 Sécurité Anti-Copie (true/false) :</label><input type="text" id="cfg-global-nocopy" value="${srv.securityNoCopy || 'false'}"></div>
+                ` : ''}
+                ${window.currentGlobalSubTab === 'alertes' ? `
+                    <div style="border:1px dashed #ef4444; padding:15px; border-radius:8px;">
+                        <div class="form-group"><label>🚨 Icône Alerte :</label>
+                            <select id="cfg-global-badge-select">
+                                <option value="🚨 " ${srv.global_badge==='🚨 '?'selected':''}>🚨 Flash Rouge</option>
+                                <option value="⚠️ " ${srv.global_badge==='⚠️ '?'selected':''}>⚠️ Attention Orange</option>
+                                <option value="" ${srv.global_badge===''?'selected':''}>❌ Désactiver</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>📝 Texte du Bandeau d'Urgence :</label><input type="text" id="cfg-global-warn-text" value="${srv.global_warn_text || ''}"></div>
+                    </div>
+                ` : ''}
+                ${window.currentGlobalSubTab === 'styles' ? `
+                    <div class="form-group"><label>🎨 Ambiance Visuelle Portail :</label>
+                        <select id="cfg-portal-theme">
+                            <option value="standard" ${srv.portalTheme==='standard'?'selected':''}>🌌 Standard d'Origine</option>
+                            <option value="noel" ${srv.portalTheme==='noel'?'selected':''}>🎄 Noël Féerique</option>
+                            <option value="halloween" ${srv.portalTheme==='halloween'?'selected':''}>🎃 Halloween Horreur</option>
+                            <option value="paques" ${srv.portalTheme==='paques'?'selected':''}>🥚 Pâques Printemps</option>
+                            <option value="cyberpunk" ${srv.portalTheme==='cyberpunk'?'selected':''}>🌆 Ambiance Cyberpunk</option>
+                            <option value="apocalypse" ${srv.portalTheme==='apocalypse'?'selected':''}>🔥 Fin des Temps</option>
+                            <option value="space" ${srv.portalTheme==='space'?'selected':''}>🚀 Vide Spatial</option>
+                        </select>
+                    </div>
+                ` : ''}
+            </div>`;
+    } else {
+
+        titleNode.innerText = `⚙️ Configuration: \${srv.name}`;
+        if (delBtn) delBtn.style.setProperty('display', 'block', 'important');
+        formContainer.innerHTML = `
+            <div class="form-group"><label>🎮 Catégorie Multi-Filtre :</label>
+                <select id="cfg-srv-type">
+                    <option value="wurm" \${srv.type==='wurm'?'selected':''}>WURM UNLIMITED</option>
+                    <option value="7dtd" \${srv.type==='7dtd'?'selected':''}>7 DAYS TO DIE</option>
+                    <option value="avorion" \${srv.type==='avorion'?'selected':''}>AVORION</option>
+                </select>
+            </div>
+            <div class="form-group" style="border: 1px dashed #00ffcc; padding: 12px; border-radius: 6px; background: rgba(0,255,204,0.02);">
+                <label style="color:#00ffcc;">🎭 Icône Décorative du Titre :</label>
+                <select id="cfg-srv-game-icon">
+                    <option value="👑 " \${srv.game_icon==='👑 '?'selected':''}>👑 Couronne Royale</option>
+                    <option value="⚔️ " \${srv.game_icon==='⚔️ '?'selected':''}>⚔️ Épées de Combat</option>
+                    <option value="🧟 " \${srv.game_icon==='🧟 '?'selected':''}>🧟 Zombie Infecté</option>
+                    <option value="💀 " \${srv.game_icon==='💀 '?'selected':''}>💀 Crâne de Mort PvP</option>
+                    <option value="🚀 " \${srv.game_icon==='🚀 '?'selected':''}>🚀 Fusée Spatiale</option>
+                    <option value="🌌 " \${srv.game_icon==='🌌 '?'selected':''}>🌌 Galaxie / Cosmos</option>
+                </select>
+            </div>
+            <div class="form-group" style="border: 1px dashed #00ffcc; padding: 12px; border-radius: 6px; background: rgba(0,255,204,0.02); margin-top:10px;">
+                <label style="color:#00ffcc;">🏷️ Sélectionner le Badge d'État Visuel :</label>
+                <select id="cfg-srv-badge-state">
+                    <option value="stable" \${srv.badge_state==='stable'?'selected':''}>🟢 NODE STABLE</option>
+                    <option value="urgent" \${srv.badge_state==='urgent'?'selected':''}>🚨 CRITICAL WARNING</option>
+                    <option value="maintenance" \${srv.badge_state==='maintenance'?'selected':''}>🛠️ MAINTENANCE PLANIFIÉE</option>
+                    <option value="pack" \${srv.badge_state==='pack'?'selected':''}>📦 PACK AJOURNÉ</option>
+                    <option value="sync" \${srv.badge_state==='sync'?'selected':''}>📡 SYNC EN COURS</option>
+                </select>
+            </div>
+            <div class="form-group"><label>🟢 Statut Énergie :</label>
+                <select id="cfg-srv-status"><option value="online" \${srv.status==='online'?'selected':''}>🟩 EN LIGNE</option><option value="offline" \${srv.status==='offline'?'selected':''}>🟥 COUPÉ</option></select>
+            </div>
+            <!-- 🟢 APRÈS (Variable libérée et étanche) -->
+            <div class="form-group"><label>👥 Capacité Joueurs :</label><input type="text" id="cfg-srv-slots" value="${srv.slots || '0/40'}"></div>
+            <div class="form-group"><label>🔥 Compteur de Votes :</label><input type="text" id="cfg-srv-votes" value="${srv.votes || '0'}"></div>
+            <div class="form-group"><label>Nom de l'Instance :</label><input type="text" id="cfg-srv-name" value="${srv.name}"></div>
+            <div class="form-group"><label>Adresse Réseau (IP:Port) :</label><input type="text" id="cfg-srv-ip" value="${srv.ip}"></div>
+            <div class="form-group"><label>Cycle de Reboot :</label><input type="text" id="cfg-srv-rb" value="${srv.rb}"></div>
+            <div class="form-group" style="border: 1px dashed rgba(0,255,204,0.2); padding: 15px; border-radius: 6px; background: rgba(0,255,204,0.01);">
+                <label style="color:#00ffcc;">📣 Note Spécifique / Message d'Update du Serveur :</label>
+                <input type="text" id="cfg-srv-wn-text" value="${srv.wn_text || ''}">
+            </div>`;
+    }
+}
+
+// 💾 MOTEUR DE SAUVEGARDE UNIFIÉ INTÉGRIAL SÉCURISÉ V75.0 (SANS CRASH VALUE)
+function saveQbcDynamicConfiguration() {
+    if (activeTabId === "global") {
+        if (document.getElementById('cfg-portal-theme')) qbcClusterData.global.portalTheme = document.getElementById('cfg-portal-theme').value;
+        if (document.getElementById('cfg-index-main-title')) qbcClusterData.global.indexMainTitle = document.getElementById('cfg-index-main-title').value;
+        if (document.getElementById('cfg-index-sub-title')) qbcClusterData.global.indexSubTitle = document.getElementById('cfg-index-sub-title').value;
+        if (document.getElementById('cfg-welcome-title')) qbcClusterData.global.title = document.getElementById('cfg-welcome-title').value;
+        if (document.getElementById('cfg-welcome-desc')) qbcClusterData.global.desc = document.getElementById('cfg-welcome-desc').value;
+        if (document.getElementById('cfg-global-nocopy')) qbcClusterData.global.securityNoCopy = document.getElementById('cfg-global-nocopy').value;
+        
+        if (document.getElementById('cfg-global-badge-select') && document.getElementById('cfg-global-warn-text')) {
+            const badge = document.getElementById('cfg-global-badge-select').value;
+            const txt = document.getElementById('cfg-global-warn-text').value;
+            qbcClusterData.global.global_badge = badge; 
+            qbcClusterData.global.global_warn_text = txt;
+            qbcClusterData.global.warn = txt.trim() !== "" ? "PREWARNING : " + badge + txt : "";
+        }
+    } else {
+        if (document.getElementById('cfg-srv-type')) qbcClusterData[activeTabId].type = document.getElementById('cfg-srv-type').value;
+        if (document.getElementById('cfg-srv-game-icon')) qbcClusterData[activeTabId].game_icon = document.getElementById('cfg-srv-game-icon').value;
+        if (document.getElementById('cfg-srv-badge-state')) qbcClusterData[activeTabId].badge_state = document.getElementById('cfg-srv-badge-state').value;
+        // 🔐 CONVERTISSEUR AUTOMATIQUE COMPATIBLE TÉLÉMÉTRIE v84.0
+        if (document.getElementById('cfg-srv-slots')) {
+            let rawSlots = document.getElementById('cfg-srv-slots').value.trim();
+            if (rawSlots !== "" && !rawSlots.includes('/')) {
+                qbcClusterData[activeTabId].slots = "0/" + rawSlots; // Si vous tapez 250, ça enregistre "0/250" !
+            } else {
+                qbcClusterData[activeTabId].slots = rawSlots; // Si c'est déjà au bon format, ça le laisse tranquille
+            }
+        }
+
+        if (document.getElementById('cfg-srv-votes')) qbcClusterData[activeTabId].votes = document.getElementById('cfg-srv-votes').value;
+        if (document.getElementById('cfg-srv-name')) qbcClusterData[activeTabId].name = document.getElementById('cfg-srv-name').value;
+        if (document.getElementById('cfg-srv-status')) qbcClusterData[activeTabId].status = document.getElementById('cfg-srv-status').value;
+        if (document.getElementById('cfg-srv-ip')) qbcClusterData[activeTabId].ip = document.getElementById('cfg-srv-ip').value;
+        if (document.getElementById('cfg-srv-rb')) qbcClusterData[activeTabId].rb = document.getElementById('cfg-srv-rb').value;
+        if (document.getElementById('cfg-srv-wn-text')) qbcClusterData[activeTabId].wn_text = document.getElementById('cfg-srv-wn-text').value;
+    }
+    
+    // Synchro locale immédiate
+    localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData));
+    
+    // 🎨 APPLICATION DU THÈME EN DIRECT SUR L'ADMINISTRATION
+    const adminThemeMap = {
+        'standard': "radial-gradient(circle at center, rgba(30, 20, 15, 0.4) 0%, rgba(5, 3, 2, 0.95) 100%)",
+        'noel': "linear-gradient(135deg, #051923 0%, #001219 100%)",
+        'halloween': "linear-gradient(135deg, #1c0a00 0%, #0b0500 100%)",
+        'paques': "linear-gradient(135deg, #0d1f10 0%, #050f06 100%)",
+        'cyberpunk': "linear-gradient(135deg, #140114 0%, #070008 100%)",
+        'apocalypse': "linear-gradient(135deg, #1c0000 0%, #0a0000 100%)",
+        'space': "linear-gradient(135deg, #000814 0%, #00010c 100%)"
+    };
+    if (qbcClusterData.global && qbcClusterData.global.portalTheme && adminThemeMap[qbcClusterData.global.portalTheme]) {
+        document.body.style.setProperty('background', adminThemeMap[qbcClusterData.global.portalTheme], 'important');
+    }
+
+    // 🚨 ALLUMAGE DU MESSAGE OK SUR TOUS LES ONGLETS SANS APPARTENANCE
+    const led = document.getElementById("sync-success-led");
+    if (led) {
+        led.style.setProperty('display', 'inline-block', 'important');
+        setTimeout(() => { led.style.setProperty('display', 'none', 'important'); }, 2000);
+    }
+    buildQbcAdminSidebarTabs();
+}
+
+
+
+function createNewQbcServerInstance() {
+    const id = "srv_" + Date.now();
+    qbcClusterData[id] = { type: "wurm", game_icon: "👑 ", name: "Nouvelle Instance", ip: "0.0.0.0", rb: "RAS", badge_state: "stable", wn_text: "", status: "online", slots: "0/40", votes: "0" };
+    localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); buildQbcAdminSidebarTabs();
+}
+function deleteCurrentServerInstance() {
+    if(activeTabId !== "global" && confirm("Supprimer définitivement ?")) { 
+        delete qbcClusterData[activeTabId]; localStorage.setItem('qbc_server_db', JSON.stringify(qbcClusterData)); 
+        activeTabId = "global"; buildQbcAdminSidebarTabs(); loadQbcActivePaneForm(); 
+    }
+}
+
+if (sessionStorage.getItem('qbc_admin_authenticated') === 'true') {
+    window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("qbc-auth-gate").style.setProperty('display', 'none', 'important');
+        document.getElementById("qbc-admin-core").style.setProperty('display', 'block', 'important');
+        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm();
+    });
+} else {
+    window.addEventListener("DOMContentLoaded", () => {
+        buildQbcAdminSidebarTabs(); loadQbcActivePaneForm();
+    });
+}
+</script>
+</body>
+</html>
+

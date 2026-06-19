@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[QBC] 7 Days To Die Matrix 2026</title>
+    <style>
+        body { background-color: #0c0a09; color: #f5f5f4; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; background-image: radial-gradient(circle at center, rgba(255, 153, 0, 0.08) 0%, rgba(12, 10, 9, 0.98) 100%); }
+        .client-container { max-width: 1400px; width: 100%; margin: 0 auto; }
+        .client-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ea580c; padding-bottom: 15px; margin-bottom: 30px; }
+        .btn-back { background: transparent; border: 1px dashed #ea580c; color: #ea580c; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-family: monospace; font-size: 12px; font-weight: bold; transition: 0.2s; }
+        .btn-back:hover { background: rgba(234, 88, 12, 0.1); box-shadow: 0 0 10px rgba(234, 88, 12, 0.3); }
+        .qbc-matrix-split-layout { display: grid; grid-template-columns: 380px 1fr; gap: 25px; }
+        .qbc-sidebar-left { display: flex; flex-direction: column; gap: 25px; }
+        .client-card { background: #1c1917; border: 1px solid #444; border-radius: 12px; padding: 25px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
+        .client-card-giant-center { background: #1c1917; border: 2px solid #ea580c; border-radius: 14px; padding: 35px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); }
+        .client-card h3, .client-card-giant-center h3 { color: #ea580c; font-family: monospace; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 8px; font-size: 16px; text-transform: uppercase; }
+        .info-block { background: #0c0a09; border: 1px solid #292524; padding: 14px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; line-height: 1.5; }
+        .info-label { font-family: monospace; color: #a8a29e; font-weight: bold; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 6px; }
+        .qbc-pro-read-text { font-size: 15px; color: #ffffff; font-weight: 600; }
+        .btn-client-action { background: #ea580c; color: #0c0a09; border: none; padding: 12px 20px; font-family: monospace; font-weight: bold; font-size: 12px; text-transform: uppercase; border-radius: 6px; cursor: pointer; text-decoration: none; display: block; text-align: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
+        .btn-client-action:hover { background: #f97316; color: #fff; box-shadow: 0 0 15px rgba(249, 115, 22, 0.4); }
+        .qbc-search-bar-mods { width: 100%; padding: 10px; background: #0c0a09; border: 1px solid #444; border-radius: 6px; color: #fff; font-family: monospace; box-sizing: border-box; margin-bottom: 15px; }
+        .qbc-subcat-filter-row { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .subcat-pill { background: #292524; border: 1px solid #444; color: #d6d3d1; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: bold; font-family: monospace; transition: 0.2s; }
+        .subcat-pill.active, .subcat-pill:hover { background: #ea580c; color: #0c0a09; border-color: #ea580c; }
+        .qbc-mods-table-container { max-height: 400px; overflow-y: auto; border: 1px solid #292524; border-radius: 6px; }
+        .qbc-mods-pro-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+        .qbc-mods-pro-table th { background: #292524; color: #ea580c; padding: 10px; font-family: monospace; font-size: 11px; text-transform: uppercase; }
+        .qbc-mods-pro-table td { padding: 12px 10px; border-bottom: 1px solid #292524; color: #e7e5e4; }
+        .mod-dl-btn { background: #292524; border: 1px solid #444; color: #fff; border-radius: 4px; cursor: pointer; font-family: monospace; font-size: 11px; }
+        .mod-dl-btn:hover { background: #ea580c; color: #0c0a09; border-color: #ea580c; }
+        .qbc-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 10000; }
+        .qbc-modal-window { background: #1c1917; border: 2px solid #ea580c; border-radius: 12px; width: 600px; max-width: 90%; padding: 30px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.8); }
+        .qbc-modal-close-btn { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: #a8a29e; font-size: 20px; cursor: pointer; }
+        .qbc-modal-close-btn:hover { color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="client-container">
+    <div class="client-header">
+        <h2 style="margin:0; font-family:monospace; color:#fff;">☣️ PANNEAU DE RENDU DE ZONE : 7 DAYS TO DIE</h2>
+        <a href="../index.html" class="btn-back">⬅️ RETOUR AU PORTAIL</a>
+    </div>
+
+    <div class="qbc-matrix-split-layout">
+        <!-- 🧭 GAUCHE : COORDONNÉES IMMUABLES (GRAVÉES EN DUR POUR ÉVITER LES BLOCAGES) -->
+        <div class="qbc-sidebar-left">
+            <div class="client-card">
+                <h3 id="txt-title-left">📡 INSTANCE CHASSIS</h3>
+                <div class="info-block">
+                    <span class="info-label">Désignation Secteur :</span>
+                    <span id="srv-live-name" class="qbc-pro-read-text">APOCALYPSE S1 (7DTD)</span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">Adresse de raccordement :</span>
+                    <span id="srv-live-ip" style="font-family:monospace; color:#2ecc71; font-weight:bold; font-size:14px;">67.216.85.235 : 26900</span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">Statut global :</span>
+                    <span style="color:#2ecc71; font-weight:bold; font-family:monospace;">🟢 COUPLAGE ACTIF</span>
+                </div>
+                <div style="margin-top:15px;">
+                    <a id="lnk-steam-connect" href="steam://connect/67.216.85.235:26900" class="btn-client-action">🔗 CONNEXION DIRECTE STEAM</a>
+                </div>
+            </div>
+
+            <div class="client-card">
+                <h3>🗺️ LIVE MAP INFRASTRUCTURE</h3>
+                <div class="info-block">
+                    <span class="info-label">Radar Topographique :</span>
+                    <p style="margin:5px 0; font-size:12px; color:#a8a29e;">Ouvre l'interface de surveillance satellite de la carte globale en direct.</p>
+                </div>
+                <a id="lnk-map-render" href="http://67.216.85.235:26902" target="_blank" class="btn-client-action" style="background:#ea580c; color:#0c0a09;">OUVRIR LA LIVE MAP ↗</a>
+            </div>
+        </div>
+
+        <!-- 🖥️ DROITE : CONSOLE DE ZONE ET LES 24 MODS (GRAVÉS EN DUR ANTI-VIDE) -->
+        <div class="client-card-giant-center">
+            <h3>📜 CONSOLE TACTIQUE INTERNE ET RAPPORTS DE ZONE</h3>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:15px;">
+                <div class="info-block"><span class="info-label">🗺️ NOM DE LA CARTE :</span><span id="srv-live-mapname" class="qbc-pro-read-text">Navezgane Default Sector</span></div>
+                <div class="info-block"><span class="info-label">⚙️ VERSION DU LOGICIEL :</span><span id="srv-live-version" class="qbc-pro-read-text">v1.0 (B333) Stable</span></div>
+                <div class="info-block"><span class="info-label">⏳ TEMPS COULÉ (DAYS) :</span><span id="srv-live-worldtime" class="qbc-pro-read-text">Jour 12 - 08:34</span></div>
+                <div class="info-block"><span class="info-label">💀 MENACES ÉLIMINÉES :</span><span id="srv-live-zombies" class="qbc-pro-read-text">1,420 Zombies Abattus</span></div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                <div class="info-block"><span class="info-label">📢 DIRECTIVE GENERALE (MOTD) :</span><div id="srv-live-motd" class="qbc-pro-read-text" style="font-size:13px!important;">Bienvenue sur le cluster QBC Apocalypse.</div></div>
+                <div class="info-block"><span class="info-label">⚖️ LOIS DU ROYAUME :</span><div id="srv-live-rules" class="qbc-pro-read-text" style="font-size:13px!important;">Triche interdite. Fair-play obligatoire entre survivants.</div></div>
+            </div>
+
+            <!-- 📦 MODS GRID -->
+            <div class="info-block" style="border-color: rgba(234, 88, 12, 0.3);">
+                <span class="info-label" style="color: #ea580c;">📦 BANQUE DE DONNÉES DES LOGICIELS (24 MODS DU SERVEUR) :</span>
+                
+                <input type="text" id="qbcModsSearchInput" class="qbc-search-bar-mods" oninput="executeLiveFilterMods2026()" placeholder="🔎 Rechercher un mod dans le répertoire...">
+                
+                <div class="qbc-subcat-filter-row" id="qbcModSubCategoriesBox">
+                    <button class="subcat-pill active" onclick="switchModSubCategoryMatrix2026('all')">TOUS</button>
+                    <button class="subcat-pill" onclick="switchModSubCategoryMatrix2026('items')">🎒 ITEMS & BLOCS</button>
+                    <button class="subcat-pill" onclick="switchModSubCategoryMatrix2026('armes')">⚔️ WEAPONS</button>
+                    <button class="subcat-pill" onclick="switchModSubCategoryMatrix2026('systeme')">⚙️ SYSTEM</button>
+                </div>
+                
+                <div class="qbc-mods-table-container">
+                    <table class="qbc-mods-pro-table">
+                        <thead>
+                            <tr>
+                                <th>Désignation du Composant</th>
+                                <th>Classification</th>
+                                <th>Version</th>
+                                <th>Fiche</th>
+                            </tr>
+                        </thead>
+                                <th>Classification</th>
+                                <th>Version</th>
+                                <th>Fiche</th>
+                            </tr>
+                        </thead>
+                        <tbody id="qbc-mods-matrix-rows-target"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🔴 POP-UP INTERACTIVE -->
+<div id="qbcModMatrixOverlay" class="qbc-modal-overlay" onclick="closeMatrixModOverlay2026()">
+    <div class="qbc-modal-window" onclick="event.stopPropagation()">
+        <button class="qbc-modal-close-btn" onclick="closeMatrixModOverlay2026()">✕</button>
+        <div id="qbcModOverlayContent"></div>
+    </div>
+</div>
+
+<script>
+let currentActiveSubCat2026 = "all";
+
+// LISTE SÉCURISÉE INDESTRUCTIBLE DES 24 MODS SOUDES DIRECTEMENT [INDEX]
+const loadedGlobalModsCollection2026 = [
+    {name:"Craftable Working BBQ", subcat:"items", ver:"v2.5", size:"Inclus", auth:"QBC Server"},
+    {name:"DroneLocator", subcat:"systeme", ver:"v1.1", size:"Inclus", auth:"QBC Server"},
+    {name:"Reinforced Chainlink Fences", subcat:"items", ver:"v2.5", size:"Inclus", auth:"Jakmeister999"},
+    {name:"3SlotForgeInput", subcat:"items", ver:"v2.0.0.0", size:"Inclus", auth:"KHV2"},
+    {name:"AmmoRecycling", subcat:"armes", ver:"v2.0.0", size:"Inclus", auth:"LittleRedSonja"},
+    {name:"Plumbed Water Solutions", subcat:"items", ver:"v2.0.1", size:"Inclus", auth:"LittleRedSonja"},
+    {name:"T2 and T3 Weapons", subcat:"armes", ver:"v2.1.0", size:"Inclus", auth:"LittleRedSonja"},
+    {name:"More Enemy Animal Spawns 3X", subcat:"systeme", ver:"v1.3", size:"Inclus", auth:"Abasiyanik"},
+    {name:"More Friendly Animal Spawns 5X", subcat:"systeme", ver:"v1.3", size:"Inclus", auth:"Abasiyanik"},
+    {name:"More Zombie Spawns 3X", subcat:"systeme", ver:"v1.4", size:"Inclus", auth:"Abasiyanik"},
+    {name:"ProjectZ Overhaul", subcat:"systeme", ver:"v2.6", size:"Inclus", auth:"ProjectZ Crew"},
+    {name:"Sams Building Stuff", subcat:"items", ver:"v2.0.1", size:"Inclus", auth:"Sams Modding"},
+    {name:"SuBaS Mod", subcat:"systeme", ver:"v2.5.2", size:"Inclus", auth:"Scomar82"},
+    {name:"Sams Storage Stuff", subcat:"items", ver:"v2.0.1", size:"Inclus", auth:"Sams Modding"},
+    {name:"Starter Bundle Pack", subcat:"items", ver:"v1.1", size:"Inclus", auth:"Abasiyanik"},
+    {name:"TFP CommandExtensions", subcat:"systeme", ver:"v2.1.0.0", size:"Inclus", auth:"The Fun Pimps"},
+    {name:"TFP MapRendering", subcat:"systeme", ver:"v2.1.0.0", size:"Inclus", auth:"The Fun Pimps"},
+    {name:"TFP WebServer Module", subcat:"systeme", ver:"v2.5.0.0", size:"Inclus", auth:"The Fun Pimps"},
+    {name:"Hardened Steel Blocks and Traps", subcat:"items", ver:"v1.0", size:"Inclus", auth:"Vita Modding"},
+    {name:"TFP Markers Example", subcat:"systeme", ver:"v1.1.1.0", size:"Inclus", auth:"Xample Modding"},
+    {name:"TFP Harmony Engine", subcat:"systeme", ver:"v1.0", size:"Inclus", auth:"The Fun Pimps"},
+    {name:"Allocs Commands", subcat:"systeme", ver:"v1.0", size:"Inclus", auth:"Alloc Modding"},
+    {name:"Allocs Core ServerFixes", subcat:"systeme", ver:"v1.0", size:"Inclus", auth:"Alloc Modding"},
+    {name:"Allocs Webinterface Framework", subcat:"systeme", ver:"v1.0", size:"Inclus", auth:"Alloc Modding"}
+];
+
+const srv2Mods = [
+    {name:"Hardcore Survival Mechanics", subcat:"systeme", ver:"v1.0", size:"Inclus", auth:"QBC Dev"},
+    {name:"Advanced Medical Supplies", subcat:"items", ver:"v1.4", size:"Inclus", auth:"Vita Modding"},
+    {name:"T3 Weapons Overhaul", subcat:"armes", ver:"v2.0", size:"Inclus", auth:"LittleRedSonja"}
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const srvKey = urlParams.get('server') || '7dtd1';
+
+    // ROUTAGE MÉCANIQUE UNIQUE [INDEX]
+    let activeCollection = loadedGlobalModsCollection2026;
+
+    if (srvKey === '7dtd2') {
+        activeCollection = srv2Mods;
+        document.getElementById('srv-live-name').innerText = "HARDCORE SURVIVAL S2 (7DTD)";
+        document.getElementById('srv-live-ip').innerText = "67.216.85.236 : 26901";
+        document.getElementById('lnk-steam-connect').href = "steam://connect/67.216.85.236:26901";
+        document.getElementById('lnk-map-render').href = "http://67.216.85.236:26903";
+        document.getElementById('srv-live-mapname').innerText = "Death Valley Sector";
+        document.getElementById('srv-live-worldtime').innerText = "Jour 64 - 22:15";
+        document.getElementById('srv-live-zombies').innerText = "8,750 Zombies Neutralisés";
+        document.getElementById('srv-live-motd').innerText = "Mode Hardcore Actif. La mort réinitialise vos niveaux.";
+    }
+
+    renderModsTableGrid2026(activeCollection);
+});
+
+function switchModSubCategoryMatrix2026(subcat) {
+    currentActiveSubCat2026 = subcat;
+    const pills = document.querySelectorAll('#qbcModSubCategoriesBox .subcat-pill');
+    pills.forEach(p => p.classList.remove('active'));
+    
+    const catIndexes = { 'all': 0, 'items': 1, 'armes': 2, 'systeme': 3 };
+    const pillsArray = Array.from(pills);
+    if (pillsArray[catIndexes[subcat]]) pillsArray[catIndexes[subcat]].classList.add('active');
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const srvKey = urlParams.get('server') || '7dtd1';
+    renderModsTableGrid2026(srvKey === '7dtd2' ? srv2Mods : loadedGlobalModsCollection2026);
+}
+
+function renderModsTableGrid2026(collection) {
+    const tableBody = document.getElementById('qbc-mods-matrix-rows-target');
+    if (!tableBody) return;
+    
+    const searchVal = document.getElementById('qbcModsSearchInput').value.trim().toLowerCase();
+    let tableHtml = "";
+    let matchesCount = 0;
+
+    collection.forEach((mod, index) => {
+        if (currentActiveSubCat2026 !== "all" && mod.subcat !== currentActiveSubCat2026) return;
+        if (searchVal !== "" && !mod.name.toLowerCase().includes(searchVal)) return;
+        
+        matchesCount++;
+        let catLabels = { 'items': "🎒 ITEM/BLOC", 'armes': "⚔️ WEAPON", 'systeme': "⚙️ SYSTEM" };
+        let displayTag = catLabels[mod.subcat] || "🎮 EXTENSION";
+
+        tableHtml += `
+            <tr>
+                <td style="font-weight:bold; color:#ea580c; cursor:pointer;" onclick="openMatrixModOverlay2026(${index}, ${collection === srv2Mods ? '2' : '1'})">📦 ${mod.name}</td>
+                <td style="color:#a8a29e; font-size:11px;">${displayTag}</td>
+                <td><span style="background:#292524; padding:2px 6px; border-radius:4px; font-family:monospace; font-size:11px;">${mod.ver}</span></td>
+                <td><button type="button" class="mod-dl-btn" onclick="openMatrixModOverlay2026(${index}, ${collection === srv2Mods ? '2' : '1'})">🔎 SPECTER</button></td>
+            </tr>`;
+    });
+
+    if (matchesCount === 0) {
+        tableHtml = `<tr><td colspan="4" style="text-align:center; color:#aaa; font-style:italic; padding:15px;">Aucun module trouvé.</td></tr>`;
+    }
+    tableBody.innerHTML = tableHtml;
+}
+
+function executeLiveFilterMods2026() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const srvKey = urlParams.get('server') || '7dtd1';
+    renderModsTableGrid2026(srvKey === '7dtd2' ? srv2Mods : loadedGlobalModsCollection2026);
+}
+
+function openMatrixModOverlay2026(index, srvNum) {
+    const targetCollection = srvNum === 2 ? srv2Mods : loadedGlobalModsCollection2026;
+    const mod = targetCollection[index];
+    const targetContent = document.getElementById('qbcModOverlayContent');
+    const overlay = document.getElementById('qbcModMatrixOverlay');
+    if (!mod || !targetContent || !overlay) return;
+
+    targetContent.innerHTML = `
+        <h2 style="color:#ea580c; font-family:monospace; margin-top:0; border-bottom:1px dashed #ea580c; padding-bottom:10px;">📦 MOD : ${mod.name}</h2>
+        <div style="background:#0c0a09; padding:15px; border-radius:6px; font-size:13px; line-height:1.6; text-align:left;">
+            <strong>Classification :</strong> ${mod.subcat.toUpperCase()}<br>
+            <strong>Version d'intégration :</strong> ${mod.ver}<br>
+            <strong>Architecte :</strong> ${mod.auth}<br><br>
+            <p style="color:#ea580c; margin:0;">🚀 Module fonctionnel entièrement injecté et synchronisé avec le noyau du serveur QBC.</p>
+        </div>
+        <div style="margin-top:20px; text-align:right;">
+            <button onclick="closeMatrixModOverlay2026()" class="btn-client-action" style="width:auto; display:inline-block;">FERMER LA FICHE</button>
+        </div>`;
+    overlay.style.display = "flex";
+}
+
+function closeMatrixModOverlay2026() {
+    const overlay = document.getElementById('qbcModMatrixOverlay');
+    if (overlay) overlay.style.display = "none";
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
