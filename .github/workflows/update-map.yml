@@ -22,6 +22,6 @@ jobs:
         username: ${{ secrets.LEGION_USER }}
         password: ${{ secrets.LEGION_PASS }}
         port: ${{ secrets.LEGION_PORT }}
-        protocol: sftp # 👈 Force explicitement la connexion sécurisée SFTP
+        protocol: ftps # 👈 Modifié ici pour utiliser la connexion sécurisée acceptée
         local-dir: ./map-folder-1/
-        server-dir: /wurmmapgen/output/ # ⚠️ Vérifiez bien ce chemin sur FileZilla !
+        server-dir: /wurmmapgen/output/
