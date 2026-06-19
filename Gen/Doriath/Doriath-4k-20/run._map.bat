@@ -1,10 +1,10 @@
 @echo off
 title Generation et Envoi de la Carte Doriath
 
-:: 1. Générer la carte Doriath (Correction de l'argument properties)
+:: 1. Générer la carte Doriath (Correction de la commande pour la v2.3.3)
 echo [1/2] Generation de la carte Google Maps (Doriath)...
 cd /d "C:\WurmMapGenTool"
-java -jar WurmMapGen.jar --properties config_doriath.properties
+java -jar WurmMapGen.jar config_doriath.properties
 
 :: 2. Envoyer la mise à jour sur GitHub
 echo [2/2] Envoi de l'update sur GitHub...
@@ -17,5 +17,4 @@ echo ===================================================
 echo     La carte de Doriath a ete mise a jour !
 echo ===================================================
 pause
-
 
