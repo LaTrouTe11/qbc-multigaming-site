@@ -2,8 +2,8 @@ name: Synchro Carte Wurm Legion Hosting
 
 on:
   schedule:
-    - cron: '0 4 * * *' # Tourne tout seul à 4h du matin
-  workflow_dispatch:      # Bouton manuel pour tester en 1 clic
+    - cron: '0 4 * * *'
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -15,20 +15,13 @@ jobs:
     - name: Créer le dossier temporaire
       run: mkdir -p ./map-folder-1/
 
-    - name: Télécharger les fichiers de carte depuis Legion Hosting
+    - name: Télécharger la carte du Serveur 1 depuis Legion Hosting
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.LEGION_HOST }}
         username: ${{ secrets.LEGION_USER }}
         password: ${{ secrets.LEGION_PASS }}
         port: ${{ secrets.LEGION_PORT }}
+        protocol: sftp # 👈 Force explicitement la connexion sécurisée SFTP
         local-dir: ./map-folder-1/
-        server-dir: /gameserver/creative/ # ⚠️ REMPLACEZ PAR LE DOSSIER DE VOTRE MONDE CHEZ LEGION
-        method: download
-
-    - name: Mettre en ligne dans le dossier Serveur 1
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: ./map-folder-1/
-        target-folder: serveur1 # Crée le dossier "serveur1" sur votre site web
-        branch: gh-pages
+        server-dir: /wurmmapgen/output/ # ⚠️ Vérifiez bien ce chemin sur FileZilla !
