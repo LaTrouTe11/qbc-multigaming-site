@@ -18,15 +18,6 @@ jobs:
         server: ${{ secrets.LEGION_HOST_IP }}
         username: ${{ secrets.LEGION_FTP_USER }}
         password: ${{ secrets.LEGION_FTP_PASSWORD }}
-        port: 22 # Port standard sécurisé pour le SFTP
+        port: 22
         local-dir: ./map-folder/
-        server-dir: /wurm/mapvieweroutput/ # ⚠️ REMPLACEZ PAR VOTRE DOSSIER CHEZ LEGION SI BESOIN
-        method: download
-        dangerous-clean-local: false
-
-    - name: Mettre la carte en ligne sur GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: ./map-folder/
-        branch: gh-pages # Crée le site internet pour vos joueurs
-
+        server-dir: /wurm/mapvieweroutput/ # ⚠️ Vérifiez bien ce nom de dossier sur votre SFTP
