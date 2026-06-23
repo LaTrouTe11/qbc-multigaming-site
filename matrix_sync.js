@@ -35,31 +35,26 @@ function scannerToutLeCluster() {
             .then(data => {
                 if (data && data.response && data.response.success && data.response.servers && data.response.servers.length > 0) {
                     const infoSteam = data.response.servers[0];
-                    const enLigne = infoSteam.players !== undefined ? infoSteam.players : 0; // Vrais connectés Steam
-                    const maxJoueurs = infoSteam.max_players || srv.max; // Slots configurés sur la machine
+                    // ===================================================================
+// ===================================================================
+// 📡 FORCE LE CHIFFRE SÉCURISÉ DE STEAM (0 SI PERSONNE EN LIGNE)
+// ===================================================================
+const srvData = data.response.servers[0];
+const enLigne = (srvData && srvData.players !== undefined) ? srvData.players : 0; 
+const maxJoueurs = (srvData && srvData.max_players) ? srvData.max_players : srv.max; 
 
-                    // Rendu automatique et rigide calculé par Steam
-                    if (txtNode) txtNode.textContent = `${enLigne} / ${maxJoueurs}`;
-                    if (barNode) barNode.style.width = `${(enLigne / maxJoueurs) * 100}%`;
+// Rendu automatique et rigide calculé par Steam
+if (txtNode) txtNode.textContent = `${enLigne} / ${maxJoueurs}`;
+if (barNode) barNode.style.width = `${(enLigne / maxJoueurs) * 100}%`;
 
-                    // Allumage en vert LIVE validé par les services de Valve
-                    if (badgeNode && statusTxtNode) {
-                        badgeNode.className = "status-badge online-mode";
-                        badgeNode.style.borderLeftColor = "#00ffcc";
-                        statusTxtNode.innerHTML = `<span class="led-pulse led-green"></span>🟢 LIVE`;
-                        statusTxtNode.style.color = "#00ffcc";
-                    }
-                } else {
-                    // Failsafe : Si la machine ne répond pas à Steam, on affiche l'état stable par défaut
-                    chargerDonneesStablesSecours(localConfig, txtNode, barNode, badgeNode, statusTxtNode, srv.max);
-                }
-            })
-            .catch(() => {
-                // Secours en cas de micro-coupure de la passerelle Valve
-                chargerDonneesStablesSecours(localConfig, txtNode, barNode, badgeNode, statusTxtNode, srv.max);
-            });
-    });
+// Allumage en vert LIVE validé par les services de Valve
+if (badgeNode && statusTxtNode) {
+    badgeNode.className = "status-badge online-mode";
+    badgeNode.style.borderLeftColor = "#00ffcc";
+    statusTxtNode.innerHTML = `<span class="led-pulse led-green"></span>🟢 LIVE`;
+    statusTxtNode.style.color = "#00ffcc";
 }
+
 
 // Moteur d'application des ordres de votre panneau d'administration
 function appliquerStatutAdminForcé(localConfig, txtNode, barNode, badgeNode, statusTxtNode, maxDefaut) {
