@@ -343,29 +343,37 @@
         });
     }
 
-    window.onload = function() {
-        runQbcVisitorCounter(); loadQbcMatrixDynamicConfig();
-        setInterval(runQbcChRadar, 1000);
-        setInterval(() => {
-            document.querySelectorAll('.qbc-live-ping-node').forEach(node => {
-                let cardText = node.closest('.server-card-portal').innerHTML.toLowerCase();
-                let pingBase = cardText.includes("wurm") || cardText.includes("doriath") ? 8 : 34;
-                node.innerText = (pingBase + Math.floor(Math.random() * 5) - 2) + " MS";
-            });
-        }, 3000);
-        setInterval(() => {
-            document.querySelectorAll('.qbc-live-slots-node').forEach(node => {
-                let text = node.innerText || "0/40";
-                if (!text.includes('/')) return;
-                let parts = text.split('/');
-                let current = parseInt(parts) || 0;
-                let max = parseInt(parts) || 40;
-                let dice = Math.random();
-                if (dice > 0.75 && current < max) current++; else if (dice < 0.25 && current > 0) current--;
-                node.innerText = current + "/" + max;
-            });
-        }, 4000);
-    };
+function loadQbcMatrixDynamicConfig() {
+    // 1. Détection automatique de vos accès administrateur décentralisés
+    const hostname = window.location.hostname;
+    const parts = hostname.split('.');
+    const realOwner = parts[0] || "latroute";
+    
+    // Clé universelle liée à votre composant de synchronisation sync.js
+    const cleanKey = "qbc_" + realOwner + "_js_config_js";
+    const urlCloud = "https://jsonbox.io" + cleanKey;
+
+    // 2. Interrogation en direct du Cloud d'administration
+    fetch(urlCloud)
+        .then(res => res.json())
+        .then(cloudData => {
+            // Si l'admin a fait un changement, on écrase les données fixes par les choix du Cockpit !
+            if (cloudData && cloudData.wurm1) {
+                window.qbcClusterData = cloudData;
+            }
+            // Lancement du rendu visuel de la grille avec les vrais choix à jour
+            scannerToutLeCluster();
+        })
+        .catch(() => {
+            // Failsafe de secours : Si le cloud ne répond pas, on utilise la mémoire locale ou le fichier fixe
+            let localCache = localStorage.getItem(cleanKey);
+            if (localCache) {
+                window.qbcClusterData = JSON.parse(localCache);
+            }
+            scannerToutLeCluster();
+        });
+}
+
 
     function applyQbcClusterFilter(game) {
         currentActiveFilter = game;
