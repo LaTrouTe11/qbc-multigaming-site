@@ -1,5 +1,5 @@
 // ===================================================================
-// 🔐 BASE DE DONNÉES CLOUD PURGÉE ET ALIGNÉE AUX COMPTEURS v87.0
+// 🔐 BASE DE DONNÉES CLOUD HARMONISÉE - DUO DE SÉPARATION DES SLOTS v88.0
 // ===================================================================
 window.qbcClusterData = {
     "global": {
@@ -19,10 +19,11 @@ window.qbcClusterData = {
         "name": "Realm Flaggard (Sandbox)",
         "ip": "104.243.40.52:5134",
         "rb": "Synchronisé avec le maître Doriath",
-        "badge_state": "stable",
-        "wn_text": "Royaume secondaire ouvert au déploiement.",
-        "status": "online",
-        "slots": "0/250",
+        "badge_state": "maintenance",
+        "wn_text": "⚠️ SERVEUR EN MAINTENANCE - Configuration en cours.",
+        "status": "offline",
+        "players_online": 0,
+        "players_max": 40,
         "votes": "12",
         "game_icon": "👑 "
     },
@@ -34,7 +35,8 @@ window.qbcClusterData = {
         "badge_state": "stable",
         "wn_text": "Live Map opérationnelle ! Fondez votre village dès ce soir.",
         "status": "online",
-        "slots": "0/250",
+        "players_online": 2,
+        "players_max": 250,
         "votes": "45",
         "game_icon": "👑 "
     },
@@ -46,7 +48,8 @@ window.qbcClusterData = {
         "badge_state": "pack",
         "wn_text": "Reboot effectué - Cycle de pousse à jour !",
         "status": "online",
-        "slots": "0/16",
+        "players_online": 0,
+        "players_max": 16,
         "votes": "89",
         "game_icon": "🧟 "
     },
@@ -58,7 +61,8 @@ window.qbcClusterData = {
         "badge_state": "stable",
         "wn_text": "Arène PVE ouverte. Progression niveau 750 active.",
         "status": "online",
-        "slots": "0/20",
+        "players_online": 0,
+        "players_max": 20,
         "votes": "5",
         "game_icon": "💀 "
     },
@@ -70,7 +74,8 @@ window.qbcClusterData = {
         "badge_state": "stable",
         "wn_text": "Secteur stable. Radar longue portée actif.",
         "status": "online",
-        "slots": "0/50",
+        "players_online": 0,
+        "players_max": 50,
         "votes": "21",
         "game_icon": "🚀 "
     },
@@ -81,10 +86,12 @@ window.qbcClusterData = {
         "rb": "Fluctuant selon la charge du secteur",
         "badge_state": "maintenance",
         "wn_text": "Nettoyage des débris spatiaux en cours.",
-        "status": "online",
-        "slots": "0/50",
+        "status": "offline",
+        "players_online": 0,
+        "players_max": 50,
         "votes": "3",
         "game_icon": "🌌 "
     }
 };
+
 

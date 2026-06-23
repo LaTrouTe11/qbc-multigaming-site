@@ -178,7 +178,13 @@
             let srvTypeLower = (srv.type || "").toLowerCase().trim();
             if (currentActiveFilter !== "all" && srvTypeLower !== currentActiveFilter) return;
 
-            let srvSlots = srv.slots || "0/40";
+// ===================================================================
+// 📊 CHARGEMENT SÉCURISÉ DES DEUX CASES NUMÉRIQUES SÉPARÉES (QBC)
+// ===================================================================
+             let currentOnline = srv.players_online !== undefined ? srv.players_online : 0;
+             let currentMax = srv.players_max !== undefined ? srv.players_max : 40;
+             let srvSlots = currentOnline + " / " + currentMax;
+
             let srvVotes = srv.votes || 0;
             let detailPageLink = srvTypeLower + ".html";
 
