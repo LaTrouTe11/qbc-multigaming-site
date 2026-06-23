@@ -1,5 +1,5 @@
 // ===================================================================
-// 🛰️ MOTEUR UNIFIÉ QBC MATRIX 2026 - PROTOCOLE DE SCAN OFFICIEL STEAM
+// 🛰️ MOTEUR UNIFIÉ QBC MATRIX 2026 - COMPATIBILITÉ STEAM QUERY PROXY
 // ===================================================================
 function scannerToutLeCluster() {
     const serveurs = [
@@ -12,51 +12,58 @@ function scannerToutLeCluster() {
     ];
 
     serveurs.forEach(srv => {
-        // Sélection des cartes de votre index principal v70.0
         const txtNode = document.getElementById(`slots-txt-${srv.id}`);
         const barNode = document.getElementById(`bar-${srv.id}`);
         const badgeNode = document.getElementById(`status-badge-${srv.id}`);
         const statusTxtNode = document.getElementById(`status-txt-${srv.id}`);
 
-        // 🔍 ÉTAPE A : Lecture de sécurité de vos ordres Admin Control Panel
+        // 🔍 ÉTAPE 1 : Lecture prioritaire des ordres de votre Admin Control Panel
         let localConfig = window.qbcClusterData && window.qbcClusterData[srv.id];
         
         if (localConfig && localConfig.status === "offline") {
-            // Si l'admin force "offline" ou "maintenance", on bloque Steam et on affiche vos choix !
             appliquerStatutAdminForcé(localConfig, txtNode, barNode, badgeNode, statusTxtNode, srv.max);
-            return; // On s'arrête ici pour ce serveur
+            return; 
         }
 
-        // 🔍 ÉTAPE B : Si l'admin dit "online", on demande les vrais slots en direct à Steam
+        // 🔍 ÉTAPE 2 : Interrogation via une passerelle de secours compatible HTTPS Vercel
         const urlSteam = `https://steampowered.com{srv.host}:${srv.port}`;
+        const urlProxy = `https://allorigins.win{encodeURIComponent(urlSteam)}`;
 
-        fetch(urlSteam)
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.response && data.response.success && data.response.servers && data.response.servers.length > 0) {
-                    const infoSteam = data.response.servers[0];
-                    // ===================================================================
-// ===================================================================
-// 📡 FORCE LE CHIFFRE SÉCURISÉ DE STEAM (0 SI PERSONNE EN LIGNE)
-// ===================================================================
-const srvData = data.response.servers[0];
-const enLigne = (srvData && srvData.players !== undefined) ? srvData.players : 0; 
-const maxJoueurs = (srvData && srvData.max_players) ? srvData.max_players : srv.max; 
+        fetch(urlProxy)
+            .then(res => {
+                if (res.ok) return res.json();
+                throw new Error('Erreur Réseau');
+            })
+            .then(wrapper => {
+                // Allorigins encapsule la réponse dans un champ .contents sous forme de texte
+                const data = JSON.parse(wrapper.contents);
 
-// Rendu automatique et rigide calculé par Steam
-if (txtNode) txtNode.textContent = `${enLigne} / ${maxJoueurs}`;
-if (barNode) barNode.style.width = `${(enLigne / maxJoueurs) * 100}%`;
+                if (data && data.response && data.response.success && data.response.servers && data.response.servers[0]) {
+                    const srvData = data.response.servers[0];
+                    const enLigne = (srvData.players !== undefined) ? srvData.players : 0; 
+                    const maxJoueurs = srvData.max_players || srv.max; 
 
-// Allumage en vert LIVE validé par les services de Valve
-if (badgeNode && statusTxtNode) {
-    badgeNode.className = "status-badge online-mode";
-    badgeNode.style.borderLeftColor = "#00ffcc";
-    statusTxtNode.innerHTML = `<span class="led-pulse led-green"></span>🟢 LIVE`;
-    statusTxtNode.style.color = "#00ffcc";
+                    if (txtNode) txtNode.textContent = `${enLigne} / ${maxJoueurs}`;
+                    if (barNode) barNode.style.width = `${(enLigne / maxJoueurs) * 100}%`;
+
+                    if (badgeNode && statusTxtNode) {
+                        badgeNode.className = "status-badge online-mode";
+                        badgeNode.style.borderLeftColor = "#00ffcc";
+                        statusTxtNode.innerHTML = `<span class="led-pulse led-green"></span>🟢 LIVE`;
+                        statusTxtNode.style.color = "#00ffcc";
+                    }
+                } else {
+                    // Si Steam renvoie une liste vide, le serveur tourne mais n'a pas de joueurs
+                    chargerDonneesStablesSecours(localConfig, txtNode, barNode, badgeNode, statusTxtNode, srv.max, 0);
+                }
+            })
+            .catch(() => {
+                // En cas de coupure de l'API de Valve, on utilise les valeurs du fichier config.js
+                chargerDonneesStablesSecours(localConfig, txtNode, barNode, badgeNode, statusTxtNode, srv.max, null);
+            });
+    });
 }
 
-
-// Moteur d'application des ordres de votre panneau d'administration
 function appliquerStatutAdminForcé(localConfig, txtNode, barNode, badgeNode, statusTxtNode, maxDefaut) {
     let online = localConfig.players_online !== undefined ? localConfig.players_online : 0;
     let max = localConfig.players_max !== undefined ? localConfig.players_max : maxDefaut;
@@ -67,21 +74,21 @@ function appliquerStatutAdminForcé(localConfig, txtNode, barNode, badgeNode, st
     if (badgeNode && statusTxtNode) {
         if (localConfig.badge_state === "maintenance") {
             badgeNode.className = "status-badge offline-mode";
-            badgeNode.style.borderLeftColor = "#ff9900"; // Orange
+            badgeNode.style.borderLeftColor = "#ff9900"; 
             statusTxtNode.innerHTML = `🛠️ MAINTENANCE`;
             statusTxtNode.style.color = "#ff9900";
         } else {
             badgeNode.className = "status-badge offline-mode";
-            badgeNode.style.borderLeftColor = "#ff1111"; // Rouge
+            badgeNode.style.borderLeftColor = "#ff1111"; 
             statusTxtNode.textContent = "🔴 OFFLINE";
             statusTxtNode.style.color = "#ff3333";
         }
     }
 }
 
-// Chargement des données par défaut si l'API Steam est indisponible
-function chargerDonneesStablesSecours(localConfig, txtNode, barNode, badgeNode, statusTxtNode, maxDefaut) {
+function chargerDonneesStablesSecours(localConfig, txtNode, barNode, badgeNode, statusTxtNode, maxDefaut, forceOnlineVal) {
     let online = (localConfig && localConfig.players_online !== undefined) ? localConfig.players_online : 0;
+    if (forceOnlineVal !== null) online = forceOnlineVal;
     let max = (localConfig && localConfig.players_max !== undefined) ? localConfig.players_max : maxDefaut;
 
     if (txtNode) txtNode.textContent = `${online} / ${max}`;
@@ -95,15 +102,10 @@ function chargerDonneesStablesSecours(localConfig, txtNode, barNode, badgeNode, 
     }
 }
 
-// Lancement synchrone après le décodage de la configuration d'accueil
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     if (typeof loadQbcMatrixDynamicConfig === "function") {
         loadQbcMatrixDynamicConfig();
     } else {
         scannerToutLeCluster();
     }
 });
-
-
-
-
