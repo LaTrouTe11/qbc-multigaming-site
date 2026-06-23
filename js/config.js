@@ -1,5 +1,5 @@
 // ===================================================================
-// 🔐 BASE DE DONNÉES CLOUD PURGÉE DE TOUTE ERREUR DE SYNTAXE v86.0
+// 🔐 BASE DE DONNÉES CLOUD PURGÉE ET ALIGNÉE AUX COMPTEURS v87.0
 // ===================================================================
 window.qbcClusterData = {
     "global": {
@@ -16,8 +16,20 @@ window.qbcClusterData = {
     },
     "wurm1": {
         "type": "wurm",
-        "name": "Doriath (Monde Principal)",
-        "ip": "74.50.94.238:5517",
+        "name": "Realm Flaggard (Sandbox)",
+        "ip": "104.243.40.52:5134",
+        "rb": "Synchronisé avec le maître Doriath",
+        "badge_state": "stable",
+        "wn_text": "Royaume secondaire ouvert au déploiement.",
+        "status": "online",
+        "slots": "0/250",
+        "votes": "12",
+        "game_icon": "👑 "
+    },
+    "wurm2": {
+        "type": "wurm",
+        "name": "Realm Doriath (Monde Principal)",
+        "ip": "74.50.94.238:5610",
         "rb": "Tous les lundis à 04:00 AM",
         "badge_state": "stable",
         "wn_text": "Live Map opérationnelle ! Fondez votre village dès ce soir.",
@@ -26,63 +38,51 @@ window.qbcClusterData = {
         "votes": "45",
         "game_icon": "👑 "
     },
-    "wurm2": {
-        "type": "wurm",
-        "name": "Flaggard",
-        "ip": "67.216.85.235:27017",
-        "rb": "Synchronisé avec le maître Doriath",
-        "badge_state": "stable",
-        "wn_text": "Royaume secondaire ouvert au déploiement.",
-        "status": "online",
-        "slots": "0/40",
-        "votes": "12",
-        "game_icon": "👑 "
-    },
-    "dtd1": {
+    "7dtd1": {
         "type": "7dtd",
-        "name": "QBC Survie Alpha (Instance 1)",
-        "ip": "67.216.85.235:26900",
+        "name": "QBC Survie Alpha (ProjectZ 2.6)",
+        "ip": "15.235.65.131:25593",
         "rb": "Automatique toutes les 12 heures",
         "badge_state": "pack",
         "wn_text": "Reboot effectué - Cycle de pousse à jour !",
         "status": "online",
-        "slots": "14/40",
+        "slots": "0/16",
         "votes": "89",
         "game_icon": "🧟 "
     },
-    "dtd2": {
+    "7dtd2": {
         "type": "7dtd",
-        "name": "Purgatoire (Instance 2 PvP)",
-        "ip": "67.216.85.235:26910",
+        "name": "QBC Survie Beta (NEW MODS 2.6)",
+        "ip": "51.222.244.134:25592",
         "rb": "Maintenance rapide chaque vendredi",
         "badge_state": "stable",
-        "wn_text": "Arène PvP ouverte. Attention aux pillages.",
+        "wn_text": "Arène PVE ouverte. Progression niveau 750 active.",
         "status": "online",
-        "slots": "0/30",
+        "slots": "0/20",
         "votes": "5",
         "game_icon": "💀 "
     },
     "avo1": {
         "type": "avorion",
-        "name": "Quadrant Galactique (Secteur 1)",
-        "ip": "67.216.85.235:27020",
+        "name": "Quadrant Galactique (Secteur Alpha)",
+        "ip": "15.235.65.131:25598",
         "rb": "Tous les lundis à 02:00 AM",
         "badge_state": "stable",
         "wn_text": "Secteur stable. Radar longue portée actif.",
         "status": "online",
-        "slots": "5/50",
+        "slots": "0/50",
         "votes": "21",
         "game_icon": "🚀 "
     },
     "avo2": {
         "type": "avorion",
-        "name": "Bordure Extérieure (Secteur 2)",
-        "ip": "67.216.85.235:27021",
+        "name": "Bordure Extérieure (Secteur Beta)",
+        "ip": "51.222.244.134:25605",
         "rb": "Fluctuant selon la charge du secteur",
         "badge_state": "maintenance",
         "wn_text": "Nettoyage des débris spatiaux en cours.",
         "status": "online",
-        "slots": "1/50",
+        "slots": "0/50",
         "votes": "3",
         "game_icon": "🌌 "
     }
