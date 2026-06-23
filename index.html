@@ -80,8 +80,8 @@
     </div>
 </div>
 
-<script src="js/config.js"></script> <!-- Ligne 83 -->
-<script src="js/sync.js"></script>   <!-- Ligne 84 : AJOUTEZ CETTE LIGNE ICI -->
+<script src="js/config.js"></script>
+<script src="matrix_sync.js"></script>
 <script>
     let currentActiveFilter = "all";
 
@@ -98,11 +98,9 @@
         if (chronoTimeRemaining <= 0) { chronoTimeRemaining = 60; loadQbcMatrixDynamicConfig(); }
     }
 
+    // ✅ VERSION UNIQUE CORRIGÉE ET SÉCURISÉE
     function loadQbcMatrixDynamicConfig() {
         let db = window.qbcClusterData || (typeof qbcClusterData !== 'undefined' ? qbcClusterData : null);
-        if (localStorage.getItem('qbc_server_db')) {
-            try { db = JSON.parse(localStorage.getItem('qbc_server_db')); } catch(e) {}
-        }
         if (!db) return;
 
         if (db.global) {
@@ -142,8 +140,26 @@
             } else if (warningBar) {
                 warningBar.style.setProperty('display', 'none', 'important');
             }
-            
-            // 🎨 AMBIANCES CYBER-DÉGRADÉES V68.0 : ZÉRO IMAGE MANQUANTE SUR GITHUB
+        }
+
+        // 🎨 AMBIANCES CYBER-DÉGRADÉES V68.0 : ZÉRO IMAGE MANQUANTE SUR GITHUB
+        const themes = {
+            'standard': "linear-gradient(135deg, #060303 0%, #120707 100%)",
+            'noel': "linear-gradient(135deg, #050f0c 0%, #1a0505 100%)",
+            'halloween': "linear-gradient(135deg, #0d0702 0%, #1c0d03 100%)",
+            'cyberpunk': "linear-gradient(135deg, #020b14 0%, #0c0014 100%)"
+        };
+        if (db.global && db.global.portalTheme && themes[db.global.portalTheme]) {
+            document.body.style.setProperty('background', themes[db.global.portalTheme], 'important');
+        }
+
+        // Lancement immédiat du scan global de vos cartes
+        if (typeof scannerToutLeCluster === "function") {
+            scannerToutLeCluster();
+        }
+    }
+
+ // 🎨 AMBIANCES CYBER-DÉGRADÉES V68.0 : ZÉRO IMAGE MANQUANTE SUR GITHUB
             const themeMap = {
                 'standard': "radial-gradient(circle at center, rgba(30, 20, 15, 0.4) 0%, rgba(5, 3, 2, 0.95) 100%)",
                 'noel': "linear-gradient(135deg, #051923 0%, #001219 100%)",
