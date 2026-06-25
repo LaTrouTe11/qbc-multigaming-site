@@ -2,26 +2,46 @@ name: Synchro Carte Wurm Legion Hosting
 
 on:
   schedule:
-    - cron: '0 4 * * *'
-  workflow_dispatch:
+    - cron: '0 4 * * *' # S'exécute automatiquement toutes les nuits à 4h00 UTC
+  workflow_dispatch: # Permet le lancement manuel en un clic
+
+permissions:
+  contents: write # Donne le droit à GitHub de sauvegarder les fichiers modifiés
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Connexion au dépôt GitHub
+    - name: 1. Connexion au dépôt GitHub
       uses: actions/checkout@v4
-
-    - name: Créer le dossier temporaire
-      run: mkdir -p ./map-folder-1/
-
-    - name: Télécharger la carte du Serveur 1 depuis Legion Hosting
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: ${{ secrets.LEGION_HOST }}
-        username: ${{ secrets.LEGION_USER }}
-        password: ${{ secrets.LEGION_PASS }}
-        port: ${{ secrets.LEGION_PORT }}
-        protocol: ftp # 👈 Changé en ftp classique pour éviter le blocage de sécurité (Timeout)
-        local-dir: ./map-folder-1/
-        server-dir: /wurmmapgen/output/
+        persist-credentials: true
+
+    - name: 2. Configuration de Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: 3. Installation des dépendances
+      run: npm ci || npm install
+
+    - name: 4. Exécution de vos 1600 lignes de code (server.ts)
+      run: npm run sync-map
+      env:
+        # Transfert de vos secrets Legion vers votre fichier server.ts
+        SFTP_HOST: ${{ secrets.LEGION_HOST }}
+        SFTP_USER: ${{ secrets.LEGION_USER }}
+        SFTP_PASSWORD: ${{ secrets.LEGION_PASS }}
+        SFTP_PORT: ${{ secrets.LEGION_PORT }} # Doit être 2022 dans vos secrets
+
+    - name: 5. Sauvegarde et Push du fichier villages.json sur GitHub
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@://github.com"
+        
+        # Enregistre les modifications générées dans votre dossier data
+        git add data/villages.json || true
+        
+        git commit -m "Mise à jour automatique des villages [skip ci]" || exit 0
+        git push origin main
