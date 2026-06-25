@@ -1366,18 +1366,42 @@ async function startServer() {
     }
   });
 
-  // Increment creatures killed
-  app.post('/api/sqlite/increment-kills', (req, res) => {
-    try {
-      const currentData = readSqliteData();
-      const amount = req.body.amount || 1;
-      currentData.totalKills = (currentData.totalKills || 1438) + amount;
-      writeSqliteData(currentData);
-      res.json({ status: 'success', totalKills: currentData.totalKills });
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
+// Incrément des créatures tuées - Version compatible Vercel + GitHub
+app.post('/api/sqlite/increment-kills', async (req, res) => {
+  try {
+    // 1. On récupère la valeur actuelle (qui est lue correctement depuis le JSON statique)
+    const currentData = readSqliteData();
+    const amount = req.body.amount || 1;
+    const newTotalKills = (currentData.totalKills || 1438) + amount;
+
+    console.log(`🤖 Demande de mise à jour des kills reçue. Nouveau total : ${newTotalKills}`);
+
+    // 2. Déclenchement automatique d'un signal vers GitHub Actions (Repository Dispatch)
+    // Cela va réveiller GitHub pour qu'il mette à jour le fichier proprement
+    if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPOSITORY) {
+      await fetch(`https://github.com{process.env.GITHUB_REPOSITORY}/dispatches`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json',
+          'User-Agent': 'Vurm-Livemap-Server'
+        },
+        body: JSON.stringify({
+          event_type: 'increment_kills_event',
+          client_payload: { amount: amount }
+        })
+      });
     }
-  });
+
+    // On renvoie une réponse positive immédiate à l'utilisateur sur la carte
+    res.json({ status: 'success', totalKills: newTotalKills, note: 'Mise à jour GitHub planifiée' });
+  } catch (err: any) {
+    console.error('Erreur increment-kills:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
   // SFTP 7 Days to Die Map Download endpoint
   app.post('/api/7dtd/sftp-map', async (req, res) => {
