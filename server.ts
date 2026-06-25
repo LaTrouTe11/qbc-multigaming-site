@@ -885,21 +885,37 @@ async function scanServer(id: string, srv: any, db: any) {
   }
 }
 
-// Background scheduler running scanning loops periodically
+// Version corrigée pour éviter le blocage réseau (Exit Code 254)
 async function runBackgroundScanner() {
   try {
     const db = readDb();
-    const tasks = Object.keys(db)
-      .filter(key => key !== 'global')
-      .map(key => {
+    const keys = Object.keys(db).filter(key => key !== 'global');
+    
+    console.log(`🔍 Démarrage du scan séquentiel de ${keys.length} serveurs...`);
+    
+    // On remplace Promise.allSettled par une boucle qui attend la fin de chaque serveur
+    for (const key of keys) {
+      try {
         const srv = db[key];
-        return scanServer(key, srv, db);
-      });
-    await Promise.allSettled(tasks);
+        console.log(`📡 Connexion et scan du serveur : ${key}...`);
+        
+        // On attend que ce serveur soit complètement fini avant de passer au suivant
+        await scanServer(key, srv, db);
+        
+        // Petite pause de sécurité d'une seconde pour laisser respirer le pare-feu de Legion
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+      } catch (srvErr) {
+        console.error(`❌ Erreur lors du scan du serveur ${key}:`, srvErr);
+      }
+    }
+    
+    console.log('🏁 Tous les serveurs ont été scannés proprement un par un.');
   } catch (err) {
     console.error('Error running scanner background task:', err);
   }
 }
+
 
 // Start periodic scanner loop
 setInterval(runBackgroundScanner, 20000);
