@@ -1,0 +1,6 @@
+{
+  "name": "QBC Portal",
+  "description": "Portail unifié d'accès réseau aux instances de jeux QBC avec cockpit de gestion dynamique.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
