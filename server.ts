@@ -8,8 +8,9 @@ import initSqlJs from 'sql.js';
 import { Client as SSHClient } from 'ssh2';
 
 const PORT = 3000;
-const DB_FILE = path.join(process.cwd(), 'qbc_server_db.json');
-const SQLITE_DATA_FILE = path.join(process.cwd(), 'qbc_sqlite_extracted.json');
+// REMPLACEZ-LES PAR CECI :
+const DB_FILE = path.join(process.cwd(), 'data', 'qbc_server_db.json');
+const SQLITE_DATA_FILE = path.join(process.cwd(), 'data', 'villages.json'); // 👈 Cible villages.json
 const SECRET_KEY_MASTER = 'QBC2026';
 
 let SQL: any = null;
