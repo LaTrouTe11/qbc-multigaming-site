@@ -128,25 +128,38 @@ function getCreatureName(templateId: number, nameField?: string): { fr: string, 
   return mapping[templateId] || { fr: `Créature #${templateId}`, en: `Creature #${templateId}`, icon: '🐾' };
 }
 
-// Read sqlite extracted data helper
-function readSqliteData() {
+// Version finale corrigée avec votre vraie fonction readSqliteData()
+async function runBackgroundScanner() {
   try {
-    if (fs.existsSync(SQLITE_DATA_FILE)) {
-      const content = fs.readFileSync(SQLITE_DATA_FILE, 'utf-8');
-      const parsed = JSON.parse(content);
-      if (parsed.totalKills === undefined || parsed.totalKills === null) {
-        parsed.totalKills = 1438;
+    // CORRECTION : On utilise le bon helper de votre fichier
+    const db = readSqliteData();
+    
+    const keys = Object.keys(db).filter(key => key !== 'global' && key !== 'totalKills' && key !== 'villages' && key !== 'players' && key !== 'creatures' && key !== 'lastUpdated');
+    
+    console.log(`🔍 Démarrage du scan séquentiel de ${keys.length} serveurs...`);
+    
+    for (const key of keys) {
+      try {
+        const srv = db[key];
+        if (!srv) continue; // Sécurité si la clé est vide
+        
+        console.log(`📡 Connexion et scan du serveur : ${key}...`);
+        await scanServer(key, srv, db);
+        
+        // Pause de sécurité pour éviter le pare-feu Legion
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+      } catch (srvErr) {
+        console.error(`❌ Erreur lors du scan du serveur ${key}:`, srvErr);
       }
-      if (!parsed.creatures) {
-        parsed.creatures = null;
-      }
-      return parsed;
     }
+    
+    console.log('🏁 Tous les serveurs ont été scannés proprement un par un.');
   } catch (err) {
-    console.error('Error reading SQLite extracted data:', err);
+    console.error('Error running scanner background task:', err);
   }
-  return { villages: null, players: null, creatures: null, totalKills: 1438, lastUpdated: null };
 }
+
 
 // Write sqlite extracted data helper
 function writeSqliteData(data: any) {
